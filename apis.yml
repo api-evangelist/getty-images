@@ -1,6 +1,5 @@
 aid: getty-images
 url: >-
-
   https://raw.githubusercontent.com/api-search/getty-images/refs/heads/main/apis.yml
 apis:
   - aid: getty-images:getty-images
@@ -62,8 +61,8 @@ apis:
     properties:
       - url: https://developers.gettyimages.com/
         type: Documentation
-      - type: OpenAPI
-        url: properties/getty-images-openapi.yml
+      - url: properties/getty-images-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -125,8 +124,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-affiliates-api-openapi.yml
+      - url: openapi/getty-images-affiliates-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -188,8 +187,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-ai-api-openapi.yml
+      - url: openapi/getty-images-ai-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -251,8 +250,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-ai-api-openapi.yml
+      - url: openapi/getty-images-ai-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -314,8 +313,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-artists-api-openapi.yml
+      - url: openapi/getty-images-artists-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -377,8 +376,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-asset-changes-api-openapi.yml
+      - url: openapi/getty-images-asset-changes-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -440,8 +439,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-asset-licensing-api-openapi.yml
+      - url: openapi/getty-images-asset-licensing-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -503,8 +502,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-asset-management-api-openapi.yml
+      - url: openapi/getty-images-asset-management-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -566,8 +565,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-boards-api-openapi.yml
+      - url: openapi/getty-images-boards-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -629,8 +628,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-collections-api-openapi.yml
+      - url: openapi/getty-images-collections-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -692,8 +691,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-countries-api-openapi.yml
+      - url: openapi/getty-images-countries-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -755,8 +754,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-customers-api-openapi.yml
+      - url: openapi/getty-images-customers-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -818,8 +817,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-downloads-api-openapi.yml
+      - url: openapi/getty-images-downloads-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -881,8 +880,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-events-api-openapi.yml
+      - url: openapi/getty-images-events-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -944,8 +943,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-images-api-openapi.yml
+      - url: openapi/getty-images-images-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -1007,8 +1006,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-orders-api-openapi.yml
+      - url: openapi/getty-images-orders-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -1070,8 +1069,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-products-api-openapi.yml
+      - url: openapi/getty-images-products-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -1133,8 +1132,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-purchased-assets-api-openapi.yml
+      - url: openapi/getty-images-purchased-assets-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -1196,8 +1195,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-search-api-openapi.yml
+      - url: openapi/getty-images-search-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -1259,8 +1258,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-usage-batches-api-openapi.yml
+      - url: openapi/getty-images-usage-batches-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
@@ -1322,8 +1321,8 @@ apis:
       - Batches
     humanURL: https://developers.gettyimages.com/
     properties:
-      - type: OpenAPI
-        url: openapi/getty-images-videos-api-openapi.yml
+      - url: openapi/getty-images-videos-api-openapi.yml
+        type: OpenAPI
     description: |-
 
       Developer resources for the Getty Images API including SDK, documentation,
