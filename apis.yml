@@ -4,7 +4,7 @@ description: >-
   The Getty Images API brings the best visual content straight to you and your
   customers, letting you integrate outstanding images, videos, and illustrations
   from Getty Images and iStock directly into your platform.
-type: Contract
+kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-11-13'
