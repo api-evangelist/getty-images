@@ -36,6 +36,8 @@ apis:
       - type: OpenAPI
         url: openapi/getty-images-openapi.yml
 common:
+  - type: GitHubOrganization
+    url: https://github.com/gettyimages
   - type: LinkedIn
     url: https://www.linkedin.com/company/getty-images
   - type: Documentation
