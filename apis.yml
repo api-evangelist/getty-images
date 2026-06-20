@@ -5,7 +5,7 @@ description: >-
   customers, letting you integrate outstanding images, videos, and illustrations
   from Getty Images and iStock directly into your platform.
 kind: contract
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-11-13'
 modified: '2026-04-28'
