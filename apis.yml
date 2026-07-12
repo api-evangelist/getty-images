@@ -36,6 +36,10 @@ apis:
       - type: OpenAPI
         url: openapi/getty-images-openapi.yml
 common:
+  - type: VulnerabilityDisclosure
+    url: security/getty-images-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/getty-images-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/gettyimages
   - type: LinkedIn
