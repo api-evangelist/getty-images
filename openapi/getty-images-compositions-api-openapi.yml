@@ -1,0 +1,286 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Compositions API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Compositions
+paths:
+  /v3/ai/image-generations/influence-composition-by-image:
+    post:
+      tags:
+      - Compositions
+      summary: Influence the composition of generated images using a reference image
+      description: '# AI Generator - Influence Composition By Image
+
+        Influence Composition By Image allows the client application to provide an existing Getty Images creative image or an existing generated image, along with prompt text, as a reference for generating new images. The generated images are influenced by the compositional elements like pose, object location and object depth within the reference image.
+
+
+        Use of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.
+
+        When generating new images using using a `reference_asset_id`, the reference image must first be licensed (downloaded) through a traditional license product such as Premium Access.
+
+
+        ## The Influence Composition By Image Request
+
+
+        The `InfluenceCompositionByImageRequest` payload requires one, and only one, reference image (`reference_asset_id`, `reference_generation`, or `reference_file_registration_id`) and accepts the following optional parameters:
+
+
+        | Parameter                        | Purpose                                                                                                                                                                                                                                                                                                                                     |
+
+        | -------------------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | `reference_asset_id`             | Creative image ID of the image being used as a reference.                                                                                                                                                                                                                                                                                   |
+
+        | `reference_generation`           | Generation details of the image being used as a reference.                                                                                                                                                                                                                                                                                  |
+
+        | `reference_file_registration_id` | Registered file id of the image being used as a reference.  The `ImageReference` category **must** be used when registering the file.                                                                                                                                                                                                       |
+
+        | `prompt` _Required_              | The primary text used for the generation of the images.                                                                                                                                                                                                                                                                                     |
+
+        | `negative_prompt`                | Concepts to _exclude_ from the result.                                                                                                                                                                                                                                                                                                      |
+
+        | `influence_level` _Required_     | Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.                                                                                                                                                                                                                           |
+
+        | `media_type`                     | Media type of the results: `photography` or `illustration`                                                                                                                                                                                                                                                                                  |
+
+        | `mood`                           | Can be `black_and_white`, `warm`, `cool`, `natural`, `vivid`, `dramatic`, or `bold`                                                                                                                                                                                                                                                         |
+
+        | `seed`                           | To create new images that have a similar aesthetic, include the seed value from a set of previously generated images. Seed can also be used to reproduce previous results.                                                                                                                                                                  |
+
+        | `product_id`                     | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`).                                                                                           |
+
+        | `notes`                          | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                   |
+
+        | `project_code`                   | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information. |
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including URLs to the result images and a `generation_request_id` value.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be
+
+        retained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.
+
+
+        ## Lifetime of Generated Images
+
+
+        Generated images will be retained for 6 months after generation.
+
+        '
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InfluenceCompositionByImageRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/InfluenceCompositionByImageRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/InfluenceCompositionByImageRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Image not found
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+components:
+  schemas:
+    MediaType:
+      enum:
+      - photography
+      - illustration
+      type: string
+    ImageDataResponse:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        is_blocked:
+          type: boolean
+        preview_urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+          description: The preview URLs for the result
+          nullable: true
+        url:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PendingImageGenerationResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PreviewUrl:
+      type: object
+      properties:
+        preview_size:
+          type: string
+          nullable: true
+        image_url:
+          type: string
+          nullable: true
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+      additionalProperties: false
+    ImageGenerationsResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          nullable: true
+        seed:
+          type: integer
+          format: int32
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDataResponse'
+          nullable: true
+        original_asset:
+          $ref: '#/components/schemas/AssetDetail'
+      additionalProperties: false
+    InfluenceCompositionByImageRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type: string
+          description: Asset Id to modify.
+          nullable: true
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        reference_file_registration_id:
+          type: string
+          description: File Id to modify.
+          nullable: true
+        prompt:
+          type: string
+          description: This is the primary text used for refining the images.
+          nullable: true
+        negative_prompt:
+          type: string
+          description: Concepts to exclude from the result.
+          nullable: true
+        influence_level:
+          type: number
+          description: Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.
+          format: float
+          nullable: true
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        seed:
+          type: integer
+          description: The seed used for the generation
+          format: int32
+          nullable: true
+        product_id:
+          type: integer
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the request.  Some products require this value.
+          nullable: true
+      additionalProperties: false
+      description: Payload with all influence composition by image parameters
+    ReferenceGeneration:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          description: The id from a previous request to generate images.
+          nullable: true
+        index:
+          type: integer
+          description: The index of the image from the specific images generation.
+          format: int32
+      additionalProperties: false
+    AssetDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Mood:
+      enum:
+      - black_and_white
+      - warm
+      - cool
+      - natural
+      - vivid
+      - dramatic
+      - bold
+      type: string
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

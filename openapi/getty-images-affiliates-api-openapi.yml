@@ -1,0 +1,227 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Affiliates API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Affiliates
+paths:
+  /v3/affiliates/search/images:
+    get:
+      tags:
+      - Affiliates
+      summary: ''
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: GI-Country-Code
+        in: header
+        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
+        schema:
+          type: string
+          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
+      - name: phrase
+        in: query
+        description: Search images using a search phrase.
+        schema:
+          type: string
+          description: Search images using a search phrase.
+          nullable: true
+      - name: style
+        in: query
+        description: Filter based on graphical style of the image.
+        schema:
+          $ref: '#/components/schemas/AffiliateSearchStyle'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AffiliateImageSearchResponse'
+  /v3/affiliates/search/videos:
+    get:
+      tags:
+      - Affiliates
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: GI-Country-Code
+        in: header
+        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
+        schema:
+          type: string
+          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
+      - name: phrase
+        in: query
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AffiliateVideoSearchResponse'
+components:
+  schemas:
+    AffiliateImage:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        caption:
+          type: string
+          nullable: true
+        preview_urls:
+          $ref: '#/components/schemas/AffiliateImageUrls'
+        destination_url:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
+    AffiliateVideo:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        caption:
+          type: string
+          nullable: true
+        preview_urls:
+          $ref: '#/components/schemas/AffiliateVideoUrls'
+        destination_url:
+          type: string
+          nullable: true
+        clip_length:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AffiliateVideoSearchResponse:
+      type: object
+      properties:
+        videos:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffiliateVideo'
+          nullable: true
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+      additionalProperties: false
+    AffiliateVideoUrls:
+      type: object
+      properties:
+        small_still:
+          type: string
+          nullable: true
+        medium_still:
+          type: string
+          nullable: true
+        large_still:
+          type: string
+          nullable: true
+        small_motion:
+          type: string
+          nullable: true
+        large_motion:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AffiliateImageSearchResponse:
+      type: object
+      properties:
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffiliateImage'
+          nullable: true
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+      additionalProperties: false
+    AffiliateImageUrls:
+      type: object
+      properties:
+        small:
+          type: string
+          nullable: true
+        small_height:
+          type: integer
+          format: int32
+        small_width:
+          type: integer
+          format: int32
+        medium:
+          type: string
+          nullable: true
+        medium_height:
+          type: integer
+          format: int32
+        medium_width:
+          type: integer
+          format: int32
+        large:
+          type: string
+          nullable: true
+        large_height:
+          type: integer
+          format: int32
+        large_width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type: string
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

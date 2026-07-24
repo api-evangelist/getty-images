@@ -1,0 +1,507 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Similar API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Similar
+paths:
+  /v3/images/{id}/similar:
+    get:
+      tags:
+      - Similar
+      summary: Retrieve similar images
+      description: "This endpoint will provide a list of images that are similar to the specified asset id.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build\nsearch response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ]\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files \nthat are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result\nset when you include **display_set** in your request.\n\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: id
+        in: path
+        description: Identifies an existing image
+        required: true
+        schema:
+          type: string
+          description: Identifies an existing image
+          nullable: true
+      - name: fields
+        in: query
+        description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImagesFieldValues'
+          description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
+          nullable: true
+      - name: page
+        in: query
+        description: Identifies page to return. Default is 1.
+        schema:
+          type: integer
+          description: Identifies page to return. Default is 1.
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Specifies page size. Default is 30, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Specifies page size. Default is 30, maximum page_size is 100.
+          format: int32
+          default: 30
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageSearchItemSearchResults'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: UnauthorizedDisplaySize
+        '404':
+          description: ImageNotFound
+        '500':
+          description: InvalidIStockCollection
+  /v3/videos/{id}/similar:
+    get:
+      tags:
+      - Similar
+      summary: Retrieve similar videos
+      description: "This endpoint will provide a list of videos that are similar to the specified asset id.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every video in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_name\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n\t\t\"call_for_image\",\n        \"caption\",\n        \"clip_length\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"color_type\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"download_sizes\",\n        \"era\",\n        \"event_ids\",\n        \"license_model\",\n        \"mastered_to\",\n        \"originally_shot_on\",\n        \"product_types\",\n        \"quality_rank\",\n        \"shot_speed\",\n        \"source\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"videos\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: id
+        in: path
+        description: A video id.
+        required: true
+        schema:
+          type: string
+          description: A video id.
+          nullable: true
+      - name: fields
+        in: query
+        description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes returned by ''download_sizes'' field is an estimate.'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssociatedVideoDetailFieldValues'
+          description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes returned by ''download_sizes'' field is an estimate.'
+          nullable: true
+      - name: page
+        in: query
+        description: Identifies page to return. Default is 1.
+        schema:
+          type: integer
+          description: Identifies page to return. Default is 1.
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Specifies page size. Default is 30, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Specifies page size. Default is 30, maximum page_size is 100.
+          format: int32
+          default: 30
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: UnauthorizedDisplaySize
+        '404':
+          description: VideosNotFound
+        '500':
+          description: InvalidIStockCollection
+components:
+  schemas:
+    MaxDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    Download:
+      type: object
+      properties:
+        product_id:
+          type: string
+          nullable: true
+        product_type:
+          type: string
+          nullable: true
+        uri:
+          type: string
+          nullable: true
+        agreement_name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ImageSearchItem:
+      type: object
+      properties:
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        alternative_ids:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        artist:
+          type: string
+          nullable: true
+        asset_family:
+          type: string
+          nullable: true
+        call_for_image:
+          type: boolean
+        caption:
+          type: string
+          nullable: true
+        collection_code:
+          type: string
+          nullable: true
+        collection_id:
+          type: integer
+          format: int32
+          nullable: true
+        collection_name:
+          type: string
+          nullable: true
+        color_type:
+          type: string
+          nullable: true
+        copyright:
+          type: string
+          nullable: true
+        date_camera_shot:
+          type: string
+          format: date-time
+          nullable: true
+        date_created:
+          type: string
+          format: date-time
+          nullable: true
+        display_sizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
+          nullable: true
+        download_product:
+          type: string
+          nullable: true
+        editorial_segments:
+          type: array
+          items:
+            type: string
+          nullable: true
+        event_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        graphical_style:
+          type: string
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        keywords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Keyword'
+          nullable: true
+        largest_downloads:
+          type: array
+          items:
+            $ref: '#/components/schemas/Download'
+          nullable: true
+        license_model:
+          type: string
+          nullable: true
+        max_dimensions:
+          $ref: '#/components/schemas/MaxDimensions'
+        orientation:
+          type: string
+          nullable: true
+        people:
+          type: array
+          items:
+            type: string
+          nullable: true
+        product_types:
+          type: array
+          items:
+            type: string
+          nullable: true
+        quality_rank:
+          type: integer
+          format: int32
+        referral_destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        uri_oembed:
+          type: string
+          nullable: true
+        istock_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IStockLicense'
+          nullable: true
+      additionalProperties: false
+    IStockLicense:
+      type: object
+      properties:
+        license_type:
+          $ref: '#/components/schemas/AssetLicenseName'
+        credits:
+          type: integer
+          format: int32
+      additionalProperties: false
+    RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type: string
+          nullable: true
+        url:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type: string
+          nullable: true
+        uri:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
+          type: string
+          description: Indicates how the asset can be used
+          nullable: true
+        release_info:
+          type: string
+          description: Indicates release status
+          nullable: true
+        usage_restrictions:
+          type: array
+          items:
+            type: string
+          description: Indicates asset usage restriction, if any
+          nullable: true
+      additionalProperties: false
+    Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type: string
+          nullable: true
+        text:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        relevance:
+          type: integer
+          format: int32
+          nullable: true
+        entity_uris:
+          type: array
+          items:
+            type: string
+          nullable: true
+        entity_types:
+          type: array
+          items:
+            type: string
+          nullable: true
+      additionalProperties: false
+    ImageSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type: string
+          nullable: true
+        uri:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AssociatedVideoDetailFieldValues:
+      enum:
+      - allowed_use
+      - artist
+      - aspect_ratio
+      - asset_family
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - entity_details
+      - era
+      - event_ids
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - mastered_to
+      - orientation
+      - originally_shot_on
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - shot_speed
+      - source
+      - summary_set
+      - thumb
+      - title
+      - istock_licenses
+      type: string
+    ImageSearchItemSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageSearchItem'
+          nullable: true
+        related_searches:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+          nullable: true
+      additionalProperties: false
+    AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    ImagesFieldValues:
+      enum:
+      - accessrestriction
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - editorial_source
+      - entity_details
+      - event_ids
+      - graphical_style
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - people
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

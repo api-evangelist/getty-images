@@ -1,0 +1,412 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Events API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Events
+paths:
+  /v3/asset-management/assets/send-events:
+    get:
+      tags:
+      - Events
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: last_offset
+        in: query
+        description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+        schema:
+          type: string
+          description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+          format: date-time
+          nullable: true
+      - name: event_count
+        in: query
+        description: Specifies the number of events to return. Default is 50, maximum value is 100.
+        schema:
+          type: integer
+          description: Specifies the number of events to return. Default is 50, maximum value is 100.
+          format: int32
+          nullable: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+        '400':
+          description: EventCountOutOfRange
+  /v3/events:
+    get:
+      tags:
+      - Events
+      summary: Get metadata for multiple events
+      description: "This endpoint returns the detailed event metadata for all specified events. Getty Images news, sports and entertainment photographers and\nvideographers cover editorially relevant events occurring around the world.  All images or video clips produced in association with \nan event, are assigned the same EventID. EventIDs are part of the meta-data returned in SearchForImages Results. Only content \nproduced under a Getty Images brand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image) \nwill be consistently assigned an EventID. The Event framework may also be used to group similar content, such as \n\"Hats from the Royal Wedding\" or \"Odd-ballOffbeat images of the week\". \n\nYou'll need an API key and access token to use this resource.\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: ids
+        in: query
+        description: A comma separated list of event ids.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: A comma separated list of event ids.
+          nullable: true
+      - name: fields
+        in: query
+        description: A comma separated list of fields to return in the response.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventDetailFieldValues'
+          description: A comma separated list of fields to return in the response.
+          nullable: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: InvalidRequestParameters
+        '401':
+          description: Unauthorized
+        '404':
+          description: EventNotFound
+  /v3/events/{id}:
+    get:
+      tags:
+      - Events
+      summary: Get metadata for a single event
+      description: "This endpoint returns the detailed event metadata for a specified event. Getty Images news, sports and entertainment \nphotographers and videographers cover editorially relevant events occurring around the world.  \nAll images or video clips produced in association with an event, are assigned the same EventID. \nEventIDs are part of the meta-data returned in SearchForImages Results. Only content produced under a Getty Images \nbrand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image) will be \nconsistently assigned an EventID. The Event framework may also be used to group similar content, such as \n\"Hats from the Royal Wedding\" or \"Odd-ballOffbeat images of the week\". \n\nYou'll need an API key and access token to use this resource.\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: id
+        in: path
+        description: An event id.
+        required: true
+        schema:
+          type: integer
+          description: An event id.
+          format: int32
+      - name: fields
+        in: query
+        description: A comma separated list of fields to return in the response.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventDetailFieldValues'
+          description: A comma separated list of fields to return in the response.
+          nullable: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: InvalidRequestParameters
+        '401':
+          description: Unauthorized
+        '404':
+          description: EventNotFound
+  /v3/search/events:
+    get:
+      tags:
+      - Events
+      summary: Search for events
+      description: 'Use this endpoint to search Getty Images news, sports and entertainment events. Getty Images photographers and videographers cover editorially-relevant events occurring around the world. All images or video clips produced in association with a specific event are assigned the same event ID. Event IDs are part of the metadata returned in Search results. Only content produced under a Getty Images brand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image) will be consistently assigned an event ID.
+
+
+        This endpoint will provide events based on a search phrase or editorial segment and an optional from/to date filter. You can show different information in the response by specifying values on the "fields" parameter. The results will include events whose associated images or videos may not be included in your product(s).
+
+
+        This endpoint requires only an API key.  An access token is NOT required.
+
+        '
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: GI-Country-Code
+        in: header
+        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
+        schema:
+          type: string
+          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
+      - name: editorial_segment
+        in: query
+        description: Filters to events with a matching editorial segment.
+        schema:
+          $ref: '#/components/schemas/EditorialSegmentContract'
+      - name: date_from
+        in: query
+        description: Filters to events that start on or after this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
+        schema:
+          type: string
+          description: Filters to events that start on or after this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
+          format: date-time
+          nullable: true
+      - name: date_to
+        in: query
+        description: Filters to events that start on or before this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
+        schema:
+          type: string
+          description: Filters to events that start on or before this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
+          format: date-time
+          nullable: true
+      - name: fields
+        in: query
+        description: Specifies fields to return. Default set is 'id','name','start_date'.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventFieldValues'
+          description: Specifies fields to return. Default set is 'id','name','start_date'.
+          nullable: true
+      - name: page
+        in: query
+        description: Request results starting at a page number (default is 1, maximum is 50).
+        schema:
+          type: integer
+          description: Request results starting at a page number (default is 1, maximum is 50).
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Request number of events to return in each page. Default is 30, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Request number of events to return in each page. Default is 30, maximum page_size is 100.
+          format: int32
+          default: 30
+      - name: phrase
+        in: query
+        description: Filters to events related to this phrase
+        schema:
+          type: string
+          description: Filters to events related to this phrase
+          default: ''
+          nullable: true
+      - name: sort_order
+        in: query
+        description: Specifies the order in which to sort the results. Default is `newest`.
+        schema:
+          $ref: '#/components/schemas/EventSearchSortOrder'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsSearchResult'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: UnauthorizedDisplaySize
+components:
+  schemas:
+    HeroImage:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        display_sizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeroImageDisplaySize'
+          nullable: true
+      additionalProperties: false
+    AssetEvent:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        asset_id:
+          type: string
+          nullable: true
+        email_address:
+          type: string
+          nullable: true
+      additionalProperties: false
+    EventSearchSortOrder:
+      enum:
+      - newest
+      - oldest
+      type: string
+    LocationEvent:
+      type: object
+      properties:
+        city:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        state_province:
+          type: string
+          nullable: true
+        venue:
+          type: string
+          nullable: true
+      additionalProperties: false
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type: string
+          format: date-time
+          nullable: true
+        asset_send_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetEvent'
+          nullable: true
+      additionalProperties: false
+    EditorialSegmentContract:
+      enum:
+      - archival
+      - entertainment
+      - news
+      - publicity
+      - royalty
+      - sport
+      type: string
+    Event:
+      type: object
+      properties:
+        child_event_count:
+          type: integer
+          format: int32
+        editorial_segments:
+          type: array
+          items:
+            type: string
+          nullable: true
+        hero_image:
+          $ref: '#/components/schemas/HeroImage'
+        id:
+          type: integer
+          format: int32
+        image_count:
+          type: integer
+          format: int32
+        location:
+          $ref: '#/components/schemas/LocationEvent'
+        name:
+          type: string
+          nullable: true
+        start_date:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    EventFieldValues:
+      enum:
+      - id
+      - child_event_count
+      - editorial_segments
+      - hero_image
+      - image_count
+      - keywords
+      - location
+      - name
+      - start_date
+      - type
+      type: string
+    EventsSearchResult:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          nullable: true
+        result_count:
+          type: integer
+          format: int32
+      additionalProperties: false
+    HeroImageDisplaySize:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        is_watermarked:
+          type: boolean
+        uri:
+          type: string
+          nullable: true
+      additionalProperties: false
+    EventDetailFieldValues:
+      enum:
+      - id
+      - child_event_count
+      - editorial_segments
+      - hero_image
+      - image_count
+      - location
+      - name
+      - start_date
+      - type
+      type: string
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

@@ -1,0 +1,111 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Channels API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Channels
+paths:
+  /v3/asset-changes/channels:
+    get:
+      tags:
+      - Channels
+      summary: Get a list of asset change notification channels.
+      description: '# Get Partner Channels
+
+
+        Retrieves the channel data for the partner. This data can be used to populate the channel_id parameter in the Put Asset Changes query.
+
+
+        ##  Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Partners who have a channel that has been removed should contact their sales representative to be set up again.
+
+
+        '
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Channel'
+        '403':
+          description: UnauthorizedToAccessResource
+        '404':
+          description: ChannelsNotFound
+components:
+  schemas:
+    Channel:
+      type: object
+      properties:
+        ChannelId:
+          type: integer
+          format: int32
+        AssetFamily:
+          $ref: '#/components/schemas/AssetFamily'
+        AssetChangeType:
+          type: string
+          nullable: true
+        CreateDateUtc:
+          type: string
+          format: date-time
+        NotificationCount:
+          type: integer
+          format: int32
+        AssetType:
+          $ref: '#/components/schemas/AssetType'
+        OldestChangeNotificationDateUtc:
+          type: string
+          format: date-time
+        Metadata:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AssetFamily:
+      enum:
+      - NotSet
+      - Editorial
+      - Creative
+      - Both
+      type: string
+    AssetType:
+      enum:
+      - NotSet
+      - Image
+      - Film
+      - Music
+      type: string
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

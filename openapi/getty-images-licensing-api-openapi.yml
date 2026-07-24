@@ -1,0 +1,110 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Licensing API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Licensing
+paths:
+  /v3/asset-licensing/{assetId}:
+    post:
+      tags:
+      - Licensing
+      summary: Endpoint for acquiring extended licenses with iStock credits for an asset.
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: assetId
+        in: path
+        description: Getty Images assetId - examples 520621493, 112301284
+        required: true
+        schema:
+          type: string
+          description: Getty Images assetId - examples 520621493, 112301284
+          nullable: true
+      requestBody:
+        description: "Structure that specifies an array of LicenseTypes (multiseat, unlimited, resale, indemnification) to acquire,\r\n            and whether or not to use Team Credits. Authenticated User must have access to Team Credits if UseTeamCredits is set to \"true\"."
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcquireAssetLicensesRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetLicensingResponse'
+        '400':
+          description: InvalidRequestParameters
+        '401':
+          description: AuthorizationTokenRequired
+        '402':
+          description: NotEnoughCreditsForPurchase
+        '404':
+          description: StandardLicenseNotFound
+components:
+  schemas:
+    ExtendedLicenses:
+      enum:
+      - multiseat
+      - unlimited
+      - resale
+      - indemnification
+      type: string
+    AcquireAssetLicensesRequest:
+      required:
+      - extended_licenses
+      type: object
+      properties:
+        extended_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+        use_team_credits:
+          type: boolean
+          description: Defaults to false.
+      additionalProperties: false
+    AssetLicensingResponse:
+      type: object
+      properties:
+        credits_used:
+          type: integer
+          format: int32
+        acquired_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

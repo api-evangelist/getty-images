@@ -1,0 +1,735 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Boards API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Boards
+paths:
+  /v3/boards:
+    get:
+      tags:
+      - Boards
+      summary: Get all boards that the user participates in
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: page
+        in: query
+        description: Request results starting at a page number (default is 1).
+        schema:
+          type: integer
+          description: Request results starting at a page number (default is 1).
+          format: int32
+          default: 1
+      - name: board_relationship
+        in: query
+        description: Search for boards the user owns or has been invited to as an editor.
+        schema:
+          $ref: '#/components/schemas/BoardRelationship'
+      - name: sort_order
+        in: query
+        description: Sort the list of boards by last update date or name. Defaults to date_last_updated_descending.
+        schema:
+          $ref: '#/components/schemas/BoardSortOrder'
+      - name: pageSize
+        in: query
+        description: Request number of boards to return in each page. (default is 30).
+        schema:
+          type: integer
+          description: Request number of boards to return in each page. (default is 30).
+          format: int32
+          default: 30
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardList'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+    post:
+      tags:
+      - Boards
+      summary: Create a new board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      requestBody:
+        description: Specify a name and description of the board to create (name is required).
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoardInfo'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardCreated'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+  /v3/boards/{board_id}:
+    get:
+      tags:
+      - Boards
+      summary: Get assets and metadata for a specific board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Retrieve details for a specific board.
+        required: true
+        schema:
+          type: string
+          description: Retrieve details for a specific board.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardDetail'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '404':
+          description: BoardNotFound
+    delete:
+      tags:
+      - Boards
+      summary: Delete a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to delete.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to delete.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: ''
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+    put:
+      tags:
+      - Boards
+      summary: Update a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to update.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to update.
+          nullable: true
+      requestBody:
+        description: Specify a new name and description for the board (name is required).
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoardInfo'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: Updated
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+  /v3/boards/{board_id}/assets:
+    put:
+      tags:
+      - Boards
+      summary: Add assets to a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to add assets to.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to add assets to.
+          nullable: true
+      requestBody:
+        description: List assets to add to the board.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BoardAsset'
+              description: List assets to add to the board.
+              nullable: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddBoardAssetsResult'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+    delete:
+      tags:
+      - Boards
+      summary: Remove assets from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to remove assets from.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to remove assets from.
+          nullable: true
+      - name: asset_ids
+        in: query
+        description: List the assets to be removed from the board.
+        schema:
+          type: array
+          items:
+            type: string
+          description: List the assets to be removed from the board.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+  /v3/boards/{board_id}/assets/{asset_id}:
+    put:
+      tags:
+      - Boards
+      summary: Add an asset to a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to add an asset to.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to add an asset to.
+          nullable: true
+      - name: asset_id
+        in: path
+        description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
+        required: true
+        schema:
+          type: string
+          description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
+          nullable: true
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: AssetNotFound
+        '404':
+          description: BoardNotFound
+    delete:
+      tags:
+      - Boards
+      summary: Remove an asset from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to remove an asset from.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to remove an asset from.
+          nullable: true
+      - name: asset_id
+        in: path
+        description: Specify the asset to remove from the board.
+        required: true
+        schema:
+          type: string
+          description: Specify the asset to remove from the board.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+  /v3/boards/{board_id}/comments:
+    get:
+      tags:
+      - Boards
+      summary: Get comments from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to retrieve comments from.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to retrieve comments from.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentsList'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '404':
+          description: BoardNotFound
+    post:
+      tags:
+      - Boards
+      summary: Add a comment to a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to add a comment to.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to add a comment to.
+          nullable: true
+      requestBody:
+        description: Comment to be added to the board.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentCreated'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+  /v3/boards/{board_id}/comments/{comment_id}:
+    delete:
+      tags:
+      - Boards
+      summary: Delete a comment from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board containing the comment to delete.
+        required: true
+        schema:
+          type: string
+          description: Specify the board containing the comment to delete.
+          nullable: true
+      - name: comment_id
+        in: path
+        description: Specify the comment to delete.
+        required: true
+        schema:
+          type: string
+          description: Specify the comment to delete.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: CommentDeleted
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+components:
+  schemas:
+    Asset:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        asset_type:
+          type: string
+          nullable: true
+        date_added:
+          type: string
+          format: date-time
+        display_sizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySize'
+          nullable: true
+      additionalProperties: false
+    BoardListBoard:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        asset_count:
+          type: integer
+          format: int32
+        date_created:
+          type: string
+          format: date-time
+        date_last_updated:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+        hero_asset:
+          $ref: '#/components/schemas/Asset'
+        name:
+          type: string
+          nullable: true
+        board_relationship:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CommentRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BoardCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CommentCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BoardRelationship:
+      enum:
+      - owned
+      - invited
+      type: string
+    BoardAsset:
+      required:
+      - asset_id
+      type: object
+      properties:
+        asset_id:
+          type: string
+      additionalProperties: false
+    AddBoardAssetsResult:
+      type: object
+      properties:
+        assets_added:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoardAsset'
+          nullable: true
+        assets_not_added:
+          type: array
+          items:
+            type: string
+          nullable: true
+      additionalProperties: false
+    BoardSortOrder:
+      enum:
+      - date_last_updated_descending
+      - date_last_updated_ascending
+      - name_ascending
+      - name_decending
+      type: string
+    BoardPermissions:
+      type: object
+      properties:
+        can_delete_board:
+          type: boolean
+        can_invite_to_board:
+          type: boolean
+        can_update_name:
+          type: boolean
+        can_update_description:
+          type: boolean
+        can_add_assets:
+          type: boolean
+        can_remove_assets:
+          type: boolean
+      additionalProperties: false
+    BoardInfo:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CommentsList:
+      type: object
+      properties:
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          nullable: true
+        permissions:
+          $ref: '#/components/schemas/BoardCommentPermissions'
+      additionalProperties: false
+    CommentPermissions:
+      type: object
+      properties:
+        can_delete_comment:
+          type: boolean
+      additionalProperties: false
+    DisplaySize:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        uri:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Collaborator:
+      type: object
+      properties:
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BoardDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        asset_count:
+          type: integer
+          format: int32
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Asset'
+          nullable: true
+        date_created:
+          type: string
+          format: date-time
+        date_last_updated:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        comment_count:
+          type: integer
+          format: int32
+        permissions:
+          $ref: '#/components/schemas/BoardPermissions'
+        links:
+          $ref: '#/components/schemas/Links'
+      additionalProperties: false
+    Links:
+      type: object
+      properties:
+        invitation:
+          type: string
+          nullable: true
+        share:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BoardList:
+      type: object
+      properties:
+        boards:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoardListBoard'
+          nullable: true
+        board_count:
+          type: integer
+          format: int32
+      additionalProperties: false
+    BoardCommentPermissions:
+      type: object
+      properties:
+        can_add_comment:
+          type: boolean
+      additionalProperties: false
+    Comment:
+      type: object
+      properties:
+        created_by:
+          $ref: '#/components/schemas/Collaborator'
+        date_created:
+          type: string
+          format: date-time
+        id:
+          type: string
+          nullable: true
+        permissions:
+          $ref: '#/components/schemas/CommentPermissions'
+        text:
+          type: string
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

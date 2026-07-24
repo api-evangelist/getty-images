@@ -1,0 +1,1843 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Ai API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Ai
+paths:
+  /v3/ai/image-generations:
+    post:
+      tags:
+      - Ai
+      summary: Generates images from a prompt
+      description: "# AI Generator - Generate Images\n\nUse a text prompt to generate images. Use of this endpoint is restricted to clients with an AI Generation license\nproduct.\n\n## The Image Generations Request\n\nThe `ImageGenerationsRequest` payload to be posted contains the required `prompt` as well as some other optional\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                                                      |\n|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `prompt` _Required_ | The primary text used for the generation of the images.                                                                                                                                      |\n| `product_id`        | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`). |\n| `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |\n| `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |\n| `negative_prompt`   | Concepts to _exclude_ from the result                                                                                                                                                        |\n| `seed`\t\t      | To create new images that have a similar aesthetic, include the seed value from a set of previously generated images. Seed can also be used to reproduce previous results.                                                                                                                                                      |\n| `aspect_ratio`      | The \"width:height\" aspect ratio of the resultant images.  Must be one of:  `1:1`, `3:4`, `4:3`, `9:16`, or `16:9`                                                                            |\n| `media_type`        | Media type of the results: `photography` or `illustration`                                                                                                                                   |\n| `mood`              | Can be `black_and_white`, `warm`, `cool`, `natural`, `vivid`, `dramatic`, or `bold`                                                                                                          |\n| `lens_type`         | Can be `wide_angle` or `telephoto`                                                                                                          |\n| `depth_of_field`    | Can be `shallow` or `deep`                                                                                                          |\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including URLs to the result images and a generation request `id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` and the payload will only contain a generation request `id` value. This value must be\nretained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation.\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerationsRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerationsRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerationsRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to generate images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Product quota exceeded
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/{generationRequestId}:
+    get:
+      tags:
+      - Ai
+      summary: Get generated images from a previous generation request
+      description: '# AI Generator - Get Generated Images
+
+
+        Gets a previously generated set of images.  This endpoint is used after a call to `POST v3/ai/image-generations`, passing the `id` value from the result of that call.
+
+
+        ## Fulfilled and Pending Results
+
+
+        Like the `POST v3/ai/image-generations` endpoint, the result of calling this endpoint will be either:
+
+
+        - `HTTP 200 OK` with the generated images'' URLs and a generation request `id` value
+
+        - `HTTP 202 Accepted` with the payload only containing a generation request `id` value
+
+
+        `HTTP 202 Accepted` is returned in the case where the generation of images has not yet completed.  In this case it is expected that the client will occasionally poll this endpoint until a `HTTP 200 OK` result with a full payload is returned.
+
+
+        ## Lifetime of Generated Images
+
+
+        Generated images will be retained for 6 months after generation.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the result of a request to generate images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: NotAuthorized
+        '404':
+          description: The request ID was not found
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/{generationRequestId}/images/{index}/variations:
+    post:
+      tags:
+      - Ai
+      summary: Get variations on a generated image
+      description: '# AI Generator - Generate Variations
+
+
+        Generate image variations from a previously-generated image.
+
+
+        ## The Image Variation Request
+
+
+        The `ImageVariationRequest` payload to be posted contains the optional
+
+        parameters:
+
+
+        | Parameter           | Purpose                                                                                                                                                                                      |
+
+        |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | `product_id`        | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`). |
+
+        | `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |
+
+        | `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including URLs to the result images and a generation request `id` value.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` and the payload will only contain a generation request `id` value. This value must be
+
+        retained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.
+
+
+        ## Lifetime of Generated Images
+
+
+        Generated images will be retained for 6 months after generation.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: index
+        in: path
+        description: The index of the image from the specific images generation
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageVariationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ImageVariationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ImageVariationRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to generate a variation of images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to generate a variation of images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Either the generation id does not exist, the index is incorrect, or the generation is still pending
+        '429':
+          description: TooManyConcurrentGenerations
+  /beta/ai/file-registrations:
+    post:
+      tags:
+      - Ai
+      summary: Register a client provided file for use with AIGenerator endpoints
+      description: '# File Registration
+
+
+        Provide the URL for a previously uploaded file to receive an ID that can be used as the `reference_file_registration_id` in subsequent image generation requests.
+
+
+
+        Use of this endpoint is restricted to clients with a Fine Tune AI Generation license product.
+
+
+        ## The File Registration Request
+
+
+        The `FileRegistrationRequest` payload accepts the following
+
+        parameters:
+
+
+        | Parameter           | Purpose                                                                                                                                                                                      |
+
+        |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | `url`          | Required. Specifies the location of the file.                                                                                                                                                |                                                                                 |
+
+        | `rights_claimed`| Required. Acknowledgment that client owns or has a license for this file.                                                                                                                                                |                                                                                 |
+
+        | `category`     | Optional. Accepted values: `CustomerProduct`, `ImageReference`. Images to be used in `POST /beta/ai/image-generations/background-generations` must have the category set to `CustomerProduct`.                                                                                                                                          |                                                                                 |
+
+
+        ## Uploading the file
+
+
+        Before calling this endpoint, a file must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.
+
+
+        For example, using cURL:
+
+
+        ``` sh
+
+        curl -i -X PUT https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg -H ''Content-Type: image/jpeg'' -H ''Api-Key: API_KEY'' --data-binary "@testimage.jpg"
+
+        ```
+
+
+        Once the file has been uploaded, use the full URL as the `url`.
+
+
+        - Uploaded files must be 10MB or smaller.
+
+        - Uploads to the same URL will overwrite each other, so ensure that the client application is handling naming uniqueness appropriately.
+
+        - Uploads expire after 24 hours.
+
+        - Uploads and file registration must be performed using the _same_ API Key.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileRegistrationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FileRegistrationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FileRegistrationRequest'
+      responses:
+        '200':
+          description: Returns the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileRegistrationResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Not authorized
+        '429':
+          description: TooManyConcurrentGenerations
+  /beta/ai/file-registrations/{fileRegistrationId}:
+    get:
+      tags:
+      - Ai
+      summary: Get details on a registered file
+      description: '# Get Registered File Details
+
+
+        Gets details for a registered file.  This endpoint is used after a call to `POST beta/ai/file-registrations`, passing the `id` value from the result of that call.'
+      parameters:
+      - name: fileRegistrationId
+        in: path
+        description: The id from a previous request to register a file
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileRegistrationResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Not authorized
+        '404':
+          description: FileRegistrationIdNotFound
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/refine:
+    post:
+      tags:
+      - Ai
+      summary: Refine a creative image
+      description: "# AI Generator - Image Refining\n\nUse a mask image and text prompts to modify content in a image from the Getty Images creative library (excluding illustrations and vectors).\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license. \nTo download a refined image, a traditional license product, such as Premium Access, that provides download access to the original creative image is required.\nLastly, downloading a refined image requires the client to first download the original image.\n \n\n## The Refine Request\n\nThe `RefineRequest` payload one, and only one, reference image (`reference_asset_id`, `reference_generation`) and accepts the following\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                                                      |\n|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `reference_asset_id`| Creative image id to modify.                                                                                                                                 |\n| `reference_generation`| Generation details of image to modify.                                                                                                                               |\n| `prompt`\t\t      | The primary text used for refined portion of the images.                                                                                                                                     |\n| `negative_prompt`   | Concepts to _exclude_ from the refined portion.                                                                                                                                              |\n| `product_id`        | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`). |\n| `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |\n| `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |\n| `mask_url`          | Required. Specifies the location of the mask.                                                                                                                                                |                                                                                 |\n\n## Uploading mask image\n\nBefore calling the refine endpoint, a mask in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.\n\nFor example, using cURL:\n\n``` sh\ncurl -i -X PUT https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg -H 'Content-Type: image/jpeg' -H 'Api-Key: API_KEY' --data-binary \"@testimage.jpg\"\n```\n\nOnce the mask has been uploaded, use the full URL as the `mask_url`.\n\n- Uploaded files must be 10MB or smaller.\n- Uploads to the same URL will overwrite each other, so ensure that the client application is handling naming uniqueness appropriately.\n- Uploads expire after 24 hours.\n- Uploads and refining must be performed using the _same_ API Key.\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including URLs to the result images and a `generation_request_id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be\nretained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation.\n"
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefineRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RefineRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RefineRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to refine an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to refine an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Image not found
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/extend:
+    post:
+      tags:
+      - Ai
+      summary: Extend a creative image
+      description: '# AI Generator - Image Extension
+
+
+        Use text prompts and numerical values to extend the content beyond the borders of a image from the Getty Images creative library (excluding illustrations and vectors).
+
+        Use of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.
+
+        To download an extended image, a traditional license product, such as Premium Access, that provides download access to the original creative image is required.
+
+        Lastly, downloading an extended image requires the client to first download the original image.
+
+
+        Extension involves adding content to one or more sides of an image by specifying a percentage by which you want the image extended.
+
+        This means that the aspect ratio of the generated images will differ from the original unless the same value is specified for all four sides.
+
+        Additionally, the pixel dimensions on the longest side will remain the same - 612px for the
+
+        images provided in this endpoint''s response, 1024px and 4096px on the images retrieved through the download process.
+
+
+        ## The Extend Request
+
+
+        The `ExtendRequest` payload requires one, and only one, reference image (`reference_asset_id`, `reference_generation`) and requires at least one percentage to be greater than zero (`left_percentage`, `right_percentage`, `top_percentage`, or `bottom_percentage`) and accepts the following optional
+
+        parameters:
+
+
+        | Parameter           | Purpose                                                                                                                                                                                     |
+
+        |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | `reference_asset_id`| Creative image id to modify.                                                                                                                                 |
+
+        | `reference_generation`| Generation details of image to modify.                                                                                                                               |
+
+        | `prompt`            | The primary text used for the extended portion of the images.                                                                                                                               |
+
+        | `negative_prompt`   | Concepts to _exclude_ from the extended portion.                                                                                                                                            |
+
+        | `product_id`        | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`). |
+
+        | `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |
+
+        | `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |
+
+        | `left_percentage`   | Percentage to add to the left side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                     |
+
+        | `right_percentage`  | Percentage to add to the right side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                    |
+
+        | `top_percentage`    | Percentage to add to the top side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                      |
+
+        | `bottom_percentage` | Percentage to add to the bottom side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                   |
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including URLs to the result images and a `generation_request_id` value.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be
+
+        retained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.
+
+
+        ## Lifetime of Generated Images
+
+
+        Generated images will be retained for 6 months after generation.
+
+        '
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtendRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ExtendRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ExtendRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Image not found
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/background-removal:
+    post:
+      tags:
+      - Ai
+      summary: Remove a background
+      description: "# AI Generator - Background Removal\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nWhen downloading an image generated using a `reference_asset_id`, a traditional license product, such as Premium Access, that provides download access to the original creative image is required. Downloading an image generated using a `reference_asset_id` also requires the client to first download the original image.\n\n## The Background Removal Request\n\nThe `BackgroundRemovalRequest` payload requires one, and only one, reference image (`reference_asset_id`, `reference_generation`) and accepts the following optional\nparameters:\n\n| Parameter\t\t\t  | Purpose                                                                                                                                                                                     |\n|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `reference_asset_id`| Creative image id to modify.                                                                                                                                 |\n| `reference_generation`| Generation details of image to modify.                                                                                                                               |                                                                                                                                          |\n| `product_id`        | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`). |\n| `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |\n| `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |                                                                                                                |\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including URLs to the result images and a `generation_request_id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be\nretained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation.\n"
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackgroundRemovalRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BackgroundRemovalRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BackgroundRemovalRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Image not found
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/object-removal:
+    post:
+      tags:
+      - Ai
+      summary: Remove object(s)
+      description: "# AI Generator - Object Removal\n\nUse a mask image to remove object content in a previously generated image or a previously licensed image from the Getty Images creative library. Use of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\n\nWhen downloading an image generated using a `reference_asset_id`, a traditional license product, such as Premium Access, that provides download access to the original creative image is required. Downloading an image generated using a `reference_asset_id` also requires the client to first download the original image.\n\n## The Remove Object Request\n\nThe `RemoveObjectRequest` payload accepts the following parameters.  One, and only one, of either `reference_asset_id` or `reference_generation` must be used.  Omitting or including both are invalid.\n\n| Parameter              | Purpose                                                                                                                                                                                                                                                                                                       |\n|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `reference_asset_id`   | Creative image id to modify.                                                                                                                                                                                                                                                                                  |\n| `reference_generation` | Generation details of image to modify.                                                                                                                                                                                                                                                                        |                                                                                                                                          |\n| `mask_url`             | **Required**: Specifies the location of the mask.                                                                                                                                                                                                                                                             |\n| `product_id`           | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is **required**. Can be retrieved from products (`GET /v3/products`).                                                           |\n| `notes`                | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                     |\n| `project_code`         | This is for use by Getty Images customers only (not iStock). If your Getty Images Generative AI product requires project codes, use of this parameter is **required**. Otherwise, this parameter **must be excluded** from the request. The products endpoint (`GET /v3/products`) provides this information. |\n\n## Uploading mask image\n\nBefore calling the endpoint, a mask in JPEG format must be uploaded\nto `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines\nthe `{CLIENT_IMAGE.jpg}` portion of the URL.\n\nFor example, using cURL:\n\n``` sh\ncurl -i -X PUT https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg -H 'Content-Type: image/jpeg' -H 'Api-Key: API_KEY' --data-binary \"@testimage.jpg\"\n```\n\nOnce the mask has been uploaded, use the full URL as the `mask_url`.\n\n- Uploaded files must be 10MB or smaller.\n- Uploads to the same URL will overwrite each other, so ensure that the client application is handling naming uniqueness\n  appropriately.\n- Uploads expire after 24 hours.\n- Uploads and object removal must be performed using the same API Key.\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK` result and a payload including URLs to the result images and a generation request `id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of this call is `HTTP 202 Accepted` and the payload will only contain a generation request `id` value. This value must be retained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation.\n"
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveObjectRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RemoveObjectRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RemoveObjectRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to refine images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to refine images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Either the generation id does not exist, the index is incorrect, or the generation is still pending
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/influence-color-by-image:
+    post:
+      tags:
+      - Ai
+      summary: Influence the color of generated images using a reference image
+      description: "# AI Generator - Influence Color By Image\n\nInfluence Color By Image allows the client application to provide an existing Getty Images creative image or an existing generated image, along with prompt text, as a reference for generating new images. The generated images are influenced by the color palette, tone and location of colors within the reference image.\n\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nWhen generating new images using using a `reference_asset_id`, the reference image must first be licensed (downloaded) through a traditional license product such as Premium Access.\n\n## The Influence Color By Image Request\n\nThe `InfluenceColorByImageRequest` payload requires one, and only one, reference image (`reference_asset_id`, `reference_generation`, or `reference_file_registration_id`) and accepts the following optional parameters:\n\n| Parameter                        | Purpose                                                                                                                                                                                                                                                                                                                                     |\n| -------------------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `reference_asset_id`             | Creative image ID of the image being used as a reference.                                                                                                                                                                                                                                                                                   |\n| `reference_generation`           | Generation details of the image being used as a reference.                                                                                                                                                                                                                                                                                  |\n| `reference_file_registration_id` | Registered file id of the image being used as a reference.  The `ImageReference` category **must** be used when registering the file.                                                                                                                                                                                                       |\n| `prompt` _Required_              | The primary text used for the generation of the images.                                                                                                                                                                                                                                                                                     |\n| `negative_prompt`                | Concepts to _exclude_ from the result.                                                                                                                                                                                                                                                                                                      |\n| `noise_level`\t_Required_         | Accepted values are 0-1. Higher values will increase differences between the reference and generated images.                                                                                                                                                                                                                                |\n| `media_type`                     | Media type of the results: `photography` or `illustration`                                                                                                                                                                                                                                                                                  |\n| `mood`                           | Can be `black_and_white`, `warm`, `cool`, `natural`, `vivid`, `dramatic`, or `bold`                                                                                                                                                                                                                                                         |\n| `seed`                           | To create new images that have a similar aesthetic, include the seed value from a set of previously generated images. Seed can also be used to reproduce previous results.                                                                                                                                                                  |\n| `product_id`                     | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`).                                                                                           |\n| `notes`                          | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                   |\n| `project_code`                   | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information. |\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including URLs to the result images and a `generation_request_id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be\nretained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation.\n"
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InfluenceColorByImageRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/InfluenceColorByImageRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/InfluenceColorByImageRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Image not found
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/image-generations/influence-composition-by-image:
+    post:
+      tags:
+      - Ai
+      summary: Influence the composition of generated images using a reference image
+      description: '# AI Generator - Influence Composition By Image
+
+        Influence Composition By Image allows the client application to provide an existing Getty Images creative image or an existing generated image, along with prompt text, as a reference for generating new images. The generated images are influenced by the compositional elements like pose, object location and object depth within the reference image.
+
+
+        Use of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.
+
+        When generating new images using using a `reference_asset_id`, the reference image must first be licensed (downloaded) through a traditional license product such as Premium Access.
+
+
+        ## The Influence Composition By Image Request
+
+
+        The `InfluenceCompositionByImageRequest` payload requires one, and only one, reference image (`reference_asset_id`, `reference_generation`, or `reference_file_registration_id`) and accepts the following optional parameters:
+
+
+        | Parameter                        | Purpose                                                                                                                                                                                                                                                                                                                                     |
+
+        | -------------------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | `reference_asset_id`             | Creative image ID of the image being used as a reference.                                                                                                                                                                                                                                                                                   |
+
+        | `reference_generation`           | Generation details of the image being used as a reference.                                                                                                                                                                                                                                                                                  |
+
+        | `reference_file_registration_id` | Registered file id of the image being used as a reference.  The `ImageReference` category **must** be used when registering the file.                                                                                                                                                                                                       |
+
+        | `prompt` _Required_              | The primary text used for the generation of the images.                                                                                                                                                                                                                                                                                     |
+
+        | `negative_prompt`                | Concepts to _exclude_ from the result.                                                                                                                                                                                                                                                                                                      |
+
+        | `influence_level` _Required_     | Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.                                                                                                                                                                                                                           |
+
+        | `media_type`                     | Media type of the results: `photography` or `illustration`                                                                                                                                                                                                                                                                                  |
+
+        | `mood`                           | Can be `black_and_white`, `warm`, `cool`, `natural`, `vivid`, `dramatic`, or `bold`                                                                                                                                                                                                                                                         |
+
+        | `seed`                           | To create new images that have a similar aesthetic, include the seed value from a set of previously generated images. Seed can also be used to reproduce previous results.                                                                                                                                                                  |
+
+        | `product_id`                     | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`).                                                                                           |
+
+        | `notes`                          | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                   |
+
+        | `project_code`                   | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information. |
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including URLs to the result images and a `generation_request_id` value.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be
+
+        retained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.
+
+
+        ## Lifetime of Generated Images
+
+
+        Generated images will be retained for 6 months after generation.
+
+        '
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InfluenceCompositionByImageRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/InfluenceCompositionByImageRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/InfluenceCompositionByImageRequest'
+      responses:
+        '200':
+          description: Returns the result of a request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request to extend an image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Image not found
+        '410':
+          description: GenerationRequestGone
+        '429':
+          description: TooManyConcurrentGenerations
+  /beta/ai/image-generations/background-generations:
+    post:
+      tags:
+      - Ai
+      summary: Add a background to a reference image
+      description: "# AI Generator - Background Generation\n\nBackground Generation allows the client application to provide a `reference_file_registration_id` as a reference for creating new AI-generated product photos. Our technology will generate new background content behind the image based on the prompt and other parameters submitted with the request. The padding values are used to position the product on the canvas.\n\nUse of this endpoint may result in the deduction of a credit depending on the terms of your license.\n\n## The Background Generation Request\n\nThe `BackgroundGenerationRequest` payload requires a reference image (`reference_file_registration_id`) and `prompt` and accepts the following parameters:\n\n| Parameter\t\t\t\t\t\t\t | Purpose                                                                                                                                                                                                                                                                                                                                     |\n|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `reference_file_registration_id` _Required_\t| Registered file id of the image being used as a reference.  The `CustomerProduct` category **must** be used when registering the file.                                                                                                                                                                                                      |\n| `prompt`\t_Required_\t\t\t\t| The primary text used for refined portion of the images.                                                                                                                                                                                                                                                                                    |\n| `negative_prompt`\t\t\t\t\t| Concepts to _exclude_ from the refined portion.                                                                                                                                                                                                                                                                                             |\n| `product_id`\t\t\t\t\t\t| If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`).                                                                                           |\n| `notes`\t\t\t\t\t\t\t| This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                   |\n| `project_code`\t\t\t\t\t| If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information. |  \n| `left_percentage`\t\t\t\t\t| Percentage of padding to add to the left side of the item in the image. Default is 0.                                                                                                                                                                                                                                                       |\n| `right_percentage`\t\t\t\t| Percentage of padding to add to the right side of the item in the image. Default is 0.                                                                                                                                                                                                                                                      |\n| `top_percentage`\t\t\t\t\t| Percentage of padding to add to the top side of the item in the image. Default is 0.                                                                                                                                                                                                                                                        |\n| `bottom_percentage`\t\t\t\t| Percentage of padding to add to the bottom side of the item in the image. Default is 0.                                                                                                                                                                                                                                                     |\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including URLs to the result images and a `generation_request_id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be\nretained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation."
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackgroundGenerationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BackgroundGenerationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BackgroundGenerationRequest'
+      responses:
+        '200':
+          description: Returns the result of a request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationsResponse'
+        '202':
+          description: Returns the request ID for a pending request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingImageGenerationResponse'
+        '400':
+          description: InvalidProduct
+        '403':
+          description: Product quota exceeded
+        '404':
+          description: Image not found
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/ai/generation-history:
+    get:
+      tags:
+      - Ai
+      summary: Retrieve history of AI generations
+      description: '# AI Generator - Generation History
+
+
+        Get the history of AI generation requests.'
+      parameters:
+      - name: date_start
+        in: query
+        description: "If included, limits the results to those generation requests made on or after date_start. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+        style: form
+        schema:
+          type: string
+          format: date-time
+      - name: date_end
+        in: query
+        description: "If included, limits the results to those generation requests made on or before date_end. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+        style: form
+        schema:
+          type: string
+          format: date-time
+      - name: media_type
+        in: query
+        description: If included, limits the results to those generation requests made for the given media type.
+        style: form
+        schema:
+          $ref: '#/components/schemas/MediaType'
+      - name: page_size
+        in: query
+        description: The page size of results.  Default is 30.
+        style: form
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: The page number of results.  Default is 1.
+        style: form
+        schema:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int32
+      - name: product_ids
+        in: query
+        description: If included, limits the results to only those requests made against the indicated products.
+        style: form
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - name: company_generations
+        in: query
+        description: "If `true`, returns the list of previously downloaded images for all users in\r\n            your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for\r\n            more information. Default is `false`."
+        style: form
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Returns the history of AI generations
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryResponse'
+        '403':
+          description: Company generations were requested but your account is not configured for access.
+  /v3/ai/generation-history/{generationRequestId}:
+    get:
+      tags:
+      - Ai
+      summary: Retrieve history item for an individual generation request
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the history item for the request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryItemResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryItemResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryItemResponse'
+        '403':
+          description: NotAuthorized
+        '404':
+          description: The request ID was not found
+  /v3/ai/image-generations/{generationRequestId}/images/{index}/download-sizes:
+    get:
+      tags:
+      - Ai
+      summary: Get download sizes for a generated image
+      description: '# AI Generator - Get Download Sizes
+
+
+        Given a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: index
+        in: path
+        description: The index of the image from the specific images generation
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the result of a request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadSizesResponse'
+        '400':
+          description: InvalidProduct
+        '404':
+          description: Either the generation id does not exist, the index is incorrect, or the generation is still pending
+        '410':
+          description: GenerationRequestGone
+  /v3/ai/image-generations/{generationRequestId}/images/{index}/download:
+    put:
+      tags:
+      - Ai
+      summary: Begin the download process
+      description: '# AI Generator - Download Image
+
+
+        Download a generated image. Initiating the download process for a 4K file may incur a cost depending on the terms of your agreement.
+
+
+        ## Download Image Request body details
+
+
+        The `ImageDownloadRequest` payload to be posted contains the required `size` as well as some other optional
+
+        parameters:
+
+
+        | Parameter         | Purpose                                                                                      |
+
+        |-------------------|----------------------------------------------------------------------------------------------|
+
+        | `size_name` _Required_ | Must be one of the valid download sizes retrieved through the "Get Download Sizes" endpoint |
+
+        | `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |
+
+        | `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including a URL for the download.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` with no payload. This client should then
+
+        poll `GET v3/ai/image-generations/{generationRequestId}/images/{index}/download` periodically to get the final
+
+        download.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: index
+        in: path
+        description: The index of the image from the specific images generation
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageDownloadRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ImageDownloadRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ImageDownloadRequest'
+      responses:
+        '200':
+          description: Download request was successful and is complete
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+        '202':
+          description: Download request was successful put is pending
+        '400':
+          description: InvalidProduct
+        '403':
+          description: ProductQuotaExceeded
+        '404':
+          description: GenerationRequestIdNotFound
+        '409':
+          description: A download is already in progress for the given `generationRequestId` and `index`.
+        '410':
+          description: GenerationRequestGone
+    get:
+      tags:
+      - Ai
+      summary: "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed."
+      description: '# AI Generator - Get Download Image
+
+
+        Get the download for a generated image
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including a URL for the download.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` with no payload. This client should then
+
+        poll `GET v3/ai/image-generations/{generationRequestId}/images/{index}/download` periodically to get the final
+
+        download.
+
+
+        Like the `PUT v3/ai/image-generations/{generationRequestId}/images/{index}/download` endpoint, the result of calling
+
+        this endpoint will be either:
+
+
+        - `HTTP 200 OK` with the download URL
+
+        - `HTTP 202 Accepted` with no payload
+
+
+        `HTTP 202 Accepted` is returned in the case where the download preparation has not yet completed. In this case it is
+
+        expected that the client will occasionally poll this endpoint until a `HTTP 200 OK` result with a full payload is
+
+        returned.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: index
+        in: path
+        description: The index of the image from the specific images generation
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Download request was successful and is complete
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+        '202':
+          description: Download request was successful put is pending
+        '400':
+          description: InvalidProduct
+        '404':
+          description: GenerationRequestIdNotFound
+        '410':
+          description: GenerationRequestGone
+  /v3/ai/redownloads:
+    post:
+      tags:
+      - Ai
+      summary: Re-download a previously downloaded item
+      description: '# Re-download AI Generated media
+
+
+        Re-download previously downloaded AI generated media.
+
+
+        ## `ReDownloadRequest` details
+
+
+        | Parameter                       | Purpose                                                                                                                                                   |
+
+        |---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | `generated_asset_id` _Required_ | The generated asset identifier to re-download.  Can be retrieved from previously downloaded assets (`GET /v3/downloads`)                                  |
+
+        | `product_id` _Required_         | The product to use to re-download.  Can be retrieved from products (`GET /v3/products`)                                                                   |
+
+        | `size_name` _Required_          | The size to re-download.  Valid values are `1k` and `4k`                                                                                                  |
+
+        | `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |
+
+        | `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReDownloadRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ReDownloadRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ReDownloadRequest'
+      responses:
+        '200':
+          description: Returns the re-download response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Product is not active or quota exceeded
+        '404':
+          description: Could not find source generated_asset_id
+        '410':
+          description: GenerationRequestGone
+components:
+  schemas:
+    ImageDataResponse:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        is_blocked:
+          type: boolean
+        preview_urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+          description: The preview URLs for the result
+          nullable: true
+        url:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PendingImageGenerationResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DownloadResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          nullable: true
+        generated_asset_id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ImageGenerationsRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: The only required parameter, this is the primary text used for the generation of the images.
+          nullable: true
+        seed:
+          type: integer
+          description: The seed to use for generation. This is not used for most generation cases but is available for use to ensure a repeatable result.
+          format: int32
+          nullable: true
+        negative_prompt:
+          type: string
+          description: Concepts to exclude from the result
+          nullable: true
+        aspect_ratio:
+          type: string
+          description: Aspect ratio of the result images.  Must be one of 1:1, 3:4, 4:3, 9:16, or 16:9
+          nullable: true
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        lens_type:
+          $ref: '#/components/schemas/LensType'
+        depth_of_field:
+          $ref: '#/components/schemas/DepthOfField'
+        product_id:
+          type: integer
+          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the generation request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the generation request.  Some products require this value.
+          nullable: true
+      additionalProperties: false
+      description: Payload with all generation request parameters
+    Mood:
+      enum:
+      - black_and_white
+      - warm
+      - cool
+      - natural
+      - vivid
+      - dramatic
+      - bold
+      type: string
+    GenerationHistoryItemResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          description: The identifier for the request
+          nullable: true
+        seed:
+          type: integer
+          description: The seed used for the generation
+          format: int32
+          nullable: true
+        generation_date:
+          type: string
+          description: ''
+          format: date-time
+        product_revoked_date:
+          type: string
+          description: If the the product against which the generation was made has been revoked, this is the date of that revocation.
+          format: date-time
+          nullable: true
+        prompt:
+          type: string
+          description: The prompt that was used for the request
+          nullable: true
+        negative_prompt:
+          type: string
+          description: The negative prompt (if any) that was used for the request
+          nullable: true
+        product_id:
+          type: integer
+          description: ''
+          format: int32
+        notes:
+          type: string
+          description: ''
+          nullable: true
+        project_code:
+          type: string
+          description: ''
+          nullable: true
+        generation_type:
+          $ref: '#/components/schemas/GenerationType'
+        generation_options:
+          $ref: '#/components/schemas/GenerationOptions'
+        source_generation_request:
+          $ref: '#/components/schemas/SourceGenerationRequest'
+        original_asset:
+          $ref: '#/components/schemas/AssetDetail'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerationHistoryResult'
+          description: ''
+          nullable: true
+        user:
+          $ref: '#/components/schemas/User'
+      additionalProperties: false
+      description: Detail on a specific historical generation
+    Category:
+      enum:
+      - ImageReference
+      - CustomerProduct
+      type: string
+    DownloadSizeResponse:
+      type: object
+      properties:
+        size_name:
+          type: string
+          nullable: true
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    ImageDownloadRequest:
+      type: object
+      properties:
+        notes:
+          type: string
+          description: The notes to use for the download request.  Some products require this value.
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the download request.  Some products require this value.
+          nullable: true
+        size_name:
+          type: string
+          description: The size name.  Valid values are 1k or 4k.
+          nullable: true
+      additionalProperties: false
+      description: Parameters for requesting an AI generation image download
+    GetFileRegistrationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        preview_urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+          nullable: true
+      additionalProperties: false
+    BackgroundGenerationRequest:
+      type: object
+      properties:
+        reference_file_registration_id:
+          type: string
+          nullable: true
+        prompt:
+          type: string
+          nullable: true
+        negative_prompt:
+          type: string
+          nullable: true
+        product_id:
+          type: integer
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        left_percentage:
+          type: number
+          format: float
+          nullable: true
+        right_percentage:
+          type: number
+          format: float
+          nullable: true
+        top_percentage:
+          type: number
+          format: float
+          nullable: true
+        bottom_percentage:
+          type: number
+          format: float
+          nullable: true
+      additionalProperties: false
+    FileRegistrationRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: The location of the file.
+          nullable: true
+        rights_claimed:
+          type: boolean
+          description: Acknowledgment of ownership or licensing of file.
+          nullable: true
+        category:
+          $ref: '#/components/schemas/Category'
+      additionalProperties: false
+      description: Parameters for registering a file
+    ReDownloadRequest:
+      type: object
+      properties:
+        generated_asset_id:
+          type: string
+          description: The identifier of the previously-downloaded generated asset.
+          nullable: true
+        product_id:
+          type: integer
+          description: The product ID to use for the download.
+          format: int32
+        size_name:
+          type: string
+          description: The size name.  Valid values are 1k or 4k.
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the download request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the download request.  Some products require this value.
+          nullable: true
+      additionalProperties: false
+      description: Parameters for requesting an AI generation re-download
+    AssetDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DownloadSizesResponse:
+      type: object
+      properties:
+        download_sizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownloadSizeResponse'
+          nullable: true
+      additionalProperties: false
+    ExtendRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type: string
+          nullable: true
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        prompt:
+          type: string
+          nullable: true
+        negative_prompt:
+          type: string
+          nullable: true
+        product_id:
+          type: integer
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        left_percentage:
+          type: number
+          format: float
+          nullable: true
+        right_percentage:
+          type: number
+          format: float
+          nullable: true
+        top_percentage:
+          type: number
+          format: float
+          nullable: true
+        bottom_percentage:
+          type: number
+          format: float
+          nullable: true
+      additionalProperties: false
+    BackgroundRemovalRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type: string
+          description: Asset Id to modify.
+          nullable: true
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        product_id:
+          type: integer
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the request.  Some products require this value.
+          nullable: true
+      additionalProperties: false
+      description: Remove a background
+    RemoveObjectRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type: string
+          description: Asset Id to modify.
+          nullable: true
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        product_id:
+          type: integer
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the request.  Some products require this value.
+          nullable: true
+        mask_url:
+          type: string
+          description: The location of the mask.
+          nullable: true
+      additionalProperties: false
+      description: Payload with all parameters for removing objects from an image
+    MediaType:
+      enum:
+      - photography
+      - illustration
+      type: string
+    GenerationType:
+      enum:
+      - text_to_image
+      - variation
+      - extend
+      - refine
+      - background_removal
+      - influence_color_by_image
+      - influence_composition_by_image
+      - object_removal
+      - influence_outline_by_image
+      - background_generation
+      type: string
+    ImageGenerationsResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          nullable: true
+        seed:
+          type: integer
+          format: int32
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDataResponse'
+          nullable: true
+        original_asset:
+          $ref: '#/components/schemas/AssetDetail'
+      additionalProperties: false
+    InfluenceCompositionByImageRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type: string
+          description: Asset Id to modify.
+          nullable: true
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        reference_file_registration_id:
+          type: string
+          description: File Id to modify.
+          nullable: true
+        prompt:
+          type: string
+          description: This is the primary text used for refining the images.
+          nullable: true
+        negative_prompt:
+          type: string
+          description: Concepts to exclude from the result.
+          nullable: true
+        influence_level:
+          type: number
+          description: Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.
+          format: float
+          nullable: true
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        seed:
+          type: integer
+          description: The seed used for the generation
+          format: int32
+          nullable: true
+        product_id:
+          type: integer
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the request.  Some products require this value.
+          nullable: true
+      additionalProperties: false
+      description: Payload with all influence composition by image parameters
+    InfluenceColorByImageRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type: string
+          description: Asset Id to modify.
+          nullable: true
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        reference_file_registration_id:
+          type: string
+          description: File Id to modify.
+          nullable: true
+        prompt:
+          type: string
+          description: This is the primary text used for refining the images.
+          nullable: true
+        negative_prompt:
+          type: string
+          description: Concepts to exclude from the result.
+          nullable: true
+        noise_level:
+          type: number
+          description: Accepted values are 0-1. Higher values will increase differences between the reference and generated images.
+          format: float
+          nullable: true
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        seed:
+          type: integer
+          description: The seed used for the generation
+          format: int32
+          nullable: true
+        product_id:
+          type: integer
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the request.  Some products require this value.
+          nullable: true
+      additionalProperties: false
+      description: Payload with all influence color by image parameters
+    LensType:
+      enum:
+      - wide_angle
+      - telephoto
+      type: string
+    GenerationOptions:
+      type: object
+      properties:
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        aspect_ratio:
+          type: string
+          nullable: true
+        mood:
+          $ref: '#/components/schemas/Mood'
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          nullable: true
+        first_name:
+          type: string
+          nullable: true
+        middle_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SourceGenerationRequest:
+      type: object
+      properties:
+        source_generation_request_id:
+          type: string
+          nullable: true
+        source_generation_result_index:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GenerationHistoryResult:
+      type: object
+      properties:
+        index:
+          type: integer
+          description: The index of the result from the original generation
+          format: int32
+        is_blocked:
+          type: boolean
+          description: If `true` the result was blocked due to AI generation policy
+        preview_urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+          description: The preview URLs for the result
+          nullable: true
+      additionalProperties: false
+      description: Individual generated result from a given generation request/response
+    ImageVariationRequest:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the generation request.  Some products require this value.
+          nullable: true
+        notes:
+          type: string
+          description: The notes to use for the generation request.  Some products require this value.
+          nullable: true
+      additionalProperties: false
+      description: Payload with all images variation parameters
+    FileRegistrationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PreviewUrl:
+      type: object
+      properties:
+        preview_size:
+          type: string
+          nullable: true
+        image_url:
+          type: string
+          nullable: true
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GenerationHistoryResponse:
+      type: object
+      properties:
+        generations:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerationHistoryItemResponse'
+          description: Current page of generations
+          nullable: true
+        result_count:
+          type: integer
+          description: The total count of results, ignoring paging
+          format: int32
+      additionalProperties: false
+      description: Full generation history response
+    DepthOfField:
+      enum:
+      - shallow
+      - deep
+      type: string
+    ReferenceGeneration:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          description: The id from a previous request to generate images.
+          nullable: true
+        index:
+          type: integer
+          description: The index of the image from the specific images generation.
+          format: int32
+      additionalProperties: false
+    RefineRequest:
+      required:
+      - mask_url
+      type: object
+      properties:
+        reference_asset_id:
+          type: string
+          nullable: true
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        prompt:
+          type: string
+          nullable: true
+        negative_prompt:
+          type: string
+          nullable: true
+        product_id:
+          type: integer
+          format: int32
+          nullable: true
+        project_code:
+          type: string
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        mask_url:
+          minLength: 1
+          type: string
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

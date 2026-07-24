@@ -1,0 +1,105 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Management API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Management
+paths:
+  /v3/asset-management/assets/send-events:
+    get:
+      tags:
+      - Management
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: last_offset
+        in: query
+        description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+        schema:
+          type: string
+          description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+          format: date-time
+          nullable: true
+      - name: event_count
+        in: query
+        description: Specifies the number of events to return. Default is 50, maximum value is 100.
+        schema:
+          type: integer
+          description: Specifies the number of events to return. Default is 50, maximum value is 100.
+          format: int32
+          nullable: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+        '400':
+          description: EventCountOutOfRange
+components:
+  schemas:
+    AssetEvent:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        asset_id:
+          type: string
+          nullable: true
+        email_address:
+          type: string
+          nullable: true
+      additionalProperties: false
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type: string
+          format: date-time
+          nullable: true
+        asset_send_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetEvent'
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

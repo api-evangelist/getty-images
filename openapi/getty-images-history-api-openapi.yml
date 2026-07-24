@@ -1,0 +1,326 @@
+openapi: 3.0.1
+info:
+  title: Getty Images History API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: History
+paths:
+  /v3/ai/generation-history:
+    get:
+      tags:
+      - History
+      summary: Retrieve history of AI generations
+      description: '# AI Generator - Generation History
+
+
+        Get the history of AI generation requests.'
+      parameters:
+      - name: date_start
+        in: query
+        description: "If included, limits the results to those generation requests made on or after date_start. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+        style: form
+        schema:
+          type: string
+          format: date-time
+      - name: date_end
+        in: query
+        description: "If included, limits the results to those generation requests made on or before date_end. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+        style: form
+        schema:
+          type: string
+          format: date-time
+      - name: media_type
+        in: query
+        description: If included, limits the results to those generation requests made for the given media type.
+        style: form
+        schema:
+          $ref: '#/components/schemas/MediaType'
+      - name: page_size
+        in: query
+        description: The page size of results.  Default is 30.
+        style: form
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: The page number of results.  Default is 1.
+        style: form
+        schema:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int32
+      - name: product_ids
+        in: query
+        description: If included, limits the results to only those requests made against the indicated products.
+        style: form
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - name: company_generations
+        in: query
+        description: "If `true`, returns the list of previously downloaded images for all users in\r\n            your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for\r\n            more information. Default is `false`."
+        style: form
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Returns the history of AI generations
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryResponse'
+        '403':
+          description: Company generations were requested but your account is not configured for access.
+  /v3/ai/generation-history/{generationRequestId}:
+    get:
+      tags:
+      - History
+      summary: Retrieve history item for an individual generation request
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the history item for the request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryItemResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryItemResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHistoryItemResponse'
+        '403':
+          description: NotAuthorized
+        '404':
+          description: The request ID was not found
+components:
+  schemas:
+    GenerationHistoryItemResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type: string
+          description: The identifier for the request
+          nullable: true
+        seed:
+          type: integer
+          description: The seed used for the generation
+          format: int32
+          nullable: true
+        generation_date:
+          type: string
+          description: ''
+          format: date-time
+        product_revoked_date:
+          type: string
+          description: If the the product against which the generation was made has been revoked, this is the date of that revocation.
+          format: date-time
+          nullable: true
+        prompt:
+          type: string
+          description: The prompt that was used for the request
+          nullable: true
+        negative_prompt:
+          type: string
+          description: The negative prompt (if any) that was used for the request
+          nullable: true
+        product_id:
+          type: integer
+          description: ''
+          format: int32
+        notes:
+          type: string
+          description: ''
+          nullable: true
+        project_code:
+          type: string
+          description: ''
+          nullable: true
+        generation_type:
+          $ref: '#/components/schemas/GenerationType'
+        generation_options:
+          $ref: '#/components/schemas/GenerationOptions'
+        source_generation_request:
+          $ref: '#/components/schemas/SourceGenerationRequest'
+        original_asset:
+          $ref: '#/components/schemas/AssetDetail'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerationHistoryResult'
+          description: ''
+          nullable: true
+        user:
+          $ref: '#/components/schemas/User'
+      additionalProperties: false
+      description: Detail on a specific historical generation
+    MediaType:
+      enum:
+      - photography
+      - illustration
+      type: string
+    PreviewUrl:
+      type: object
+      properties:
+        preview_size:
+          type: string
+          nullable: true
+        image_url:
+          type: string
+          nullable: true
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GenerationType:
+      enum:
+      - text_to_image
+      - variation
+      - extend
+      - refine
+      - background_removal
+      - influence_color_by_image
+      - influence_composition_by_image
+      - object_removal
+      - influence_outline_by_image
+      - background_generation
+      type: string
+    GenerationHistoryResponse:
+      type: object
+      properties:
+        generations:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerationHistoryItemResponse'
+          description: Current page of generations
+          nullable: true
+        result_count:
+          type: integer
+          description: The total count of results, ignoring paging
+          format: int32
+      additionalProperties: false
+      description: Full generation history response
+    AssetDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    GenerationOptions:
+      type: object
+      properties:
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        aspect_ratio:
+          type: string
+          nullable: true
+        mood:
+          $ref: '#/components/schemas/Mood'
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          nullable: true
+        first_name:
+          type: string
+          nullable: true
+        middle_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Mood:
+      enum:
+      - black_and_white
+      - warm
+      - cool
+      - natural
+      - vivid
+      - dramatic
+      - bold
+      type: string
+    SourceGenerationRequest:
+      type: object
+      properties:
+        source_generation_request_id:
+          type: string
+          nullable: true
+        source_generation_result_index:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GenerationHistoryResult:
+      type: object
+      properties:
+        index:
+          type: integer
+          description: The index of the result from the original generation
+          format: int32
+        is_blocked:
+          type: boolean
+          description: If `true` the result was blocked due to AI generation policy
+        preview_urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+          description: The preview URLs for the result
+          nullable: true
+      additionalProperties: false
+      description: Individual generated result from a given generation request/response
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

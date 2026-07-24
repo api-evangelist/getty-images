@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Usage API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Usage
+paths:
+  /v3/usage-batches/{id}:
+    put:
+      tags:
+      - Usage
+      summary: Report usage of assets via a batch format.
+      description: "# Report Usage\n\nUse this endpoint to report the usages of a set of assets. The count of assets submitted in a single batch to this endpoint is limited to 1000. Note that all asset Ids specified must be valid or the operation will fail causing no usages to be recorded. In this case, you will need to remove the invalid asset Ids from the query request and re-submit the query.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource. \n\n_Note_: Date of use can be in any unambiguous date format.\n"
+      parameters:
+      - name: id
+        in: path
+        description: Specifies a unique batch transaction id to identify the report.
+        required: true
+        schema:
+          type: string
+          description: Specifies a unique batch transaction id to identify the report.
+          nullable: true
+      requestBody:
+        description: "Specifies up to 1000 sets of asset Id, usage count, and date of use to submit usages for. \r\n            Note that all asset Ids specified must be valid or the operation will fail causing no usages to be recorded. \r\n            All dates must be on or before this date and the format should be ISO 8601 (ex: YYYY-MM-DD), time is not needed."
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/report_usage_batch_request'
+      responses:
+        '201':
+          description: Success - All usages reported were successfully recorded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/report_usage_batch_response'
+        '400':
+          description: InvalidRequest - The content of the request was invalid. Most commonly this is due to either too many assets specified, no assets or invalid JSON.
+        '401':
+          description: AuthorizationTokenRequired - Authorization token was missing or not valid.
+        '403':
+          description: UnauthorizedToReportUsage
+        '409':
+          description: TransactionIdDuplicated
+components:
+  schemas:
+    report_usage_batch_request:
+      type: object
+      properties:
+        asset_usages:
+          type: array
+          items:
+            $ref: '#/components/schemas/asset_usage'
+          description: Identifies the list of asset id, usage count and date of usage combinations to record.
+          nullable: true
+      additionalProperties: false
+      description: Specifies the request information for the Batch Usages endpoint.
+    report_usage_batch_response:
+      type: object
+      properties:
+        invalid_assets:
+          type: array
+          items:
+            type: string
+          description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
+          nullable: true
+        total_asset_usages_processed:
+          type: integer
+          description: Specifies the number of asset usage records that were successfully recorded.
+          format: int32
+          nullable: true
+      additionalProperties: false
+      description: Specifies the response from the Batch Usages endpoint.
+    asset_usage:
+      type: object
+      properties:
+        asset_id:
+          type: string
+          description: Specifies the Id of the asset that was used.
+          nullable: true
+        quantity:
+          type: integer
+          description: Specifies the number of times the asset was used.
+          format: int32
+        usage_date:
+          type: string
+          description: Identifies the date the asset was used, in ISO 8601 format (e.g., YYYY-MM-DD), time is not needed.
+          format: date-time
+      additionalProperties: false
+      description: Specifies the id, usage Quantity, and date of when an asset was used.
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

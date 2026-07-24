@@ -1,0 +1,248 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Files API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Files
+paths:
+  /beta/ai/file-registrations:
+    post:
+      tags:
+      - Files
+      summary: Register a client provided file for use with AIGenerator endpoints
+      description: '# File Registration
+
+
+        Provide the URL for a previously uploaded file to receive an ID that can be used as the `reference_file_registration_id` in subsequent image generation requests.
+
+
+
+        Use of this endpoint is restricted to clients with a Fine Tune AI Generation license product.
+
+
+        ## The File Registration Request
+
+
+        The `FileRegistrationRequest` payload accepts the following
+
+        parameters:
+
+
+        | Parameter           | Purpose                                                                                                                                                                                      |
+
+        |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | `url`          | Required. Specifies the location of the file.                                                                                                                                                |                                                                                 |
+
+        | `rights_claimed`| Required. Acknowledgment that client owns or has a license for this file.                                                                                                                                                |                                                                                 |
+
+        | `category`     | Optional. Accepted values: `CustomerProduct`, `ImageReference`. Images to be used in `POST /beta/ai/image-generations/background-generations` must have the category set to `CustomerProduct`.                                                                                                                                          |                                                                                 |
+
+
+        ## Uploading the file
+
+
+        Before calling this endpoint, a file must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.
+
+
+        For example, using cURL:
+
+
+        ``` sh
+
+        curl -i -X PUT https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg -H ''Content-Type: image/jpeg'' -H ''Api-Key: API_KEY'' --data-binary "@testimage.jpg"
+
+        ```
+
+
+        Once the file has been uploaded, use the full URL as the `url`.
+
+
+        - Uploaded files must be 10MB or smaller.
+
+        - Uploads to the same URL will overwrite each other, so ensure that the client application is handling naming uniqueness appropriately.
+
+        - Uploads expire after 24 hours.
+
+        - Uploads and file registration must be performed using the _same_ API Key.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileRegistrationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FileRegistrationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FileRegistrationRequest'
+      responses:
+        '200':
+          description: Returns the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileRegistrationResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Not authorized
+        '429':
+          description: TooManyConcurrentGenerations
+  /beta/ai/file-registrations/{fileRegistrationId}:
+    get:
+      tags:
+      - Files
+      summary: Get details on a registered file
+      description: '# Get Registered File Details
+
+
+        Gets details for a registered file.  This endpoint is used after a call to `POST beta/ai/file-registrations`, passing the `id` value from the result of that call.'
+      parameters:
+      - name: fileRegistrationId
+        in: path
+        description: The id from a previous request to register a file
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileRegistrationResponse'
+        '400':
+          description: The request was invalid
+        '403':
+          description: Not authorized
+        '404':
+          description: FileRegistrationIdNotFound
+        '429':
+          description: TooManyConcurrentGenerations
+  /v3/search/by-image/uploads/{file-name}:
+    put:
+      tags:
+      - Files
+      summary: Upload image for use by the search creative images/videos operations
+      parameters:
+      - name: file-name
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      requestBody:
+        description: ''
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              description: ''
+              format: byte
+              nullable: true
+          image/png:
+            schema:
+              type: string
+              description: ''
+              format: byte
+              nullable: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: UnauthorizedDisplaySize
+components:
+  schemas:
+    GetFileRegistrationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        preview_urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+          nullable: true
+      additionalProperties: false
+    Category:
+      enum:
+      - ImageReference
+      - CustomerProduct
+      type: string
+    FileRegistrationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PreviewUrl:
+      type: object
+      properties:
+        preview_size:
+          type: string
+          nullable: true
+        image_url:
+          type: string
+          nullable: true
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+      additionalProperties: false
+    FileRegistrationRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: The location of the file.
+          nullable: true
+        rights_claimed:
+          type: boolean
+          description: Acknowledgment of ownership or licensing of file.
+          nullable: true
+        category:
+          $ref: '#/components/schemas/Category'
+      additionalProperties: false
+      description: Parameters for registering a file
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

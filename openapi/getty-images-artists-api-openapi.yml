@@ -1,0 +1,215 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Artists API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Artists
+paths:
+  /v3/artists/images:
+    get:
+      tags:
+      - Artists
+      summary: Search for images by a photographer
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: artist_name
+        in: query
+        description: Name of artist for desired images
+        schema:
+          type: string
+          description: Name of artist for desired images
+          nullable: true
+      - name: fields
+        in: query
+        description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtistsImageSearchFieldValues'
+          description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
+          nullable: true
+      - name: page
+        in: query
+        description: Identifies page to return. Default page is 1.
+        schema:
+          type: integer
+          description: Identifies page to return. Default page is 1.
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Specifies page size. Default page_size is 10, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Specifies page size. Default page_size is 10, maximum page_size is 100.
+          format: int32
+          default: 10
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+  /v3/artists/videos:
+    get:
+      tags:
+      - Artists
+      summary: Search for videos by a photographer
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: artist_name
+        in: query
+        description: Name of artist for desired images
+        schema:
+          type: string
+          description: Name of artist for desired images
+          nullable: true
+      - name: fields
+        in: query
+        description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtistsVideoSearchFieldValues'
+          description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
+          nullable: true
+      - name: page
+        in: query
+        description: Identifies page to return. Default page is 1.
+        schema:
+          type: integer
+          description: Identifies page to return. Default page is 1.
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Specifies page size. Default page_size is 10, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Specifies page size. Default page_size is 10, maximum page_size is 100.
+          format: int32
+          default: 10
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    ArtistsImageSearchFieldValues:
+      enum:
+      - id
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - asset_type
+      - call_for_image
+      - caption
+      - collection_id
+      - collection_code
+      - collection_name
+      - comp
+      - comp_webp
+      - copyright
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - editorial_segments
+      - event_ids
+      - graphical_style
+      - high_res_comp_webp
+      - keywords
+      - license_model
+      - max_dimensions
+      - mid_res_comp_webp
+      - orientation
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      type: string
+    ArtistsVideoSearchFieldValues:
+      enum:
+      - id
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - asset_type
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_id
+      - collection_code
+      - collection_name
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - editorial_segments
+      - event_ids
+      - graphical_style
+      - keywords
+      - license_model
+      - max_dimensions
+      - orientation
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      type: string
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

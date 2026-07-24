@@ -1,0 +1,74 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Uploads API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Uploads
+paths:
+  /v3/search/by-image/uploads/{file-name}:
+    put:
+      tags:
+      - Uploads
+      summary: Upload image for use by the search creative images/videos operations
+      parameters:
+      - name: file-name
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      requestBody:
+        description: ''
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              description: ''
+              format: byte
+              nullable: true
+          image/png:
+            schema:
+              type: string
+              description: ''
+              format: byte
+              nullable: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: UnauthorizedDisplaySize
+components:
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

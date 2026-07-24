@@ -1,0 +1,154 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Change API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Change
+paths:
+  /v3/asset-changes/change-sets:
+    put:
+      tags:
+      - Change
+      summary: Get asset change notifications.
+      description: "# Asset Changes\n\nGet notifications about new, updated or deleted assets for a specific channel.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource. \n\nMaximum batch size is 2200.\n\nChange-sets must be confirmed before a new batch of notifications can be retrieved from this endpoint. Use the DELETE asset-changes/change-sets/{change-set-id} endpoint to confirm reciept of these notifications.\n\nValues returned for asset_type include Image, Film, and null. Values returned for asset_lifecycle include New, Update, and Delete.\n\nDelete notifications may be provided for asset ids that have not previously been received as New or Update notifications. Delete notifications may return null for the asset_type.\n\nIf there are no notifications in the channel an empty response body will be returned.\n\nNotifications older than 60 days will be removed from partner channels.\n"
+      parameters:
+      - name: channel_id
+        in: query
+        description: Specifies the id of the channel for the asset data. Valid channel ids can be found in the results of the Get Partner Channel query.
+        schema:
+          type: integer
+          description: Specifies the id of the channel for the asset data. Valid channel ids can be found in the results of the Get Partner Channel query.
+          format: int32
+      - name: batch_size
+        in: query
+        description: Specifies the number of assets to return. The default is 2200; maximum is 2200.
+        schema:
+          type: integer
+          description: Specifies the number of assets to return. The default is 2200; maximum is 2200.
+          format: int32
+          nullable: true
+      responses:
+        '200':
+          description: Success - Channel contains unconfirmed asset change notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetChanges'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetChanges'
+        '400':
+          description: InvalidChannelIdException
+        '403':
+          description: Your access token does not authorize access to this resource
+        '404':
+          description: The channel you specified does not exist
+  /v3/asset-changes/change-sets/{change-set-id}:
+    delete:
+      tags:
+      - Change
+      summary: Confirm asset change notifications.
+      description: '# Delete Asset Changes
+
+
+        Confirm asset changes acknowledges receipt of asset changes (from the PUT asset-changes endpoint).
+
+
+        ##  Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Use the change_set_id from the PUT asset-changes/change-sets endpoint to confirm receipt of notifications.
+
+        '
+      parameters:
+      - name: change-set-id
+        in: path
+        description: Specify the change-set-id associated with a transaction resource whose receipt you want to confirm.
+        required: true
+        schema:
+          type: integer
+          description: Specify the change-set-id associated with a transaction resource whose receipt you want to confirm.
+          format: int64
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidChangeSetId
+        '403':
+          description: Your access token does not authorize access to this resource
+        '404':
+          description: Transaction was not found
+components:
+  schemas:
+    ChangedAssetDetail:
+      type: object
+      properties:
+        asset_changed_utc_datetime:
+          type: string
+          description: Contains the date of the asset change.
+          format: date-time
+        asset_lifecycle:
+          type: string
+          description: Contains the type of change this asset change is. (i.e. "New," "Updated" or "Deleted")
+          nullable: true
+        asset_type:
+          type: string
+          description: Contains the type of asset this asset change is (i.e. "Image").
+          nullable: true
+        id:
+          type: string
+          description: Contains the Id for the asset change.
+          nullable: true
+        uri:
+          type: string
+          description: Contains the asset download URL for assets with an AssetLifecycle of "New."
+          nullable: true
+      additionalProperties: false
+    AssetChanges:
+      type: object
+      properties:
+        change_set_id:
+          type: string
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+          nullable: true
+        changed_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

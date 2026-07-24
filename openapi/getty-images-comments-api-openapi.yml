@@ -1,0 +1,215 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Comments API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Comments
+paths:
+  /v3/boards/{board_id}/comments:
+    get:
+      tags:
+      - Comments
+      summary: Get comments from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to retrieve comments from.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to retrieve comments from.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentsList'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '404':
+          description: BoardNotFound
+    post:
+      tags:
+      - Comments
+      summary: Add a comment to a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to add a comment to.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to add a comment to.
+          nullable: true
+      requestBody:
+        description: Comment to be added to the board.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentCreated'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+  /v3/boards/{board_id}/comments/{comment_id}:
+    delete:
+      tags:
+      - Comments
+      summary: Delete a comment from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board containing the comment to delete.
+        required: true
+        schema:
+          type: string
+          description: Specify the board containing the comment to delete.
+          nullable: true
+      - name: comment_id
+        in: path
+        description: Specify the comment to delete.
+        required: true
+        schema:
+          type: string
+          description: Specify the comment to delete.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: CommentDeleted
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+components:
+  schemas:
+    CommentsList:
+      type: object
+      properties:
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          nullable: true
+        permissions:
+          $ref: '#/components/schemas/BoardCommentPermissions'
+      additionalProperties: false
+    CommentPermissions:
+      type: object
+      properties:
+        can_delete_comment:
+          type: boolean
+      additionalProperties: false
+    CommentCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Collaborator:
+      type: object
+      properties:
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BoardCommentPermissions:
+      type: object
+      properties:
+        can_add_comment:
+          type: boolean
+      additionalProperties: false
+    CommentRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Comment:
+      type: object
+      properties:
+        created_by:
+          $ref: '#/components/schemas/Collaborator'
+        date_created:
+          type: string
+          format: date-time
+        id:
+          type: string
+          nullable: true
+        permissions:
+          $ref: '#/components/schemas/CommentPermissions'
+        text:
+          type: string
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

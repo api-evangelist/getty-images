@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Orders API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Orders
+paths:
+  /v3/orders/{id}:
+    get:
+      tags:
+      - Orders
+      summary: Get order metadata
+      description: "This endpoint returns detailed order metadata for a specified order.\nUse of this endpoint requires configuration changes to your API key. \n\nYou'll need an API key and access token to use this resource."
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: id
+        in: path
+        description: An order id.
+        required: true
+        schema:
+          type: integer
+          description: An order id.
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetail'
+        '401':
+          description: Unauthorized
+        '403':
+          description: NoAccessToOrderMetadata
+        '404':
+          description: OrderNotFound
+components:
+  schemas:
+    AssetIdFromOrder:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    OrderNotes:
+      type: object
+      properties:
+        licensee_name:
+          type: string
+          nullable: true
+        purchase_order_number:
+          type: string
+          nullable: true
+        project_title:
+          type: string
+          nullable: true
+        ordered_by:
+          type: string
+          nullable: true
+      additionalProperties: false
+    OrderDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        invoice_number:
+          type: string
+          nullable: true
+        order_date:
+          type: string
+          format: date-time
+        end_client:
+          type: string
+          nullable: true
+        notes:
+          $ref: '#/components/schemas/OrderNotes'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetIdFromOrder'
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

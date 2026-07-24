@@ -1,0 +1,660 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Downloads API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Downloads
+paths:
+  /v3/ai/image-generations/{generationRequestId}/images/{index}/download-sizes:
+    get:
+      tags:
+      - Downloads
+      summary: Get download sizes for a generated image
+      description: '# AI Generator - Get Download Sizes
+
+
+        Given a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: index
+        in: path
+        description: The index of the image from the specific images generation
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the result of a request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadSizesResponse'
+        '400':
+          description: InvalidProduct
+        '404':
+          description: Either the generation id does not exist, the index is incorrect, or the generation is still pending
+        '410':
+          description: GenerationRequestGone
+  /v3/ai/image-generations/{generationRequestId}/images/{index}/download:
+    put:
+      tags:
+      - Downloads
+      summary: Begin the download process
+      description: '# AI Generator - Download Image
+
+
+        Download a generated image. Initiating the download process for a 4K file may incur a cost depending on the terms of your agreement.
+
+
+        ## Download Image Request body details
+
+
+        The `ImageDownloadRequest` payload to be posted contains the required `size` as well as some other optional
+
+        parameters:
+
+
+        | Parameter         | Purpose                                                                                      |
+
+        |-------------------|----------------------------------------------------------------------------------------------|
+
+        | `size_name` _Required_ | Must be one of the valid download sizes retrieved through the "Get Download Sizes" endpoint |
+
+        | `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |
+
+        | `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including a URL for the download.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` with no payload. This client should then
+
+        poll `GET v3/ai/image-generations/{generationRequestId}/images/{index}/download` periodically to get the final
+
+        download.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: index
+        in: path
+        description: The index of the image from the specific images generation
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Request parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageDownloadRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ImageDownloadRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ImageDownloadRequest'
+      responses:
+        '200':
+          description: Download request was successful and is complete
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+        '202':
+          description: Download request was successful put is pending
+        '400':
+          description: InvalidProduct
+        '403':
+          description: ProductQuotaExceeded
+        '404':
+          description: GenerationRequestIdNotFound
+        '409':
+          description: A download is already in progress for the given `generationRequestId` and `index`.
+        '410':
+          description: GenerationRequestGone
+    get:
+      tags:
+      - Downloads
+      summary: "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed."
+      description: '# AI Generator - Get Download Image
+
+
+        Get the download for a generated image
+
+
+        ## Fulfilled and Pending Results
+
+
+        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
+
+        result and a payload including a URL for the download.
+
+
+        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
+
+        this call is `HTTP 202 Accepted` with no payload. This client should then
+
+        poll `GET v3/ai/image-generations/{generationRequestId}/images/{index}/download` periodically to get the final
+
+        download.
+
+
+        Like the `PUT v3/ai/image-generations/{generationRequestId}/images/{index}/download` endpoint, the result of calling
+
+        this endpoint will be either:
+
+
+        - `HTTP 200 OK` with the download URL
+
+        - `HTTP 202 Accepted` with no payload
+
+
+        `HTTP 202 Accepted` is returned in the case where the download preparation has not yet completed. In this case it is
+
+        expected that the client will occasionally poll this endpoint until a `HTTP 200 OK` result with a full payload is
+
+        returned.
+
+        '
+      parameters:
+      - name: generationRequestId
+        in: path
+        description: The ID from a previous request to generate images
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: index
+        in: path
+        description: The index of the image from the specific images generation
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Download request was successful and is complete
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DownloadResponse'
+        '202':
+          description: Download request was successful put is pending
+        '400':
+          description: InvalidProduct
+        '404':
+          description: GenerationRequestIdNotFound
+        '410':
+          description: GenerationRequestGone
+  /v3/downloads:
+    get:
+      tags:
+      - Downloads
+      summary: Returns information about a customer's downloaded assets.
+      description: "Returns information about a customer's previously downloaded assets.\n\nYou'll need an API key and access token to use this resource.\n \n\t\nThis endpoint requires being a Getty Images customer to limit your results to only assets that you have a license to use, \nyou need to also include an authorization token in the header of your request. \nPlease consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens.\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: date_from
+        in: query
+        description: "If specified, selects assets downloaded on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD). \r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is 30 days prior to date_to"
+        schema:
+          type: string
+          description: "If specified, selects assets downloaded on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD). \r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is 30 days prior to date_to"
+          format: date-time
+          nullable: true
+      - name: date_to
+        in: query
+        description: "If specified, selects assets downloaded on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)\r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is current date or 30 days after specified start date, whichever one is earlier."
+        schema:
+          type: string
+          description: "If specified, selects assets downloaded on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)\r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is current date or 30 days after specified start date, whichever one is earlier."
+          format: date-time
+          nullable: true
+      - name: use_time
+        in: query
+        description: "If specified, time values provided with date_to or date_from will be used. Time values should be appended to the date value in ISO 8601 format\r\ni.e.: 2019-09-19T19:30:37 or 2019-09-19 19:30:37.  Time zone can be specified as optional.\r\nDefault value is false"
+        schema:
+          type: boolean
+          description: "If specified, time values provided with date_to or date_from will be used. Time values should be appended to the date value in ISO 8601 format\r\ni.e.: 2019-09-19T19:30:37 or 2019-09-19 19:30:37.  Time zone can be specified as optional.\r\nDefault value is false"
+          default: false
+      - name: page
+        in: query
+        description: Identifies page to return. Default is 1.
+        schema:
+          type: integer
+          description: Identifies page to return. Default is 1.
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Specifies page size. Default is 30, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Specifies page size. Default is 30, maximum page_size is 100.
+          format: int32
+          default: 30
+      - name: product_type
+        in: query
+        description: Specifies product type to be included in the previous download results. Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. To get previous iStockPhoto credit downloads, creditpack must be selected.
+        schema:
+          $ref: '#/components/schemas/ProductTypeForDownloads'
+      - name: company_downloads
+        in: query
+        description: If specified, returns the list of previously downloaded images for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
+        schema:
+          type: boolean
+          description: If specified, returns the list of previously downloaded images for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
+          default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDownloadsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: Forbidden
+  /v3/downloads/images/{id}:
+    post:
+      tags:
+      - Downloads
+      summary: Download an image
+      description: "Use this endpoint to generate download URLs and related data for images you are authorized to download.\n\nMost product offerings have enforced periodic download limits such as monthly, weekly, and daily. When this operation executes, the count of allowed downloads is decremented by one for the product offering. Once the download limit is reached for a given product offering, no further downloads may be requested for that product offering until the next download period.\n\nThe download limit for a given download period is covered in your product agreement established with Getty Images.\n\nYou'll need an API key and a [Resource Owner Grant or Implicit Grant](http://developers.gettyimages.com/en/authorization-faq.html) access token to use this resource.\n\n## Auto Downloads\nThe `auto_download` request query parameter specifies whether to automatically download the image.\n\nIf the `auto_download` request query parameter is set to _true_, the API will return an HTTP status code 303 *See Other*.Your client code will need to process this response and redirect to the URI specified in the *Location* header to enable you to automatically download the file. The redirection workflow follows the [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4.4).\n\nClient Request:\n\n```\nhttps://api.gettyimages.com/v3/downloads/images/[asset_id]?auto_download=true\n```\n\nServer Response:\n\nYour client code should follow redirect (3xx) status codes returned from the URI in the response Location header. More information here: [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4).\n\n```\nHTTP/1.1 303 See Other\nLocation: https://delivery.gettyimages.com/...\n```\n\nIf the `auto_download` request query parameter is set to false, the API will return a HTTP status code 200, along with the URI in the response body which can be used to download the image. \n\nClient Request:\n\n```\nhttps://api.gettyimages.com/v3/downloads/images/[asset_id]?auto_download=false\n```\n\nServer Response:\n\n```\nHTTP/1.1 200 OK\n{\n\t\"uri\": \"https://delivery.gettyimages.com/...\"\n}\n```\n## Downloading Via the Returned URI\n\nYour client code should follow redirect (3xx) status codes returned from the URI in the response. More information here: [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4).\n\nThe URI returned by this call should be considered opaque and the format could change at any time.\nIn order to get the filename, length or file type, the response headers must be inspected. An example\nresponse follows:\n\n```\ncontent-length: 33959979\ncontent-type: image/jpeg\ncontent-disposition: attachment; filename=GettyImages-1167612765.jpg\n```\n\nThe `content-disposition` header must be parsed to get a usable filename.\n\n## Download URI expiration\n\nDownload URIs are _**only valid for 24 hours**_, starting from the moment they are returned from this call.\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: id
+        in: path
+        description: "<remarks>\r\n                    Id of image to download.\r\n                </remarks>"
+        required: true
+        schema:
+          type: string
+          description: "<remarks>\r\n                    Id of image to download.\r\n                </remarks>"
+          nullable: true
+      - name: auto_download
+        in: query
+        description: "<remarks>\r\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the image.\r\n                    If false is specified, the download URI will be returned in the response message. Default is true.\r\n                </remarks>"
+        schema:
+          type: boolean
+          description: "<remarks>\r\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the image.\r\n                    If false is specified, the download URI will be returned in the response message. Default is true.\r\n                </remarks>"
+          default: true
+      - name: file_type
+        in: query
+        description: "<remarks>\r\n                    File Type expressed with three character file extension.\r\n                </remarks>"
+        schema:
+          $ref: '#/components/schemas/DownloadFileType'
+      - name: height
+        in: query
+        description: "<remarks>\r\n                    Specifies the pixel height of the particular image to download.\r\n                    Available heights can be found in the images/{ids} response for the specific image.\r\n                    If left blank, it will return the largest available size.\r\n                </remarks>"
+        schema:
+          type: string
+          description: "<remarks>\r\n                    Specifies the pixel height of the particular image to download.\r\n                    Available heights can be found in the images/{ids} response for the specific image.\r\n                    If left blank, it will return the largest available size.\r\n                </remarks>"
+          nullable: true
+      - name: product_id
+        in: query
+        description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+        schema:
+          type: integer
+          description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+          format: int32
+          nullable: true
+      - name: product_type
+        in: query
+        description: "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+        schema:
+          $ref: '#/components/schemas/ProductTypeForDownloads'
+      - name: use_team_credits
+        in: query
+        description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
+        schema:
+          type: boolean
+          description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
+          default: false
+          nullable: true
+      requestBody:
+        description: "<remarks>\r\n                    Additional information required from specific customers when downloading. \r\n                    Only users who have been set up with a project code by Getty Images Sales need to use this field.\r\n                </remarks>"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PremiumAccessDownloadData'
+      responses:
+        '200':
+          description: OK
+        '303':
+          description: See Other
+        '400':
+          description: MissingRequiredQueryParameters
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: OverageLimitReached
+        '404':
+          description: ImageNotFound
+  /v3/downloads/videos/{id}:
+    post:
+      tags:
+      - Downloads
+      summary: Download a video
+      description: "Use this endpoint to generate download URLs and related data for videos you are authorized to download.\n\nMost product offerings have enforced periodic download limits such as monthly, weekly, and daily. When this operation executes, the count of allowed downloads is decremented by one for the product offering. Once the download limit is reached for a given product offering, no further downloads may be requested for that product offering until the next download period.\n\nThe download limit for a given download period is covered in your product agreement established with Getty Images.\n\nYou'll need an API key and a [Resource Owner Grant or Implicit Grant](http://developers.gettyimages.com/en/authorization-faq.html) access token to use this resource.\n\n## Auto Downloads\nThe `auto_download` request query parameter specifies whether to automatically download the video.\n\nIf the `auto_download` request query parameter is set to _true_, the API will return an HTTP status code 303 *See Other*.Your client code will need to process this response and redirect to the URI specified in the *Location* header to enable you to automatically download the file. The redirection workflow follows the [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4.4).\n\nClient Request:\n\n```\nhttps://api.gettyimages.com/v3/downloads/videos/[asset_id]?auto_download=true\n```\n\nServer Response:\n\nYour client code should follow redirect (3xx) status codes returned from the URI in the response Location header. More information here: [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4).\n\n```\nHTTP/1.1 303 See Other\nLocation: https://delivery.gettyimages.com/...\n```\n\nIf the `auto_download` request query parameter is set to false, the API will return a HTTP status code 200, along with the URI in the response body which can be used to download the video. \n\nClient Request:\n\n```\nhttps://api.gettyimages.com/v3/downloads/videos/[asset_id]?auto_download=false\n```\n\nServer Response:\n\n```\nHTTP/1.1 200 OK\n{\n\t\"uri\": \"https://delivery.gettyimages.com/...\"\n}\n```\n\n## Downloading Via the Returned URI\n\nYour client code should follow redirect (3xx) status codes returned from the URI in the response. More information here: [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4).\n\nThe URI returned by this call should be considered opaque and the format could change at any time.\nIn order to get the filename, length or file type, the response headers must be inspected. An example\nresponse follows:\n\n```\ncontent-length: 283925783\ncontent-type: video/quicktime\ncontent-disposition: attachment; filename=GettyImages-690773579.mov\n```\n\nThe `content-disposition` header must be parsed to get a usable filename.\n\n## Download URI expiration\n\nDownload URIs are _**only valid for 24 hours**_, starting from the moment they are returned from this call.\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: id
+        in: path
+        description: "<remarks>\r\n                    Id of video to download.\r\n                </remarks>"
+        required: true
+        schema:
+          type: string
+          description: "<remarks>\r\n                    Id of video to download.\r\n                </remarks>"
+          nullable: true
+      - name: auto_download
+        in: query
+        description: "<remarks>\r\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the video.\r\n                    If false is specified, the download URI will be returned in the response message. Default is false.\r\n                </remarks>"
+        schema:
+          type: boolean
+          description: "<remarks>\r\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the video.\r\n                    If false is specified, the download URI will be returned in the response message. Default is false.\r\n                </remarks>"
+          default: false
+      - name: size
+        in: query
+        description: Specifies the size to be downloaded.
+        schema:
+          type: string
+          description: Specifies the size to be downloaded.
+          nullable: true
+      - name: product_id
+        in: query
+        description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+        schema:
+          type: integer
+          description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+          format: int32
+          nullable: true
+      - name: product_type
+        in: query
+        description: "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+        schema:
+          $ref: '#/components/schemas/ProductTypeForDownloads'
+      - name: use_team_credits
+        in: query
+        description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
+        schema:
+          type: boolean
+          description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
+          nullable: true
+      requestBody:
+        description: "<remarks>\r\n                    Additional information required from specific customers when downloading. \r\n                    Only users who have been set up with a project code by Getty Images Sales need to use this field.\r\n                </remarks>"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PremiumAccessDownloadData'
+      responses:
+        '200':
+          description: OK
+        '303':
+          description: See Other
+        '400':
+          description: MissingRequiredQueryParameters
+        '401':
+          description: AuthorizationTokenRequired
+        '403':
+          description: OverageLimitReached
+        '404':
+          description: VideoNotFound
+components:
+  schemas:
+    DownloadFileType:
+      enum:
+      - eps
+      - jpg
+      type: string
+    ImageDownloadRequest:
+      type: object
+      properties:
+        notes:
+          type: string
+          description: The notes to use for the download request.  Some products require this value.
+          nullable: true
+        project_code:
+          type: string
+          description: The project code to use for the download request.  Some products require this value.
+          nullable: true
+        size_name:
+          type: string
+          description: The size name.  Valid values are 1k or 4k.
+          nullable: true
+      additionalProperties: false
+      description: Parameters for requesting an AI generation image download
+    DownloadSizeResponse:
+      type: object
+      properties:
+        size_name:
+          type: string
+          nullable: true
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GetDownloadsResponse:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        downloads:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoricalDownload'
+          nullable: true
+      additionalProperties: false
+    DownloadResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          nullable: true
+        generated_asset_id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DownloadDetails:
+      type: object
+      properties:
+        download_notes:
+          type: string
+          nullable: true
+        project_code:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ProductTypeForDownloads:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          nullable: true
+        first_name:
+          type: string
+          nullable: true
+        middle_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DownloadSizesResponse:
+      type: object
+      properties:
+        download_sizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownloadSizeResponse'
+          nullable: true
+      additionalProperties: false
+    HistoricalDownload:
+      type: object
+      properties:
+        date_downloaded:
+          type: string
+          format: date-time
+        id:
+          type: string
+          nullable: true
+        asset_type:
+          type: string
+          nullable: true
+        product_type:
+          type: string
+          nullable: true
+        thumb_uri:
+          type: string
+          nullable: true
+        agreement_name:
+          type: string
+          nullable: true
+        product_id:
+          type: integer
+          format: int32
+        download_details:
+          $ref: '#/components/schemas/DownloadDetails'
+        download_source:
+          type: string
+          nullable: true
+        user:
+          $ref: '#/components/schemas/User'
+        size_name:
+          type: string
+          nullable: true
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        license_model:
+          type: string
+          nullable: true
+        generated_asset_id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PremiumAccessDownloadData:
+      type: object
+      properties:
+        download_notes:
+          type: string
+          nullable: true
+        project_code:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Dimensions:
+      type: object
+      properties:
+        width:
+          type: integer
+          format: int32
+          nullable: true
+        height:
+          type: integer
+          format: int32
+          nullable: true
+        dpi:
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

@@ -1,0 +1,74 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Set API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Set
+paths:
+  /v3/asset-changes/change-sets/{change-set-id}:
+    delete:
+      tags:
+      - Set
+      summary: Confirm asset change notifications.
+      description: '# Delete Asset Changes
+
+
+        Confirm asset changes acknowledges receipt of asset changes (from the PUT asset-changes endpoint).
+
+
+        ##  Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Use the change_set_id from the PUT asset-changes/change-sets endpoint to confirm receipt of notifications.
+
+        '
+      parameters:
+      - name: change-set-id
+        in: path
+        description: Specify the change-set-id associated with a transaction resource whose receipt you want to confirm.
+        required: true
+        schema:
+          type: integer
+          description: Specify the change-set-id associated with a transaction resource whose receipt you want to confirm.
+          format: int64
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidChangeSetId
+        '403':
+          description: Your access token does not authorize access to this resource
+        '404':
+          description: Transaction was not found
+components:
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

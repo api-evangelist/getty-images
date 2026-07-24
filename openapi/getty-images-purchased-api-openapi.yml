@@ -1,0 +1,148 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Purchased API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Purchased
+paths:
+  /v3/purchased-assets:
+    get:
+      tags:
+      - Purchased
+      summary: Get Previously Purchased Images and Video
+      description: "This endpoint returns a list of all assets purchased on gettyimages.com by the username used for authentication. \nUse of this endpoint requires configuration changes to your API key. Please contact your sales representative\nto learn more.\n\nYou'll need an API key and access token to use this resource.\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: date_to
+        in: query
+        description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+        schema:
+          type: string
+          description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+          format: date-time
+          nullable: true
+      - name: page
+        in: query
+        description: Identifies page to return. Default is 1.
+        schema:
+          type: integer
+          description: Identifies page to return. Default is 1.
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Specifies page size. Default is 75, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Specifies page size. Default is 75, maximum page_size is 100.
+          format: int32
+          default: 75
+      - name: date_from
+        in: query
+        description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+        schema:
+          type: string
+          description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+          format: date-time
+          nullable: true
+      - name: company_purchases
+        in: query
+        description: If specified, returns the list of previously purchased assets for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
+        schema:
+          type: boolean
+          description: If specified, returns the list of previously purchased assets for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
+          default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviousAssetPurchases'
+        '400':
+          description: PageNumberLessThanOne
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientPermissions
+components:
+  schemas:
+    PreviousAssetPurchases:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        previous_purchases:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviousAssetPurchase'
+          nullable: true
+      additionalProperties: false
+    PreviousAssetPurchase:
+      type: object
+      properties:
+        date_purchased:
+          type: string
+          format: date-time
+        purchased_by:
+          type: string
+          nullable: true
+        asset_id:
+          type: string
+          nullable: true
+        asset_type:
+          type: string
+          nullable: true
+        license_model:
+          type: string
+          nullable: true
+        order_id:
+          type: string
+          nullable: true
+        thumb_uri:
+          type: string
+          nullable: true
+        size_name:
+          type: string
+          nullable: true
+        file_size_in_bytes:
+          type: string
+          nullable: true
+        download_uri:
+          type: string
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

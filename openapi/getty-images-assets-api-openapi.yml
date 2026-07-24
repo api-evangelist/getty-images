@@ -1,0 +1,663 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Assets API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Assets
+paths:
+  /v3/asset-changes/change-sets:
+    put:
+      tags:
+      - Assets
+      summary: Get asset change notifications.
+      description: "# Asset Changes\n\nGet notifications about new, updated or deleted assets for a specific channel.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource. \n\nMaximum batch size is 2200.\n\nChange-sets must be confirmed before a new batch of notifications can be retrieved from this endpoint. Use the DELETE asset-changes/change-sets/{change-set-id} endpoint to confirm reciept of these notifications.\n\nValues returned for asset_type include Image, Film, and null. Values returned for asset_lifecycle include New, Update, and Delete.\n\nDelete notifications may be provided for asset ids that have not previously been received as New or Update notifications. Delete notifications may return null for the asset_type.\n\nIf there are no notifications in the channel an empty response body will be returned.\n\nNotifications older than 60 days will be removed from partner channels.\n"
+      parameters:
+      - name: channel_id
+        in: query
+        description: Specifies the id of the channel for the asset data. Valid channel ids can be found in the results of the Get Partner Channel query.
+        schema:
+          type: integer
+          description: Specifies the id of the channel for the asset data. Valid channel ids can be found in the results of the Get Partner Channel query.
+          format: int32
+      - name: batch_size
+        in: query
+        description: Specifies the number of assets to return. The default is 2200; maximum is 2200.
+        schema:
+          type: integer
+          description: Specifies the number of assets to return. The default is 2200; maximum is 2200.
+          format: int32
+          nullable: true
+      responses:
+        '200':
+          description: Success - Channel contains unconfirmed asset change notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetChanges'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetChanges'
+        '400':
+          description: InvalidChannelIdException
+        '403':
+          description: Your access token does not authorize access to this resource
+        '404':
+          description: The channel you specified does not exist
+  /v3/asset-changes/change-sets/{change-set-id}:
+    delete:
+      tags:
+      - Assets
+      summary: Confirm asset change notifications.
+      description: '# Delete Asset Changes
+
+
+        Confirm asset changes acknowledges receipt of asset changes (from the PUT asset-changes endpoint).
+
+
+        ##  Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Use the change_set_id from the PUT asset-changes/change-sets endpoint to confirm receipt of notifications.
+
+        '
+      parameters:
+      - name: change-set-id
+        in: path
+        description: Specify the change-set-id associated with a transaction resource whose receipt you want to confirm.
+        required: true
+        schema:
+          type: integer
+          description: Specify the change-set-id associated with a transaction resource whose receipt you want to confirm.
+          format: int64
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidChangeSetId
+        '403':
+          description: Your access token does not authorize access to this resource
+        '404':
+          description: Transaction was not found
+  /v3/asset-changes/channels:
+    get:
+      tags:
+      - Assets
+      summary: Get a list of asset change notification channels.
+      description: '# Get Partner Channels
+
+
+        Retrieves the channel data for the partner. This data can be used to populate the channel_id parameter in the Put Asset Changes query.
+
+
+        ##  Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Partners who have a channel that has been removed should contact their sales representative to be set up again.
+
+
+        '
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Channel'
+        '403':
+          description: UnauthorizedToAccessResource
+        '404':
+          description: ChannelsNotFound
+  /v3/asset-licensing/{assetId}:
+    post:
+      tags:
+      - Assets
+      summary: Endpoint for acquiring extended licenses with iStock credits for an asset.
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: assetId
+        in: path
+        description: Getty Images assetId - examples 520621493, 112301284
+        required: true
+        schema:
+          type: string
+          description: Getty Images assetId - examples 520621493, 112301284
+          nullable: true
+      requestBody:
+        description: "Structure that specifies an array of LicenseTypes (multiseat, unlimited, resale, indemnification) to acquire,\r\n            and whether or not to use Team Credits. Authenticated User must have access to Team Credits if UseTeamCredits is set to \"true\"."
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcquireAssetLicensesRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetLicensingResponse'
+        '400':
+          description: InvalidRequestParameters
+        '401':
+          description: AuthorizationTokenRequired
+        '402':
+          description: NotEnoughCreditsForPurchase
+        '404':
+          description: StandardLicenseNotFound
+  /v3/asset-management/assets/send-events:
+    get:
+      tags:
+      - Assets
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: last_offset
+        in: query
+        description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+        schema:
+          type: string
+          description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+          format: date-time
+          nullable: true
+      - name: event_count
+        in: query
+        description: Specifies the number of events to return. Default is 50, maximum value is 100.
+        schema:
+          type: integer
+          description: Specifies the number of events to return. Default is 50, maximum value is 100.
+          format: int32
+          nullable: true
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetSendEventsResponse'
+        '400':
+          description: EventCountOutOfRange
+  /v3/boards/{board_id}/assets:
+    put:
+      tags:
+      - Assets
+      summary: Add assets to a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to add assets to.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to add assets to.
+          nullable: true
+      requestBody:
+        description: List assets to add to the board.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BoardAsset'
+              description: List assets to add to the board.
+              nullable: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddBoardAssetsResult'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+    delete:
+      tags:
+      - Assets
+      summary: Remove assets from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to remove assets from.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to remove assets from.
+          nullable: true
+      - name: asset_ids
+        in: query
+        description: List the assets to be removed from the board.
+        schema:
+          type: array
+          items:
+            type: string
+          description: List the assets to be removed from the board.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+  /v3/boards/{board_id}/assets/{asset_id}:
+    put:
+      tags:
+      - Assets
+      summary: Add an asset to a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to add an asset to.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to add an asset to.
+          nullable: true
+      - name: asset_id
+        in: path
+        description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
+        required: true
+        schema:
+          type: string
+          description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
+          nullable: true
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: AssetNotFound
+        '404':
+          description: BoardNotFound
+    delete:
+      tags:
+      - Assets
+      summary: Remove an asset from a board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specify the board to remove an asset from.
+        required: true
+        schema:
+          type: string
+          description: Specify the board to remove an asset from.
+          nullable: true
+      - name: asset_id
+        in: path
+        description: Specify the asset to remove from the board.
+        required: true
+        schema:
+          type: string
+          description: Specify the asset to remove from the board.
+          nullable: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientAccess
+        '404':
+          description: BoardNotFound
+  /v3/purchased-assets:
+    get:
+      tags:
+      - Assets
+      summary: Get Previously Purchased Images and Video
+      description: "This endpoint returns a list of all assets purchased on gettyimages.com by the username used for authentication. \nUse of this endpoint requires configuration changes to your API key. Please contact your sales representative\nto learn more.\n\nYou'll need an API key and access token to use this resource.\n"
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: date_to
+        in: query
+        description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+        schema:
+          type: string
+          description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+          format: date-time
+          nullable: true
+      - name: page
+        in: query
+        description: Identifies page to return. Default is 1.
+        schema:
+          type: integer
+          description: Identifies page to return. Default is 1.
+          format: int32
+          default: 1
+      - name: page_size
+        in: query
+        description: Specifies page size. Default is 75, maximum page_size is 100.
+        schema:
+          type: integer
+          description: Specifies page size. Default is 75, maximum page_size is 100.
+          format: int32
+          default: 75
+      - name: date_from
+        in: query
+        description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+        schema:
+          type: string
+          description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
+          format: date-time
+          nullable: true
+      - name: company_purchases
+        in: query
+        description: If specified, returns the list of previously purchased assets for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
+        schema:
+          type: boolean
+          description: If specified, returns the list of previously purchased assets for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
+          default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviousAssetPurchases'
+        '400':
+          description: PageNumberLessThanOne
+        '401':
+          description: Unauthorized
+        '403':
+          description: InsufficientPermissions
+components:
+  schemas:
+    BoardAsset:
+      required:
+      - asset_id
+      type: object
+      properties:
+        asset_id:
+          type: string
+      additionalProperties: false
+    AssetChanges:
+      type: object
+      properties:
+        change_set_id:
+          type: string
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+          nullable: true
+        changed_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
+          nullable: true
+      additionalProperties: false
+    AssetEvent:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        asset_id:
+          type: string
+          nullable: true
+        email_address:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Channel:
+      type: object
+      properties:
+        ChannelId:
+          type: integer
+          format: int32
+        AssetFamily:
+          $ref: '#/components/schemas/AssetFamily'
+        AssetChangeType:
+          type: string
+          nullable: true
+        CreateDateUtc:
+          type: string
+          format: date-time
+        NotificationCount:
+          type: integer
+          format: int32
+        AssetType:
+          $ref: '#/components/schemas/AssetType'
+        OldestChangeNotificationDateUtc:
+          type: string
+          format: date-time
+        Metadata:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AssetType:
+      enum:
+      - NotSet
+      - Image
+      - Film
+      - Music
+      type: string
+    ExtendedLicenses:
+      enum:
+      - multiseat
+      - unlimited
+      - resale
+      - indemnification
+      type: string
+    AddBoardAssetsResult:
+      type: object
+      properties:
+        assets_added:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoardAsset'
+          nullable: true
+        assets_not_added:
+          type: array
+          items:
+            type: string
+          nullable: true
+      additionalProperties: false
+    ChangedAssetDetail:
+      type: object
+      properties:
+        asset_changed_utc_datetime:
+          type: string
+          description: Contains the date of the asset change.
+          format: date-time
+        asset_lifecycle:
+          type: string
+          description: Contains the type of change this asset change is. (i.e. "New," "Updated" or "Deleted")
+          nullable: true
+        asset_type:
+          type: string
+          description: Contains the type of asset this asset change is (i.e. "Image").
+          nullable: true
+        id:
+          type: string
+          description: Contains the Id for the asset change.
+          nullable: true
+        uri:
+          type: string
+          description: Contains the asset download URL for assets with an AssetLifecycle of "New."
+          nullable: true
+      additionalProperties: false
+    AssetLicensingResponse:
+      type: object
+      properties:
+        credits_used:
+          type: integer
+          format: int32
+        acquired_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+          nullable: true
+      additionalProperties: false
+    PreviousAssetPurchase:
+      type: object
+      properties:
+        date_purchased:
+          type: string
+          format: date-time
+        purchased_by:
+          type: string
+          nullable: true
+        asset_id:
+          type: string
+          nullable: true
+        asset_type:
+          type: string
+          nullable: true
+        license_model:
+          type: string
+          nullable: true
+        order_id:
+          type: string
+          nullable: true
+        thumb_uri:
+          type: string
+          nullable: true
+        size_name:
+          type: string
+          nullable: true
+        file_size_in_bytes:
+          type: string
+          nullable: true
+        download_uri:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PreviousAssetPurchases:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        previous_purchases:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviousAssetPurchase'
+          nullable: true
+      additionalProperties: false
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type: string
+          format: date-time
+          nullable: true
+        asset_send_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetEvent'
+          nullable: true
+      additionalProperties: false
+    AcquireAssetLicensesRequest:
+      required:
+      - extended_licenses
+      type: object
+      properties:
+        extended_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+        use_team_credits:
+          type: boolean
+          description: Defaults to false.
+      additionalProperties: false
+    AssetFamily:
+      enum:
+      - NotSet
+      - Editorial
+      - Creative
+      - Both
+      type: string
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}

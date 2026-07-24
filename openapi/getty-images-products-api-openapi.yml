@@ -1,0 +1,197 @@
+openapi: 3.0.1
+info:
+  title: Getty Images Products API
+  version: '3'
+  description: '
+
+    Developer resources for the Getty Images API including SDK, documentation,
+
+    release notes, status, notifications and sample code.'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: Products
+paths:
+  /v3/products:
+    get:
+      tags:
+      - Products
+      summary: Get Products
+      description: 'This endpoint returns all products available to the username used during authentication. As such, this endpoint requires the use of
+
+        a fully authorized access_token. The product data can then be used as search filters, restricting results to images from a specific product.
+
+
+        You''ll need an API key and access token to use this resource.
+
+        '
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: fields
+        in: query
+        description: Comma separated list of fields. Allows product download requirements to be returned.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductFieldValues'
+          description: Comma separated list of fields. Allows product download requirements to be returned.
+          nullable: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResult'
+        '400':
+          description: InvalidRequestParameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: CreditPack
+components:
+  schemas:
+    DownloadRequirements:
+      type: object
+      properties:
+        is_note_required:
+          type: boolean
+        is_project_code_required:
+          type: boolean
+        project_codes:
+          type: array
+          items:
+            type: string
+          nullable: true
+      additionalProperties: false
+    Product:
+      type: object
+      properties:
+        application_website:
+          type: string
+          nullable: true
+        credits_remaining:
+          type: integer
+          format: int32
+          nullable: true
+        download_limit:
+          type: integer
+          format: int32
+          nullable: true
+        download_limit_duration:
+          type: string
+          nullable: true
+        download_limit_reset_utc_date:
+          type: string
+          format: date-time
+          nullable: true
+        downloads_remaining:
+          type: integer
+          format: int32
+          nullable: true
+        expiration_utc_date:
+          type: string
+          format: date-time
+          nullable: true
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/ProductStatus'
+        type:
+          $ref: '#/components/schemas/ProductTypeResponse'
+        ai_gen_requirements:
+          $ref: '#/components/schemas/DownloadRequirements'
+        download_requirements:
+          $ref: '#/components/schemas/DownloadRequirements'
+        overage:
+          $ref: '#/components/schemas/OverageDetails'
+        agreement_name:
+          type: string
+          nullable: true
+        imagepack_resolution:
+          type: string
+          nullable: true
+        team_credits:
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    ProductFieldValues:
+      enum:
+      - download_requirements
+      type: string
+    OverageDetails:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+          nullable: true
+        remaining:
+          type: integer
+          format: int32
+          nullable: true
+        count:
+          type: integer
+          format: int32
+          nullable: true
+        overages_reached:
+          type: boolean
+          nullable: true
+      additionalProperties: false
+    ProductTypeResponse:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
+    ProductStatus:
+      enum:
+      - active
+      - inactive
+      type: string
+    ProductsResult:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          scopes: {}
