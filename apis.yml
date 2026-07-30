@@ -5,7 +5,19 @@ description: >-
   customers, letting you integrate outstanding images, videos, and illustrations
   from Getty Images and iStock directly into your platform.
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/getty-images.png
 access: 3rd-Party
 created: '2024-11-13'
 modified: '2026-04-28'
@@ -19,22 +31,630 @@ tags:
   - Photos
   - Videos
 apis:
-  - aid: getty-images:getty-images
-    name: Getty Images API
-    description: >-
-      Developer resources for the Getty Images API including SDK, documentation,
-      release notes, status, notifications and sample code.
-    humanURL: https://developers.gettyimages.com/
-    baseURL: https://api.gettyimages.com
-    tags:
-      - Images
-      - Videos
-      - Media
-    properties:
-      - type: Documentation
-        url: https://developers.gettyimages.com/
-      - type: OpenAPI
-        url: openapi/getty-images-openapi.yml
+- aid: getty-images:getty-images-affiliates-api
+  name: Getty Images Affiliates API
+  description: The Affiliates API from Getty Images — 2 operation(s) for affiliates.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Affiliates
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-affiliates-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-ai-api
+  name: Getty Images Ai API
+  description: The Ai API from Getty Images — 17 operation(s) for ai.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Ai
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-ai-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-ai-generator-api
+  name: Getty Images Ai Generator API
+  description: The Ai Generator API from Getty Images — 2 operation(s) for ai generator.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Ai Generator
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-ai-generator-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-artists-api
+  name: Getty Images Artists API
+  description: The Artists API from Getty Images — 2 operation(s) for artists.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Artists
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-artists-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-assets-api
+  name: Getty Images Assets API
+  description: The Assets API from Getty Images — 8 operation(s) for assets.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-assets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-background-api
+  name: Getty Images Background API
+  description: The Background API from Getty Images — 2 operation(s) for background.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Background
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-background-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-batches-api
+  name: Getty Images Batches API
+  description: The Batches API from Getty Images — 1 operation(s) for batches.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-batches-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-boards-api
+  name: Getty Images Boards API
+  description: The Boards API from Getty Images — 6 operation(s) for boards.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Boards
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-boards-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-change-api
+  name: Getty Images Change API
+  description: The Change API from Getty Images — 2 operation(s) for change.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Change
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-change-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-changes-api
+  name: Getty Images Changes API
+  description: The Changes API from Getty Images — 3 operation(s) for changes.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Changes
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-changes-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-channels-api
+  name: Getty Images Channels API
+  description: The Channels API from Getty Images — 1 operation(s) for channels.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-channels-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-collections-api
+  name: Getty Images Collections API
+  description: The Collections API from Getty Images — 1 operation(s) for collections.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-collections-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-color-api
+  name: Getty Images Color API
+  description: The Color API from Getty Images — 1 operation(s) for color.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Color
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-color-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-comments-api
+  name: Getty Images Comments API
+  description: The Comments API from Getty Images — 2 operation(s) for comments.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-comments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-compositions-api
+  name: Getty Images Compositions API
+  description: The Compositions API from Getty Images — 1 operation(s) for compositions.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Compositions
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-compositions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-countries-api
+  name: Getty Images Countries API
+  description: The Countries API from Getty Images — 1 operation(s) for countries.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Countries
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-countries-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-creative-api
+  name: Getty Images Creative API
+  description: The Creative API from Getty Images — 4 operation(s) for creative.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Creative
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-creative-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-current-api
+  name: Getty Images Current API
+  description: The Current API from Getty Images — 1 operation(s) for current.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Current
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-current-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-customers-api
+  name: Getty Images Customers API
+  description: The Customers API from Getty Images — 1 operation(s) for customers.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-downloads-api
+  name: Getty Images Downloads API
+  description: The Downloads API from Getty Images — 5 operation(s) for downloads.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Downloads
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-downloads-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-editorial-api
+  name: Getty Images Editorial API
+  description: The Editorial API from Getty Images — 2 operation(s) for editorial.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Editorial
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-editorial-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-events-api
+  name: Getty Images Events API
+  description: The Events API from Getty Images — 4 operation(s) for events.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-events-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-extend-api
+  name: Getty Images Extend API
+  description: The Extend API from Getty Images — 1 operation(s) for extend.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Extend
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-extend-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-files-api
+  name: Getty Images Files API
+  description: The Files API from Getty Images — 3 operation(s) for files.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-files-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-generation-api
+  name: Getty Images Generation API
+  description: The Generation API from Getty Images — 6 operation(s) for generation.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Generation
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-generation-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-generations-api
+  name: Getty Images Generations API
+  description: The Generations API from Getty Images — 12 operation(s) for generations.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Generations
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-generations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-history-api
+  name: Getty Images History API
+  description: The History API from Getty Images — 2 operation(s) for history.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-history-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-image-api
+  name: Getty Images Image API
+  description: The Image API from Getty Images — 15 operation(s) for image.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Image
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-image-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-images-api
+  name: Getty Images Images API
+  description: The Images API from Getty Images — 15 operation(s) for images.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-images-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-index-api
+  name: Getty Images Index API
+  description: The Index API from Getty Images — 3 operation(s) for index.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Index
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-index-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-influence-api
+  name: Getty Images Influence API
+  description: The Influence API from Getty Images — 2 operation(s) for influence.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Influence
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-influence-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-licensing-api
+  name: Getty Images Licensing API
+  description: The Licensing API from Getty Images — 1 operation(s) for licensing.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Licensing
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-licensing-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-management-api
+  name: Getty Images Management API
+  description: The Management API from Getty Images — 1 operation(s) for management.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Management
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-management-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-name-api
+  name: Getty Images Name API
+  description: The Name API from Getty Images — 1 operation(s) for name.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Name
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-name-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-objects-api
+  name: Getty Images Objects API
+  description: The Objects API from Getty Images — 1 operation(s) for objects.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Objects
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-objects-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-orders-api
+  name: Getty Images Orders API
+  description: The Orders API from Getty Images — 1 operation(s) for orders.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-products-api
+  name: Getty Images Products API
+  description: The Products API from Getty Images — 1 operation(s) for products.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-products-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-purchased-api
+  name: Getty Images Purchased API
+  description: The Purchased API from Getty Images — 1 operation(s) for purchased.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Purchased
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-purchased-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-refine-api
+  name: Getty Images Refine API
+  description: The Refine API from Getty Images — 1 operation(s) for refine.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Refine
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-refine-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-registrations-api
+  name: Getty Images Registrations API
+  description: The Registrations API from Getty Images — 2 operation(s) for registrations.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Registrations
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-registrations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-removal-api
+  name: Getty Images Removal API
+  description: The Removal API from Getty Images — 2 operation(s) for removal.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Removal
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-removal-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-request-api
+  name: Getty Images Request API
+  description: The Request API from Getty Images — 5 operation(s) for request.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Request
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-request-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-search-api
+  name: Getty Images Search API
+  description: The Search API from Getty Images — 11 operation(s) for search.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-search-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-send-api
+  name: Getty Images Send API
+  description: The Send API from Getty Images — 1 operation(s) for send.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Send
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-send-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-series-api
+  name: Getty Images Series API
+  description: The Series API from Getty Images — 2 operation(s) for series.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Series
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-series-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-set-api
+  name: Getty Images Set API
+  description: The Set API from Getty Images — 1 operation(s) for set.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Set
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-set-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-sets-api
+  name: Getty Images Sets API
+  description: The Sets API from Getty Images — 2 operation(s) for sets.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Sets
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-sets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-similar-api
+  name: Getty Images Similar API
+  description: The Similar API from Getty Images — 2 operation(s) for similar.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Similar
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-similar-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-uploads-api
+  name: Getty Images Uploads API
+  description: The Uploads API from Getty Images — 1 operation(s) for uploads.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Uploads
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-uploads-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-usage-api
+  name: Getty Images Usage API
+  description: The Usage API from Getty Images — 1 operation(s) for usage.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-usage-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-variations-api
+  name: Getty Images Variations API
+  description: The Variations API from Getty Images — 1 operation(s) for variations.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Variations
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-variations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
+- aid: getty-images:getty-images-videos-api
+  name: Getty Images Videos API
+  description: The Videos API from Getty Images — 11 operation(s) for videos.
+  humanURL: https://developers.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Videos
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-videos-api-openapi.yml
+  - type: Documentation
+    url: https://developers.gettyimages.com/
 common:
   - type: VulnerabilityDisclosure
     url: security/getty-images-vulnerability-disclosure.yml
