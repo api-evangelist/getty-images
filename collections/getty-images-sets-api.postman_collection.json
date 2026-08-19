@@ -1,0 +1,597 @@
+{
+  "item": [
+    {
+      "id": "56dad984-a4d3-422d-a456-d059f534ab60",
+      "name": "Sets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b962615a-7b17-4a76-91c6-4003161b35b5",
+          "name": "Get asset change notifications.",
+          "request": {
+            "name": "Get asset change notifications.",
+            "description": {
+              "content": "# Asset Changes\n\nGet notifications about new, updated or deleted assets for a specific channel.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource. \n\nMaximum batch size is 2200.\n\nChange-sets must be confirmed before a new batch of notifications can be retrieved from this endpoint. Use the DELETE asset-changes/change-sets/{change-set-id} endpoint to confirm reciept of these notifications.\n\nValues returned for asset_type include Image, Film, and null. Values returned for asset_lifecycle include New, Update, and Delete.\n\nDelete notifications may be provided for asset ids that have not previously been received as New or Update notifications. Delete notifications may return null for the asset_type.\n\nIf there are no notifications in the channel an empty response body will be returned.\n\nNotifications older than 60 days will be removed from partner channels.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "asset-changes",
+                "change-sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "channel_id",
+                  "value": "<integer>",
+                  "description": "Specifies the id of the channel for the asset data. Valid channel ids can be found in the results of the Get Partner Channel query."
+                },
+                {
+                  "disabled": false,
+                  "key": "batch_size",
+                  "value": "<integer>",
+                  "description": "Specifies the number of assets to return. The default is 2200; maximum is 2200."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33f2910f-ec24-4c68-a95f-1a61e572f4b9",
+              "name": "Success - Channel contains unconfirmed asset change notifications",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "batch_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"change_set_id\": \"string\",\n  \"changed_assets\": [\n    {\n      \"asset_changed_utc_datetime\": \"1967-08-28T20:27:09.930Z\",\n      \"asset_lifecycle\": \"string\",\n      \"asset_type\": \"string\",\n      \"id\": \"string\",\n      \"uri\": \"string\"\n    },\n    {\n      \"asset_changed_utc_datetime\": \"2017-03-23T23:31:43.897Z\",\n      \"asset_lifecycle\": \"string\",\n      \"asset_type\": \"string\",\n      \"id\": \"string\",\n      \"uri\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f962be7d-f37c-4885-acd1-46b3b9a22e1e",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "batch_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"change_set_id\": \"string\",\n  \"changed_assets\": [\n    {\n      \"asset_changed_utc_datetime\": \"2025-09-23T00:04:46.679Z\",\n      \"asset_lifecycle\": \"string\",\n      \"asset_type\": \"string\",\n      \"id\": \"string\",\n      \"uri\": \"string\"\n    },\n    {\n      \"asset_changed_utc_datetime\": \"1952-05-22T07:33:08.986Z\",\n      \"asset_lifecycle\": \"string\",\n      \"asset_type\": \"string\",\n      \"id\": \"string\",\n      \"uri\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ecf92a3-6327-41ff-a1ef-6671c8bac0d6",
+              "name": "InvalidChannelIdException",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "batch_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5e13bdee-d008-43ed-9d18-b57f1af90c37",
+              "name": "Your access token does not authorize access to this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "batch_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e3b0e6de-a244-495d-91a2-32667b28615f",
+              "name": "The channel you specified does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "batch_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8f586fe-3c56-4825-8a66-c4b3c92d9b7e",
+          "name": "Confirm asset change notifications.",
+          "request": {
+            "name": "Confirm asset change notifications.",
+            "description": {
+              "content": "# Delete Asset Changes\n\nConfirm asset changes acknowledges receipt of asset changes (from the PUT asset-changes endpoint).\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource.\n\nUse the change_set_id from the PUT asset-changes/change-sets endpoint to confirm receipt of notifications.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "asset-changes",
+                "change-sets",
+                ":change-set-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "change-set-id",
+                  "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "574ce317-29d0-42c7-a25a-640a5b5a02ad",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "374a8d58-6f12-4fac-91dd-b6de0f17cc5b",
+              "name": "InvalidChangeSetId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62687b7f-9fbb-4bc0-aa79-667035662f58",
+              "name": "Your access token does not authorize access to this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a3d0db59-a5c1-4d79-85b4-fde3034d02d6",
+              "name": "Transaction was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aa3eae80-5075-4ed0-ba39-764298ae894d",
+    "name": "Getty Images Sets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

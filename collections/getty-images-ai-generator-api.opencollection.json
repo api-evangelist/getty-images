@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Ai Generator API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ai Generator",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get download sizes for a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download-sizes",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Sizes\n\nGiven a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.\n"
+        },
+        {
+          "info": {
+            "name": "Re-download a previously downloaded item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/redownloads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# Re-download AI Generated media\n\nRe-download previously downloaded AI generated media.\n\n## `ReDownloadRequest` details\n\n| Parameter                       | Purpose                                                                                                                                                   |\n|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

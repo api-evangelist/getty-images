@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Variations API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Variations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get variations on a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/variations",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Generate Variations\n\nGenerate image variations from a previously-generated image.\n\n## The Image Variation Request\n\nThe `ImageVariationRequest` payload to be posted contains the optional\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                                                      |\n|---------------------|----------------------------------------------"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

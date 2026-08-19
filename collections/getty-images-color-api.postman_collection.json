@@ -1,0 +1,458 @@
+{
+  "item": [
+    {
+      "id": "e7a276d1-89ad-44ba-af10-73b92b12874d",
+      "name": "Color",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e13e2cd3-bb09-4285-aa9d-0e133838bb21",
+          "name": "Influence the color of generated images using a reference image",
+          "request": {
+            "name": "Influence the color of generated images using a reference image",
+            "description": {
+              "content": "# AI Generator - Influence Color By Image\n\nInfluence Color By Image allows the client application to provide an existing Getty Images creative image or an existing generated image, along with prompt text, as a reference for generating new images. The generated images are influenced by the color palette, tone and location of colors within the reference image.\n\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nWhen generating new images using using a `reference_asset_id`, the reference image must first be licensed (downloaded) through a traditional license product such as Premium Access.\n\n## The Influence Color By Image Request\n\nThe `InfluenceColorByImageRequest` payload requires one, and only one, reference image (`reference_asset_id`, `reference_generation`, or `reference_file_registration_id`) and accepts the following optional parameters:\n\n| Parameter                        | Purpose                                                                                                                                                                                                                                                                                                                                     |\n| -------------------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `reference_asset_id`             | Creative image ID of the image being used as a reference.                                                                                                                                                                                                                                                                                   |\n| `reference_generation`           | Generation details of the image being used as a reference.                                                                                                                                                                                                                                                                                  |\n| `reference_file_registration_id` | Registered file id of the image being used as a reference.  The `ImageReference` category **must** be used when registering the file.                                                                                                                                                                                                       |\n| `prompt` _Required_              | The primary text used for the generation of the images.                                                                                                                                                                                                                                                                                     |\n| `negative_prompt`                | Concepts to _exclude_ from the result.                                                                                                                                                                                                                                                                                                      |\n| `noise_level`\t_Required_         | Accepted values are 0-1. Higher values will increase differences between the reference and generated images.                                                                                                                                                                                                                                |\n| `media_type`                     | Media type of the results: `photography` or `illustration`                                                                                                                                                                                                                                                                                  |\n| `mood`                           | Can be `black_and_white`, `warm`, `cool`, `natural`, `vivid`, `dramatic`, or `bold`                                                                                                                                                                                                                                                         |\n| `seed`                           | To create new images that have a similar aesthetic, include the seed value from a set of previously generated images. Seed can also be used to reproduce previous results.                                                                                                                                                                  |\n| `product_id`                     | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`).                                                                                           |\n| `notes`                          | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                   |\n| `project_code`                   | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information. |\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including URLs to the result images and a `generation_request_id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be\nretained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "ai",
+                "image-generations",
+                "influence-color-by-image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b6f5337c-c629-452b-ae3d-96bb6c39bb7b",
+              "name": "Returns the result of a request to extend an image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "influence-color-by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generation_request_id\": \"string\",\n  \"seed\": 7831,\n  \"results\": [\n    {\n      \"index\": 5123,\n      \"is_blocked\": true,\n      \"preview_urls\": [\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 1333,\n          \"height\": 5281\n        },\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 2819,\n          \"height\": 4164\n        }\n      ],\n      \"url\": \"string\"\n    },\n    {\n      \"index\": 6608,\n      \"is_blocked\": false,\n      \"preview_urls\": [\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 4527,\n          \"height\": 6129\n        },\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 1643,\n          \"height\": 7798\n        }\n      ],\n      \"url\": \"string\"\n    }\n  ],\n  \"original_asset\": {\n    \"id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2275cf64-ed87-44f8-9268-557e63b801d6",
+              "name": "Returns the request ID for a pending request to extend an image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "influence-color-by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generation_request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31f354ef-8de3-4d34-a0fb-48bbab5d0dd7",
+              "name": "The request was invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "influence-color-by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8bcab387-279b-4197-8817-cc367f17005f",
+              "name": "Product quota exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "influence-color-by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c4dbe832-6bff-45e8-8f30-5ea7b84eb49b",
+              "name": "Image not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "influence-color-by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81dffa19-19dd-4f87-86fc-bc0d7fabca02",
+              "name": "GenerationRequestGone",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "influence-color-by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06f278fa-9ce2-4c8e-b32a-a00a3f149385",
+              "name": "TooManyConcurrentGenerations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "influence-color-by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"reference_file_registration_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"noise_level\": \"<float>\",\n  \"media_type\": \"<string>\",\n  \"mood\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7a7568b7-e2c0-478e-9db8-e36894190413",
+    "name": "Getty Images Color API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

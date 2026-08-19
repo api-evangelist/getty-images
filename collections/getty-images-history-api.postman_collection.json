@@ -1,0 +1,484 @@
+{
+  "item": [
+    {
+      "id": "37385496-a297-46d1-bc5c-8d7bff4d82a6",
+      "name": "History",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6f06b966-44dd-4c5f-b397-f2172783b839",
+          "name": "Retrieve history of AI generations",
+          "request": {
+            "name": "Retrieve history of AI generations",
+            "description": {
+              "content": "# AI Generator - Generation History\n\nGet the history of AI generation requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "ai",
+                "generation-history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_start",
+                  "value": "<dateTime>",
+                  "description": "If included, limits the results to those generation requests made on or after date_start. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_end",
+                  "value": "<dateTime>",
+                  "description": "If included, limits the results to those generation requests made on or before date_end. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+                },
+                {
+                  "disabled": false,
+                  "key": "media_type",
+                  "value": "<string>",
+                  "description": "If included, limits the results to those generation requests made for the given media type."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The page size of results.  Default is 30."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page number of results.  Default is 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "product_ids",
+                  "value": "<integer>",
+                  "description": "If included, limits the results to only those requests made against the indicated products."
+                },
+                {
+                  "disabled": false,
+                  "key": "product_ids",
+                  "value": "<integer>",
+                  "description": "If included, limits the results to only those requests made against the indicated products."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_generations",
+                  "value": "false",
+                  "description": "If `true`, returns the list of previously downloaded images for all users in\r\n            your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for\r\n            more information. Default is `false`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8772dd17-7ebc-44ae-a33e-0ccc58941e0c",
+              "name": "Returns the history of AI generations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "generation-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "media_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "product_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "product_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "company_generations",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generations\": [\n    {\n      \"generation_request_id\": \"string\",\n      \"seed\": 2795,\n      \"generation_date\": \"1997-06-16T00:43:13.605Z\",\n      \"product_revoked_date\": \"2005-10-29T10:54:31.049Z\",\n      \"prompt\": \"string\",\n      \"negative_prompt\": \"string\",\n      \"product_id\": 4219,\n      \"notes\": \"string\",\n      \"project_code\": \"string\",\n      \"generation_type\": \"influence_composition_by_image\",\n      \"generation_options\": {\n        \"media_type\": \"<string>\",\n        \"aspect_ratio\": \"string\",\n        \"mood\": \"vivid\"\n      },\n      \"source_generation_request\": {\n        \"source_generation_request_id\": \"string\",\n        \"source_generation_result_index\": 3457\n      },\n      \"original_asset\": {\n        \"id\": \"string\"\n      },\n      \"results\": [\n        {\n          \"index\": 5016,\n          \"is_blocked\": true,\n          \"preview_urls\": [\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"index\": 3963,\n          \"is_blocked\": true,\n          \"preview_urls\": [\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"user\": {\n        \"username\": \"string\",\n        \"first_name\": \"string\",\n        \"middle_name\": \"string\",\n        \"last_name\": \"string\"\n      }\n    },\n    {\n      \"generation_request_id\": \"string\",\n      \"seed\": 0,\n      \"generation_date\": \"1979-02-19T17:01:51.235Z\",\n      \"product_revoked_date\": \"1996-02-26T09:05:17.804Z\",\n      \"prompt\": \"string\",\n      \"negative_prompt\": \"string\",\n      \"product_id\": 5648,\n      \"notes\": \"string\",\n      \"project_code\": \"string\",\n      \"generation_type\": \"variation\",\n      \"generation_options\": {\n        \"media_type\": \"<string>\",\n        \"aspect_ratio\": \"string\",\n        \"mood\": \"cool\"\n      },\n      \"source_generation_request\": {\n        \"source_generation_request_id\": \"string\",\n        \"source_generation_result_index\": 9954\n      },\n      \"original_asset\": {\n        \"id\": \"string\"\n      },\n      \"results\": [\n        {\n          \"index\": 6218,\n          \"is_blocked\": true,\n          \"preview_urls\": [\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"index\": 2303,\n          \"is_blocked\": false,\n          \"preview_urls\": [\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"preview_size\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"image_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"width\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"height\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"user\": {\n        \"username\": \"string\",\n        \"first_name\": \"string\",\n        \"middle_name\": \"string\",\n        \"last_name\": \"string\"\n      }\n    }\n  ],\n  \"result_count\": 6283\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62516487-7410-4059-9799-5d0c5074a90b",
+              "name": "Company generations were requested but your account is not configured for access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "generation-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "media_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "product_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "product_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "company_generations",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a58dc5b9-94d2-4518-8ba0-4bcda4d42b87",
+          "name": "Retrieve history item for an individual generation request",
+          "request": {
+            "name": "Retrieve history item for an individual generation request",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "ai",
+                "generation-history",
+                ":generationRequestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "generationRequestId",
+                  "description": "(Required) The ID from a previous request to generate images"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "562769e9-7388-4538-944f-ec21db08bf01",
+              "name": "Returns the history item for the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "generation-history",
+                    ":generationRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generationRequestId",
+                      "description": "(Required) The ID from a previous request to generate images"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generation_request_id\": \"string\",\n  \"seed\": 3469,\n  \"generation_date\": \"1989-06-19T14:05:40.484Z\",\n  \"product_revoked_date\": \"1970-07-18T01:44:35.922Z\",\n  \"prompt\": \"string\",\n  \"negative_prompt\": \"string\",\n  \"product_id\": 2541,\n  \"notes\": \"string\",\n  \"project_code\": \"string\",\n  \"generation_type\": \"influence_outline_by_image\",\n  \"generation_options\": {\n    \"media_type\": \"<string>\",\n    \"aspect_ratio\": \"string\",\n    \"mood\": \"black_and_white\"\n  },\n  \"source_generation_request\": {\n    \"source_generation_request_id\": \"string\",\n    \"source_generation_result_index\": 2613\n  },\n  \"original_asset\": {\n    \"id\": \"string\"\n  },\n  \"results\": [\n    {\n      \"index\": 839,\n      \"is_blocked\": false,\n      \"preview_urls\": [\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 7067,\n          \"height\": 6848\n        },\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 3281,\n          \"height\": 8923\n        }\n      ]\n    },\n    {\n      \"index\": 4624,\n      \"is_blocked\": false,\n      \"preview_urls\": [\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 6837,\n          \"height\": 7693\n        },\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 5645,\n          \"height\": 863\n        }\n      ]\n    }\n  ],\n  \"user\": {\n    \"username\": \"string\",\n    \"first_name\": \"string\",\n    \"middle_name\": \"string\",\n    \"last_name\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67472779-f70f-44fe-b0ce-acf9ef2a654d",
+              "name": "NotAuthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "generation-history",
+                    ":generationRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generationRequestId",
+                      "description": "(Required) The ID from a previous request to generate images"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9320117-df05-441d-bc34-16ce0164e6bb",
+              "name": "The request ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "generation-history",
+                    ":generationRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generationRequestId",
+                      "description": "(Required) The ID from a previous request to generate images"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9b9c9459-340a-4902-8d1e-c0cfcbfcb6ed",
+    "name": "Getty Images History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

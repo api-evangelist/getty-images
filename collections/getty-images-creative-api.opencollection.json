@@ -1,0 +1,634 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Creative API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Creative",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for creative images only",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images/creative",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the age of individuals in an image."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for images by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "color",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on predominant color in an image. Use 6 character hexadecimal format (e.g., #002244)."
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image composition."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "embed_content_only",
+                "value": "",
+                "type": "query",
+                "description": "Restrict search results to embeddable images. The default is false."
+              },
+              {
+                "name": "enhanced_search",
+                "value": "",
+                "type": "query",
+                "description": "If set to {false}, your search will not use enhanced search. Defaults to {true}."
+              },
+              {
+                "name": "ethnicity",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on the ethnicity of individuals in an image."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude images that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "exclude_keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "exclude_nudity",
+                "value": "",
+                "type": "query",
+                "description": "Excludes images containing nudity. The default is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "file_types",
+                "value": "",
+                "type": "query",
+                "description": "Return only images having a specific file type."
+              },
+              {
+                "name": "graphical_styles",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on graphical style of the image."
+              },
+              {
+                "name": "graphical_styles_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Provides searching based on specified graphical style(s). The default is include."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "minimum_size",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on minimum size requested. The default is x-small."
+              },
+              {
+                "name": "moods",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on predominant mood in an image."
+              },
+              {
+                "name": "number_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the number of people in the image."
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only images with selected aspect ratios."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Search images using a search phrase."
+              },
+              {
+                "name": "safe_search",
+                "value": "",
+                "type": "query",
+                "description": "Setting safe_search to \"true\" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search our contemporary stock photos, illustrations and archival images.\n\nYou'll need an API key and access token to use this resource.\n \nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API custom"
+        },
+        {
+          "info": {
+            "name": "Search for creative images based on url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images/creative/by-image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the Getty image id to use in the search."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude images that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "image_url",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the location of the image to use in the search."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "product_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              }
+            ]
+          },
+          "docs": "Search for **similar creative images** by passing an `image_url` to an uploaded image OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.\n\nFor example, using cURL:\n\n``` sh\nc"
+        },
+        {
+          "info": {
+            "name": "Search for creative videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/videos/creative",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering according to the age of individuals in a video."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "aspect_ratios",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific aspect ratios."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by collection code."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on video composition."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "enhanced_search",
+                "value": "",
+                "type": "query",
+                "description": "If set to {false}, your search will not use enhanced search. Defaults to {true}."
+              },
+              {
+                "name": "ethnicity",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on the ethnicity of individuals."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude videos that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "exclude_keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also do not contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "exclude_nudity",
+                "value": "",
+                "type": "query",
+                "description": "Excludes videos containing nudity. The default is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "format_available",
+                "value": "",
+                "type": "query",
+                "description": "Filters according to the digital video format available on a film asset."
+              },
+              {
+                "name": "frame_rates",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by video frame rate (frames/second)."
+              },
+              {
+                "name": "image_techniques",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image technique."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "license_models",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the video licensing model(s)."
+              },
+              {
+                "name": "min_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by minimum length of video clip, in seconds"
+              },
+              {
+                "name": "max_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by maximum length of video, in seconds"
+              },
+              {
+                "name": "number_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the number of people."
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos with selected orientations."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "safe_search",
+                "value": "",
+                "type": "query",
+                "description": "Setting safe_search to \"true\" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              },
+              {
+                "name": "release_status",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by type of model release."
+              },
+              {
+                "name": "viewpoints",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on viewpoint."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search premium stock video, from archival film to contemporary 4K and HD footage.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without\nbeing logged in (anonymous search).  If you are a Getty Images AP"
+        },
+        {
+          "info": {
+            "name": "Search for creative videos based on url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/videos/creative/by-image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the Getty video id to use in the search."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude videos that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "image_url",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the location of the image to use in the search."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "product_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              }
+            ]
+          },
+          "docs": "Search for **similar creative videos** by passing an `image_url` to an uploaded image/frame grab from a video OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image or frame grab in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the UR"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

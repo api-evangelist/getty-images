@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Uploads API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Uploads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload image for use by the search creative images/videos operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/search/by-image/uploads/:file-name",
+            "params": [
+              {
+                "name": "file-name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload image for use by the search creative images/videos operations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

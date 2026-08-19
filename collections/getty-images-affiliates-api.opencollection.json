@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Affiliates API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Affiliates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /v3/affiliates/search/images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/affiliates/search/images",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Search images using a search phrase."
+              },
+              {
+                "name": "style",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on graphical style of the image."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /v3/affiliates/search/videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/affiliates/search/videos",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

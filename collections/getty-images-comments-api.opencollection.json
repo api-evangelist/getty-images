@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Comments API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get comments from a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/boards/:board_id/comments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to retrieve comments from."
+              }
+            ]
+          },
+          "docs": "Get comments from a board"
+        },
+        {
+          "info": {
+            "name": "Add a comment to a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/boards/:board_id/comments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to add a comment to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a comment to a board"
+        },
+        {
+          "info": {
+            "name": "Delete a comment from a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v3/boards/:board_id/comments/:comment_id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board containing the comment to delete."
+              },
+              {
+                "name": "comment_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the comment to delete."
+              }
+            ]
+          },
+          "docs": "Delete a comment from a board"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

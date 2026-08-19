@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Purchased API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Purchased",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Previously Purchased Images and Video",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/purchased-assets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 75, maximum page_size is 100."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)."
+              },
+              {
+                "name": "company_purchases",
+                "value": "",
+                "type": "query",
+                "description": "If specified, returns the list of previously purchased assets for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false."
+              }
+            ]
+          },
+          "docs": "This endpoint returns a list of all assets purchased on gettyimages.com by the username used for authentication. \nUse of this endpoint requires configuration changes to your API key. Please contact your sales representative\nto learn more.\n\nYou'll need an API key and access token to use this resource.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

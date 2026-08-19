@@ -1,0 +1,376 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Boards API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Boards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all boards that the user participates in",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/boards",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "board_relationship",
+                "value": "",
+                "type": "query",
+                "description": "Search for boards the user owns or has been invited to as an editor."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Sort the list of boards by last update date or name. Defaults to date_last_updated_descending."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Request number of boards to return in each page. (default is 30)."
+              }
+            ]
+          },
+          "docs": "Get all boards that the user participates in"
+        },
+        {
+          "info": {
+            "name": "Create a new board",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/boards",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new board"
+        },
+        {
+          "info": {
+            "name": "Get assets and metadata for a specific board",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/boards/:board_id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Retrieve details for a specific board."
+              }
+            ]
+          },
+          "docs": "Get assets and metadata for a specific board"
+        },
+        {
+          "info": {
+            "name": "Update a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/boards/:board_id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a board"
+        },
+        {
+          "info": {
+            "name": "Delete a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v3/boards/:board_id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to delete."
+              }
+            ]
+          },
+          "docs": "Delete a board"
+        },
+        {
+          "info": {
+            "name": "Add assets to a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/boards/:board_id/assets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to add assets to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add assets to a board"
+        },
+        {
+          "info": {
+            "name": "Remove assets from a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v3/boards/:board_id/assets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to remove assets from."
+              },
+              {
+                "name": "asset_ids",
+                "value": "",
+                "type": "query",
+                "description": "List the assets to be removed from the board."
+              }
+            ]
+          },
+          "docs": "Remove assets from a board"
+        },
+        {
+          "info": {
+            "name": "Add an asset to a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/boards/:board_id/assets/:asset_id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to add an asset to."
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken."
+              }
+            ]
+          },
+          "docs": "Add an asset to a board"
+        },
+        {
+          "info": {
+            "name": "Remove an asset from a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v3/boards/:board_id/assets/:asset_id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to remove an asset from."
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the asset to remove from the board."
+              }
+            ]
+          },
+          "docs": "Remove an asset from a board"
+        },
+        {
+          "info": {
+            "name": "Get comments from a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/boards/:board_id/comments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to retrieve comments from."
+              }
+            ]
+          },
+          "docs": "Get comments from a board"
+        },
+        {
+          "info": {
+            "name": "Add a comment to a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/boards/:board_id/comments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board to add a comment to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a comment to a board"
+        },
+        {
+          "info": {
+            "name": "Delete a comment from a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v3/boards/:board_id/comments/:comment_id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "board_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the board containing the comment to delete."
+              },
+              {
+                "name": "comment_id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the comment to delete."
+              }
+            ]
+          },
+          "docs": "Delete a comment from a board"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

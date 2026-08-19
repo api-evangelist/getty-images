@@ -1,0 +1,1941 @@
+{
+  "item": [
+    {
+      "id": "de87b7f8-fad0-4a7b-9b9a-916f812e4e39",
+      "name": "Editorial",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed9b9dfc-092b-4c5f-a410-e06459282b3b",
+          "name": "Search for editorial images only",
+          "request": {
+            "name": "Search for editorial images only",
+            "description": {
+              "content": "Use this endpoint to search our editorial stock photos, illustrations and archival images.  Editorial images represent newsworthy events or illustrate matters of general interest, such as news, sport and entertainment and are generally intended for editorial use.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\nTo include your API token in the search request, add it to the headers as a Bearer token (example in curl):\n\n\t-H \"Authorization: Bearer <your-token>\"\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "search",
+                "images",
+                "editorial"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "age_of_people",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on the age of individuals in an image."
+                },
+                {
+                  "disabled": false,
+                  "key": "artists",
+                  "value": "<string>",
+                  "description": "Search for images by specific artists (free-text, comma-separated list of artists)."
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_codes",
+                  "value": "<string>,<string>",
+                  "description": "Filter by collections (comma-separated list of collection codes). Include or exclude based on collections_filter_type."
+                },
+                {
+                  "disabled": false,
+                  "key": "collections_filter_type",
+                  "value": "<string>",
+                  "description": "Use to include or exclude collections from search. The default is include"
+                },
+                {
+                  "disabled": false,
+                  "key": "compositions",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on image composition."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_from",
+                  "value": "<dateTime>",
+                  "description": "Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31)."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to",
+                  "value": "<dateTime>",
+                  "description": "Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31)."
+                },
+                {
+                  "disabled": false,
+                  "key": "download_product",
+                  "value": "<string>",
+                  "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+                },
+                {
+                  "disabled": false,
+                  "key": "editorial_segments",
+                  "value": "<string>,<string>",
+                  "description": "Return only events with a matching editorial segment."
+                },
+                {
+                  "disabled": false,
+                  "key": "embed_content_only",
+                  "value": "false",
+                  "description": "Restrict search results to embeddable images. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "ethnicity",
+                  "value": "<string>,<string>",
+                  "description": "Filter search results based on the ethnicity of individuals in an image."
+                },
+                {
+                  "disabled": false,
+                  "key": "event_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Filter based on specific events"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_keyword_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+                },
+                {
+                  "disabled": false,
+                  "key": "file_types",
+                  "value": "<string>,<string>",
+                  "description": "Return only images having a specific file type."
+                },
+                {
+                  "disabled": false,
+                  "key": "graphical_styles",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on graphical style of the image."
+                },
+                {
+                  "disabled": false,
+                  "key": "graphical_styles_filter_type",
+                  "value": "<string>",
+                  "description": "Provides searching based on specified graphical style(s). The default is include."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_related_searches",
+                  "value": "false",
+                  "description": "Specifies whether or not to include related searches in the response. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "keyword_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "minimum_size",
+                  "value": "<string>",
+                  "description": "Filter based on minimum size requested. The default is x-small."
+                },
+                {
+                  "disabled": false,
+                  "key": "number_of_people",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on the number of people in the image."
+                },
+                {
+                  "disabled": false,
+                  "key": "orientations",
+                  "value": "<string>,<string>",
+                  "description": "Return only images with selected aspect ratios."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Request results starting at a page number (default is 1)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "phrase",
+                  "value": "<string>",
+                  "description": "Search images using a search phrase."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>",
+                  "description": "Select sort order of results.  The default is best_match"
+                },
+                {
+                  "disabled": false,
+                  "key": "specific_people",
+                  "value": "<string>,<string>",
+                  "description": "Return only images associated with specific people (using a comma-delimited list)."
+                },
+                {
+                  "disabled": false,
+                  "key": "minimum_quality_rank",
+                  "value": "<integer>",
+                  "description": "Filter search results based on minimum quality ranking. Possible values 1, 2, 3 with 1 being best."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_facets",
+                  "value": "<boolean>",
+                  "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_max_count",
+                  "value": "300",
+                  "description": "Specifies the maximum number of facets to return per type. Default is 300."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                "key": "GI-Country-Code",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f93948de-dd24-47e9-abfa-140900eede60",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_segments",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "minimum_quality_rank",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 1134,\n  \"images\": [\n    {\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"alternative_ids\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"call_for_image\": false,\n      \"caption\": \"string\",\n      \"collection_code\": \"string\",\n      \"collection_id\": 5693,\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_camera_shot\": \"1987-09-17T02:32:26.675Z\",\n      \"date_created\": \"2002-06-04T07:02:08.563Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"editorial_segments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"editorial_source\": {\n        \"id\": 5660\n      },\n      \"event_ids\": [\n        9363,\n        3357\n      ],\n      \"graphical_style\": \"string\",\n      \"id\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 9444,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 1611,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"max_dimensions\": {\n        \"height\": 8973,\n        \"width\": 2232\n      },\n      \"orientation\": \"string\",\n      \"people\": [\n        \"string\",\n        \"string\"\n      ],\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"quality_rank\": 3506,\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"title\": \"string\",\n      \"uri_oembed\": \"string\"\n    },\n    {\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"alternative_ids\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"call_for_image\": true,\n      \"caption\": \"string\",\n      \"collection_code\": \"string\",\n      \"collection_id\": 3721,\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_camera_shot\": \"2022-03-29T12:09:35.836Z\",\n      \"date_created\": \"2000-01-05T00:51:33.117Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"editorial_segments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"editorial_source\": {\n        \"id\": 636\n      },\n      \"event_ids\": [\n        8325,\n        277\n      ],\n      \"graphical_style\": \"string\",\n      \"id\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 249,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 7858,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"max_dimensions\": {\n        \"height\": 1855,\n        \"width\": 9062\n      },\n      \"orientation\": \"string\",\n      \"people\": [\n        \"string\",\n        \"string\"\n      ],\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"quality_rank\": 489,\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"title\": \"string\",\n      \"uri_oembed\": \"string\"\n    }\n  ],\n  \"related_searches\": [\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb0e868e-e87d-4a61-b678-3e980775e05e",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_segments",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "minimum_quality_rank",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "83738729-d631-42e6-9727-e1f31386a3c7",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_segments",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "minimum_quality_rank",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "120dc9db-00e5-489a-a201-45164203d028",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_segments",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "minimum_quality_rank",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2739c4f2-0dc7-41d6-a14f-39841b3c29f6",
+          "name": "Search for editorial videos",
+          "request": {
+            "name": "Search for editorial videos",
+            "description": {
+              "content": "Use this endpoint to search current and archival video clips of celebrities, newsmakers, and events.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every video in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"asset_family\", \n        \"caption\",\n        \"collection_code\",\n        \"collection_name\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\", \n\t\t\"call_for_image\",\n        \"caption\", \n        \"clip_length\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\", \n        \"color_type\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"era\",\n        \"event_ids\",\n        \"license_model\",\n        \"mastered_to\",\n        \"originally_shot_on\",\n        \"product_types\",\n        \"quality_rank\",\n        \"shot_speed\",\n        \"source\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"videos\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "search",
+                "videos",
+                "editorial"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "age_of_people",
+                  "value": "<string>,<string>",
+                  "description": "Provides filtering according to the age of individuals in a video."
+                },
+                {
+                  "disabled": false,
+                  "key": "artists",
+                  "value": "<string>",
+                  "description": "Search for videos by specific artists (free-text, comma-separated list of artists)."
+                },
+                {
+                  "disabled": false,
+                  "key": "aspect_ratios",
+                  "value": "<string>,<string>",
+                  "description": "Search for videos by specific aspect ratios."
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_codes",
+                  "value": "<string>,<string>",
+                  "description": "Provides filtering by collection code."
+                },
+                {
+                  "disabled": false,
+                  "key": "collections_filter_type",
+                  "value": "<string>",
+                  "description": "Use to include or exclude collections from search. The default is include"
+                },
+                {
+                  "disabled": false,
+                  "key": "compositions",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on video composition."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_from",
+                  "value": "<dateTime>",
+                  "description": "Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31)."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to",
+                  "value": "<dateTime>",
+                  "description": "Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31)."
+                },
+                {
+                  "disabled": false,
+                  "key": "download_product",
+                  "value": "<string>",
+                  "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+                },
+                {
+                  "disabled": false,
+                  "key": "editorial_video_types",
+                  "value": "<string>,<string>",
+                  "description": "Allows filtering by types of video."
+                },
+                {
+                  "disabled": false,
+                  "key": "event_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Filter based on specific events"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+                },
+                {
+                  "disabled": false,
+                  "key": "format_available",
+                  "value": "<string>",
+                  "description": "Filters according to the digital video format available on a film asset."
+                },
+                {
+                  "disabled": false,
+                  "key": "frame_rates",
+                  "value": "<string>,<string>",
+                  "description": "Provides filtering by video frame rate (frames/second)."
+                },
+                {
+                  "disabled": false,
+                  "key": "image_techniques",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on image technique."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_related_searches",
+                  "value": "false",
+                  "description": "Specifies whether or not to include related searches in the response. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "keyword_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Return only videos tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also contain the requested keyword(s) are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_clip_length",
+                  "value": "0",
+                  "description": "Provides filtering by minimum length of video clip, in seconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_clip_length",
+                  "value": "0",
+                  "description": "Provides filtering by maximum length of video clip, in seconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "orientations",
+                  "value": "<string>,<string>",
+                  "description": "Return only videos with selected orientations."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Identifies page to return. Default is 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Specifies page size. Default is 30, maximum page_size is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "phrase",
+                  "value": "",
+                  "description": "Free-text search query."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>",
+                  "description": "Select sort order of results.  The default is best_match"
+                },
+                {
+                  "disabled": false,
+                  "key": "specific_people",
+                  "value": "<string>,<string>",
+                  "description": "Allows filtering by specific peoples' names."
+                },
+                {
+                  "disabled": false,
+                  "key": "release_status",
+                  "value": "<string>",
+                  "description": "Allows filtering by type of model release."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_facets",
+                  "value": "<boolean>",
+                  "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_max_count",
+                  "value": "300",
+                  "description": "Specifies the maximum number of facets to return per type. Default is 300."
+                },
+                {
+                  "disabled": false,
+                  "key": "viewpoints",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on viewpoint."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                "key": "GI-Country-Code",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4abba956-0a91-472f-861c-4480d1694649",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_video_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 3703,\n  \"videos\": [\n    {\n      \"source\": \"string\",\n      \"id\": \"string\",\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"caption\": \"string\",\n      \"clip_length\": \"string\",\n      \"collection_id\": 3893,\n      \"collection_code\": \"string\",\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_created\": \"1963-03-27T20:10:12.816Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        },\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"era\": \"string\",\n      \"event_ids\": [\n        5118,\n        7012\n      ],\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 1869,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 1729,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"mastered_to\": \"string\",\n      \"originally_shot_on\": \"string\",\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"shot_speed\": \"string\",\n      \"title\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Resale\",\n          \"credits\": 1683\n        },\n        {\n          \"license_type\": \"Indemnification\",\n          \"credits\": 7065\n        }\n      ]\n    },\n    {\n      \"source\": \"string\",\n      \"id\": \"string\",\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"caption\": \"string\",\n      \"clip_length\": \"string\",\n      \"collection_id\": 6065,\n      \"collection_code\": \"string\",\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_created\": \"1975-04-05T06:07:08.086Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        },\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"era\": \"string\",\n      \"event_ids\": [\n        8147,\n        1449\n      ],\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 7492,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 8224,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"mastered_to\": \"string\",\n      \"originally_shot_on\": \"string\",\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"shot_speed\": \"string\",\n      \"title\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Unlimited\",\n          \"credits\": 7561\n        },\n        {\n          \"license_type\": \"Unlimited\",\n          \"credits\": 1464\n        }\n      ]\n    }\n  ],\n  \"facets\": {\n    \"specific_people\": [\n      {\n        \"id\": 3974,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 1147,\n        \"name\": \"string\"\n      }\n    ],\n    \"events\": [\n      {\n        \"id\": 1249,\n        \"name\": \"string\",\n        \"date\": \"2005-06-15T09:52:21.045Z\"\n      },\n      {\n        \"id\": 2565,\n        \"name\": \"string\",\n        \"date\": \"2023-11-20T13:07:59.963Z\"\n      }\n    ],\n    \"locations\": [\n      {\n        \"id\": 9929,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 2523,\n        \"name\": \"string\"\n      }\n    ],\n    \"artists\": [\n      {\n        \"name\": \"string\"\n      },\n      {\n        \"name\": \"string\"\n      }\n    ],\n    \"entertainment\": [\n      {\n        \"id\": 6223,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 1712,\n        \"name\": \"string\"\n      }\n    ]\n  },\n  \"related_searches\": [\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f22f382-81fa-4610-a9f0-b862941d45de",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_video_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "44b8b8d5-4ee5-4080-8286-d53b13c376c9",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_video_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "95a81a17-1f3d-40e2-a6d7-513fcb51cbbc",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "editorial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editorial_video_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "specific_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "728f47d1-8ff0-4ebd-9a2a-58ddc8ba5250",
+    "name": "Getty Images Editorial API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

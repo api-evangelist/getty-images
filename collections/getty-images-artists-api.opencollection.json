@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Artists API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Artists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for images by a photographer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/artists/images",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "artist_name",
+                "value": "",
+                "type": "query",
+                "description": "Name of artist for desired images"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default page is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default page_size is 10, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "Search for images by a photographer"
+        },
+        {
+          "info": {
+            "name": "Search for videos by a photographer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/artists/videos",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "artist_name",
+                "value": "",
+                "type": "query",
+                "description": "Name of artist for desired images"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default page is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default page_size is 10, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "Search for videos by a photographer"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

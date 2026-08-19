@@ -1,0 +1,306 @@
+{
+  "item": [
+    {
+      "id": "158be5c1-e3e0-411c-b810-1f9f3dc0fba9",
+      "name": "Products",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4e86eade-6d41-43c7-b4c4-43638cf02491",
+          "name": "Get Products",
+          "request": {
+            "name": "Get Products",
+            "description": {
+              "content": "This endpoint returns all products available to the username used during authentication. As such, this endpoint requires the use of\na fully authorized access_token. The product data can then be used as search filters, restricting results to images from a specific product.\n\nYou'll need an API key and access token to use this resource.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Comma separated list of fields. Allows product download requirements to be returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6954e2e6-9767-4dd0-ac0f-b351a63806bf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"products\": [\n    {\n      \"application_website\": \"string\",\n      \"credits_remaining\": 7704,\n      \"download_limit\": 6769,\n      \"download_limit_duration\": \"string\",\n      \"download_limit_reset_utc_date\": \"2001-03-08T01:48:55.364Z\",\n      \"downloads_remaining\": 8025,\n      \"expiration_utc_date\": \"2019-11-04T01:12:03.954Z\",\n      \"id\": 4555,\n      \"name\": \"string\",\n      \"status\": \"active\",\n      \"type\": \"easyaccess\",\n      \"ai_gen_requirements\": {\n        \"is_note_required\": true,\n        \"is_project_code_required\": true,\n        \"project_codes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"download_requirements\": {\n        \"is_note_required\": false,\n        \"is_project_code_required\": true,\n        \"project_codes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"overage\": {\n        \"limit\": 9578,\n        \"remaining\": 9253,\n        \"count\": 2605,\n        \"overages_reached\": true\n      },\n      \"agreement_name\": \"string\",\n      \"imagepack_resolution\": \"string\",\n      \"team_credits\": 3096\n    },\n    {\n      \"application_website\": \"string\",\n      \"credits_remaining\": 8624,\n      \"download_limit\": 399,\n      \"download_limit_duration\": \"string\",\n      \"download_limit_reset_utc_date\": \"1975-02-01T00:07:07.199Z\",\n      \"downloads_remaining\": 9039,\n      \"expiration_utc_date\": \"1968-04-02T00:36:39.633Z\",\n      \"id\": 3605,\n      \"name\": \"string\",\n      \"status\": \"active\",\n      \"type\": \"editorialsubscription\",\n      \"ai_gen_requirements\": {\n        \"is_note_required\": false,\n        \"is_project_code_required\": false,\n        \"project_codes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"download_requirements\": {\n        \"is_note_required\": true,\n        \"is_project_code_required\": false,\n        \"project_codes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"overage\": {\n        \"limit\": 4395,\n        \"remaining\": 1500,\n        \"count\": 8308,\n        \"overages_reached\": false\n      },\n      \"agreement_name\": \"string\",\n      \"imagepack_resolution\": \"string\",\n      \"team_credits\": 3879\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6df6e43d-5019-42da-a79b-30ccba95ea66",
+              "name": "InvalidRequestParameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1e709470-a024-4e0e-bdd7-d87a6188d0aa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e8398b97-c31b-4533-b4a1-25d0c466d41d",
+              "name": "CreditPack",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d8fbf6b4-43a5-412e-bd74-cb49906ad37b",
+    "name": "Getty Images Products API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

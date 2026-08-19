@@ -1,0 +1,648 @@
+{
+  "item": [
+    {
+      "id": "70000e7e-5afa-4434-80bf-91a58d363e15",
+      "name": "Ai Generator",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c0333f76-ffa9-4732-b2cd-d1b88d61b2b8",
+          "name": "Get download sizes for a generated image",
+          "request": {
+            "name": "Get download sizes for a generated image",
+            "description": {
+              "content": "# AI Generator - Get Download Sizes\n\nGiven a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "ai",
+                "image-generations",
+                ":generationRequestId",
+                "images",
+                ":index",
+                "download-sizes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "generationRequestId",
+                  "description": "(Required) The ID from a previous request to generate images"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "index",
+                  "description": "(Required) The index of the image from the specific images generation"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f6faf8c-cffa-44af-9de1-61cc336ae725",
+              "name": "Returns the result of a request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    ":generationRequestId",
+                    "images",
+                    ":index",
+                    "download-sizes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generationRequestId",
+                      "description": "(Required) The ID from a previous request to generate images"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "index",
+                      "description": "(Required) The index of the image from the specific images generation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"download_sizes\": [\n    {\n      \"size_name\": \"string\",\n      \"height\": 2758,\n      \"width\": 3030\n    },\n    {\n      \"size_name\": \"string\",\n      \"height\": 1942,\n      \"width\": 4812\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02ffecc8-4bbe-48ae-be17-3e6892cea341",
+              "name": "InvalidProduct",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    ":generationRequestId",
+                    "images",
+                    ":index",
+                    "download-sizes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generationRequestId",
+                      "description": "(Required) The ID from a previous request to generate images"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "index",
+                      "description": "(Required) The index of the image from the specific images generation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3d214880-ca52-4d30-901f-686144413323",
+              "name": "Either the generation id does not exist, the index is incorrect, or the generation is still pending",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    ":generationRequestId",
+                    "images",
+                    ":index",
+                    "download-sizes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generationRequestId",
+                      "description": "(Required) The ID from a previous request to generate images"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "index",
+                      "description": "(Required) The index of the image from the specific images generation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0c9ae9a-e8fc-4838-b91f-4aad37762b33",
+              "name": "GenerationRequestGone",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    ":generationRequestId",
+                    "images",
+                    ":index",
+                    "download-sizes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generationRequestId",
+                      "description": "(Required) The ID from a previous request to generate images"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "index",
+                      "description": "(Required) The index of the image from the specific images generation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ba6cf02-1284-4bfd-8bb7-31799cbaf321",
+          "name": "Re-download a previously downloaded item",
+          "request": {
+            "name": "Re-download a previously downloaded item",
+            "description": {
+              "content": "# Re-download AI Generated media\n\nRe-download previously downloaded AI generated media.\n\n## `ReDownloadRequest` details\n\n| Parameter                       | Purpose                                                                                                                                                   |\n|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `generated_asset_id` _Required_ | The generated asset identifier to re-download.  Can be retrieved from previously downloaded assets (`GET /v3/downloads`)                                  |\n| `product_id` _Required_         | The product to use to re-download.  Can be retrieved from products (`GET /v3/products`)                                                                   |\n| `size_name` _Required_          | The size to re-download.  Valid values are `1k` and `4k`                                                                                                  |\n| `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |\n| `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "ai",
+                "redownloads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"generated_asset_id\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"size_name\": \"<string>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "638a081a-6f1e-4a56-9c6a-b6cbd04ea415",
+              "name": "Returns the re-download response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "redownloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"generated_asset_id\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"size_name\": \"<string>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"string\",\n  \"generated_asset_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31876652-ef07-494f-b3b6-64f50f9be748",
+              "name": "The request was invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "redownloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"generated_asset_id\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"size_name\": \"<string>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "973ed926-3b85-4649-b488-fc1de42df89c",
+              "name": "Product is not active or quota exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "redownloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"generated_asset_id\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"size_name\": \"<string>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "866969ba-7c31-416f-980f-c26272103949",
+              "name": "Could not find source generated_asset_id",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "redownloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"generated_asset_id\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"size_name\": \"<string>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f044fbd4-ab92-4af3-bc4d-fa44199515af",
+              "name": "GenerationRequestGone",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "redownloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"generated_asset_id\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"size_name\": \"<string>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bcacf8cb-a9ea-4686-9c92-1cf5b3b7e0b2",
+    "name": "Getty Images Ai Generator API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1019 @@
+{
+  "item": [
+    {
+      "id": "3470c132-3180-4f4f-90d0-cee9ba6456da",
+      "name": "Similar",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8e9fbfe0-28e8-41f4-855d-5bb548bcf1ff",
+          "name": "Retrieve similar images",
+          "request": {
+            "name": "Retrieve similar images",
+            "description": {
+              "content": "This endpoint will provide a list of images that are similar to the specified asset id.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build\nsearch response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ]\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files \nthat are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result\nset when you include **display_set** in your request.\n\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "images",
+                ":id",
+                "similar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Identifies page to return. Default is 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Specifies page size. Default is 30, maximum page_size is 100."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Identifies an existing image"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5b02c33-c841-4192-a65c-8bc887496509",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "images",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifies an existing image"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 3774,\n  \"images\": [\n    {\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"alternative_ids\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"call_for_image\": true,\n      \"caption\": \"string\",\n      \"collection_code\": \"string\",\n      \"collection_id\": 8298,\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_camera_shot\": \"1975-08-22T20:53:44.464Z\",\n      \"date_created\": \"1954-11-14T08:46:45.049Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"editorial_segments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"event_ids\": [\n        1359,\n        1565\n      ],\n      \"graphical_style\": \"string\",\n      \"id\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 4777,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 8252,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"max_dimensions\": {\n        \"height\": 7751,\n        \"width\": 6264\n      },\n      \"orientation\": \"string\",\n      \"people\": [\n        \"string\",\n        \"string\"\n      ],\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"quality_rank\": 8473,\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"title\": \"string\",\n      \"uri_oembed\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Standard\",\n          \"credits\": 1158\n        },\n        {\n          \"license_type\": \"Indemnification\",\n          \"credits\": 4567\n        }\n      ]\n    },\n    {\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"alternative_ids\": {\n        \"key_0\": \"string\"\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"call_for_image\": true,\n      \"caption\": \"string\",\n      \"collection_code\": \"string\",\n      \"collection_id\": 143,\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_camera_shot\": \"2009-08-20T19:59:10.488Z\",\n      \"date_created\": \"1950-06-15T22:17:38.765Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"editorial_segments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"event_ids\": [\n        3779,\n        2175\n      ],\n      \"graphical_style\": \"string\",\n      \"id\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 5755,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 1835,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"max_dimensions\": {\n        \"height\": 7835,\n        \"width\": 1189\n      },\n      \"orientation\": \"string\",\n      \"people\": [\n        \"string\",\n        \"string\"\n      ],\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"quality_rank\": 9408,\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"title\": \"string\",\n      \"uri_oembed\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Unlimited\",\n          \"credits\": 4750\n        },\n        {\n          \"license_type\": \"Unlimited\",\n          \"credits\": 1004\n        }\n      ]\n    }\n  ],\n  \"related_searches\": [\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8c9e3cd-e02c-4d4e-8eb2-9a36da1f00ac",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "images",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifies an existing image"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b32bfc83-5b9a-4ef8-962b-b6a6ec092dee",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "images",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifies an existing image"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a99498b6-83ae-4f81-8c4c-224ba36b7aa1",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "images",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifies an existing image"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f442b123-a404-4134-9cb3-55393a2be11e",
+              "name": "ImageNotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "images",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifies an existing image"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5d1508f5-78df-4fca-826f-81bfac8b1589",
+              "name": "InvalidIStockCollection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "images",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifies an existing image"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "952e2aee-726e-43cd-8f45-cbf037c6e3c9",
+          "name": "Retrieve similar videos",
+          "request": {
+            "name": "Retrieve similar videos",
+            "description": {
+              "content": "This endpoint will provide a list of videos that are similar to the specified asset id.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every video in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_name\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n\t\t\"call_for_image\",\n        \"caption\",\n        \"clip_length\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"color_type\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"download_sizes\",\n        \"era\",\n        \"event_ids\",\n        \"license_model\",\n        \"mastered_to\",\n        \"originally_shot_on\",\n        \"product_types\",\n        \"quality_rank\",\n        \"shot_speed\",\n        \"source\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"videos\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "videos",
+                ":id",
+                "similar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Identifies page to return. Default is 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Specifies page size. Default is 30, maximum page_size is 100."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) A video id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "97863c55-e165-4f24-b78e-58bb1f96fe83",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "videos",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A video id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea1786d4-492b-43a2-be98-36e27e7de765",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "videos",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A video id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d2a8f27f-6549-4401-ae05-0abb4f4a77bc",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "videos",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A video id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "73d05c43-bdce-472e-80fb-8849be2d110b",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "videos",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A video id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1dbf9670-c6a7-443e-b297-81400f729632",
+              "name": "VideosNotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "videos",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A video id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4af34d71-f167-4301-85f7-bae530ea8a70",
+              "name": "InvalidIStockCollection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "videos",
+                    ":id",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A video id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "944467c8-8571-429f-9d5b-1204eadf216a",
+    "name": "Getty Images Similar API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

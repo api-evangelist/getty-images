@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Management API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /v3/asset-management/assets/send-events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/asset-management/assets/send-events",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "last_offset",
+                "value": "",
+                "type": "query",
+                "description": "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+              },
+              {
+                "name": "event_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the number of events to return. Default is 50, maximum value is 100."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

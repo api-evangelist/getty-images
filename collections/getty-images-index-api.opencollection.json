@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Index API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Index",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get variations on a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/variations",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Generate Variations\n\nGenerate image variations from a previously-generated image.\n\n## The Image Variation Request\n\nThe `ImageVariationRequest` payload to be posted contains the optional\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                                                      |\n|---------------------|----------------------------------------------"
+        },
+        {
+          "info": {
+            "name": "Get download sizes for a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download-sizes",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Sizes\n\nGiven a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.\n"
+        },
+        {
+          "info": {
+            "name": "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Image\n\nGet the download for a generated image\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including a URL for the download.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` with no payload. This client should then\npoll `GET v3/ai/image"
+        },
+        {
+          "info": {
+            "name": "Begin the download process",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Download Image\n\nDownload a generated image. Initiating the download process for a 4K file may incur a cost depending on the terms of your agreement.\n\n## Download Image Request body details\n\nThe `ImageDownloadRequest` payload to be posted contains the required `size` as well as some other optional\nparameters:\n\n| Parameter         | Purpose                                                                                      |\n|-------------------|----------------------------------"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

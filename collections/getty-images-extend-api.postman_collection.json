@@ -1,0 +1,458 @@
+{
+  "item": [
+    {
+      "id": "368aa282-3964-480d-94ae-b3ef69247ae8",
+      "name": "Extend",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d0058a80-b343-4652-8bf5-1d021e8f341b",
+          "name": "Extend a creative image",
+          "request": {
+            "name": "Extend a creative image",
+            "description": {
+              "content": "# AI Generator - Image Extension\n\nUse text prompts and numerical values to extend the content beyond the borders of a image from the Getty Images creative library (excluding illustrations and vectors).\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nTo download an extended image, a traditional license product, such as Premium Access, that provides download access to the original creative image is required.\nLastly, downloading an extended image requires the client to first download the original image.\n\nExtension involves adding content to one or more sides of an image by specifying a percentage by which you want the image extended.\nThis means that the aspect ratio of the generated images will differ from the original unless the same value is specified for all four sides.\nAdditionally, the pixel dimensions on the longest side will remain the same - 612px for the\nimages provided in this endpoint's response, 1024px and 4096px on the images retrieved through the download process.\n\n## The Extend Request\n\nThe `ExtendRequest` payload requires one, and only one, reference image (`reference_asset_id`, `reference_generation`) and requires at least one percentage to be greater than zero (`left_percentage`, `right_percentage`, `top_percentage`, or `bottom_percentage`) and accepts the following optional\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                                                     |\n|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `reference_asset_id`| Creative image id to modify.                                                                                                                                 |\n| `reference_generation`| Generation details of image to modify.                                                                                                                               |\n| `prompt`            | The primary text used for the extended portion of the images.                                                                                                                               |\n| `negative_prompt`   | Concepts to _exclude_ from the extended portion.                                                                                                                                            |\n| `product_id`        | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`). |\n| `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |\n| `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |\n| `left_percentage`   | Percentage to add to the left side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                     |\n| `right_percentage`  | Percentage to add to the right side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                    |\n| `top_percentage`    | Percentage to add to the top side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                      |\n| `bottom_percentage` | Percentage to add to the bottom side of the image. This must be a float that is equal to or greater than 0. Default is 0.                                                                   |\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including URLs to the result images and a `generation_request_id` value.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` and the payload will only contain a `generation_request_id` value. This value must be\nretained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.\n\n## Lifetime of Generated Images\n\nGenerated images will be retained for 6 months after generation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "ai",
+                "image-generations",
+                "extend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cd59628f-3c1e-4410-a344-948309b1744e",
+              "name": "Returns the result of a request to extend an image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generation_request_id\": \"string\",\n  \"seed\": 1087,\n  \"results\": [\n    {\n      \"index\": 4782,\n      \"is_blocked\": false,\n      \"preview_urls\": [\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 5948,\n          \"height\": 3123\n        },\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 6766,\n          \"height\": 8807\n        }\n      ],\n      \"url\": \"string\"\n    },\n    {\n      \"index\": 7394,\n      \"is_blocked\": true,\n      \"preview_urls\": [\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 3748,\n          \"height\": 9141\n        },\n        {\n          \"preview_size\": \"string\",\n          \"image_url\": \"string\",\n          \"width\": 8570,\n          \"height\": 7988\n        }\n      ],\n      \"url\": \"string\"\n    }\n  ],\n  \"original_asset\": {\n    \"id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d090445-35c9-492e-b23a-e475d20bd978",
+              "name": "Returns the request ID for a pending request to extend an image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generation_request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcf09eec-6fdd-4035-bcea-fc8ba6b2bada",
+              "name": "InvalidProduct",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c44275a-0962-41a5-8808-8e117afa3616",
+              "name": "Product quota exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "28925ad1-46b0-4543-8e49-5a7615ee3221",
+              "name": "Image not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c584cad-0804-4f01-937e-83304c2ab1d4",
+              "name": "GenerationRequestGone",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "83643afc-b48d-40fc-a193-b1b5cc178224",
+              "name": "TooManyConcurrentGenerations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "ai",
+                    "image-generations",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference_asset_id\": \"<string>\",\n  \"reference_generation\": {\n    \"generation_request_id\": \"<string>\",\n    \"index\": \"<integer>\"\n  },\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"product_id\": \"<integer>\",\n  \"project_code\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"left_percentage\": \"<float>\",\n  \"right_percentage\": \"<float>\",\n  \"top_percentage\": \"<float>\",\n  \"bottom_percentage\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a0b3a627-94ba-42bb-a9bc-577710182e13",
+    "name": "Getty Images Extend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "item": [
+    {
+      "id": "5522194f-6abc-4dfc-a4f2-100ab79936a2",
+      "name": "Channels",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6744872-1860-41dd-ad66-0b4ab360dfbc",
+          "name": "Get a list of asset change notification channels.",
+          "request": {
+            "name": "Get a list of asset change notification channels.",
+            "description": {
+              "content": "# Get Partner Channels\n\nRetrieves the channel data for the partner. This data can be used to populate the channel_id parameter in the Put Asset Changes query.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource.\n\nPartners who have a channel that has been removed should contact their sales representative to be set up again.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "asset-changes",
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d4d45f1-f077-48b3-af6e-1c40ad156520",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"ChannelId\": 3614,\n    \"AssetFamily\": \"Editorial\",\n    \"AssetChangeType\": \"string\",\n    \"CreateDateUtc\": \"1970-01-16T08:09:43.543Z\",\n    \"NotificationCount\": 9839,\n    \"AssetType\": \"Music\",\n    \"OldestChangeNotificationDateUtc\": \"1969-12-24T16:41:17.060Z\",\n    \"Metadata\": \"string\"\n  },\n  {\n    \"ChannelId\": 7194,\n    \"AssetFamily\": \"Editorial\",\n    \"AssetChangeType\": \"string\",\n    \"CreateDateUtc\": \"1951-10-07T21:54:03.607Z\",\n    \"NotificationCount\": 8338,\n    \"AssetType\": \"NotSet\",\n    \"OldestChangeNotificationDateUtc\": \"1973-01-07T02:32:34.614Z\",\n    \"Metadata\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "708704f5-3441-43ab-a94b-88fb40524ee8",
+              "name": "UnauthorizedToAccessResource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6d21415f-db00-4633-aa05-59e8ca7fc97a",
+              "name": "ChannelsNotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "095b93b2-c79d-467e-bba5-e3118f77b617",
+    "name": "Getty Images Channels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

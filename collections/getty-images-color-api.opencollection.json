@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Color API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Color",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Influence the color of generated images using a reference image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/influence-color-by-image",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Influence Color By Image\n\nInfluence Color By Image allows the client application to provide an existing Getty Images creative image or an existing generated image, along with prompt text, as a reference for generating new images. The generated images are influenced by the color palette, tone and location of colors within the reference image.\n\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

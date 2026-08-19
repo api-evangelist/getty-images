@@ -1,0 +1,290 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Downloads API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Downloads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get download sizes for a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download-sizes",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Sizes\n\nGiven a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.\n"
+        },
+        {
+          "info": {
+            "name": "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Image\n\nGet the download for a generated image\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including a URL for the download.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` with no payload. This client should then\npoll `GET v3/ai/image"
+        },
+        {
+          "info": {
+            "name": "Begin the download process",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Download Image\n\nDownload a generated image. Initiating the download process for a 4K file may incur a cost depending on the terms of your agreement.\n\n## Download Image Request body details\n\nThe `ImageDownloadRequest` payload to be posted contains the required `size` as well as some other optional\nparameters:\n\n| Parameter         | Purpose                                                                                      |\n|-------------------|----------------------------------"
+        },
+        {
+          "info": {
+            "name": "Returns information about a customer's downloaded assets.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/downloads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "If specified, selects assets downloaded on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD). \r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is 30 days prior to date_to"
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "If specified, selects assets downloaded on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)\r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is current date or 30 days after specified start date, whichever one is earlier."
+              },
+              {
+                "name": "use_time",
+                "value": "",
+                "type": "query",
+                "description": "If specified, time values provided with date_to or date_from will be used. Time values should be appended to the date value in ISO 8601 format\r\ni.e.: 2019-09-19T19:30:37 or 2019-09-19 19:30:37.  Time zone can be specified as optional.\r\nDefault value is false"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "product_type",
+                "value": "",
+                "type": "query",
+                "description": "Specifies product type to be included in the previous download results. Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. To get previous iStockPhoto credit downloads, creditpack must be selected."
+              },
+              {
+                "name": "company_downloads",
+                "value": "",
+                "type": "query",
+                "description": "If specified, returns the list of previously downloaded images for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false."
+              }
+            ]
+          },
+          "docs": "Returns information about a customer's previously downloaded assets.\n\nYou'll need an API key and access token to use this resource.\n \n\t\nThis endpoint requires being a Getty Images customer to limit your results to only assets that you have a license to use, \nyou need to also include an authorization token in the header of your request. \nPlease consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens.\n"
+        },
+        {
+          "info": {
+            "name": "Download an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/downloads/images/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "<remarks>\r\n                    Id of image to download.\r\n                </remarks>"
+              },
+              {
+                "name": "auto_download",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the image.\r\n                    If false is specified, the download URI will be returned in the response message. Default is true.\r\n                </remarks>"
+              },
+              {
+                "name": "file_type",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    File Type expressed with three character file extension.\r\n                </remarks>"
+              },
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Specifies the pixel height of the particular image to download.\r\n                    Available heights can be found in the images/{ids} response for the specific image.\r\n                    If left blank, it will return the largest available size.\r\n                </remarks>"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+              },
+              {
+                "name": "product_type",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+              },
+              {
+                "name": "use_team_credits",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to generate download URLs and related data for images you are authorized to download.\n\nMost product offerings have enforced periodic download limits such as monthly, weekly, and daily. When this operation executes, the count of allowed downloads is decremented by one for the product offering. Once the download limit is reached for a given product offering, no further downloads may be requested for that product offering until the next download period.\n\nThe download limit for a g"
+        },
+        {
+          "info": {
+            "name": "Download a video",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/downloads/videos/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "<remarks>\r\n                    Id of video to download.\r\n                </remarks>"
+              },
+              {
+                "name": "auto_download",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the video.\r\n                    If false is specified, the download URI will be returned in the response message. Default is false.\r\n                </remarks>"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the size to be downloaded."
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+              },
+              {
+                "name": "product_type",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+              },
+              {
+                "name": "use_team_credits",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to generate download URLs and related data for videos you are authorized to download.\n\nMost product offerings have enforced periodic download limits such as monthly, weekly, and daily. When this operation executes, the count of allowed downloads is decremented by one for the product offering. Once the download limit is reached for a given product offering, no further downloads may be requested for that product offering until the next download period.\n\nThe download limit for a g"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

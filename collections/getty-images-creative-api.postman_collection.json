@@ -1,0 +1,3817 @@
+{
+  "item": [
+    {
+      "id": "3520ca17-1a4a-4029-aeff-6632db471764",
+      "name": "Creative",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5650a9bf-7661-474b-9145-9c68a6c4d45c",
+          "name": "Search for creative images only",
+          "request": {
+            "name": "Search for creative images only",
+            "description": {
+              "content": "Use this endpoint to search our contemporary stock photos, illustrations and archival images.\n\nYou'll need an API key and access token to use this resource.\n \nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to \nbuild search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to \nbuild a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution\nfiles that are most frequently used to build a UI displaying search results. The following fields are provided for every image \nin your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Enhanced Search\n\nOur enhanced search uses machine-learning models to understand natural, conversational language. Meaning you can search for longer phrases and get more relevant results from our creative image and creative video libraries.  Default is `true`. Set `enhanced_search` to `false` if you require a precise result set and not one expanded through enhanced search.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "search",
+                "images",
+                "creative"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "age_of_people",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on the age of individuals in an image."
+                },
+                {
+                  "disabled": false,
+                  "key": "artists",
+                  "value": "<string>",
+                  "description": "Search for images by specific artists (free-text, comma-separated list of artists)."
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_codes",
+                  "value": "<string>,<string>",
+                  "description": "Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type."
+                },
+                {
+                  "disabled": false,
+                  "key": "collections_filter_type",
+                  "value": "<string>",
+                  "description": "Use to include or exclude collections from search. The default is include"
+                },
+                {
+                  "disabled": false,
+                  "key": "color",
+                  "value": "<string>",
+                  "description": "Filter based on predominant color in an image. Use 6 character hexadecimal format (e.g., #002244)."
+                },
+                {
+                  "disabled": false,
+                  "key": "compositions",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on image composition."
+                },
+                {
+                  "disabled": false,
+                  "key": "download_product",
+                  "value": "<string>",
+                  "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+                },
+                {
+                  "disabled": false,
+                  "key": "embed_content_only",
+                  "value": "false",
+                  "description": "Restrict search results to embeddable images. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "enhanced_search",
+                  "value": "true",
+                  "description": "If set to {false}, your search will not use enhanced search. Defaults to {true}."
+                },
+                {
+                  "disabled": false,
+                  "key": "ethnicity",
+                  "value": "<string>,<string>",
+                  "description": "Filter search results based on the ethnicity of individuals in an image."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_editorial_use_only",
+                  "value": "<boolean>",
+                  "description": "Exclude images that are only available for editorial (non-commercial) use. Default value is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_keyword_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_nudity",
+                  "value": "false",
+                  "description": "Excludes images containing nudity. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_max_count",
+                  "value": "300",
+                  "description": "Specifies the maximum number of facets to return per type. Default is 300."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+                },
+                {
+                  "disabled": false,
+                  "key": "file_types",
+                  "value": "<string>,<string>",
+                  "description": "Return only images having a specific file type."
+                },
+                {
+                  "disabled": false,
+                  "key": "graphical_styles",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on graphical style of the image."
+                },
+                {
+                  "disabled": false,
+                  "key": "graphical_styles_filter_type",
+                  "value": "<string>",
+                  "description": "Provides searching based on specified graphical style(s). The default is include."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_facets",
+                  "value": "<boolean>",
+                  "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_related_searches",
+                  "value": "false",
+                  "description": "Specifies whether or not to include related searches in the response. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "keyword_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "minimum_size",
+                  "value": "<string>",
+                  "description": "Filter based on minimum size requested. The default is x-small."
+                },
+                {
+                  "disabled": false,
+                  "key": "moods",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on predominant mood in an image."
+                },
+                {
+                  "disabled": false,
+                  "key": "number_of_people",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on the number of people in the image."
+                },
+                {
+                  "disabled": false,
+                  "key": "orientations",
+                  "value": "<string>,<string>",
+                  "description": "Return only images with selected aspect ratios."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Request results starting at a page number (default is 1)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "phrase",
+                  "value": "",
+                  "description": "Search images using a search phrase."
+                },
+                {
+                  "disabled": false,
+                  "key": "safe_search",
+                  "value": "false",
+                  "description": "Setting safe_search to \"true\" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>",
+                  "description": "Select sort order of results.  The default is best_match"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                "key": "GI-Country-Code",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "064558f5-299b-4dc0-98db-6c58544a8fd6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "color",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "moods",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 545,\n  \"images\": [\n    {\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"alternative_ids\": {\n        \"key_0\": \"string\"\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"call_for_image\": false,\n      \"caption\": \"string\",\n      \"collection_code\": \"string\",\n      \"collection_id\": 5619,\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_camera_shot\": \"1963-01-31T06:11:28.461Z\",\n      \"date_created\": \"2008-09-12T12:09:11.717Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"graphical_style\": \"string\",\n      \"id\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 2319,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 7842,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"max_dimensions\": {\n        \"height\": 8804,\n        \"width\": 3972\n      },\n      \"orientation\": \"string\",\n      \"quality_rank\": 772,\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"title\": \"string\",\n      \"uri_oembed\": \"string\"\n    },\n    {\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"alternative_ids\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"call_for_image\": true,\n      \"caption\": \"string\",\n      \"collection_code\": \"string\",\n      \"collection_id\": 1276,\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_camera_shot\": \"1952-11-12T02:09:20.792Z\",\n      \"date_created\": \"2017-02-06T10:17:47.808Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"graphical_style\": \"string\",\n      \"id\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 2773,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 9695,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"max_dimensions\": {\n        \"height\": 6408,\n        \"width\": 4093\n      },\n      \"orientation\": \"string\",\n      \"quality_rank\": 7299,\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"title\": \"string\",\n      \"uri_oembed\": \"string\"\n    }\n  ],\n  \"auto_corrections\": {\n    \"phrase\": \"string\"\n  },\n  \"related_searches\": [\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27052de7-8209-42cd-8a83-026d293fe3b5",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "color",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "moods",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "843fa73e-8387-41d1-9f53-6a2a00ee6324",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "color",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "moods",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae035d28-fc0e-4133-89cc-7399c5517236",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "color",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "moods",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49510ac5-4a3b-491a-9858-1e0e32da07b8",
+              "name": "InvalidIStockCollection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "color",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "embed_content_only",
+                      "value": "false"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "file_types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "graphical_styles_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "minimum_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "moods",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "611fb893-c8b9-4fce-a52a-94b9ef7e75e7",
+          "name": "Search for creative images based on url",
+          "request": {
+            "name": "Search for creative images based on url",
+            "description": {
+              "content": "Search for **similar creative images** by passing an `image_url` to an uploaded image OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.\n\nFor example, using cURL:\n\n``` sh\ncurl -i -X PUT https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg -H 'Content-Type: image/jpeg' -H 'Api-Key: API_KEY' --data-binary \"@testimage.jpg\"\n```\n\nOnce the image has been uploaded, use the full URL in the `image_url` parameter, e.g. `image_url=https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg`.\n\n- Uploaded files must be 10MB or smaller.\n- Uploads to the same URL will overwrite each other, so ensure that the client application is handling naming uniqueness appropriately.\n- Uploads expire after 24 hours.\n- Uploads and searches must be performed using the _same_ API Key.\n\n## Searching by asset id\n\nWhen searching by `asset_id`, any image or video asset id in the Getty/iStock catalog can be used as the source for similar images.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "search",
+                "images",
+                "creative",
+                "by-image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "asset_id",
+                  "value": "<string>",
+                  "description": "Specifies the Getty image id to use in the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_editorial_use_only",
+                  "value": "<boolean>",
+                  "description": "Exclude images that are only available for editorial (non-commercial) use. Default value is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_max_count",
+                  "value": "300",
+                  "description": "Specifies the maximum number of facets to return per type. Default is 300."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+                },
+                {
+                  "disabled": false,
+                  "key": "image_url",
+                  "value": "<string>",
+                  "description": "Specifies the location of the image to use in the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_facets",
+                  "value": "<boolean>",
+                  "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Request results starting at a page number (default is 1)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "phrase",
+                  "value": "",
+                  "description": "Free-text search query."
+                },
+                {
+                  "disabled": false,
+                  "key": "product_types",
+                  "value": "<string>,<string>",
+                  "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                "key": "GI-Country-Code",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ead33d2b-f725-4a4a-824a-9c13d1f2ea59",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"image_fingerprint\": \"string\",\n  \"related_searches\": [\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"result_count\": 9134,\n  \"images\": {},\n  \"facets\": {\n    \"specific_people\": [\n      {\n        \"id\": 7995,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 9824,\n        \"name\": \"string\"\n      }\n    ],\n    \"events\": [\n      {\n        \"id\": 3482,\n        \"name\": \"string\",\n        \"date\": \"2015-10-08T02:02:38.809Z\"\n      },\n      {\n        \"id\": 5211,\n        \"name\": \"string\",\n        \"date\": \"1951-03-22T02:35:12.177Z\"\n      }\n    ],\n    \"locations\": [\n      {\n        \"id\": 3075,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 8036,\n        \"name\": \"string\"\n      }\n    ],\n    \"artists\": [\n      {\n        \"name\": \"string\"\n      },\n      {\n        \"name\": \"string\"\n      }\n    ],\n    \"entertainment\": [\n      {\n        \"id\": 1755,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 2725,\n        \"name\": \"string\"\n      }\n    ]\n  },\n  \"auto_corrections\": {\n    \"phrase\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "447a0de3-9308-487a-8f8e-51d3c4887c2a",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "32ad07f1-7842-4721-a482-e99ee85ad183",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1da2fa30-f7cb-42ed-b404-791bbc30c88c",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b465ee1f-0303-4f3e-be4f-cb5786c81e40",
+              "name": "AssetNotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fe685379-5d22-45c2-b402-038212bb65e3",
+              "name": "InvalidIStockCollection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "images",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f110865-156a-43a6-bb7d-3cee58e3ada7",
+          "name": "Search for creative videos",
+          "request": {
+            "name": "Search for creative videos",
+            "description": {
+              "content": "Use this endpoint to search premium stock video, from archival film to contemporary 4K and HD footage.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without\nbeing logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only \nassets that you have a license to use, you need to also include an authorization token in the header of your request.\nPlease consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens.\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search\nresponse results. The following fields are provided for every video in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"asset_family\", \n        \"caption\",\n        \"collection_code\",\n        \"collection_name\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\", \n\t\t\"call_for_image\",\n        \"caption\", \n        \"clip_length\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\", \n        \"color_type\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"era\",\n        \"license_model\",\n        \"mastered_to\",\n        \"originally_shot_on\",\n        \"product_types\",\n        \"quality_rank\",\n        \"shot_speed\",\n        \"source\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files \nthat are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result \nset when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"videos\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Enhanced Search\n\nOur enhanced search uses machine-learning models to understand natural, conversational language. Meaning you can search for longer phrases and get more relevant results from our creative image and creative video libraries.  Default is `true`. Set `enhanced_search` to `false` if you require a precise result set and not one expanded through enhanced search.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "search",
+                "videos",
+                "creative"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "age_of_people",
+                  "value": "<string>,<string>",
+                  "description": "Provides filtering according to the age of individuals in a video."
+                },
+                {
+                  "disabled": false,
+                  "key": "artists",
+                  "value": "<string>",
+                  "description": "Search for videos by specific artists (free-text, comma-separated list of artists)."
+                },
+                {
+                  "disabled": false,
+                  "key": "aspect_ratios",
+                  "value": "<string>,<string>",
+                  "description": "Search for videos by specific aspect ratios."
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_codes",
+                  "value": "<string>,<string>",
+                  "description": "Provides filtering by collection code."
+                },
+                {
+                  "disabled": false,
+                  "key": "collections_filter_type",
+                  "value": "<string>",
+                  "description": "Use to include or exclude collections from search. The default is include"
+                },
+                {
+                  "disabled": false,
+                  "key": "compositions",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on video composition."
+                },
+                {
+                  "disabled": false,
+                  "key": "download_product",
+                  "value": "<string>",
+                  "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+                },
+                {
+                  "disabled": false,
+                  "key": "enhanced_search",
+                  "value": "true",
+                  "description": "If set to {false}, your search will not use enhanced search. Defaults to {true}."
+                },
+                {
+                  "disabled": false,
+                  "key": "ethnicity",
+                  "value": "<string>,<string>",
+                  "description": "Filter search results based on the ethnicity of individuals."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_editorial_use_only",
+                  "value": "<boolean>",
+                  "description": "Exclude videos that are only available for editorial (non-commercial) use. Default value is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_keyword_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Return only videos not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also do not contain the requested keyword(s) are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_nudity",
+                  "value": "false",
+                  "description": "Excludes videos containing nudity. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_max_count",
+                  "value": "300",
+                  "description": "Specifies the maximum number of facets to return per type. Default is 300."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+                },
+                {
+                  "disabled": false,
+                  "key": "format_available",
+                  "value": "<string>",
+                  "description": "Filters according to the digital video format available on a film asset."
+                },
+                {
+                  "disabled": false,
+                  "key": "frame_rates",
+                  "value": "<string>,<string>",
+                  "description": "Provides filtering by video frame rate (frames/second)."
+                },
+                {
+                  "disabled": false,
+                  "key": "image_techniques",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on image technique."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_facets",
+                  "value": "<boolean>",
+                  "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_related_searches",
+                  "value": "false",
+                  "description": "Specifies whether or not to include related searches in the response. The default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "keyword_ids",
+                  "value": "<integer>,<integer>",
+                  "description": "Return only videos tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also contain the requested keyword(s) are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "license_models",
+                  "value": "<string>,<string>",
+                  "description": "Specifies the video licensing model(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_clip_length",
+                  "value": "0",
+                  "description": "Provides filtering by minimum length of video clip, in seconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_clip_length",
+                  "value": "0",
+                  "description": "Provides filtering by maximum length of video, in seconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "number_of_people",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on the number of people."
+                },
+                {
+                  "disabled": false,
+                  "key": "orientations",
+                  "value": "<string>,<string>",
+                  "description": "Return only videos with selected orientations."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Identifies page to return. Default is 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Specifies page size. Default is 30, maximum page_size is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "phrase",
+                  "value": "",
+                  "description": "Free-text search query."
+                },
+                {
+                  "disabled": false,
+                  "key": "safe_search",
+                  "value": "false",
+                  "description": "Setting safe_search to \"true\" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>",
+                  "description": "Select sort order of results.  The default is best_match"
+                },
+                {
+                  "disabled": false,
+                  "key": "release_status",
+                  "value": "<string>",
+                  "description": "Allows filtering by type of model release."
+                },
+                {
+                  "disabled": false,
+                  "key": "viewpoints",
+                  "value": "<string>,<string>",
+                  "description": "Filter based on viewpoint."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                "key": "GI-Country-Code",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "050e595c-dffb-4618-b855-d0c89b54a7c3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "license_models",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 1422,\n  \"videos\": [\n    {\n      \"id\": \"string\",\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"caption\": \"string\",\n      \"clip_length\": \"string\",\n      \"collection_id\": 2528,\n      \"collection_code\": \"string\",\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_created\": \"2016-07-01T21:03:14.200Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        },\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"era\": \"string\",\n      \"event_ids\": [\n        4306,\n        165\n      ],\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 2792,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 6824,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"mastered_to\": \"string\",\n      \"originally_shot_on\": \"string\",\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"shot_speed\": \"string\",\n      \"title\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Multiseat\",\n          \"credits\": 7072\n        },\n        {\n          \"license_type\": \"Standard\",\n          \"credits\": 2608\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"caption\": \"string\",\n      \"clip_length\": \"string\",\n      \"collection_id\": 1509,\n      \"collection_code\": \"string\",\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_created\": \"2017-09-04T15:06:40.263Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        },\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"era\": \"string\",\n      \"event_ids\": [\n        8333,\n        5439\n      ],\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 1512,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 56,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"mastered_to\": \"string\",\n      \"originally_shot_on\": \"string\",\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"shot_speed\": \"string\",\n      \"title\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Standard\",\n          \"credits\": 6208\n        },\n        {\n          \"license_type\": \"Standard\",\n          \"credits\": 625\n        }\n      ]\n    }\n  ],\n  \"facets\": {\n    \"specific_people\": [\n      {\n        \"id\": 7316,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 393,\n        \"name\": \"string\"\n      }\n    ],\n    \"events\": [\n      {\n        \"id\": 101,\n        \"name\": \"string\",\n        \"date\": \"2002-04-06T07:02:28.213Z\"\n      },\n      {\n        \"id\": 9861,\n        \"name\": \"string\",\n        \"date\": \"1977-12-01T19:46:29.792Z\"\n      }\n    ],\n    \"locations\": [\n      {\n        \"id\": 5730,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 430,\n        \"name\": \"string\"\n      }\n    ],\n    \"artists\": [\n      {\n        \"name\": \"string\"\n      },\n      {\n        \"name\": \"string\"\n      }\n    ],\n    \"entertainment\": [\n      {\n        \"id\": 1048,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 300,\n        \"name\": \"string\"\n      }\n    ]\n  },\n  \"auto_corrections\": {\n    \"phrase\": \"string\"\n  },\n  \"related_searches\": [\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ebcd9ba-d200-4adc-b54a-fa26eb139eb1",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "license_models",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "873c3edc-cc34-4b92-af9a-f32ac1c03de0",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "license_models",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a7929002-c2ec-4d59-bcdf-e090f4e911eb",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "license_models",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "17b43c26-170c-4f31-b7f3-5d19abc31429",
+              "name": "InvalidIStockCollection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "age_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "aspect_ratios",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collection_codes",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "collections_filter_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compositions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "download_product",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "enhanced_search",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ethnicity",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "exclude_keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "exclude_nudity",
+                      "value": "false"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "format_available",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frame_rates",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_techniques",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_related_searches",
+                      "value": "false"
+                    },
+                    {
+                      "key": "keyword_ids",
+                      "value": "<integer>,<integer>"
+                    },
+                    {
+                      "key": "license_models",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "min_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max_clip_length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "number_of_people",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orientations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "safe_search",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "release_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viewpoints",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a7f40e0-1ad5-4ef2-a031-babb33e855c9",
+          "name": "Search for creative videos based on url",
+          "request": {
+            "name": "Search for creative videos based on url",
+            "description": {
+              "content": "Search for **similar creative videos** by passing an `image_url` to an uploaded image/frame grab from a video OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image or frame grab in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.\n\nFor example, using cURL:\n\n``` sh\ncurl -i -X PUT https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg -H 'Content-Type: image/jpeg' -H 'Api-Key: API_KEY' --data-binary \"@testimage.jpg\"\n```\n\nOnce the image has been uploaded, use the full URL in the `image_url` parameter, e.g. `image_url=https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg`.\n\n- Uploaded files must be 10MB or smaller\n- Uploads to the same URL will overwrite each other, so ensure that the client application is handling naming uniqueness appropriately.\n- Uploads expire after 24 hours.\n- Uploads and searches must be performed using the _same_ API Key.\n\n## Searching by asset id\n\nWhen searching by `asset_id`, any image or video asset id in the Getty/iStock catalog can be used as the source for similar videos.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "search",
+                "videos",
+                "creative",
+                "by-image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "asset_id",
+                  "value": "<string>",
+                  "description": "Specifies the Getty video id to use in the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_editorial_use_only",
+                  "value": "<boolean>",
+                  "description": "Exclude videos that are only available for editorial (non-commercial) use. Default value is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet_max_count",
+                  "value": "300",
+                  "description": "Specifies the maximum number of facets to return per type. Default is 300."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+                },
+                {
+                  "disabled": false,
+                  "key": "image_url",
+                  "value": "<string>",
+                  "description": "Specifies the location of the image to use in the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_facets",
+                  "value": "<boolean>",
+                  "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Request results starting at a page number (default is 1)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "30",
+                  "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "phrase",
+                  "value": "",
+                  "description": "Free-text search query."
+                },
+                {
+                  "disabled": false,
+                  "key": "product_types",
+                  "value": "<string>,<string>",
+                  "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                "key": "GI-Country-Code",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f0db50c-b240-451f-8f73-6b8c39ca9eac",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 5417,\n  \"videos\": [\n    {\n      \"id\": \"string\",\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"caption\": \"string\",\n      \"clip_length\": \"string\",\n      \"collection_id\": 4036,\n      \"collection_code\": \"string\",\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_created\": \"1948-04-18T13:33:49.752Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        },\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"era\": \"string\",\n      \"event_ids\": [\n        909,\n        9384\n      ],\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 8496,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 9498,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"mastered_to\": \"string\",\n      \"originally_shot_on\": \"string\",\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"shot_speed\": \"string\",\n      \"title\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Indemnification\",\n          \"credits\": 2339\n        },\n        {\n          \"license_type\": \"Unlimited\",\n          \"credits\": 3973\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"allowed_use\": {\n        \"how_can_i_use_it\": \"string\",\n        \"release_info\": \"string\",\n        \"usage_restrictions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"artist\": \"string\",\n      \"asset_family\": \"string\",\n      \"caption\": \"string\",\n      \"clip_length\": \"string\",\n      \"collection_id\": 2830,\n      \"collection_code\": \"string\",\n      \"collection_name\": \"string\",\n      \"color_type\": \"string\",\n      \"copyright\": \"string\",\n      \"date_created\": \"1970-12-03T04:14:21.214Z\",\n      \"display_sizes\": [\n        {\n          \"is_watermarked\": true,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        },\n        {\n          \"is_watermarked\": false,\n          \"name\": \"string\",\n          \"uri\": \"string\",\n          \"aspect_ratio\": \"string\"\n        }\n      ],\n      \"download_product\": \"string\",\n      \"era\": \"string\",\n      \"event_ids\": [\n        1317,\n        7642\n      ],\n      \"keywords\": [\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 2336,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"keyword_id\": \"string\",\n          \"text\": \"string\",\n          \"type\": \"string\",\n          \"relevance\": 2650,\n          \"entity_uris\": [\n            \"string\",\n            \"string\"\n          ],\n          \"entity_types\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"largest_downloads\": [\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        },\n        {\n          \"product_id\": \"string\",\n          \"product_type\": \"string\",\n          \"uri\": \"string\",\n          \"agreement_name\": \"string\"\n        }\n      ],\n      \"license_model\": \"string\",\n      \"mastered_to\": \"string\",\n      \"originally_shot_on\": \"string\",\n      \"product_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"referral_destinations\": [\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        },\n        {\n          \"site_name\": \"string\",\n          \"uri\": \"string\"\n        }\n      ],\n      \"shot_speed\": \"string\",\n      \"title\": \"string\",\n      \"istock_licenses\": [\n        {\n          \"license_type\": \"Multiseat\",\n          \"credits\": 3870\n        },\n        {\n          \"license_type\": \"Standard\",\n          \"credits\": 1280\n        }\n      ]\n    }\n  ],\n  \"facets\": {\n    \"specific_people\": [\n      {\n        \"id\": 3023,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 2747,\n        \"name\": \"string\"\n      }\n    ],\n    \"events\": [\n      {\n        \"id\": 3010,\n        \"name\": \"string\",\n        \"date\": \"1964-05-11T17:31:03.792Z\"\n      },\n      {\n        \"id\": 9057,\n        \"name\": \"string\",\n        \"date\": \"1999-11-09T10:21:28.500Z\"\n      }\n    ],\n    \"locations\": [\n      {\n        \"id\": 1855,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 599,\n        \"name\": \"string\"\n      }\n    ],\n    \"artists\": [\n      {\n        \"name\": \"string\"\n      },\n      {\n        \"name\": \"string\"\n      }\n    ],\n    \"entertainment\": [\n      {\n        \"id\": 6494,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 7186,\n        \"name\": \"string\"\n      }\n    ]\n  },\n  \"auto_corrections\": {\n    \"phrase\": \"string\"\n  },\n  \"related_searches\": [\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"phrase\": \"string\",\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "521b0868-ca87-4729-bd60-18563807cade",
+              "name": "InvalidParameterValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cf653379-30c8-43ff-9658-72c8ee822095",
+              "name": "AuthorizationTokenRequired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ee7f3c44-d666-44ea-acff-8e6ae3c6062c",
+              "name": "UnauthorizedDisplaySize",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7a5cbe0c-c49b-401c-992d-7a0e49b07720",
+              "name": "AssetNotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4d758906-81c0-4642-afa5-bb6f01265142",
+              "name": "InvalidIStockCollection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "search",
+                    "videos",
+                    "creative",
+                    "by-image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_editorial_use_only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "facet_fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "facet_max_count",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "image_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "30"
+                    },
+                    {
+                      "key": "phrase",
+                      "value": ""
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).",
+                    "key": "Accept-Language",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.",
+                    "key": "GI-Country-Code",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "48d4a211-0a0b-4532-9e72-7d139cf2b557",
+    "name": "Getty Images Creative API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

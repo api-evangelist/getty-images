@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Countries API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Countries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gets countries codes and names.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/countries",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a list of country objects that contains country name, two letter ISO abbreviation and three letter ISO abbreviation.\n\nYou'll need an API key and access token to use this resource.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

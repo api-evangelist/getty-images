@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Products API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/products",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of fields. Allows product download requirements to be returned."
+              }
+            ]
+          },
+          "docs": "This endpoint returns all products available to the username used during authentication. As such, this endpoint requires the use of\na fully authorized access_token. The product data can then be used as search filters, restricting results to images from a specific product.\n\nYou'll need an API key and access token to use this resource.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Files API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Register a client provided file for use with AIGenerator endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/beta/ai/file-registrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# File Registration\n\nProvide the URL for a previously uploaded file to receive an ID that can be used as the `reference_file_registration_id` in subsequent image generation requests.\n\n\nUse of this endpoint is restricted to clients with a Fine Tune AI Generation license product.\n\n## The File Registration Request\n\nThe `FileRegistrationRequest` payload accepts the following\nparameters:\n\n| Parameter           | Purpose                                                                                  "
+        },
+        {
+          "info": {
+            "name": "Get details on a registered file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/beta/ai/file-registrations/:fileRegistrationId",
+            "params": [
+              {
+                "name": "fileRegistrationId",
+                "value": "",
+                "type": "path",
+                "description": "The id from a previous request to register a file"
+              }
+            ]
+          },
+          "docs": "# Get Registered File Details\n\nGets details for a registered file.  This endpoint is used after a call to `POST beta/ai/file-registrations`, passing the `id` value from the result of that call."
+        },
+        {
+          "info": {
+            "name": "Upload image for use by the search creative images/videos operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/search/by-image/uploads/:file-name",
+            "params": [
+              {
+                "name": "file-name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload image for use by the search creative images/videos operations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Licensing API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Licensing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Endpoint for acquiring extended licenses with iStock credits for an asset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/asset-licensing/:assetId",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Getty Images assetId - examples 520621493, 112301284"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Endpoint for acquiring extended licenses with iStock credits for an asset."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Changes API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Changes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get asset change notifications.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/asset-changes/change-sets",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the id of the channel for the asset data. Valid channel ids can be found in the results of the Get Partner Channel query."
+              },
+              {
+                "name": "batch_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the number of assets to return. The default is 2200; maximum is 2200."
+              }
+            ]
+          },
+          "docs": "# Asset Changes\n\nGet notifications about new, updated or deleted assets for a specific channel.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource. \n\nMaximum batch size is 2200.\n\nChange-sets must be confirmed before a new batch of notifications can be retrieved from this endpoint. Use the DELETE asset-changes/change-sets/{change-set-id} endpoint to confirm reciept of these notifications.\n\nValues returned for asset_type include Image, Film, and null. Values returned "
+        },
+        {
+          "info": {
+            "name": "Confirm asset change notifications.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v3/asset-changes/change-sets/:change-set-id",
+            "params": [
+              {
+                "name": "change-set-id",
+                "value": "",
+                "type": "path",
+                "description": "Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+              }
+            ]
+          },
+          "docs": "# Delete Asset Changes\n\nConfirm asset changes acknowledges receipt of asset changes (from the PUT asset-changes endpoint).\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource.\n\nUse the change_set_id from the PUT asset-changes/change-sets endpoint to confirm receipt of notifications.\n"
+        },
+        {
+          "info": {
+            "name": "Get a list of asset change notification channels.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/asset-changes/channels"
+          },
+          "docs": "# Get Partner Channels\n\nRetrieves the channel data for the partner. This data can be used to populate the channel_id parameter in the Put Asset Changes query.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource.\n\nPartners who have a channel that has been removed should contact their sales representative to be set up again.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,438 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Editorial API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Editorial",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for editorial images only",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images/editorial",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the age of individuals in an image."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for images by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Filter by collections (comma-separated list of collection codes). Include or exclude based on collections_filter_type."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image composition."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "editorial_segments",
+                "value": "",
+                "type": "query",
+                "description": "Return only events with a matching editorial segment."
+              },
+              {
+                "name": "embed_content_only",
+                "value": "",
+                "type": "query",
+                "description": "Restrict search results to embeddable images. The default is false."
+              },
+              {
+                "name": "ethnicity",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on the ethnicity of individuals in an image."
+              },
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on specific events"
+              },
+              {
+                "name": "exclude_keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "file_types",
+                "value": "",
+                "type": "query",
+                "description": "Return only images having a specific file type."
+              },
+              {
+                "name": "graphical_styles",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on graphical style of the image."
+              },
+              {
+                "name": "graphical_styles_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Provides searching based on specified graphical style(s). The default is include."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "minimum_size",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on minimum size requested. The default is x-small."
+              },
+              {
+                "name": "number_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the number of people in the image."
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only images with selected aspect ratios."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Search images using a search phrase."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              },
+              {
+                "name": "specific_people",
+                "value": "",
+                "type": "query",
+                "description": "Return only images associated with specific people (using a comma-delimited list)."
+              },
+              {
+                "name": "minimum_quality_rank",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on minimum quality ranking. Possible values 1, 2, 3 with 1 being best."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search our editorial stock photos, illustrations and archival images.  Editorial images represent newsworthy events or illustrate matters of general interest, such as news, sport and entertainment and are generally intended for editorial use.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will gi"
+        },
+        {
+          "info": {
+            "name": "Search for editorial videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/videos/editorial",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering according to the age of individuals in a video."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "aspect_ratios",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific aspect ratios."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by collection code."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on video composition."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "editorial_video_types",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by types of video."
+              },
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on specific events"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "format_available",
+                "value": "",
+                "type": "query",
+                "description": "Filters according to the digital video format available on a film asset."
+              },
+              {
+                "name": "frame_rates",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by video frame rate (frames/second)."
+              },
+              {
+                "name": "image_techniques",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image technique."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "min_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by minimum length of video clip, in seconds"
+              },
+              {
+                "name": "max_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by maximum length of video clip, in seconds"
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos with selected orientations."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              },
+              {
+                "name": "specific_people",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by specific peoples' names."
+              },
+              {
+                "name": "release_status",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by type of model release."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "viewpoints",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on viewpoint."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search current and archival video clips of celebrities, newsmakers, and events.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

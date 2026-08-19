@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Customers API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns information about the current user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/customers/current",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the first, middle and last name of the authenticated user.\n\nYou'll need an API key and access token to use this resource.\n\t\nPlease consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

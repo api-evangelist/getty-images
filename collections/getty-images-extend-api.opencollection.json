@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Extend API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Extend",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Extend a creative image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/extend",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Image Extension\n\nUse text prompts and numerical values to extend the content beyond the borders of a image from the Getty Images creative library (excluding illustrations and vectors).\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nTo download an extended image, a traditional license product, such as Premium Access, that provides download access to the origina"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

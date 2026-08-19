@@ -1,0 +1,289 @@
+{
+  "item": [
+    {
+      "id": "6e9b2b63-1956-404b-a2d2-79d6d8b19516",
+      "name": "Set",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4c2a2e84-af98-4e5a-ab78-825766c0b141",
+          "name": "Confirm asset change notifications.",
+          "request": {
+            "name": "Confirm asset change notifications.",
+            "description": {
+              "content": "# Delete Asset Changes\n\nConfirm asset changes acknowledges receipt of asset changes (from the PUT asset-changes endpoint).\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource.\n\nUse the change_set_id from the PUT asset-changes/change-sets endpoint to confirm receipt of notifications.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "asset-changes",
+                "change-sets",
+                ":change-set-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "change-set-id",
+                  "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8393690-24e2-42b6-82dd-c62e915f9bb9",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b4cb916-e81a-422a-84a5-3d6432e42124",
+              "name": "InvalidChangeSetId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a07477ff-1bc5-44d2-b4ca-2c95739a1997",
+              "name": "Your access token does not authorize access to this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "de64fa13-5404-4208-80a6-6512fbb90524",
+              "name": "Transaction was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "asset-changes",
+                    "change-sets",
+                    ":change-set-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "change-set-id",
+                      "description": "(Required) Specify the change-set-id associated with a transaction resource whose receipt you want to confirm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "31ec1edc-91dc-4e42-a3ce-2aa32d3f9b00",
+    "name": "Getty Images Set API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

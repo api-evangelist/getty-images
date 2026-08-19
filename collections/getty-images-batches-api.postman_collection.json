@@ -1,0 +1,396 @@
+{
+  "item": [
+    {
+      "id": "7267ceb1-7f16-492c-b55a-9b8b9a2252b0",
+      "name": "Batches",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "287514cc-b34d-47d7-9a25-4fa518484642",
+          "name": "Report usage of assets via a batch format.",
+          "request": {
+            "name": "Report usage of assets via a batch format.",
+            "description": {
+              "content": "# Report Usage\n\nUse this endpoint to report the usages of a set of assets. The count of assets submitted in a single batch to this endpoint is limited to 1000. Note that all asset Ids specified must be valid or the operation will fail causing no usages to be recorded. In this case, you will need to remove the invalid asset Ids from the query request and re-submit the query.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource. \n\n_Note_: Date of use can be in any unambiguous date format.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "usage-batches",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Specifies a unique batch transaction id to identify the report."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"asset_usages\": [\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    },\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b2c5c9af-30d3-4354-a4e9-3cc5d657719e",
+              "name": "Success - All usages reported were successfully recorded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "usage-batches",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Specifies a unique batch transaction id to identify the report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset_usages\": [\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    },\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"invalid_assets\": [\n    \"string\",\n    \"string\"\n  ],\n  \"total_asset_usages_processed\": 3385\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd8b93e5-80a9-4e18-80d8-a13b58edbb59",
+              "name": "InvalidRequest - The content of the request was invalid. Most commonly this is due to either too many assets specified, no assets or invalid JSON.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "usage-batches",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Specifies a unique batch transaction id to identify the report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset_usages\": [\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    },\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6496675-fbd5-4efe-b25b-21b9662bc887",
+              "name": "AuthorizationTokenRequired - Authorization token was missing or not valid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "usage-batches",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Specifies a unique batch transaction id to identify the report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset_usages\": [\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    },\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d25de27b-8ec6-492a-92c9-05673ca64956",
+              "name": "UnauthorizedToReportUsage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "usage-batches",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Specifies a unique batch transaction id to identify the report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset_usages\": [\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    },\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "293d5229-9cfd-49a8-bddc-dcc8eaaa7b4e",
+              "name": "TransactionIdDuplicated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "usage-batches",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Specifies a unique batch transaction id to identify the report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset_usages\": [\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    },\n    {\n      \"asset_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"usage_date\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "14dfc6ea-357d-4b45-94e3-3bc6b7a048e0",
+    "name": "Getty Images Batches API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDeveloper resources for the Getty Images API including SDK, documentation,\nrelease notes, status, notifications and sample code.",
+      "type": "text/plain"
+    }
+  }
+}

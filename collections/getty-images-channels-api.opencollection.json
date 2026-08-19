@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Channels API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of asset change notification channels.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/asset-changes/channels"
+          },
+          "docs": "# Get Partner Channels\n\nRetrieves the channel data for the partner. This data can be used to populate the channel_id parameter in the Put Asset Changes query.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource.\n\nPartners who have a channel that has been removed should contact their sales representative to be set up again.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Background API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Background",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Remove a background",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/background-removal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Background Removal\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nWhen downloading an image generated using a `reference_asset_id`, a traditional license product, such as Premium Access, that provides download access to the original creative image is required. Downloading an image generated using a `reference_asset_id` also requires the client to first downloa"
+        },
+        {
+          "info": {
+            "name": "Add a background to a reference image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/beta/ai/image-generations/background-generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Background Generation\n\nBackground Generation allows the client application to provide a `reference_file_registration_id` as a reference for creating new AI-generated product photos. Our technology will generate new background content behind the image based on the prompt and other parameters submitted with the request. The padding values are used to position the product on the canvas.\n\nUse of this endpoint may result in the deduction of a credit depending on the terms of your lic"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

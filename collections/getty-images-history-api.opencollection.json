@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images History API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve history of AI generations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/generation-history",
+            "params": [
+              {
+                "name": "date_start",
+                "value": "",
+                "type": "query",
+                "description": "If included, limits the results to those generation requests made on or after date_start. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+              },
+              {
+                "name": "date_end",
+                "value": "",
+                "type": "query",
+                "description": "If included, limits the results to those generation requests made on or before date_end. Both dates and datetimes are supported. \r\nDates should be submitted in ISO 8601 format YYYY-MM-DD. The time will default to 00:00:00 UTC. \r\nDatetimes should be submitted in ISO 8601 format YYYY-MM-DDTHH:mm:ssZ."
+              },
+              {
+                "name": "media_type",
+                "value": "",
+                "type": "query",
+                "description": "If included, limits the results to those generation requests made for the given media type."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The page size of results.  Default is 30."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of results.  Default is 1."
+              },
+              {
+                "name": "product_ids",
+                "value": "",
+                "type": "query",
+                "description": "If included, limits the results to only those requests made against the indicated products."
+              },
+              {
+                "name": "company_generations",
+                "value": "",
+                "type": "query",
+                "description": "If `true`, returns the list of previously downloaded images for all users in\r\n            your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for\r\n            more information. Default is `false`."
+              }
+            ]
+          },
+          "docs": "# AI Generator - Generation History\n\nGet the history of AI generation requests."
+        },
+        {
+          "info": {
+            "name": "Retrieve history item for an individual generation request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/generation-history/:generationRequestId",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              }
+            ]
+          },
+          "docs": "Retrieve history item for an individual generation request"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

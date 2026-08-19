@@ -1,0 +1,847 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Videos API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Videos",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /v3/affiliates/search/videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/affiliates/search/videos",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Search for videos by a photographer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/artists/videos",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "artist_name",
+                "value": "",
+                "type": "query",
+                "description": "Name of artist for desired images"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default page is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default page_size is 10, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "Search for videos by a photographer"
+        },
+        {
+          "info": {
+            "name": "Download a video",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/downloads/videos/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "<remarks>\r\n                    Id of video to download.\r\n                </remarks>"
+              },
+              {
+                "name": "auto_download",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the video.\r\n                    If false is specified, the download URI will be returned in the response message. Default is false.\r\n                </remarks>"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the size to be downloaded."
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+              },
+              {
+                "name": "product_type",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+              },
+              {
+                "name": "use_team_credits",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to generate download URLs and related data for videos you are authorized to download.\n\nMost product offerings have enforced periodic download limits such as monthly, weekly, and daily. When this operation executes, the count of allowed downloads is decremented by one for the product offering. Once the download limit is reached for a given product offering, no further downloads may be requested for that product offering until the next download period.\n\nThe download limit for a g"
+        },
+        {
+          "info": {
+            "name": "Search for creative videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/videos/creative",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering according to the age of individuals in a video."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "aspect_ratios",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific aspect ratios."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by collection code."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on video composition."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "enhanced_search",
+                "value": "",
+                "type": "query",
+                "description": "If set to {false}, your search will not use enhanced search. Defaults to {true}."
+              },
+              {
+                "name": "ethnicity",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on the ethnicity of individuals."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude videos that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "exclude_keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also do not contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "exclude_nudity",
+                "value": "",
+                "type": "query",
+                "description": "Excludes videos containing nudity. The default is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "format_available",
+                "value": "",
+                "type": "query",
+                "description": "Filters according to the digital video format available on a film asset."
+              },
+              {
+                "name": "frame_rates",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by video frame rate (frames/second)."
+              },
+              {
+                "name": "image_techniques",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image technique."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "license_models",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the video licensing model(s)."
+              },
+              {
+                "name": "min_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by minimum length of video clip, in seconds"
+              },
+              {
+                "name": "max_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by maximum length of video, in seconds"
+              },
+              {
+                "name": "number_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the number of people."
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos with selected orientations."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "safe_search",
+                "value": "",
+                "type": "query",
+                "description": "Setting safe_search to \"true\" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              },
+              {
+                "name": "release_status",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by type of model release."
+              },
+              {
+                "name": "viewpoints",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on viewpoint."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search premium stock video, from archival film to contemporary 4K and HD footage.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without\nbeing logged in (anonymous search).  If you are a Getty Images AP"
+        },
+        {
+          "info": {
+            "name": "Search for creative videos based on url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/videos/creative/by-image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the Getty video id to use in the search."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude videos that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "image_url",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the location of the image to use in the search."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "product_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              }
+            ]
+          },
+          "docs": "Search for **similar creative videos** by passing an `image_url` to an uploaded image/frame grab from a video OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image or frame grab in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the UR"
+        },
+        {
+          "info": {
+            "name": "Search for editorial videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/videos/editorial",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering according to the age of individuals in a video."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "aspect_ratios",
+                "value": "",
+                "type": "query",
+                "description": "Search for videos by specific aspect ratios."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by collection code."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on video composition."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "editorial_video_types",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by types of video."
+              },
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on specific events"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "format_available",
+                "value": "",
+                "type": "query",
+                "description": "Filters according to the digital video format available on a film asset."
+              },
+              {
+                "name": "frame_rates",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by video frame rate (frames/second)."
+              },
+              {
+                "name": "image_techniques",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image technique."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those videos matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "min_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by minimum length of video clip, in seconds"
+              },
+              {
+                "name": "max_clip_length",
+                "value": "",
+                "type": "query",
+                "description": "Provides filtering by maximum length of video clip, in seconds"
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only videos with selected orientations."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              },
+              {
+                "name": "specific_people",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by specific peoples' names."
+              },
+              {
+                "name": "release_status",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering by type of model release."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "viewpoints",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on viewpoint."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search current and archival video clips of celebrities, newsmakers, and events.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API "
+        },
+        {
+          "info": {
+            "name": "Get metadata for multiple videos by supplying multiple video ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/videos",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Specifies one or more video ids to return. Use comma delimiter when requesting multiple ids.  Maximum of 100 ids."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to return detailed video metadata for all the specified video ids.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and wou"
+        },
+        {
+          "info": {
+            "name": "Get metadata for a single video by supplying one video id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/videos/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A video id. For more than one video please use the /v3/video endpoint."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to return detailed video metadata for the specified video id.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would li"
+        },
+        {
+          "info": {
+            "name": "Returns information about a customer's download history for a specific asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/videos/:id/downloadhistory",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A video id."
+              },
+              {
+                "name": "company_downloads",
+                "value": "",
+                "type": "query",
+                "description": "If specified, returns the list of previously downloaded videos for all users in your company.\r\n            Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false."
+              }
+            ]
+          },
+          "docs": "Returns information about a customer's download history for a specific asset"
+        },
+        {
+          "info": {
+            "name": "Retrieve creative videos from the same series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/videos/:id/same-series",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifies an existing video"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "This endpoint will provide the list of videos, if any exist, from the same series as the specified creative asset id. These images are typically from the same photo shoot. This functionality will not work for editorial assets.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set"
+        },
+        {
+          "info": {
+            "name": "Retrieve similar videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/videos/:id/similar",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A video id."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "This endpoint will provide a list of videos that are similar to the specified asset id.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. Th"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

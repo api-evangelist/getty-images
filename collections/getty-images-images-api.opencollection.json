@@ -1,0 +1,1135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /v3/affiliates/search/images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/affiliates/search/images",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Search images using a search phrase."
+              },
+              {
+                "name": "style",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on graphical style of the image."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get variations on a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/variations",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Generate Variations\n\nGenerate image variations from a previously-generated image.\n\n## The Image Variation Request\n\nThe `ImageVariationRequest` payload to be posted contains the optional\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                                                      |\n|---------------------|----------------------------------------------"
+        },
+        {
+          "info": {
+            "name": "Get download sizes for a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download-sizes",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Sizes\n\nGiven a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.\n"
+        },
+        {
+          "info": {
+            "name": "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Image\n\nGet the download for a generated image\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including a URL for the download.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` with no payload. This client should then\npoll `GET v3/ai/image"
+        },
+        {
+          "info": {
+            "name": "Begin the download process",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Download Image\n\nDownload a generated image. Initiating the download process for a 4K file may incur a cost depending on the terms of your agreement.\n\n## Download Image Request body details\n\nThe `ImageDownloadRequest` payload to be posted contains the required `size` as well as some other optional\nparameters:\n\n| Parameter         | Purpose                                                                                      |\n|-------------------|----------------------------------"
+        },
+        {
+          "info": {
+            "name": "Search for images by a photographer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/artists/images",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "artist_name",
+                "value": "",
+                "type": "query",
+                "description": "Name of artist for desired images"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default page is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default page_size is 10, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "Search for images by a photographer"
+        },
+        {
+          "info": {
+            "name": "Download an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/downloads/images/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "<remarks>\r\n                    Id of image to download.\r\n                </remarks>"
+              },
+              {
+                "name": "auto_download",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the image.\r\n                    If false is specified, the download URI will be returned in the response message. Default is true.\r\n                </remarks>"
+              },
+              {
+                "name": "file_type",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    File Type expressed with three character file extension.\r\n                </remarks>"
+              },
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Specifies the pixel height of the particular image to download.\r\n                    Available heights can be found in the images/{ids} response for the specific image.\r\n                    If left blank, it will return the largest available size.\r\n                </remarks>"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+              },
+              {
+                "name": "product_type",
+                "value": "",
+                "type": "query",
+                "description": "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+              },
+              {
+                "name": "use_team_credits",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to generate download URLs and related data for images you are authorized to download.\n\nMost product offerings have enforced periodic download limits such as monthly, weekly, and daily. When this operation executes, the count of allowed downloads is decremented by one for the product offering. Once the download limit is reached for a given product offering, no further downloads may be requested for that product offering until the next download period.\n\nThe download limit for a g"
+        },
+        {
+          "info": {
+            "name": "Get metadata for multiple images by supplying multiple image ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/images",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Specifies one or more image ids to return. Use comma delimiter when requesting multiple ids.  Maximum of 100 ids."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              }
+            ]
+          },
+          "docs": "This endpoint returns the detailed image metadata for all specified images.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build \nsearch response results. The following"
+        },
+        {
+          "info": {
+            "name": "Get metadata for a single image by supplying one image id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/images/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "An image id. For more than one image please use the /v3/images endpoint."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              }
+            ]
+          },
+          "docs": "This endpoint returns the detailed image metadata for a specified image.\n\nYou'll need an API key and access token to use this resource. \n \n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that\nare often used to build search response results. The following f"
+        },
+        {
+          "info": {
+            "name": "Returns information about a customer's download history for a specific asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/images/:id/downloadhistory",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "An image id."
+              },
+              {
+                "name": "company_downloads",
+                "value": "",
+                "type": "query",
+                "description": "If specified, returns the list of previously downloaded images for all users in your company.\r\n            Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false."
+              }
+            ]
+          },
+          "docs": "Returns information about a customer's download history for a specific asset"
+        },
+        {
+          "info": {
+            "name": "Retrieve creative images from the same series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/images/:id/same-series",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifies an existing image"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "This endpoint will provide the list of images, if any exist, from the same series as the specified creative asset id. These images are typically from the same photo shoot. This functionality will not work for editorial assets.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set"
+        },
+        {
+          "info": {
+            "name": "Retrieve similar images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/images/:id/similar",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifies an existing image"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Identifies page to return. Default is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Specifies page size. Default is 30, maximum page_size is 100."
+              }
+            ]
+          },
+          "docs": "This endpoint will provide a list of images that are similar to the specified asset id.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build\nsearch response results. Th"
+        },
+        {
+          "info": {
+            "name": "Search for creative images only",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images/creative",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the age of individuals in an image."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for images by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "color",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on predominant color in an image. Use 6 character hexadecimal format (e.g., #002244)."
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image composition."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "embed_content_only",
+                "value": "",
+                "type": "query",
+                "description": "Restrict search results to embeddable images. The default is false."
+              },
+              {
+                "name": "enhanced_search",
+                "value": "",
+                "type": "query",
+                "description": "If set to {false}, your search will not use enhanced search. Defaults to {true}."
+              },
+              {
+                "name": "ethnicity",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on the ethnicity of individuals in an image."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude images that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "exclude_keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "exclude_nudity",
+                "value": "",
+                "type": "query",
+                "description": "Excludes images containing nudity. The default is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "file_types",
+                "value": "",
+                "type": "query",
+                "description": "Return only images having a specific file type."
+              },
+              {
+                "name": "graphical_styles",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on graphical style of the image."
+              },
+              {
+                "name": "graphical_styles_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Provides searching based on specified graphical style(s). The default is include."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "minimum_size",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on minimum size requested. The default is x-small."
+              },
+              {
+                "name": "moods",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on predominant mood in an image."
+              },
+              {
+                "name": "number_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the number of people in the image."
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only images with selected aspect ratios."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Search images using a search phrase."
+              },
+              {
+                "name": "safe_search",
+                "value": "",
+                "type": "query",
+                "description": "Setting safe_search to \"true\" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search our contemporary stock photos, illustrations and archival images.\n\nYou'll need an API key and access token to use this resource.\n \nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API custom"
+        },
+        {
+          "info": {
+            "name": "Search for creative images based on url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images/creative/by-image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the Getty image id to use in the search."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude images that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "image_url",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the location of the image to use in the search."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "product_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              }
+            ]
+          },
+          "docs": "Search for **similar creative images** by passing an `image_url` to an uploaded image OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.\n\nFor example, using cURL:\n\n``` sh\nc"
+        },
+        {
+          "info": {
+            "name": "Search for editorial images only",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images/editorial",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the age of individuals in an image."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for images by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Filter by collections (comma-separated list of collection codes). Include or exclude based on collections_filter_type."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Use to include or exclude collections from search. The default is include"
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image composition."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31)."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "editorial_segments",
+                "value": "",
+                "type": "query",
+                "description": "Return only events with a matching editorial segment."
+              },
+              {
+                "name": "embed_content_only",
+                "value": "",
+                "type": "query",
+                "description": "Restrict search results to embeddable images. The default is false."
+              },
+              {
+                "name": "ethnicity",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on the ethnicity of individuals in an image."
+              },
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on specific events"
+              },
+              {
+                "name": "exclude_keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "file_types",
+                "value": "",
+                "type": "query",
+                "description": "Return only images having a specific file type."
+              },
+              {
+                "name": "graphical_styles",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on graphical style of the image."
+              },
+              {
+                "name": "graphical_styles_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Provides searching based on specified graphical style(s). The default is include."
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "minimum_size",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on minimum size requested. The default is x-small."
+              },
+              {
+                "name": "number_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the number of people in the image."
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only images with selected aspect ratios."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Search images using a search phrase."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              },
+              {
+                "name": "specific_people",
+                "value": "",
+                "type": "query",
+                "description": "Return only images associated with specific people (using a comma-delimited list)."
+              },
+              {
+                "name": "minimum_quality_rank",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on minimum quality ranking. Possible values 1, 2, 3 with 1 being best."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to search our editorial stock photos, illustrations and archival images.  Editorial images represent newsworthy events or illustrate matters of general interest, such as news, sport and entertainment and are generally intended for editorial use.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will gi"
+        },
+        {
+          "info": {
+            "name": "Search for both creative and editorial images - *** DEPRECATED ***",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "age_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the age of individuals in an image."
+              },
+              {
+                "name": "artists",
+                "value": "",
+                "type": "query",
+                "description": "Search for images by specific artists (free-text, comma-separated list of artists)."
+              },
+              {
+                "name": "collection_codes",
+                "value": "",
+                "type": "query",
+                "description": "Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type."
+              },
+              {
+                "name": "collections_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Provides searching based on specified collection(s). The default is Include"
+              },
+              {
+                "name": "color",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on predominant color in an image. Use 6 character hexidecimal format (e.g., #002244). Note: when specified, results will not contain editorial images."
+              },
+              {
+                "name": "compositions",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on image composition."
+              },
+              {
+                "name": "download_product",
+                "value": "",
+                "type": "query",
+                "description": "Filters based on which product the asset will download against.\r\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              },
+              {
+                "name": "embed_content_only",
+                "value": "",
+                "type": "query",
+                "description": "Restrict search results to embeddable images. The default is false."
+              },
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on specific events"
+              },
+              {
+                "name": "ethnicity",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on the ethnicity of individuals in an image."
+              },
+              {
+                "name": "exclude_nudity",
+                "value": "",
+                "type": "query",
+                "description": "Excludes images containing nudity. The default is false."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'."
+              },
+              {
+                "name": "file_types",
+                "value": "",
+                "type": "query",
+                "description": "Return only images having a specific file type."
+              },
+              {
+                "name": "graphical_styles",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on graphical style of the image."
+              },
+              {
+                "name": "graphical_styles_filter_type",
+                "value": "",
+                "type": "query",
+                "description": "Provides searching based on specified graphical style(s). The default is Include"
+              },
+              {
+                "name": "include_related_searches",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include related searches in the response. The default is false."
+              },
+              {
+                "name": "keyword_ids",
+                "value": "",
+                "type": "query",
+                "description": "Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned."
+              },
+              {
+                "name": "minimum_size",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on minimum size requested. The default is x-small"
+              },
+              {
+                "name": "number_of_people",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on the number of people in the image."
+              },
+              {
+                "name": "orientations",
+                "value": "",
+                "type": "query",
+                "description": "Return only images with selected aspect ratios."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Search images using a search phrase."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Select sort order of results.  The default is best_match"
+              },
+              {
+                "name": "specific_people",
+                "value": "",
+                "type": "query",
+                "description": "Return only images associated with specific people (using a comma-delimited list)."
+              }
+            ]
+          },
+          "docs": "## _This endpoint draws from such a large diversity of content, the results will not be as relevant as when the more specific Creative or Editorial endpoints are used. Additionally, the response time for this endpoint is slower compared to that for Creative and Editorial-specific endpoints. For these reasons,_ _**it is highly recommended that those endpoints are used instead of this blended endpoint.**_\n\n\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different info"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

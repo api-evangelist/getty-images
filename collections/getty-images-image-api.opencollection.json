@@ -1,0 +1,469 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Image API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Image",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generates images from a prompt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Generate Images\n\nUse a text prompt to generate images. Use of this endpoint is restricted to clients with an AI Generation license\nproduct.\n\n## The Image Generations Request\n\nThe `ImageGenerationsRequest` payload to be posted contains the required `prompt` as well as some other optional\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                       "
+        },
+        {
+          "info": {
+            "name": "Get generated images from a previous generation request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Generated Images\n\nGets a previously generated set of images.  This endpoint is used after a call to `POST v3/ai/image-generations`, passing the `id` value from the result of that call.\n\n## Fulfilled and Pending Results\n\nLike the `POST v3/ai/image-generations` endpoint, the result of calling this endpoint will be either:\n\n- `HTTP 200 OK` with the generated images' URLs and a generation request `id` value\n- `HTTP 202 Accepted` with the payload only containing a generation requ"
+        },
+        {
+          "info": {
+            "name": "Get variations on a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/variations",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Generate Variations\n\nGenerate image variations from a previously-generated image.\n\n## The Image Variation Request\n\nThe `ImageVariationRequest` payload to be posted contains the optional\nparameters:\n\n| Parameter           | Purpose                                                                                                                                                                                      |\n|---------------------|----------------------------------------------"
+        },
+        {
+          "info": {
+            "name": "Refine a creative image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/refine",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Image Refining\n\nUse a mask image and text prompts to modify content in a image from the Getty Images creative library (excluding illustrations and vectors).\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license. \nTo download a refined image, a traditional license product, such as Premium Access, that provides download access to the original creative image is required."
+        },
+        {
+          "info": {
+            "name": "Extend a creative image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/extend",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Image Extension\n\nUse text prompts and numerical values to extend the content beyond the borders of a image from the Getty Images creative library (excluding illustrations and vectors).\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nTo download an extended image, a traditional license product, such as Premium Access, that provides download access to the origina"
+        },
+        {
+          "info": {
+            "name": "Remove a background",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/background-removal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Background Removal\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\nWhen downloading an image generated using a `reference_asset_id`, a traditional license product, such as Premium Access, that provides download access to the original creative image is required. Downloading an image generated using a `reference_asset_id` also requires the client to first downloa"
+        },
+        {
+          "info": {
+            "name": "Remove object(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/object-removal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Object Removal\n\nUse a mask image to remove object content in a previously generated image or a previously licensed image from the Getty Images creative library. Use of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license.\n\nWhen downloading an image generated using a `reference_asset_id`, a traditional license product, such as Premium Access, that provides download access to"
+        },
+        {
+          "info": {
+            "name": "Influence the color of generated images using a reference image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/influence-color-by-image",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Influence Color By Image\n\nInfluence Color By Image allows the client application to provide an existing Getty Images creative image or an existing generated image, along with prompt text, as a reference for generating new images. The generated images are influenced by the color palette, tone and location of colors within the reference image.\n\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending "
+        },
+        {
+          "info": {
+            "name": "Influence the composition of generated images using a reference image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/influence-composition-by-image",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Influence Composition By Image\nInfluence Composition By Image allows the client application to provide an existing Getty Images creative image or an existing generated image, along with prompt text, as a reference for generating new images. The generated images are influenced by the compositional elements like pose, object location and object depth within the reference image.\n\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in t"
+        },
+        {
+          "info": {
+            "name": "Add a background to a reference image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/beta/ai/image-generations/background-generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Background Generation\n\nBackground Generation allows the client application to provide a `reference_file_registration_id` as a reference for creating new AI-generated product photos. Our technology will generate new background content behind the image based on the prompt and other parameters submitted with the request. The padding values are used to position the product on the canvas.\n\nUse of this endpoint may result in the deduction of a credit depending on the terms of your lic"
+        },
+        {
+          "info": {
+            "name": "Get download sizes for a generated image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download-sizes",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Sizes\n\nGiven a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.\n"
+        },
+        {
+          "info": {
+            "name": "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ]
+          },
+          "docs": "# AI Generator - Get Download Image\n\nGet the download for a generated image\n\n## Fulfilled and Pending Results\n\nIn many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`\nresult and a payload including a URL for the download.\n\nHowever some generations may take more time than can be accommodated in the initial call. In these cases the result of\nthis call is `HTTP 202 Accepted` with no payload. This client should then\npoll `GET v3/ai/image"
+        },
+        {
+          "info": {
+            "name": "Begin the download process",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/ai/image-generations/:generationRequestId/images/:index/download",
+            "params": [
+              {
+                "name": "generationRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The ID from a previous request to generate images"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "path",
+                "description": "The index of the image from the specific images generation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Download Image\n\nDownload a generated image. Initiating the download process for a 4K file may incur a cost depending on the terms of your agreement.\n\n## Download Image Request body details\n\nThe `ImageDownloadRequest` payload to be posted contains the required `size` as well as some other optional\nparameters:\n\n| Parameter         | Purpose                                                                                      |\n|-------------------|----------------------------------"
+        },
+        {
+          "info": {
+            "name": "Search for creative images based on url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/images/creative/by-image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the Getty image id to use in the search."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude images that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes, height, and width returned by 'download_sizes' field are estimates."
+              },
+              {
+                "name": "image_url",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the location of the image to use in the search."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "product_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              }
+            ]
+          },
+          "docs": "Search for **similar creative images** by passing an `image_url` to an uploaded image OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.\n\nFor example, using cURL:\n\n``` sh\nc"
+        },
+        {
+          "info": {
+            "name": "Search for creative videos based on url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/search/videos/creative/by-image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "GI-Country-Code",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the Getty video id to use in the search."
+              },
+              {
+                "name": "exclude_editorial_use_only",
+                "value": "",
+                "type": "query",
+                "description": "Exclude videos that are only available for editorial (non-commercial) use. Default value is false."
+              },
+              {
+                "name": "facet_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+              },
+              {
+                "name": "facet_max_count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of facets to return per type. Default is 300."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Specifies fields to return. Defaults to 'summary_set'. NOTE: Bytes returned by 'download_sizes' field is an estimate."
+              },
+              {
+                "name": "image_url",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the location of the image to use in the search."
+              },
+              {
+                "name": "include_facets",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether or not to include facets in the result set. Default is \"false\"."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Request results starting at a page number (default is 1)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Request number of images to return in each page. Default is 30, maximum page_size is 100."
+              },
+              {
+                "name": "phrase",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "product_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+              }
+            ]
+          },
+          "docs": "Search for **similar creative videos** by passing an `image_url` to an uploaded image/frame grab from a video OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.\n\n## Searching by URL\n\nBefore calling the search by image endpoint, an image or frame grab in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the UR"
+        },
+        {
+          "info": {
+            "name": "Upload image for use by the search creative images/videos operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v3/search/by-image/uploads/:file-name",
+            "params": [
+              {
+                "name": "file-name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload image for use by the search creative images/videos operations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Getty Images Refine API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refine",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Refine a creative image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/ai/image-generations/refine",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "# AI Generator - Image Refining\n\nUse a mask image and text prompts to modify content in a image from the Getty Images creative library (excluding illustrations and vectors).\nUse of this endpoint is restricted to clients with an AI Generation license product and may result in the deduction of a credit depending on the terms of your license. \nTo download a refined image, a traditional license product, such as Premium Access, that provides download access to the original creative image is required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
