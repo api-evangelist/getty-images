@@ -5,6 +5,17 @@ description: >-
   customers, letting you integrate outstanding images, videos, and illustrations
   from Getty Images and iStock directly into your platform.
 kind: contract
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
