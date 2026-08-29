@@ -1,0 +1,49 @@
+slug: getty-images
+provider: Getty Images
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Media, Entertainment & Telecom Content
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Licensing
+  spec_file: getty-images-licensing-api-openapi.yml
+  capability_id: BC-3720
+  capability_id_l1: BC-3720
+  capability_name: Content Rights & Licensing Management
+  confidence: 0.85
+  evidence: POST /v3/asset-licensing/{assetId} — "Endpoint for acquiring extended licenses with iStock
+    credits for an asset"; schemas ExtendedLicenses, AcquireAssetLicensesRequest
+  reason: Explicit acquisition of content licences for a media asset — content rights and licensing. Whether
+    this is best read as inbound rights acquisition (from the caller's side) or outbound licensing (Getty's
+    side) is ambiguous, so L1 only.
+- tag: Assets
+  spec_file: getty-images-assets-api-openapi.yml
+  capability_id: BC-3720
+  capability_id_l1: BC-3720
+  capability_name: Content Rights & Licensing Management
+  confidence: 0.7
+  evidence: POST /v3/asset-licensing/{assetId}    Endpoint for acquiring extended licenses with iStock
+    credits for an asset; GET /v3/purchased-assets    Get Previously Purchased Images and Video
+  reason: Core operations acquire/extend licences for media assets and list previously purchased (licensed)
+    content, with schemas ExtendedLicenses and AcquireAssetLicensesRequest — clearly content rights and
+    licensing. L2 left null because the surface sits on both sides of the licence transaction (outbound
+    licensing by Getty / rights acquisition by the caller).
+- tag: Generations
+  spec_file: getty-images-generations-api-openapi.yml
+  capability_id: BC-3700
+  capability_id_l1: BC-3700
+  capability_name: Content Origination & Production Management
+  confidence: 0.7
+  evidence: POST /v3/ai/image-generations — "Generates images from a prompt"; "Refine a creative image";
+    "Remove a background"
+  reason: The surface is squarely generative creation and editing of creative images (prompt generation,
+    refine, extend, background/object removal, composition influence). That is origination of visual content;
+    L2 is ambiguous between origination and post-production style finishing, so L1 only.

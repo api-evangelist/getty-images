@@ -686,6 +686,9 @@ apis:
   - type: Documentation
     url: https://developers.gettyimages.com/
 common:
+  - type: CapabilityMap
+    url: capabilities/getty-images-capability-edges.yml
+    name: Getty Images Business Capability Map
   - type: VulnerabilityDisclosure
     url: security/getty-images-vulnerability-disclosure.yml
   - type: DomainSecurity
