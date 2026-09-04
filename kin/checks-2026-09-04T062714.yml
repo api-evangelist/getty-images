@@ -1,17 +1,17 @@
 ---
 kin_checks:
   slug: getty-images
-  schema_version: 0.17.2
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T063623
+  schema_version: 0.18.2
+  scored_at: '2026-09-04'
+  run_ts: 2026-09-04T062714
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.17.2.yml; counts below let you verify that.
+    in rubric/scoring-0.18.2.yml; counts below let you verify that.
   counts:
-    total: 130
-    earned: 21
+    total: 132
+    earned: 24
     partial: 13
-    missed: 72
-    na: 24
+    missed: 69
+    na: 26
   checks:
   - id: tags_present
     status: missed
@@ -86,13 +86,9 @@ kin_checks:
     status: missed
   - id: examples_published
     status: missed
-  - id: portal_present
-    status: missed
   - id: api_reference_present
     status: missed
   - id: getting_started_present
-    status: missed
-  - id: authentication_documented
     status: missed
   - id: sdk_count_1
     status: missed
@@ -123,8 +119,6 @@ kin_checks:
   - id: trust_center
     status: missed
   - id: reg_oauth_scopes
-    status: missed
-  - id: reg_authentication_documented
     status: missed
   - id: reg_terms_of_service
     status: missed
