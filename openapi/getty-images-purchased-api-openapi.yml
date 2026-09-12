@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Purchased API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -30,10 +33,11 @@ paths:
         in: query
         description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
           format: date-time
-          nullable: true
       - name: page
         in: query
         description: Identifies page to return. Default is 1.
@@ -54,10 +58,11 @@ paths:
         in: query
         description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
           format: date-time
-          nullable: true
       - name: company_purchases
         in: query
         description: If specified, returns the list of previously purchased assets for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
@@ -87,10 +92,11 @@ components:
           type: integer
           format: int32
         previous_purchases:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/PreviousAssetPurchase'
-          nullable: true
       additionalProperties: false
     PreviousAssetPurchase:
       type: object
@@ -99,32 +105,41 @@ components:
           type: string
           format: date-time
         purchased_by:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         asset_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         asset_type:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         license_model:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         order_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         thumb_uri:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         size_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         file_size_in_bytes:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         download_uri:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:

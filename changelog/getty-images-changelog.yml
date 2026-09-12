@@ -1,0 +1,168 @@
+generated: '2026-09-12'
+method: searched
+source: https://developer.gettyimages.com/release-notes/
+url: https://developer.gettyimages.com/release-notes/
+feed: https://developer.gettyimages.com/release-notes/index.xml
+format: dated prose entries on a single first-party page (Hugo), newest first
+scheme:
+  api_version: v3
+  entry_versioning: none
+  note: >-
+    Entries are titled and dated but carry no version number, no semver and no breaking/
+    non-breaking label. A reader must infer impact from the prose. The page also has an RSS
+    feed (/release-notes/index.xml), which is the only machine-readable change signal Getty
+    publishes — there is no changelog API and no Sunset/Deprecation header.
+current_version: v3
+coverage: 2020-12-03 through 2026-03-02 on one page
+entries:
+- date: '2026-03-02'
+  title: order_id data point
+  type: advisory
+  breaking: false
+  summary: >-
+    order_id in GET /v3/purchased-assets responses has historically been emitted as a 32-bit
+    integer in string form. That behaviour continues "in the near term", but clients relying
+    on 32-bit-integer semantics are told to move to treating it solely as a string.
+  operations: [GET /v3/purchased-assets]
+- date: '2024-08-19'
+  title: 'Gen AI: generate new images influenced by a reference image'
+  type: addition
+  breaking: false
+  summary: >-
+    Two new generation endpoints taking a previously licensed or generated image as a
+    reference — influence-color-by-image (colour palette, tone, colour placement) and
+    influence-composition-by-image (pose, object location, object depth).
+  operations:
+  - POST /beta/ai/image-generations/influence-color-by-image
+  - POST /beta/ai/image-generations/influence-composition-by-image
+- date: '2024-08-13'
+  title: Gen AI remove object endpoint
+  type: addition
+  breaking: false
+  summary: >-
+    Mask-driven object removal against a previously licensed creative image or a previously
+    generated image; returns four generated images.
+  operations: [POST /beta/ai/image-generations/object-removal]
+- date: '2024-08-12'
+  title: Preview image files are now the same as comp image files
+  type: change
+  breaking: false
+  summary: >-
+    The preview field in /search and /images responses now points at the same file as comp.
+    Previously preview was a variable-length, unoptimised file.
+- date: '2024-07-17'
+  title: Enhanced search
+  type: change
+  breaking: false
+  summary: >-
+    Creative image and video search now use machine-learning models to understand natural,
+    conversational language. Enabled BY DEFAULT in all supported languages. Callers needing a
+    precise result set must opt out with enhanced_search=false — a silent behavioural change
+    to existing queries with an opt-out rather than an opt-in.
+  operations: [GET /v3/search/images/creative, GET /v3/search/videos/creative]
+- date: '2024-07-11'
+  title: Gen AI camera controls and background removal
+  type: addition
+  breaking: false
+  summary: >-
+    POST /v3/ai/image-generations gains optional lens_type (wide_angle, telephoto) and
+    depth_of_field (shallow, deep) parameters; new background-removal endpoint added.
+  operations:
+  - POST /v3/ai/image-generations
+  - POST /v3/ai/image-generations/background-removal
+- date: '2024-05-08'
+  title: SSL/TLS update
+  type: platform
+  breaking: false
+  summary: >-
+    CloudFront security policy moved from TLSv1.2_2019 to TLSv1.2_2021, removing some
+    vulnerable ciphers.
+- date: '2024-04-11'
+  title: Modify images from the Getty Images creative library
+  type: addition
+  breaking: false
+  summary: >-
+    Extend and refine extended to imagery from the creative library, not just generated
+    images. Restricted to clients with a Gen AI licence product; may deduct a credit.
+  operations:
+  - POST /v3/ai/image-generations/extend
+  - POST /v3/ai/image-generations/refine
+- date: '2024-02-02'
+  title: AiGenerator endpoints are now v3
+  type: path-migration
+  breaking: false
+  summary: >-
+    Most AiGenerator endpoints promoted from /beta/ to /v3/. Beta versions stay supported
+    "while we work with existing clients on making the transition" — no dated sunset.
+- date: '2024-01-19'
+  title: Creative video search filters
+  type: addition
+  breaking: false
+  summary: >-
+    New ethnicity and number_of_people filters for creative video search; new values
+    (medium_shot, wide_shot, part_of_a_series) added to the existing compositions filter.
+- date: '2024-01-08'
+  title: AI image generation with refine and extend
+  type: addition
+  breaking: false
+  summary: >-
+    Refine (inpainting, mask-driven) and extend (outpainting) added. Masks must be uploaded
+    to Getty's S3 bucket. Restricted to AI Generation licence holders; may deduct a credit.
+- date: '2023-10-25'
+  title: moods creative image search filter
+  type: addition
+  breaking: false
+  summary: 'New moods filter: black_and_white, bold, cool, dramatic, natural, vivid, warm.'
+- date: '2023-06-12'
+  title: license_model field on previous downloads
+  type: addition
+  breaking: false
+  summary: >-
+    GET /v3/downloads responses gain license_model (royaltyfree, rightsmanaged, rightsready),
+    so a client can branch DAM behaviour on licence class.
+  operations: [GET /v3/downloads]
+- date: '2023-06-05'
+  title: WebP files now available
+  type: addition
+  breaking: false
+  summary: >-
+    WebP versions of comp, mid_res_comp and high_res_comp added alongside the existing JPGs,
+    retrievable individually or via display_set.
+- date: '2022-11-01'
+  title: Update to display image URLs
+  type: change
+  breaking: false
+  summary: >-
+    thumb / preview / comp / mid-res / high-res URLs now carry a file extension. Getty
+    restates that all such URLs are opaque values subject to change and must be used as-is.
+- date: '2022-05-12'
+  title: New endpoints for OAuth
+  type: change
+  breaking: false
+  summary: >-
+    New OAuth endpoints at authentication.gettyimages.com/oauth2/{token,auth} fix a bug where
+    expires_in was returned as a string instead of an integer. "The existing endpoints will
+    continue to work for some time, but customers are encouraged to migrate to the new ones as
+    soon as possible." This is the migration that the older harvested specs in this repo
+    missed — they still name api.gettyimages.com/v4/oauth2/token.
+- date: '2022-03-29'
+  title: Video download redirects
+  type: change
+  breaking: true
+  summary: >-
+    Calls to delivery.gettyimages.com video download URLs changed from HTTP 200 to HTTP 307
+    Redirect. Clients that did not follow redirects broke on the day. The closest thing to a
+    breaking change in the visible window, shipped same-day with a support-email escape hatch
+    (apisupport at gettyimages dot com).
+- date: '2021-01-21'
+  title: TLS minimum requirements now in place
+  type: platform
+  breaking: true
+  summary: >-
+    TLS 1.0 and 1.1 support removed; TLS 1.2+ only. Announced 2020-12-03, effective
+    2021-01-21 — 49 days of notice, the longest documented deprecation lead time on record.
+notes: >-
+  Entries above are the recent window plus every entry that is breaking or deprecation-
+  bearing. The full page runs back to 2020 and also carries search-filter and metadata-field
+  additions (safe_search, exclude_nudity, aspect_ratio, orientation, dpi, event_ids, four new
+  search languages, search-by-video) not itemised here.

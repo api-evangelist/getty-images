@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Image API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -780,7 +783,9 @@ paths:
     get:
       tags:
       - Image
-      summary: "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed."
+      summary: 'Once the download process has started, this endpoint can be used to check the status of the download and get the
+
+        download URL once it is completed.'
       description: '# AI Generator - Get Download Image
 
 
@@ -917,27 +922,30 @@ paths:
         in: query
         description: Specifies the Getty image id to use in the search.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specifies the Getty image id to use in the search.
-          nullable: true
       - name: exclude_editorial_use_only
         in: query
         description: Exclude images that are only available for editorial (non-commercial) use. Default value is false.
         schema:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           description: Exclude images that are only available for editorial (non-commercial) use. Default value is false.
-          nullable: true
       - name: facet_fields
         in: query
-        description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+        description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/CreateImageSearchFacetsFields'
-          description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
-          nullable: true
+          description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
       - name: facet_max_count
         in: query
         description: Specifies the maximum number of facets to return per type. Default is 300.
@@ -952,25 +960,28 @@ paths:
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/CreativeImagesFieldValues'
           description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-          nullable: true
       - name: image_url
         in: query
         description: Specifies the location of the image to use in the search.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specifies the location of the image to use in the search.
-          nullable: true
       - name: include_facets
         in: query
         description: Specifies whether or not to include facets in the result set. Default is "false".
         schema:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           description: Specifies whether or not to include facets in the result set. Default is "false".
-          nullable: true
       - name: page
         in: query
         description: Request results starting at a page number (default is 1).
@@ -991,21 +1002,23 @@ paths:
         in: query
         description: Free-text search query.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Free-text search query.
           default: ''
-          nullable: true
       - name: product_types
         in: query
-        description: "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+        description: "Filter images to those from one of your product types. \n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          description: "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
-          nullable: true
+          description: "Filter images to those from one of your product types. \n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
       responses:
         '200':
           description: Success
@@ -1082,27 +1095,30 @@ paths:
         in: query
         description: Specifies the Getty video id to use in the search.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specifies the Getty video id to use in the search.
-          nullable: true
       - name: exclude_editorial_use_only
         in: query
         description: Exclude videos that are only available for editorial (non-commercial) use. Default value is false.
         schema:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           description: Exclude videos that are only available for editorial (non-commercial) use. Default value is false.
-          nullable: true
       - name: facet_fields
         in: query
-        description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
+        description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/CreateVideoSearchFacetsFields'
-          description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\r\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
-          nullable: true
+          description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
       - name: facet_max_count
         in: query
         description: Specifies the maximum number of facets to return per type. Default is 300.
@@ -1117,25 +1133,28 @@ paths:
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/CreativeVideosFieldValues'
           description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes returned by ''download_sizes'' field is an estimate.'
-          nullable: true
       - name: image_url
         in: query
         description: Specifies the location of the image to use in the search.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specifies the location of the image to use in the search.
-          nullable: true
       - name: include_facets
         in: query
         description: Specifies whether or not to include facets in the result set. Default is "false".
         schema:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           description: Specifies whether or not to include facets in the result set. Default is "false".
-          nullable: true
       - name: page
         in: query
         description: Request results starting at a page number (default is 1).
@@ -1156,21 +1175,23 @@ paths:
         in: query
         description: Free-text search query.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Free-text search query.
           default: ''
-          nullable: true
       - name: product_types
         in: query
-        description: "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
+        description: "Filter images to those from one of your product types. \n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          description: "Filter images to those from one of your product types. \r\n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \r\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \r\n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \r\n                    Product ID can be obtained from the GET /products response."
-          nullable: true
+          description: "Filter images to those from one of your product types. \n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
       responses:
         '200':
           description: Success
@@ -1199,24 +1220,27 @@ paths:
         description: ''
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: ''
-          nullable: true
       requestBody:
         description: ''
         content:
           image/jpeg:
             schema:
-              type: string
+              type:
+              - string
+              - 'null'
               description: ''
               format: byte
-              nullable: true
           image/png:
             schema:
-              type: string
+              type:
+              - string
+              - 'null'
               description: ''
               format: byte
-              nullable: true
       responses:
         '200':
           description: Success
@@ -1228,34 +1252,199 @@ paths:
           description: UnauthorizedDisplaySize
 components:
   schemas:
+    AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
+          type:
+          - string
+          - 'null'
+          description: Indicates how the asset can be used
+        release_info:
+          type:
+          - string
+          - 'null'
+          description: Indicates release status
+        usage_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Indicates asset usage restriction, if any
+      additionalProperties: false
+    ReferenceGeneration:
+      type: object
+      properties:
+        generation_request_id:
+          type:
+          - string
+          - 'null'
+          description: The id from a previous request to generate images.
+        index:
+          type: integer
+          description: The index of the image from the specific images generation.
+          format: int32
+      additionalProperties: false
+    DownloadSizeResponse:
+      type: object
+      properties:
+        size_name:
+          type:
+          - string
+          - 'null'
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    BackgroundRemovalRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+      additionalProperties: false
+      description: Remove a background
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImageGenerationsRequest:
+      type: object
+      properties:
+        prompt:
+          type:
+          - string
+          - 'null'
+          description: The only required parameter, this is the primary text used for the generation of the images.
+        seed:
+          type:
+          - integer
+          - 'null'
+          description: The seed to use for generation. This is not used for most generation cases but is available for use to ensure a repeatable result.
+          format: int32
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+          description: Concepts to exclude from the result
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+          description: Aspect ratio of the result images.  Must be one of 1:1, 3:4, 4:3, 9:16, or 16:9
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        lens_type:
+          $ref: '#/components/schemas/LensType'
+        depth_of_field:
+          $ref: '#/components/schemas/DepthOfField'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the generation request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the generation request.  Some products require this value.
+      additionalProperties: false
+      description: Payload with all generation request parameters
     SearchFacetsResponse:
       type: object
       properties:
         specific_people:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SpecificPeople'
-          nullable: true
         events:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/FacetEvent'
-          nullable: true
         locations:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Location'
-          nullable: true
         artists:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Artist'
-          nullable: true
         entertainment:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Entertainment'
-          nullable: true
+      additionalProperties: false
+    CreativeVideoSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CreativeVideoSearchItem'
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
       additionalProperties: false
     CreativeImagesFieldValues:
       enum:
@@ -1296,18 +1485,634 @@ components:
       - title
       - uri_oembed
       type: string
-    FacetEvent:
+    PreviewUrl:
+      type: object
+      properties:
+        preview_size:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type:
+          - string
+          - 'null'
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+      additionalProperties: false
+    AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    SpecificPeople:
       type: object
       properties:
         id:
           type: integer
           format: int32
         name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    VideoSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DownloadResponse:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+        generated_asset_id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CreateImageSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    Download:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CreateVideoSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    InfluenceCompositionByImageRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        reference_file_registration_id:
+          type:
+          - string
+          - 'null'
+          description: File Id to modify.
+        prompt:
+          type:
+          - string
+          - 'null'
+          description: This is the primary text used for refining the images.
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+          description: Concepts to exclude from the result.
+        influence_level:
+          type:
+          - number
+          - 'null'
+          description: Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.
+          format: float
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        seed:
+          type:
+          - integer
+          - 'null'
+          description: The seed used for the generation
+          format: int32
+        product_id:
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+      additionalProperties: false
+      description: Payload with all influence composition by image parameters
+    ExtendRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        prompt:
+          type:
+          - string
+          - 'null'
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        left_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        right_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        top_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        bottom_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+      additionalProperties: false
+    BackgroundGenerationRequest:
+      type: object
+      properties:
+        reference_file_registration_id:
+          type:
+          - string
+          - 'null'
+        prompt:
+          type:
+          - string
+          - 'null'
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        left_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        right_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        top_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        bottom_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+      additionalProperties: false
+    AssetDetail:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Entertainment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    MediaType:
+      enum:
+      - photography
+      - illustration
+      type: string
+    Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        entity_uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        entity_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    InfluenceColorByImageRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        reference_file_registration_id:
+          type:
+          - string
+          - 'null'
+          description: File Id to modify.
+        prompt:
+          type:
+          - string
+          - 'null'
+          description: This is the primary text used for refining the images.
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+          description: Concepts to exclude from the result.
+        noise_level:
+          type:
+          - number
+          - 'null'
+          description: Accepted values are 0-1. Higher values will increase differences between the reference and generated images.
+          format: float
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        seed:
+          type:
+          - integer
+          - 'null'
+          description: The seed used for the generation
+          format: int32
+        product_id:
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+      additionalProperties: false
+      description: Payload with all influence color by image parameters
+    Artist:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImageDownloadRequest:
+      type: object
+      properties:
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the download request.  Some products require this value.
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the download request.  Some products require this value.
+        size_name:
+          type:
+          - string
+          - 'null'
+          description: The size name.  Valid values are 1k or 4k.
+      additionalProperties: false
+      description: Parameters for requesting an AI generation image download
+    PendingImageGenerationResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DownloadSizesResponse:
+      type: object
+      properties:
+        download_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DownloadSizeResponse'
+      additionalProperties: false
+    IStockLicense:
+      type: object
+      properties:
+        license_type:
+          $ref: '#/components/schemas/AssetLicenseName'
+        credits:
+          type: integer
+          format: int32
+      additionalProperties: false
+    RefineRequest:
+      required:
+      - mask_url
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        prompt:
+          type:
+          - string
+          - 'null'
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        mask_url:
+          minLength: 1
           type: string
-          nullable: true
-        date:
-          type: string
+      additionalProperties: false
+    CreativeVideoSearchItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_created:
+          type:
+          - string
+          - 'null'
           format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VideoSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        era:
+          type:
+          - string
+          - 'null'
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        mastered_to:
+          type:
+          - string
+          - 'null'
+        originally_shot_on:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+        shot_speed:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        istock_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IStockLicense'
+      additionalProperties: false
+    SearchByImageResourceResults:
+      type: object
+      properties:
+        image_fingerprint:
+          type:
+          - string
+          - 'null'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+          deprecated: true
+        result_count:
+          type: integer
+          format: int32
+        images: {}
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
     ImageDataResponse:
       type: object
@@ -1318,31 +2123,16 @@ components:
         is_blocked:
           type: boolean
         preview_urls:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/PreviewUrl'
           description: The preview URLs for the result
-          nullable: true
         url:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PendingImageGenerationResponse:
-      type: object
-      properties:
-        generation_request_id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    DownloadResponse:
-      type: object
-      properties:
-        url:
-          type: string
-          nullable: true
-        generated_asset_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     CreativeVideosFieldValues:
       enum:
@@ -1384,74 +2174,6 @@ components:
       - thumb
       - title
       type: string
-    ImageGenerationsRequest:
-      type: object
-      properties:
-        prompt:
-          type: string
-          description: The only required parameter, this is the primary text used for the generation of the images.
-          nullable: true
-        seed:
-          type: integer
-          description: The seed to use for generation. This is not used for most generation cases but is available for use to ensure a repeatable result.
-          format: int32
-          nullable: true
-        negative_prompt:
-          type: string
-          description: Concepts to exclude from the result
-          nullable: true
-        aspect_ratio:
-          type: string
-          description: Aspect ratio of the result images.  Must be one of 1:1, 3:4, 4:3, 9:16, or 16:9
-          nullable: true
-        media_type:
-          $ref: '#/components/schemas/MediaType'
-        mood:
-          $ref: '#/components/schemas/Mood'
-        lens_type:
-          $ref: '#/components/schemas/LensType'
-        depth_of_field:
-          $ref: '#/components/schemas/DepthOfField'
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the generation request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the generation request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Payload with all generation request parameters
-    ReferralDestination:
-      type: object
-      properties:
-        site_name:
-          type: string
-          nullable: true
-        uri:
-          type: string
-          nullable: true
-      additionalProperties: false
-    VideoSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type: string
-          nullable: true
-        uri:
-          type: string
-          nullable: true
-        aspect_ratio:
-          type: string
-          nullable: true
-      additionalProperties: false
     Mood:
       enum:
       - black_and_white
@@ -1462,675 +2184,116 @@ components:
       - dramatic
       - bold
       type: string
-    ImageDownloadRequest:
-      type: object
-      properties:
-        notes:
-          type: string
-          description: The notes to use for the download request.  Some products require this value.
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the download request.  Some products require this value.
-          nullable: true
-        size_name:
-          type: string
-          description: The size name.  Valid values are 1k or 4k.
-          nullable: true
-      additionalProperties: false
-      description: Parameters for requesting an AI generation image download
-    DownloadSizeResponse:
-      type: object
-      properties:
-        size_name:
-          type: string
-          nullable: true
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    BackgroundGenerationRequest:
-      type: object
-      properties:
-        reference_file_registration_id:
-          type: string
-          nullable: true
-        prompt:
-          type: string
-          nullable: true
-        negative_prompt:
-          type: string
-          nullable: true
-        product_id:
-          type: integer
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          nullable: true
-        notes:
-          type: string
-          nullable: true
-        left_percentage:
-          type: number
-          format: float
-          nullable: true
-        right_percentage:
-          type: number
-          format: float
-          nullable: true
-        top_percentage:
-          type: number
-          format: float
-          nullable: true
-        bottom_percentage:
-          type: number
-          format: float
-          nullable: true
-      additionalProperties: false
-    RelatedSearch:
-      type: object
-      properties:
-        phrase:
-          type: string
-          nullable: true
-        url:
-          type: string
-          nullable: true
-      additionalProperties: false
-    CreativeVideoSearchItem:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-        allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
-        artist:
-          type: string
-          nullable: true
-        asset_family:
-          type: string
-          nullable: true
-        caption:
-          type: string
-          nullable: true
-        clip_length:
-          type: string
-          nullable: true
-        collection_id:
-          type: integer
-          format: int32
-          nullable: true
-        collection_code:
-          type: string
-          nullable: true
-        collection_name:
-          type: string
-          nullable: true
-        color_type:
-          type: string
-          nullable: true
-        copyright:
-          type: string
-          nullable: true
-        date_created:
-          type: string
-          format: date-time
-          nullable: true
-        display_sizes:
-          type: array
-          items:
-            $ref: '#/components/schemas/VideoSearchItemDisplaySize'
-          nullable: true
-        download_product:
-          type: string
-          nullable: true
-        era:
-          type: string
-          nullable: true
-        event_ids:
-          type: array
-          items:
-            type: integer
-            format: int32
-          nullable: true
-        keywords:
-          type: array
-          items:
-            $ref: '#/components/schemas/Keyword'
-          nullable: true
-        largest_downloads:
-          type: array
-          items:
-            $ref: '#/components/schemas/Download'
-          nullable: true
-        license_model:
-          type: string
-          nullable: true
-        mastered_to:
-          type: string
-          nullable: true
-        originally_shot_on:
-          type: string
-          nullable: true
-        product_types:
-          type: array
-          items:
-            type: string
-          nullable: true
-        referral_destinations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReferralDestination'
-          nullable: true
-        shot_speed:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        istock_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/IStockLicense'
-          nullable: true
-      additionalProperties: false
-    AllowedUse:
-      type: object
-      properties:
-        how_can_i_use_it:
-          type: string
-          description: Indicates how the asset can be used
-          nullable: true
-        release_info:
-          type: string
-          description: Indicates release status
-          nullable: true
-        usage_restrictions:
-          type: array
-          items:
-            type: string
-          description: Indicates asset usage restriction, if any
-          nullable: true
-      additionalProperties: false
-    Location:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-          nullable: true
-      additionalProperties: false
-    AssetDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    DownloadSizesResponse:
-      type: object
-      properties:
-        download_sizes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DownloadSizeResponse'
-          nullable: true
-      additionalProperties: false
-    CreateImageSearchFacetsFields:
-      enum:
-      - artists
-      - locations
-      type: string
-    ExtendRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        prompt:
-          type: string
-          nullable: true
-        negative_prompt:
-          type: string
-          nullable: true
-        product_id:
-          type: integer
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          nullable: true
-        notes:
-          type: string
-          nullable: true
-        left_percentage:
-          type: number
-          format: float
-          nullable: true
-        right_percentage:
-          type: number
-          format: float
-          nullable: true
-        top_percentage:
-          type: number
-          format: float
-          nullable: true
-        bottom_percentage:
-          type: number
-          format: float
-          nullable: true
-      additionalProperties: false
-    Entertainment:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-          nullable: true
-      additionalProperties: false
-    BackgroundRemovalRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Remove a background
-    Download:
+    ImageVariationRequest:
       type: object
       properties:
         product_id:
-          type: string
-          nullable: true
-        product_type:
-          type: string
-          nullable: true
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the generation request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the generation request.  Some products require this value.
+      additionalProperties: false
+      description: Payload with all images variation parameters
+    ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
         uri:
-          type: string
-          nullable: true
-        agreement_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    MediaType:
-      enum:
-      - photography
-      - illustration
-      type: string
-    RemoveObjectRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-        mask_url:
-          type: string
-          description: The location of the mask.
-          nullable: true
-      additionalProperties: false
-      description: Payload with all parameters for removing objects from an image
-    IStockLicense:
-      type: object
-      properties:
-        license_type:
-          $ref: '#/components/schemas/AssetLicenseName'
-        credits:
-          type: integer
-          format: int32
-      additionalProperties: false
-    SearchByImageResourceResults:
-      type: object
-      properties:
-        image_fingerprint:
-          type: string
-          nullable: true
-        related_searches:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-          nullable: true
-          deprecated: true
-        result_count:
-          type: integer
-          format: int32
-        images:
-          nullable: true
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    ImageGenerationsResponse:
-      type: object
-      properties:
-        generation_request_id:
-          type: string
-          nullable: true
-        seed:
-          type: integer
-          format: int32
-          nullable: true
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageDataResponse'
-          nullable: true
-        original_asset:
-          $ref: '#/components/schemas/AssetDetail'
-      additionalProperties: false
-    InfluenceCompositionByImageRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        reference_file_registration_id:
-          type: string
-          description: File Id to modify.
-          nullable: true
-        prompt:
-          type: string
-          description: This is the primary text used for refining the images.
-          nullable: true
-        negative_prompt:
-          type: string
-          description: Concepts to exclude from the result.
-          nullable: true
-        influence_level:
-          type: number
-          description: Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.
-          format: float
-          nullable: true
-        media_type:
-          $ref: '#/components/schemas/MediaType'
-        mood:
-          $ref: '#/components/schemas/Mood'
-        seed:
-          type: integer
-          description: The seed used for the generation
-          format: int32
-          nullable: true
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Payload with all influence composition by image parameters
-    CreateVideoSearchFacetsFields:
-      enum:
-      - artists
-      - locations
-      type: string
-    InfluenceColorByImageRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        reference_file_registration_id:
-          type: string
-          description: File Id to modify.
-          nullable: true
-        prompt:
-          type: string
-          description: This is the primary text used for refining the images.
-          nullable: true
-        negative_prompt:
-          type: string
-          description: Concepts to exclude from the result.
-          nullable: true
-        noise_level:
-          type: number
-          description: Accepted values are 0-1. Higher values will increase differences between the reference and generated images.
-          format: float
-          nullable: true
-        media_type:
-          $ref: '#/components/schemas/MediaType'
-        mood:
-          $ref: '#/components/schemas/Mood'
-        seed:
-          type: integer
-          description: The seed used for the generation
-          format: int32
-          nullable: true
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Payload with all influence color by image parameters
     LensType:
       enum:
       - wide_angle
       - telephoto
       type: string
-    Keyword:
+    RemoveObjectRequest:
       type: object
       properties:
-        keyword_id:
-          type: string
-          nullable: true
-        text:
-          type: string
-          nullable: true
-        type:
-          type: string
-          nullable: true
-        relevance:
-          type: integer
-          format: int32
-          nullable: true
-        entity_uris:
-          type: array
-          items:
-            type: string
-          nullable: true
-        entity_types:
-          type: array
-          items:
-            type: string
-          nullable: true
-      additionalProperties: false
-    ImageVariationRequest:
-      type: object
-      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
         product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
           format: int32
-          nullable: true
         project_code:
-          type: string
-          description: The project code to use for the generation request.  Some products require this value.
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
         notes:
-          type: string
-          description: The notes to use for the generation request.  Some products require this value.
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+        mask_url:
+          type:
+          - string
+          - 'null'
+          description: The location of the mask.
       additionalProperties: false
-      description: Payload with all images variation parameters
-    AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PreviewUrl:
-      type: object
-      properties:
-        preview_size:
-          type: string
-          nullable: true
-        image_url:
-          type: string
-          nullable: true
-        width:
-          type: integer
-          format: int32
-        height:
-          type: integer
-          format: int32
-      additionalProperties: false
-    SpecificPeople:
+      description: Payload with all parameters for removing objects from an image
+    DepthOfField:
+      enum:
+      - shallow
+      - deep
+      type: string
+    FacetEvent:
       type: object
       properties:
         id:
           type: integer
           format: int32
         name:
+          type:
+          - string
+          - 'null'
+        date:
           type: string
-          nullable: true
+          format: date-time
       additionalProperties: false
-    CreativeVideoSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        videos:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreativeVideoSearchItem'
-          nullable: true
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-        related_searches:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-          nullable: true
-      additionalProperties: false
-    Artist:
-      type: object
-      properties:
-        name:
-          type: string
-          nullable: true
-      additionalProperties: false
-    DepthOfField:
-      enum:
-      - shallow
-      - deep
-      type: string
-    ReferenceGeneration:
+    ImageGenerationsResponse:
       type: object
       properties:
         generation_request_id:
-          type: string
-          description: The id from a previous request to generate images.
-          nullable: true
-        index:
-          type: integer
-          description: The index of the image from the specific images generation.
+          type:
+          - string
+          - 'null'
+        seed:
+          type:
+          - integer
+          - 'null'
           format: int32
-      additionalProperties: false
-    AssetLicenseName:
-      enum:
-      - Standard
-      - Multiseat
-      - Unlimited
-      - Resale
-      - Indemnification
-      type: string
-    RefineRequest:
-      required:
-      - mask_url
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        prompt:
-          type: string
-          nullable: true
-        negative_prompt:
-          type: string
-          nullable: true
-        product_id:
-          type: integer
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          nullable: true
-        notes:
-          type: string
-          nullable: true
-        mask_url:
-          minLength: 1
-          type: string
+        results:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageDataResponse'
+        original_asset:
+          $ref: '#/components/schemas/AssetDetail'
       additionalProperties: false
   securitySchemes:
     Api-Key:

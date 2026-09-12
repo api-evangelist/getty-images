@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Extend API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -132,6 +135,19 @@ paths:
           description: TooManyConcurrentGenerations
 components:
   schemas:
+    ReferenceGeneration:
+      type: object
+      properties:
+        generation_request_id:
+          type:
+          - string
+          - 'null'
+          description: The id from a previous request to generate images.
+        index:
+          type: integer
+          description: The index of the image from the specific images generation.
+          format: int32
+      additionalProperties: false
     ImageDataResponse:
       type: object
       properties:
@@ -141,31 +157,95 @@ components:
         is_blocked:
           type: boolean
         preview_urls:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/PreviewUrl'
           description: The preview URLs for the result
-          nullable: true
         url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     PendingImageGenerationResponse:
       type: object
       properties:
         generation_request_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ExtendRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        prompt:
+          type:
+          - string
+          - 'null'
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        left_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        right_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        top_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        bottom_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+      additionalProperties: false
+    AssetDetail:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     PreviewUrl:
       type: object
       properties:
         preview_size:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         image_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         width:
           type: integer
           format: int32
@@ -177,79 +257,22 @@ components:
       type: object
       properties:
         generation_request_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         seed:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
-          nullable: true
         results:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/ImageDataResponse'
-          nullable: true
         original_asset:
           $ref: '#/components/schemas/AssetDetail'
-      additionalProperties: false
-    ReferenceGeneration:
-      type: object
-      properties:
-        generation_request_id:
-          type: string
-          description: The id from a previous request to generate images.
-          nullable: true
-        index:
-          type: integer
-          description: The index of the image from the specific images generation.
-          format: int32
-      additionalProperties: false
-    AssetDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    ExtendRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        prompt:
-          type: string
-          nullable: true
-        negative_prompt:
-          type: string
-          nullable: true
-        product_id:
-          type: integer
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          nullable: true
-        notes:
-          type: string
-          nullable: true
-        left_percentage:
-          type: number
-          format: float
-          nullable: true
-        right_percentage:
-          type: number
-          format: float
-          nullable: true
-        top_percentage:
-          type: number
-          format: float
-          nullable: true
-        bottom_percentage:
-          type: number
-          format: float
-          nullable: true
       additionalProperties: false
   securitySchemes:
     Api-Key:

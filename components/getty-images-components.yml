@@ -1,0 +1,81 @@
+generated: '2026-09-12'
+method: searched
+source: https://developer.gettyimages.com/affiliates/
+description: >-
+  Getty Images ships one client-side embeddable component: a custom-element widget for
+  iStock affiliate partners. It is distinct from the SDKs in packages/ — it renders UI in the
+  end user's browser and calls the API from there, with no server-side integration.
+families:
+- family: affiliate-widget
+  name: iStock Affiliate Partner JavaScript Widget
+  kind: web-component
+  element: <istock-affiliate>
+  docs: https://developer.gettyimages.com/affiliates/
+  loader:
+    type: script-tag
+    url: https://developer.gettyimages.com/libs/affiliate/1.0/istock.js
+    registry: cdn
+    pinned: false
+    version_served: 1.0.9
+    version_source: >-
+      The first line of the served file is the comment "// 1.0.9". The URL pins only the 1.0
+      major-minor, so the file floats within 1.0.x and a consumer cannot tell from the URL
+      what they are getting. The provider's own documented changelog stops at 1.0.8, one
+      behind what is being served.
+    license: MIT (added in 1.0.4)
+    size_bytes: 10530
+    probe:
+      url: https://developer.gettyimages.com/libs/affiliate/1.0/istock.js
+      status: 200
+      note: >-
+        developers.gettyimages.com/libs/... (the URL printed in Getty's own docs) 301s to
+        developer.gettyimages.com and serves the same file.
+  rendering: >-
+    Entirely client-side — the widget makes the Getty Images/iStock API calls from the
+    browser and appends the affiliate tracking parameters to every link back to iStock, so
+    there is no added load on the partner's infrastructure.
+  attributes:
+  - {name: api-key, required: true, description: API key issued on affiliate signup}
+  - {name: affiliate-id, required: true, description: Affiliate id issued on affiliate signup}
+  - {name: search-phrase, required: false, description: Search terms selecting the content displayed}
+  - {name: item-count, required: false, default: 10, range: 1-20, description: Number of items to display}
+  - {name: orientation, required: false, default: horizontal, values: [horizontal, vertical]}
+  - {name: image-style, required: false, values: [photography, vector], description: Blank mixes both}
+  - {name: image-size, required: false, default: medium, values: [small, medium, large]}
+  - {name: title, required: false, description: Overrides the widget's default title}
+  constraints:
+  - >-
+      The underlying result set is capped at 20 images, so across multiple widget instances on
+      one page (instances x item-count) must be <= 20 or later instances render short.
+  - >-
+      Use the same item-count in every instance on a page to avoid duplicate images across
+      instances.
+  - >-
+      Getty advises reserving the widget's width and height before load to avoid Cumulative
+      Layout Shift under Google Core Web Vitals.
+  changelog:
+  - {version: 1.0.8, change: image-size attribute added}
+  - {version: 1.0.7, change: Better support for multiple instances on the same page}
+  - {version: 1.0.6, change: Widget title customizable}
+  - {version: 1.0.5, change: IE and Edge support removed (it broke the widget on many affiliate sites)}
+  - {version: 1.0.4, change: IE11 and Edge support added; MIT licence added}
+  - {version: 1.0.3, change: Updated to the new Impact Radius tracking link}
+  - {version: 1.0.2, change: Widget version added to the search querystring}
+  - {version: 1.0.1, change: Indicator that the search call was widget-initiated}
+  - {version: 1.0.0, change: Initial release; Chrome, Firefox and Safari}
+  fallback_api:
+    note: >-
+      Partners who need more than the widget are pointed at two REST operations shaped for
+      this use case, returning trimmed metadata for 20 assets.
+    operations:
+    - GET /v3/affiliates/search/images
+    - GET /v3/affiliates/search/videos
+    caveat: >-
+      Unlike the widget, the REST path requires the partner to append their own Affiliate ID
+      to the destination URL per Impact Radius instructions — the widget does that
+      automatically.
+notes: >-
+  No hosted/prebuilt dashboard, embedded portal, checkout element or design-system package is
+  published. Getty's other embeddable surface — the gettyimages.com "embed" iframe for
+  editorial content — is a website feature, not an API-documented component, and is not
+  recorded here.

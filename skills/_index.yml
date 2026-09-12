@@ -1,0 +1,30 @@
+generated: '2026-09-12'
+method: generated
+source: >-
+  openapi/_original/getty-images-swagger-v3-openapi.json (the provider's live OpenAPI 3.0.4)
+  plus https://developer.gettyimages.com/docs/, /asset-change/ and /ai-generation/
+provider: Getty Images
+providerId: getty-images
+note: >-
+  Getty Images publishes no AGENTS.md and no first-party agent skills (probed
+  https://developer.gettyimages.com/llms.txt -> 404; no /skills/ or /AGENTS.md on the docs
+  host). These three are generated from the provider's live contract and its own
+  documentation, one per marquee flow. Every operation named in them was read from the live
+  spec — the spec declares no operationId on any of its 76 operations, so operations are
+  addressed by METHOD + PATH throughout and each skill says so in its frontmatter.
+skills:
+- name: getty-images-search-and-license
+  file: getty-images-search-and-license.md
+  flow: Token -> search with download fields -> pre-flight download history -> license -> fetch delivery URI
+  operations: 9
+  consequential: true
+- name: getty-images-sync-catalog
+  file: getty-images-sync-catalog.md
+  flow: Read channels -> PUT change-set -> upsert/delete -> DELETE to confirm -> repeat
+  operations: 5
+  consequential: false
+- name: getty-images-generate-image
+  file: getty-images-generate-image.md
+  flow: Enhance prompt -> register file -> generate/modify -> poll -> download-sizes -> download
+  operations: 18
+  consequential: true

@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Boards API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -107,9 +110,10 @@ paths:
         description: Retrieve details for a specific board.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Retrieve details for a specific board.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -139,9 +143,10 @@ paths:
         description: Specify the board to delete.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to delete.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -171,9 +176,10 @@ paths:
         description: Specify the board to update.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to update.
-          nullable: true
       requestBody:
         description: Specify a new name and description for the board (name is required).
         content:
@@ -210,19 +216,21 @@ paths:
         description: Specify the board to add assets to.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to add assets to.
-          nullable: true
       requestBody:
         description: List assets to add to the board.
         content:
           application/json:
             schema:
-              type: array
+              type:
+              - array
+              - 'null'
               items:
                 $ref: '#/components/schemas/BoardAsset'
               description: List assets to add to the board.
-              nullable: true
       responses:
         '201':
           description: Created
@@ -254,18 +262,20 @@ paths:
         description: Specify the board to remove assets from.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to remove assets from.
-          nullable: true
       - name: asset_ids
         in: query
         description: List the assets to be removed from the board.
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: List the assets to be removed from the board.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -294,17 +304,19 @@ paths:
         description: Specify the board to add an asset to.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to add an asset to.
-          nullable: true
       - name: asset_id
         in: path
         description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
-          nullable: true
       responses:
         '201':
           description: Created
@@ -332,17 +344,19 @@ paths:
         description: Specify the board to remove an asset from.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to remove an asset from.
-          nullable: true
       - name: asset_id
         in: path
         description: Specify the asset to remove from the board.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the asset to remove from the board.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -371,9 +385,10 @@ paths:
         description: Specify the board to retrieve comments from.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to retrieve comments from.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -403,9 +418,10 @@ paths:
         description: Specify the board to add a comment to.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to add a comment to.
-          nullable: true
       requestBody:
         description: Comment to be added to the board.
         content:
@@ -444,17 +460,19 @@ paths:
         description: Specify the board containing the comment to delete.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board containing the comment to delete.
-          nullable: true
       - name: comment_id
         in: path
         description: Specify the comment to delete.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the comment to delete.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -470,30 +488,21 @@ paths:
           description: BoardNotFound
 components:
   schemas:
-    Asset:
+    CommentCreated:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
-        asset_type:
-          type: string
-          nullable: true
-        date_added:
-          type: string
-          format: date-time
-        display_sizes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySize'
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     BoardListBoard:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         asset_count:
           type: integer
           format: int32
@@ -504,72 +513,66 @@ components:
           type: string
           format: date-time
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         hero_asset:
           $ref: '#/components/schemas/Asset'
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         board_relationship:
-          type: string
-          nullable: true
-      additionalProperties: false
-    CommentRequest:
-      type: object
-      properties:
-        text:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     BoardCreated:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    CommentCreated:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     BoardRelationship:
       enum:
       - owned
       - invited
       type: string
-    BoardAsset:
-      required:
-      - asset_id
+    BoardCommentPermissions:
       type: object
       properties:
-        asset_id:
+        can_add_comment:
+          type: boolean
+      additionalProperties: false
+    Comment:
+      type: object
+      properties:
+        created_by:
+          $ref: '#/components/schemas/Collaborator'
+        date_created:
           type: string
+          format: date-time
+        id:
+          type:
+          - string
+          - 'null'
+        permissions:
+          $ref: '#/components/schemas/CommentPermissions'
+        text:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    AddBoardAssetsResult:
+    CommentRequest:
       type: object
       properties:
-        assets_added:
-          type: array
-          items:
-            $ref: '#/components/schemas/BoardAsset'
-          nullable: true
-        assets_not_added:
-          type: array
-          items:
-            type: string
-          nullable: true
+        text:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    BoardSortOrder:
-      enum:
-      - date_last_updated_descending
-      - date_last_updated_ascending
-      - name_ascending
-      - name_decending
-      type: string
     BoardPermissions:
       type: object
       properties:
@@ -586,68 +589,22 @@ components:
         can_remove_assets:
           type: boolean
       additionalProperties: false
-    BoardInfo:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-          nullable: true
-      additionalProperties: false
-    CommentsList:
-      type: object
-      properties:
-        comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Comment'
-          nullable: true
-        permissions:
-          $ref: '#/components/schemas/BoardCommentPermissions'
-      additionalProperties: false
-    CommentPermissions:
-      type: object
-      properties:
-        can_delete_comment:
-          type: boolean
-      additionalProperties: false
-    DisplaySize:
-      type: object
-      properties:
-        name:
-          type: string
-          nullable: true
-        uri:
-          type: string
-          nullable: true
-      additionalProperties: false
-    Collaborator:
-      type: object
-      properties:
-        first_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
-      additionalProperties: false
     BoardDetail:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         asset_count:
           type: integer
           format: int32
         assets:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Asset'
-          nullable: true
         date_created:
           type: string
           format: date-time
@@ -655,11 +612,13 @@ components:
           type: string
           format: date-time
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         comment_count:
           type: integer
           format: int32
@@ -668,50 +627,136 @@ components:
         links:
           $ref: '#/components/schemas/Links'
       additionalProperties: false
+    Asset:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        date_added:
+          type: string
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DisplaySize'
+      additionalProperties: false
+    AddBoardAssetsResult:
+      type: object
+      properties:
+        assets_added:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BoardAsset'
+        assets_not_added:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    BoardAsset:
+      required:
+      - asset_id
+      type: object
+      properties:
+        asset_id:
+          type: string
+      additionalProperties: false
+    BoardInfo:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     Links:
       type: object
       properties:
         invitation:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         share:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
+    DisplaySize:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CommentsList:
+      type: object
+      properties:
+        comments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Comment'
+        permissions:
+          $ref: '#/components/schemas/BoardCommentPermissions'
+      additionalProperties: false
+    BoardSortOrder:
+      enum:
+      - date_last_updated_descending
+      - date_last_updated_ascending
+      - name_ascending
+      - name_decending
+      type: string
     BoardList:
       type: object
       properties:
         boards:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/BoardListBoard'
-          nullable: true
         board_count:
           type: integer
           format: int32
       additionalProperties: false
-    BoardCommentPermissions:
+    Collaborator:
       type: object
       properties:
-        can_add_comment:
-          type: boolean
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    Comment:
+    CommentPermissions:
       type: object
       properties:
-        created_by:
-          $ref: '#/components/schemas/Collaborator'
-        date_created:
-          type: string
-          format: date-time
-        id:
-          type: string
-          nullable: true
-        permissions:
-          $ref: '#/components/schemas/CommentPermissions'
-        text:
-          type: string
-          nullable: true
+        can_delete_comment:
+          type: boolean
       additionalProperties: false
   securitySchemes:
     Api-Key:

@@ -1,0 +1,98 @@
+generated: '2026-09-12'
+method: searched
+source: https://developer.gettyimages.com/sdks/ + https://github.com/gettyimages + registry
+  metadata endpoints (registry.npmjs.org, api.nuget.org, repo.packagist.org, rubygems.org,
+  search.maven.org)
+notes: >-
+  Getty Images names C#, NodeJS and PHP as its supported SDKs on the /sdks/ page. Java and
+  Ruby SDKs were also published first-party but their GitHub repositories are now ARCHIVED
+  and their registry releases predate the live v3 contract, which is a decay signal worth
+  recording rather than hiding. There is no first-party Python SDK on PyPI (three candidate
+  names all 404), even though the Getty error-handling docs recommend the Python library
+  Tenacity for 429 retries.
+packages:
+- language: javascript
+  registry: npm
+  name: gettyimages-api
+  url: https://www.npmjs.com/package/gettyimages-api
+  install: npm install gettyimages-api
+  repository: https://github.com/gettyimages/gettyimages-api_nodejs
+  official: true
+  version: 6.7.0
+  published: '2026-08-19'
+  status: active
+- language: csharp
+  registry: nuget
+  name: GettyImages.Api
+  url: https://www.nuget.org/packages/GettyImages.Api
+  install: dotnet add package GettyImages.Api
+  repository: https://github.com/gettyimages/gettyimages-api_dotnet
+  official: true
+  version: 10.0.0
+  published: '2026-02-09'
+  status: active
+  note: 291,495 total downloads recorded on NuGet at time of probe.
+- language: php
+  registry: packagist
+  name: gettyimages/gettyimages-api
+  url: https://packagist.org/packages/gettyimages/gettyimages-api
+  install: composer require gettyimages/gettyimages-api
+  repository: https://github.com/gettyimages/gettyimages-api_php
+  official: true
+  version: 6.0.0
+  published: '2025-11-24'
+  status: active
+- language: ruby
+  registry: rubygems
+  name: gettyimages-api
+  url: https://rubygems.org/gems/gettyimages-api
+  install: gem install gettyimages-api
+  repository: https://github.com/gettyimages/gettyimages-api_ruby
+  official: true
+  version: 3.2.6
+  published: '2025-08-06'
+  status: archived
+  note: >-
+    The gettyimages-api_ruby GitHub repository is archived (read-only) and the gem is not
+    listed on the provider's /sdks/ page. Treat as unmaintained.
+- language: java
+  registry: maven
+  name: com.gettyimages:gettyimagesapi-sdk
+  url: https://central.sonatype.com/artifact/com.gettyimages/gettyimagesapi-sdk
+  install: 'implementation "com.gettyimages:gettyimagesapi-sdk:3.1.9"'
+  repository: https://github.com/gettyimages/gettyimages-api_java
+  official: true
+  version: 3.1.9
+  published: '2023-11-15'
+  status: archived
+  note: >-
+    The gettyimages-api_java GitHub repository is archived and the last Maven Central
+    release predates every 2024-2026 release-note entry (Gen AI v3 endpoints, enhanced
+    search, image-match, boards comments). Strongest decay signal in this SDK set.
+- language: python
+  registry: pypi
+  name: null
+  url: null
+  official: false
+  version: null
+  published: null
+  status: absent
+  note: >-
+    Checked pypi.org/pypi/{gettyimages,gettyimages-api,getty-images}/json — all HTTP 404.
+    Getty publishes no first-party Python client.
+components_distribution:
+- language: javascript
+  registry: cdn
+  name: istock-affiliate widget
+  url: https://developer.gettyimages.com/libs/affiliate/1.0/istock.js
+  official: true
+  version: 1.0.9
+  published: null
+  status: active
+  note: >-
+    Distributed only from the provider's own docs host at a floating /1.0/ path, with no
+    package-registry entry and no CDN metadata endpoint. The served file's first line is the
+    comment "// 1.0.9", so 1.0.9 is what a consumer actually receives today, but the URL is
+    not pinned to it and the documented changelog stops at 1.0.8 — a consumer cannot tell
+    from the URL what they are getting. No `published` date is discoverable. See
+    components/getty-images-components.yml.

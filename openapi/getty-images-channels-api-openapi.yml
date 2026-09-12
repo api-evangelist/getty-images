@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Channels API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -58,8 +61,9 @@ components:
         AssetFamily:
           $ref: '#/components/schemas/AssetFamily'
         AssetChangeType:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         CreateDateUtc:
           type: string
           format: date-time
@@ -72,22 +76,23 @@ components:
           type: string
           format: date-time
         Metadata:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    AssetFamily:
-      enum:
-      - NotSet
-      - Editorial
-      - Creative
-      - Both
-      type: string
     AssetType:
       enum:
       - NotSet
       - Image
       - Film
       - Music
+      type: string
+    AssetFamily:
+      enum:
+      - NotSet
+      - Editorial
+      - Creative
+      - Both
       type: string
   securitySchemes:
     Api-Key:

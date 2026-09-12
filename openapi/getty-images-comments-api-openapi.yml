@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Comments API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -30,9 +33,10 @@ paths:
         description: Specify the board to retrieve comments from.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to retrieve comments from.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -62,9 +66,10 @@ paths:
         description: Specify the board to add a comment to.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to add a comment to.
-          nullable: true
       requestBody:
         description: Comment to be added to the board.
         content:
@@ -103,17 +108,19 @@ paths:
         description: Specify the board containing the comment to delete.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board containing the comment to delete.
-          nullable: true
       - name: comment_id
         in: path
         description: Specify the comment to delete.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the comment to delete.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -129,52 +136,31 @@ paths:
           description: BoardNotFound
 components:
   schemas:
-    CommentsList:
-      type: object
-      properties:
-        comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Comment'
-          nullable: true
-        permissions:
-          $ref: '#/components/schemas/BoardCommentPermissions'
-      additionalProperties: false
-    CommentPermissions:
-      type: object
-      properties:
-        can_delete_comment:
-          type: boolean
-      additionalProperties: false
     CommentCreated:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    Collaborator:
+    CommentsList:
       type: object
       properties:
-        first_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
+        comments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Comment'
+        permissions:
+          $ref: '#/components/schemas/BoardCommentPermissions'
       additionalProperties: false
     BoardCommentPermissions:
       type: object
       properties:
         can_add_comment:
           type: boolean
-      additionalProperties: false
-    CommentRequest:
-      type: object
-      properties:
-        text:
-          type: string
-          nullable: true
       additionalProperties: false
     Comment:
       type: object
@@ -185,13 +171,41 @@ components:
           type: string
           format: date-time
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         permissions:
           $ref: '#/components/schemas/CommentPermissions'
         text:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CommentRequest:
+      type: object
+      properties:
+        text:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Collaborator:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CommentPermissions:
+      type: object
+      properties:
+        can_delete_comment:
+          type: boolean
       additionalProperties: false
   securitySchemes:
     Api-Key:

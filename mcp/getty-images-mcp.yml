@@ -1,0 +1,67 @@
+generated: '2026-09-12'
+method: searched
+status: published
+source: https://developer.gettyimages.com/mcp/
+deployment:
+  mode: remote
+  endpoint: https://mcp.gettyimages.com/v1
+  auth: oauth
+  verified: probed
+  note: >-
+    POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} with
+    Accept: application/json, text/event-stream returned HTTP 401
+    {"message":"Unauthorized"} (AWS API Gateway, x-amzn-errortype UnauthorizedException) on
+    2026-09-12 — the endpoint exists and is auth-gated. An initialize call returned the same.
+    No stdio/npx package is published; this is a remote-only server.
+server:
+  name: Getty Images MCP Server
+  transport: http
+  url: https://mcp.gettyimages.com/v1
+  docs: https://developer.gettyimages.com/mcp/
+authentication:
+  grants:
+  - client_credentials
+  - authorization_code
+  token_endpoint: https://authentication.gettyimages.com/oauth2/token
+  authorization_endpoint: https://authentication.gettyimages.com/oauth2/auth
+  discovery: https://mcp.gettyimages.com/.well-known/oauth-authorization-server
+  credentials: >-
+    API key and secret, issued by a Getty Images account representative. There is no
+    self-service signup for the MCP server.
+throttling:
+  limit: 20
+  unit: queries_per_second
+  source: https://developer.gettyimages.com/mcp/
+tool_discovery:
+  gated: true
+  note: >-
+    tools/list requires an authenticated session, so the real tool names and inputSchemas
+    could not be captured. Getty explicitly asks clients NOT to hard-code tool names or
+    parameters and to discover them at call time, so no tool list is asserted here. The
+    capability areas below are the provider's own prose description of what the server
+    offers, NOT tool names — do not treat them as an inputSchema-bearing manifest.
+capability_areas:
+- area: authentication
+  description: Agent retrieves a token via the OAuth 2.0 client-credentials or authorization-code grant.
+- area: search
+  description: Searching for images and videos from the organization's Getty Images license agreement.
+- area: asset_metadata
+  description: Retrieving asset metadata.
+- area: download
+  description: Downloading image and video files.
+audience: >-
+  Getty Images subscription customers (Premium Access, Editorial Subscription) adding search
+  and download to AI workflows, and business partners reselling catalog access to their own
+  platform customers.
+x-evidence:
+  fetched: '2026-09-12'
+  docs_url: https://developer.gettyimages.com/mcp/
+  endpoint_probe:
+    url: https://mcp.gettyimages.com/v1
+    method: POST
+    jsonrpc_method: tools/list
+    http_status: 401
+    body: '{"message":"Unauthorized"}'
+  oauth_metadata_probe:
+    url: https://mcp.gettyimages.com/.well-known/oauth-authorization-server
+    http_status: 200

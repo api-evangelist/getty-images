@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Files API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -142,24 +145,27 @@ paths:
         description: ''
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: ''
-          nullable: true
       requestBody:
         description: ''
         content:
           image/jpeg:
             schema:
-              type: string
+              type:
+              - string
+              - 'null'
               description: ''
               format: byte
-              nullable: true
           image/png:
             schema:
-              type: string
+              type:
+              - string
+              - 'null'
               description: ''
               format: byte
-              nullable: true
       responses:
         '200':
           description: Success
@@ -171,39 +177,30 @@ paths:
           description: UnauthorizedDisplaySize
 components:
   schemas:
-    GetFileRegistrationResponse:
+    FileRegistrationResponse:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
-        preview_urls:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreviewUrl'
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     Category:
       enum:
       - ImageReference
       - CustomerProduct
       type: string
-    FileRegistrationResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-      additionalProperties: false
     PreviewUrl:
       type: object
       properties:
         preview_size:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         image_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         width:
           type: integer
           format: int32
@@ -211,17 +208,33 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    GetFileRegistrationResponse:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+      additionalProperties: false
     FileRegistrationRequest:
       type: object
       properties:
         url:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The location of the file.
-          nullable: true
         rights_claimed:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           description: Acknowledgment of ownership or licensing of file.
-          nullable: true
         category:
           $ref: '#/components/schemas/Category'
       additionalProperties: false

@@ -1,0 +1,195 @@
+generated: '2026-09-12'
+method: searched
+source: https://developer.gettyimages.com/docs/authorization/ + https://api.gettyimages.com/.well-known/oauth-authorization-server
+  (RFC 8414, HTTP 200) + https://api.gettyimages.com/swagger/v3/swagger.json (live OpenAPI 3.0.4), cross-checked
+  against the derived per-spec schemes below
+summary:
+  types:
+  - apiKey
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+  - password
+schemes:
+- name: Api-Key
+  type: apiKey
+  in: header
+  parameter: Api-Key
+  sources:
+  - openapi/getty-images-affiliates-api-openapi.yml
+  - openapi/getty-images-ai-api-openapi.yml
+  - openapi/getty-images-ai-generator-api-openapi.yml
+  - openapi/getty-images-artists-api-openapi.yml
+  - openapi/getty-images-assets-api-openapi.yml
+  - openapi/getty-images-background-api-openapi.yml
+  - openapi/getty-images-batches-api-openapi.yml
+  - openapi/getty-images-boards-api-openapi.yml
+  - openapi/getty-images-change-api-openapi.yml
+  - openapi/getty-images-changes-api-openapi.yml
+  - openapi/getty-images-channels-api-openapi.yml
+  - openapi/getty-images-collections-api-openapi.yml
+  - openapi/getty-images-color-api-openapi.yml
+  - openapi/getty-images-comments-api-openapi.yml
+  - openapi/getty-images-compositions-api-openapi.yml
+  - openapi/getty-images-countries-api-openapi.yml
+  - openapi/getty-images-creative-api-openapi.yml
+  - openapi/getty-images-current-api-openapi.yml
+  - openapi/getty-images-customers-api-openapi.yml
+  - openapi/getty-images-downloads-api-openapi.yml
+  - openapi/getty-images-editorial-api-openapi.yml
+  - openapi/getty-images-events-api-openapi.yml
+  - openapi/getty-images-extend-api-openapi.yml
+  - openapi/getty-images-files-api-openapi.yml
+  - openapi/getty-images-generation-api-openapi.yml
+  - openapi/getty-images-generations-api-openapi.yml
+  - openapi/getty-images-history-api-openapi.yml
+  - openapi/getty-images-image-api-openapi.yml
+  - openapi/getty-images-images-api-openapi.yml
+  - openapi/getty-images-index-api-openapi.yml
+  - openapi/getty-images-influence-api-openapi.yml
+  - openapi/getty-images-licensing-api-openapi.yml
+  - openapi/getty-images-management-api-openapi.yml
+  - openapi/getty-images-name-api-openapi.yml
+  - openapi/getty-images-objects-api-openapi.yml
+  - openapi/getty-images-orders-api-openapi.yml
+  - openapi/getty-images-products-api-openapi.yml
+  - openapi/getty-images-purchased-api-openapi.yml
+  - openapi/getty-images-refine-api-openapi.yml
+  - openapi/getty-images-registrations-api-openapi.yml
+  - openapi/getty-images-removal-api-openapi.yml
+  - openapi/getty-images-request-api-openapi.yml
+  - openapi/getty-images-search-api-openapi.yml
+  - openapi/getty-images-send-api-openapi.yml
+  - openapi/getty-images-series-api-openapi.yml
+  - openapi/getty-images-set-api-openapi.yml
+  - openapi/getty-images-sets-api-openapi.yml
+  - openapi/getty-images-similar-api-openapi.yml
+  - openapi/getty-images-uploads-api-openapi.yml
+  - openapi/getty-images-usage-api-openapi.yml
+  - openapi/getty-images-variations-api-openapi.yml
+  - openapi/getty-images-videos-api-openapi.yml
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+    scopes: 0
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+    scopes: 0
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+    scopes: 0
+  sources:
+  - openapi/getty-images-affiliates-api-openapi.yml
+  - openapi/getty-images-ai-api-openapi.yml
+  - openapi/getty-images-ai-generator-api-openapi.yml
+  - openapi/getty-images-artists-api-openapi.yml
+  - openapi/getty-images-assets-api-openapi.yml
+  - openapi/getty-images-background-api-openapi.yml
+  - openapi/getty-images-batches-api-openapi.yml
+  - openapi/getty-images-boards-api-openapi.yml
+  - openapi/getty-images-change-api-openapi.yml
+  - openapi/getty-images-changes-api-openapi.yml
+  - openapi/getty-images-channels-api-openapi.yml
+  - openapi/getty-images-collections-api-openapi.yml
+  - openapi/getty-images-color-api-openapi.yml
+  - openapi/getty-images-comments-api-openapi.yml
+  - openapi/getty-images-compositions-api-openapi.yml
+  - openapi/getty-images-countries-api-openapi.yml
+  - openapi/getty-images-creative-api-openapi.yml
+  - openapi/getty-images-current-api-openapi.yml
+  - openapi/getty-images-customers-api-openapi.yml
+  - openapi/getty-images-downloads-api-openapi.yml
+  - openapi/getty-images-editorial-api-openapi.yml
+  - openapi/getty-images-events-api-openapi.yml
+  - openapi/getty-images-extend-api-openapi.yml
+  - openapi/getty-images-files-api-openapi.yml
+  - openapi/getty-images-generation-api-openapi.yml
+  - openapi/getty-images-generations-api-openapi.yml
+  - openapi/getty-images-history-api-openapi.yml
+  - openapi/getty-images-image-api-openapi.yml
+  - openapi/getty-images-images-api-openapi.yml
+  - openapi/getty-images-index-api-openapi.yml
+  - openapi/getty-images-influence-api-openapi.yml
+  - openapi/getty-images-licensing-api-openapi.yml
+  - openapi/getty-images-management-api-openapi.yml
+  - openapi/getty-images-name-api-openapi.yml
+  - openapi/getty-images-objects-api-openapi.yml
+  - openapi/getty-images-orders-api-openapi.yml
+  - openapi/getty-images-products-api-openapi.yml
+  - openapi/getty-images-purchased-api-openapi.yml
+  - openapi/getty-images-refine-api-openapi.yml
+  - openapi/getty-images-registrations-api-openapi.yml
+  - openapi/getty-images-removal-api-openapi.yml
+  - openapi/getty-images-request-api-openapi.yml
+  - openapi/getty-images-search-api-openapi.yml
+  - openapi/getty-images-send-api-openapi.yml
+  - openapi/getty-images-series-api-openapi.yml
+  - openapi/getty-images-set-api-openapi.yml
+  - openapi/getty-images-sets-api-openapi.yml
+  - openapi/getty-images-similar-api-openapi.yml
+  - openapi/getty-images-uploads-api-openapi.yml
+  - openapi/getty-images-usage-api-openapi.yml
+  - openapi/getty-images-variations-api-openapi.yml
+  - openapi/getty-images-videos-api-openapi.yml
+docs: https://developer.gettyimages.com/docs/authorization/
+live:
+  api_key:
+    required_on: every request
+    location: header
+    name: Api-Key
+    note: Getty documents the header case-insensitively as api-key; the spec declares it as Api-Key. Omitting it
+      returns 401 {"message":"Unauthorized"}.
+  bearer:
+    location: header
+    name: Authorization
+    scheme: Bearer
+    required_for:
+    - downloads
+    - fields=downloads|download_sizes|largest_downloads
+    - boards
+    - purchased assets
+    - all Generative AI operations
+    challenge: 'WWW-Authenticate: Bearer realm="Download",error="invalid_token",error_description="The access token
+      is missing"'
+  oauth2:
+    issuer: https://authentication.gettyimages.com
+    authorization_endpoint: https://authentication.gettyimages.com/oauth2/auth
+    token_endpoint: https://authentication.gettyimages.com/oauth2/token
+    grant_types_supported:
+    - client_credentials
+    - authorization_code
+    - refresh_token
+    token_endpoint_auth_methods_supported:
+    - client_secret_basic
+    - client_secret_post
+    response_types_supported:
+    - code
+    code_challenge_methods_supported:
+    - S256
+    pkce: Required for the authorization-code grant; the docs also document the plain method. Public clients (mobile)
+      must NOT send client_secret — doing so fails the request.
+    access_token_lifetime_seconds: 1800
+    scopes: []
+    scopes_note: The authorization server declares an EMPTY scopes map on all three flows. Getty authorizes by licence
+      agreement, not by scope; there is no scope surface to request or consent to.
+    service_documentation: https://developer.gettyimages.com/docs/authorization/
+    discovery_document: well-known/getty-images-oauth-authorization-server.json
+    guidance: Reuse an access token until it expires. Token requests count against the customer rate limit.
+  credential_issuance: Sales-gated. API key and secret are issued by a Getty Images account representative against
+    an existing licence agreement. There is no self-service registration and no key rotation endpoint.
+  mcp: The MCP server at https://mcp.gettyimages.com/v1 uses the same authorization server; it advertises the same
+    RFC 8414 document byte-for-byte.
+  scim: 'The SCIM 2.0 surface at https://scim.gettyimages.com/v2 declares authenticationSchemes: [oauthbearertoken]
+    and uses the same token endpoint.'
+discrepancy_note: 'IMPORTANT: the refined per-tag specs in openapi/ (split from a 2024-era harvest) declare the
+  oauth2 token and authorization URLs as https://api.gettyimages.com/v4/oauth2/{token,auth}. The provider LIVE spec
+  and the live RFC 8414 metadata both name https://authentication.gettyimages.com/oauth2/{token,auth}. Getty announced
+  that migration in its release notes on 2022-05-12 ("the existing endpoints will continue to work for some time,
+  but customers are encouraged to migrate"). Treat authentication.gettyimages.com as authoritative; the v4 host
+  in the older split specs is stale.'

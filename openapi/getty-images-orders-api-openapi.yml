@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Orders API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -49,51 +52,60 @@ paths:
           description: OrderNotFound
 components:
   schemas:
-    AssetIdFromOrder:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-      additionalProperties: false
     OrderNotes:
       type: object
       properties:
         licensee_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         purchase_order_number:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         project_title:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         ordered_by:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     OrderDetail:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         invoice_number:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         order_date:
           type: string
           format: date-time
         end_client:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         notes:
           $ref: '#/components/schemas/OrderNotes'
         assets:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/AssetIdFromOrder'
-          nullable: true
+      additionalProperties: false
+    AssetIdFromOrder:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:

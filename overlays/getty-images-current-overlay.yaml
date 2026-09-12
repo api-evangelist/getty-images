@@ -1,0 +1,55 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Getty Images Current API
+  version: 1.0.0
+extends: openapi/getty-images-current-api-openapi.yml
+x-generated: '2026-09-12'
+x-method: generated
+x-source: https://api.gettyimages.com/swagger/v3/swagger.json + https://developer.gettyimages.com/docs/
+x-note: Records API Evangelist enrichment findings against this document without mutating it. The upstream contract
+  this repo split from is the provider's live OpenAPI 3.0.4 at https://api.gettyimages.com/swagger/v3/swagger.json,
+  harvested verbatim on 2026-09-12 to openapi/_original/getty-images-swagger-v3-openapi.json. Every value asserted
+  below was read from the provider's own contract or documentation; nothing here is invented.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: getty-images
+    x-apievangelist-enriched: '2026-09-12'
+    x-upstream-contract: https://api.gettyimages.com/swagger/v3/swagger.json
+    x-upstream-contract-version: OpenAPI 3.0.4
+    x-operations-in-this-document: 1
+    x-apievangelist-tags:
+    - Current
+- target: $.info
+  update:
+    x-runtime-semantics:
+      authentication: 'Api-Key header required on every request; Authorization: Bearer additionally required for
+        downloads, download fields, boards, purchase history and all Gen AI operations.'
+      oauth-token-endpoint: https://authentication.gettyimages.com/oauth2/token
+      error-envelope: 'application/vnd.getty.error+json with ErrorCode / ErrorMessage; edge failures return {"message":
+        "..."}'
+      rfc9457: false
+      idempotency: none - no Idempotency-Key or equivalent exists anywhere in the Getty contract
+      rate-limit-headers: none - no RateLimit-*/X-RateLimit-*/Retry-After; 429 carries X-Error-Detail on the QPS
+        path
+      pagination: page / page_size querystring; result_count in the body; page_size limited to an enumerated value
+        set
+      field-expansion: fields=summary_set (default) | detail_set | comma-delimited list; download fields must be
+        requested explicitly and need a bearer token
+      sandbox: none published
+      webhooks: none - catalogue changes are pulled via /v3/asset-changes
+      detail:
+      - conventions/getty-images-conventions.yml
+      - errors/getty-images-problem-types.yml
+      - rate-limits/getty-images-rate-limits.yml
+      - authentication/getty-images-authentication.yml
+- target: $.info
+  update:
+    x-contract-quality-gaps:
+      operation-ids: The upstream contract declares no operationId on any of its 76 operations, so no operation
+        in this document has one either. Every derived artifact in this repo addresses operations by METHOD + PATH
+        as a result.
+      in-spec-examples: The upstream contract carries no request or response examples.
+      schema-naming: Many component schemas carry leaked .NET fully-qualified type names (GettyImages.Services.Connect.Public.Controllers.*),
+        indicating the spec is emitted from the implementation rather than authored.
+      observed-on: '2026-09-12'

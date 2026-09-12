@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Similar API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -31,20 +34,22 @@ paths:
         description: Identifies an existing image
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Identifies an existing image
-          nullable: true
       - name: fields
         in: query
         description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/ImagesFieldValues'
           description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-          nullable: true
       - name: page
         in: query
         description: Identifies page to return. Default is 1.
@@ -96,20 +101,22 @@ paths:
         description: A video id.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: A video id.
-          nullable: true
       - name: fields
         in: query
         description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes returned by ''download_sizes'' field is an estimate.'
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/AssociatedVideoDetailFieldValues'
           description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes returned by ''download_sizes'' field is an estimate.'
-          nullable: true
       - name: page
         in: query
         description: Identifies page to return. Default is 1.
@@ -151,225 +158,26 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    Download:
-      type: object
-      properties:
-        product_id:
-          type: string
-          nullable: true
-        product_type:
-          type: string
-          nullable: true
-        uri:
-          type: string
-          nullable: true
-        agreement_name:
-          type: string
-          nullable: true
-      additionalProperties: false
-    ImageSearchItem:
-      type: object
-      properties:
-        allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
-        alternative_ids:
-          type: object
-          additionalProperties:
-            type: string
-          nullable: true
-        artist:
-          type: string
-          nullable: true
-        asset_family:
-          type: string
-          nullable: true
-        call_for_image:
-          type: boolean
-        caption:
-          type: string
-          nullable: true
-        collection_code:
-          type: string
-          nullable: true
-        collection_id:
-          type: integer
-          format: int32
-          nullable: true
-        collection_name:
-          type: string
-          nullable: true
-        color_type:
-          type: string
-          nullable: true
-        copyright:
-          type: string
-          nullable: true
-        date_camera_shot:
-          type: string
-          format: date-time
-          nullable: true
-        date_created:
-          type: string
-          format: date-time
-          nullable: true
-        display_sizes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
-          nullable: true
-        download_product:
-          type: string
-          nullable: true
-        editorial_segments:
-          type: array
-          items:
-            type: string
-          nullable: true
-        event_ids:
-          type: array
-          items:
-            type: integer
-            format: int32
-          nullable: true
-        graphical_style:
-          type: string
-          nullable: true
-        id:
-          type: string
-          nullable: true
-        keywords:
-          type: array
-          items:
-            $ref: '#/components/schemas/Keyword'
-          nullable: true
-        largest_downloads:
-          type: array
-          items:
-            $ref: '#/components/schemas/Download'
-          nullable: true
-        license_model:
-          type: string
-          nullable: true
-        max_dimensions:
-          $ref: '#/components/schemas/MaxDimensions'
-        orientation:
-          type: string
-          nullable: true
-        people:
-          type: array
-          items:
-            type: string
-          nullable: true
-        product_types:
-          type: array
-          items:
-            type: string
-          nullable: true
-        quality_rank:
-          type: integer
-          format: int32
-        referral_destinations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReferralDestination'
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        uri_oembed:
-          type: string
-          nullable: true
-        istock_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/IStockLicense'
-          nullable: true
-      additionalProperties: false
-    IStockLicense:
-      type: object
-      properties:
-        license_type:
-          $ref: '#/components/schemas/AssetLicenseName'
-        credits:
-          type: integer
-          format: int32
-      additionalProperties: false
-    RelatedSearch:
-      type: object
-      properties:
-        phrase:
-          type: string
-          nullable: true
-        url:
-          type: string
-          nullable: true
-      additionalProperties: false
-    ReferralDestination:
-      type: object
-      properties:
-        site_name:
-          type: string
-          nullable: true
-        uri:
-          type: string
-          nullable: true
-      additionalProperties: false
     AllowedUse:
       type: object
       properties:
         how_can_i_use_it:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Indicates how the asset can be used
-          nullable: true
         release_info:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Indicates release status
-          nullable: true
         usage_restrictions:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: Indicates asset usage restriction, if any
-          nullable: true
-      additionalProperties: false
-    Keyword:
-      type: object
-      properties:
-        keyword_id:
-          type: string
-          nullable: true
-        text:
-          type: string
-          nullable: true
-        type:
-          type: string
-          nullable: true
-        relevance:
-          type: integer
-          format: int32
-          nullable: true
-        entity_uris:
-          type: array
-          items:
-            type: string
-          nullable: true
-        entity_types:
-          type: array
-          items:
-            type: string
-          nullable: true
-      additionalProperties: false
-    ImageSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type: string
-          nullable: true
-        uri:
-          type: string
-          nullable: true
       additionalProperties: false
     AssociatedVideoDetailFieldValues:
       enum:
@@ -415,6 +223,18 @@ components:
       - title
       - istock_licenses
       type: string
+    ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     ImageSearchItemSearchResults:
       type: object
       properties:
@@ -422,15 +242,17 @@ components:
           type: integer
           format: int32
         images:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/ImageSearchItem'
-          nullable: true
         related_searches:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/RelatedSearch'
-          nullable: true
       additionalProperties: false
     AssetLicenseName:
       enum:
@@ -440,6 +262,74 @@ components:
       - Resale
       - Indemnification
       type: string
+    RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        entity_uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        entity_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    IStockLicense:
+      type: object
+      properties:
+        license_type:
+          $ref: '#/components/schemas/AssetLicenseName'
+        credits:
+          type: integer
+          format: int32
+      additionalProperties: false
+    ImageSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     ImagesFieldValues:
       enum:
       - accessrestriction
@@ -485,6 +375,171 @@ components:
       - title
       - uri_oembed
       type: string
+    ImageSearchItem:
+      type: object
+      properties:
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type: boolean
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type: integer
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+        istock_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IStockLicense'
+      additionalProperties: false
+    Download:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
   securitySchemes:
     Api-Key:
       type: apiKey

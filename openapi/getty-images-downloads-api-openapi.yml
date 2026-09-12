@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Downloads API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -156,7 +159,9 @@ paths:
     get:
       tags:
       - Downloads
-      summary: "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed."
+      summary: 'Once the download process has started, this endpoint can be used to check the status of the download and get the
+
+        download URL once it is completed.'
       description: '# AI Generator - Get Download Image
 
 
@@ -249,26 +254,44 @@ paths:
           description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
       - name: date_from
         in: query
-        description: "If specified, selects assets downloaded on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD). \r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is 30 days prior to date_to"
+        description: "If specified, selects assets downloaded on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD). \nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\nDate/times in the response are UTC. Default is 30 days prior to date_to"
         schema:
-          type: string
-          description: "If specified, selects assets downloaded on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD). \r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is 30 days prior to date_to"
+          type:
+          - string
+          - 'null'
+          description: "If specified, selects assets downloaded on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD). \nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\nDate/times in the response are UTC. Default is 30 days prior to date_to"
           format: date-time
-          nullable: true
       - name: date_to
         in: query
-        description: "If specified, selects assets downloaded on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)\r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is current date or 30 days after specified start date, whichever one is earlier."
+        description: 'If specified, selects assets downloaded on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)
+
+          Any hour, minute, second values in the request are not used, unless useTimePart parameter is included.
+
+          Date/times in the response are UTC. Default is current date or 30 days after specified start date, whichever one is earlier.'
         schema:
-          type: string
-          description: "If specified, selects assets downloaded on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)\r\nAny hour, minute, second values in the request are not used, unless useTimePart parameter is included.\r\nDate/times in the response are UTC. Default is current date or 30 days after specified start date, whichever one is earlier."
+          type:
+          - string
+          - 'null'
+          description: 'If specified, selects assets downloaded on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD)
+
+            Any hour, minute, second values in the request are not used, unless useTimePart parameter is included.
+
+            Date/times in the response are UTC. Default is current date or 30 days after specified start date, whichever one is earlier.'
           format: date-time
-          nullable: true
       - name: use_time
         in: query
-        description: "If specified, time values provided with date_to or date_from will be used. Time values should be appended to the date value in ISO 8601 format\r\ni.e.: 2019-09-19T19:30:37 or 2019-09-19 19:30:37.  Time zone can be specified as optional.\r\nDefault value is false"
+        description: 'If specified, time values provided with date_to or date_from will be used. Time values should be appended to the date value in ISO 8601 format
+
+          i.e.: 2019-09-19T19:30:37 or 2019-09-19 19:30:37.  Time zone can be specified as optional.
+
+          Default value is false'
         schema:
           type: boolean
-          description: "If specified, time values provided with date_to or date_from will be used. Time values should be appended to the date value in ISO 8601 format\r\ni.e.: 2019-09-19T19:30:37 or 2019-09-19 19:30:37.  Time zone can be specified as optional.\r\nDefault value is false"
+          description: 'If specified, time values provided with date_to or date_from will be used. Time values should be appended to the date value in ISO 8601 format
+
+            i.e.: 2019-09-19T19:30:37 or 2019-09-19 19:30:37.  Time zone can be specified as optional.
+
+            Default value is false'
           default: false
       - name: page
         in: query
@@ -326,54 +349,58 @@ paths:
           description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
       - name: id
         in: path
-        description: "<remarks>\r\n                    Id of image to download.\r\n                </remarks>"
+        description: "<remarks>\n                    Id of image to download.\n                </remarks>"
         required: true
         schema:
-          type: string
-          description: "<remarks>\r\n                    Id of image to download.\r\n                </remarks>"
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: "<remarks>\n                    Id of image to download.\n                </remarks>"
       - name: auto_download
         in: query
-        description: "<remarks>\r\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the image.\r\n                    If false is specified, the download URI will be returned in the response message. Default is true.\r\n                </remarks>"
+        description: "<remarks>\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\n                    Location header set to the location of the image.\n                    If false is specified, the download URI will be returned in the response message. Default is true.\n                </remarks>"
         schema:
           type: boolean
-          description: "<remarks>\r\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the image.\r\n                    If false is specified, the download URI will be returned in the response message. Default is true.\r\n                </remarks>"
+          description: "<remarks>\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\n                    Location header set to the location of the image.\n                    If false is specified, the download URI will be returned in the response message. Default is true.\n                </remarks>"
           default: true
       - name: file_type
         in: query
-        description: "<remarks>\r\n                    File Type expressed with three character file extension.\r\n                </remarks>"
+        description: "<remarks>\n                    File Type expressed with three character file extension.\n                </remarks>"
         schema:
           $ref: '#/components/schemas/DownloadFileType'
       - name: height
         in: query
-        description: "<remarks>\r\n                    Specifies the pixel height of the particular image to download.\r\n                    Available heights can be found in the images/{ids} response for the specific image.\r\n                    If left blank, it will return the largest available size.\r\n                </remarks>"
+        description: "<remarks>\n                    Specifies the pixel height of the particular image to download.\n                    Available heights can be found in the images/{ids} response for the specific image.\n                    If left blank, it will return the largest available size.\n                </remarks>"
         schema:
-          type: string
-          description: "<remarks>\r\n                    Specifies the pixel height of the particular image to download.\r\n                    Available heights can be found in the images/{ids} response for the specific image.\r\n                    If left blank, it will return the largest available size.\r\n                </remarks>"
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: "<remarks>\n                    Specifies the pixel height of the particular image to download.\n                    Available heights can be found in the images/{ids} response for the specific image.\n                    If left blank, it will return the largest available size.\n                </remarks>"
       - name: product_id
         in: query
-        description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+        description: "<remarks>\n                    Identifier of the instance for the selected product offering type.\n                </remarks>"
         schema:
-          type: integer
-          description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+          type:
+          - integer
+          - 'null'
+          description: "<remarks>\n                    Identifier of the instance for the selected product offering type.\n                </remarks>"
           format: int32
-          nullable: true
       - name: product_type
         in: query
-        description: "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+        description: "<remarks>\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\n                </remarks>"
         schema:
           $ref: '#/components/schemas/ProductTypeForDownloads'
       - name: use_team_credits
         in: query
         description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
         schema:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
           default: false
-          nullable: true
       requestBody:
-        description: "<remarks>\r\n                    Additional information required from specific customers when downloading. \r\n                    Only users who have been set up with a project code by Getty Images Sales need to use this field.\r\n                </remarks>"
+        description: "<remarks>\n                    Additional information required from specific customers when downloading. \n                    Only users who have been set up with a project code by Getty Images Sales need to use this field.\n                </remarks>"
         content:
           application/json:
             schema:
@@ -406,48 +433,52 @@ paths:
           description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
       - name: id
         in: path
-        description: "<remarks>\r\n                    Id of video to download.\r\n                </remarks>"
+        description: "<remarks>\n                    Id of video to download.\n                </remarks>"
         required: true
         schema:
-          type: string
-          description: "<remarks>\r\n                    Id of video to download.\r\n                </remarks>"
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: "<remarks>\n                    Id of video to download.\n                </remarks>"
       - name: auto_download
         in: query
-        description: "<remarks>\r\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the video.\r\n                    If false is specified, the download URI will be returned in the response message. Default is false.\r\n                </remarks>"
+        description: "<remarks>\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\n                    Location header set to the location of the video.\n                    If false is specified, the download URI will be returned in the response message. Default is false.\n                </remarks>"
         schema:
           type: boolean
-          description: "<remarks>\r\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\r\n                    Location header set to the location of the video.\r\n                    If false is specified, the download URI will be returned in the response message. Default is false.\r\n                </remarks>"
+          description: "<remarks>\n                    Specifies whether to auto-download the video. If true is specified, a 303 SeeOther status is returned with a\n                    Location header set to the location of the video.\n                    If false is specified, the download URI will be returned in the response message. Default is false.\n                </remarks>"
           default: false
       - name: size
         in: query
         description: Specifies the size to be downloaded.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specifies the size to be downloaded.
-          nullable: true
       - name: product_id
         in: query
-        description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+        description: "<remarks>\n                    Identifier of the instance for the selected product offering type.\n                </remarks>"
         schema:
-          type: integer
-          description: "<remarks>\r\n                    Identifier of the instance for the selected product offering type.\r\n                </remarks>"
+          type:
+          - integer
+          - 'null'
+          description: "<remarks>\n                    Identifier of the instance for the selected product offering type.\n                </remarks>"
           format: int32
-          nullable: true
       - name: product_type
         in: query
-        description: "<remarks>\r\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\r\n                </remarks>"
+        description: "<remarks>\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\n                </remarks>"
         schema:
           $ref: '#/components/schemas/ProductTypeForDownloads'
       - name: use_team_credits
         in: query
         description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
         schema:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
-          nullable: true
       requestBody:
-        description: "<remarks>\r\n                    Additional information required from specific customers when downloading. \r\n                    Only users who have been set up with a project code by Getty Images Sales need to use this field.\r\n                </remarks>"
+        description: "<remarks>\n                    Additional information required from specific customers when downloading. \n                    Only users who have been set up with a project code by Getty Images Sales need to use this field.\n                </remarks>"
         content:
           application/json:
             schema:
@@ -472,34 +503,37 @@ components:
       - eps
       - jpg
       type: string
-    ImageDownloadRequest:
-      type: object
-      properties:
-        notes:
-          type: string
-          description: The notes to use for the download request.  Some products require this value.
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the download request.  Some products require this value.
-          nullable: true
-        size_name:
-          type: string
-          description: The size name.  Valid values are 1k or 4k.
-          nullable: true
-      additionalProperties: false
-      description: Parameters for requesting an AI generation image download
     DownloadSizeResponse:
       type: object
       properties:
         size_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         height:
           type: integer
           format: int32
         width:
           type: integer
+          format: int32
+      additionalProperties: false
+    Dimensions:
+      type: object
+      properties:
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        dpi:
+          type:
+          - integer
+          - 'null'
           format: int32
       additionalProperties: false
     GetDownloadsResponse:
@@ -509,31 +543,32 @@ components:
           type: integer
           format: int32
         downloads:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/HistoricalDownload'
-          nullable: true
       additionalProperties: false
-    DownloadResponse:
+    ImageDownloadRequest:
       type: object
       properties:
-        url:
-          type: string
-          nullable: true
-        generated_asset_id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    DownloadDetails:
-      type: object
-      properties:
-        download_notes:
-          type: string
-          nullable: true
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the download request.  Some products require this value.
         project_code:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the download request.  Some products require this value.
+        size_name:
+          type:
+          - string
+          - 'null'
+          description: The size name.  Valid values are 1k or 4k.
       additionalProperties: false
+      description: Parameters for requesting an AI generation image download
     ProductTypeForDownloads:
       enum:
       - easyaccess
@@ -544,30 +579,71 @@ components:
       - creditpack
       - aigen
       type: string
-    User:
+    PremiumAccessDownloadData:
       type: object
       properties:
-        username:
-          type: string
-          nullable: true
-        first_name:
-          type: string
-          nullable: true
-        middle_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
+        download_notes:
+          type:
+          - string
+          - 'null'
+        project_code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DownloadDetails:
+      type: object
+      properties:
+        download_notes:
+          type:
+          - string
+          - 'null'
+        project_code:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     DownloadSizesResponse:
       type: object
       properties:
         download_sizes:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/DownloadSizeResponse'
-          nullable: true
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        username:
+          type:
+          - string
+          - 'null'
+        first_name:
+          type:
+          - string
+          - 'null'
+        middle_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DownloadResponse:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+        generated_asset_id:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     HistoricalDownload:
       type: object
@@ -576,67 +652,50 @@ components:
           type: string
           format: date-time
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         asset_type:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         product_type:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         thumb_uri:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         agreement_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         product_id:
           type: integer
           format: int32
         download_details:
           $ref: '#/components/schemas/DownloadDetails'
         download_source:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         user:
           $ref: '#/components/schemas/User'
         size_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         dimensions:
           $ref: '#/components/schemas/Dimensions'
         license_model:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         generated_asset_id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PremiumAccessDownloadData:
-      type: object
-      properties:
-        download_notes:
-          type: string
-          nullable: true
-        project_code:
-          type: string
-          nullable: true
-      additionalProperties: false
-    Dimensions:
-      type: object
-      properties:
-        width:
-          type: integer
-          format: int32
-          nullable: true
-        height:
-          type: integer
-          format: int32
-          nullable: true
-        dpi:
-          type: integer
-          format: int32
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:

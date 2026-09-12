@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Ai Generator API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -108,12 +111,54 @@ paths:
           description: GenerationRequestGone
 components:
   schemas:
+    ReDownloadRequest:
+      type: object
+      properties:
+        generated_asset_id:
+          type:
+          - string
+          - 'null'
+          description: The identifier of the previously-downloaded generated asset.
+        product_id:
+          type: integer
+          description: The product ID to use for the download.
+          format: int32
+        size_name:
+          type:
+          - string
+          - 'null'
+          description: The size name.  Valid values are 1k or 4k.
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the download request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the download request.  Some products require this value.
+      additionalProperties: false
+      description: Parameters for requesting an AI generation re-download
+    DownloadResponse:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+        generated_asset_id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     DownloadSizeResponse:
       type: object
       properties:
         size_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         height:
           type: integer
           format: int32
@@ -121,50 +166,16 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    DownloadResponse:
-      type: object
-      properties:
-        url:
-          type: string
-          nullable: true
-        generated_asset_id:
-          type: string
-          nullable: true
-      additionalProperties: false
     DownloadSizesResponse:
       type: object
       properties:
         download_sizes:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/DownloadSizeResponse'
-          nullable: true
       additionalProperties: false
-    ReDownloadRequest:
-      type: object
-      properties:
-        generated_asset_id:
-          type: string
-          description: The identifier of the previously-downloaded generated asset.
-          nullable: true
-        product_id:
-          type: integer
-          description: The product ID to use for the download.
-          format: int32
-        size_name:
-          type: string
-          description: The size name.  Valid values are 1k or 4k.
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the download request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the download request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Parameters for requesting an AI generation re-download
   securitySchemes:
     Api-Key:
       type: apiKey

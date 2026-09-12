@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Artists API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -29,20 +32,22 @@ paths:
         in: query
         description: Name of artist for desired images
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Name of artist for desired images
-          nullable: true
       - name: fields
         in: query
         description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/ArtistsImageSearchFieldValues'
           description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
-          nullable: true
       - name: page
         in: query
         description: Identifies page to return. Default page is 1.
@@ -82,20 +87,22 @@ paths:
         in: query
         description: Name of artist for desired images
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Name of artist for desired images
-          nullable: true
       - name: fields
         in: query
         description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/ArtistsVideoSearchFieldValues'
           description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
-          nullable: true
       - name: page
         in: query
         description: Identifies page to return. Default page is 1.
@@ -121,6 +128,41 @@ paths:
           description: Unauthorized
 components:
   schemas:
+    ArtistsVideoSearchFieldValues:
+      enum:
+      - id
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - asset_type
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_id
+      - collection_code
+      - collection_name
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - editorial_segments
+      - event_ids
+      - graphical_style
+      - keywords
+      - license_model
+      - max_dimensions
+      - orientation
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      type: string
     ArtistsImageSearchFieldValues:
       enum:
       - id
@@ -149,41 +191,6 @@ components:
       - license_model
       - max_dimensions
       - mid_res_comp_webp
-      - orientation
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      type: string
-    ArtistsVideoSearchFieldValues:
-      enum:
-      - id
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - asset_type
-      - call_for_image
-      - caption
-      - clip_length
-      - collection_id
-      - collection_code
-      - collection_name
-      - comp
-      - copyright
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - editorial_segments
-      - event_ids
-      - graphical_style
-      - keywords
-      - license_model
-      - max_dimensions
       - orientation
       - preview
       - product_types

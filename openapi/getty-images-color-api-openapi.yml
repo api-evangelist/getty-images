@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Color API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -56,11 +59,19 @@ paths:
           description: TooManyConcurrentGenerations
 components:
   schemas:
-    MediaType:
-      enum:
-      - photography
-      - illustration
-      type: string
+    ReferenceGeneration:
+      type: object
+      properties:
+        generation_request_id:
+          type:
+          - string
+          - 'null'
+          description: The id from a previous request to generate images.
+        index:
+          type: integer
+          description: The index of the image from the specific images generation.
+          format: int32
+      additionalProperties: false
     ImageDataResponse:
       type: object
       properties:
@@ -70,125 +81,76 @@ components:
         is_blocked:
           type: boolean
         preview_urls:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/PreviewUrl'
           description: The preview URLs for the result
-          nullable: true
         url:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PreviewUrl:
-      type: object
-      properties:
-        preview_size:
-          type: string
-          nullable: true
-        image_url:
-          type: string
-          nullable: true
-        width:
-          type: integer
-          format: int32
-        height:
-          type: integer
-          format: int32
-      additionalProperties: false
-    PendingImageGenerationResponse:
-      type: object
-      properties:
-        generation_request_id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    ImageGenerationsResponse:
-      type: object
-      properties:
-        generation_request_id:
-          type: string
-          nullable: true
-        seed:
-          type: integer
-          format: int32
-          nullable: true
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageDataResponse'
-          nullable: true
-        original_asset:
-          $ref: '#/components/schemas/AssetDetail'
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     InfluenceColorByImageRequest:
       type: object
       properties:
         reference_asset_id:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Asset Id to modify.
-          nullable: true
         reference_generation:
           $ref: '#/components/schemas/ReferenceGeneration'
         reference_file_registration_id:
-          type: string
+          type:
+          - string
+          - 'null'
           description: File Id to modify.
-          nullable: true
         prompt:
-          type: string
+          type:
+          - string
+          - 'null'
           description: This is the primary text used for refining the images.
-          nullable: true
         negative_prompt:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Concepts to exclude from the result.
-          nullable: true
         noise_level:
-          type: number
+          type:
+          - number
+          - 'null'
           description: Accepted values are 0-1. Higher values will increase differences between the reference and generated images.
           format: float
-          nullable: true
         media_type:
           $ref: '#/components/schemas/MediaType'
         mood:
           $ref: '#/components/schemas/Mood'
         seed:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: The seed used for the generation
           format: int32
-          nullable: true
         product_id:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: If you have multiple Getty products, indicate which one you would like to use for this refine request
           format: int32
-          nullable: true
         project_code:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The project code to use for the request.  Some products require this value.
-          nullable: true
         notes:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The notes to use for the request.  Some products require this value.
-          nullable: true
       additionalProperties: false
       description: Payload with all influence color by image parameters
-    ReferenceGeneration:
-      type: object
-      properties:
-        generation_request_id:
-          type: string
-          description: The id from a previous request to generate images.
-          nullable: true
-        index:
-          type: integer
-          description: The index of the image from the specific images generation.
-          format: int32
-      additionalProperties: false
-    AssetDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-      additionalProperties: false
     Mood:
       enum:
       - black_and_white
@@ -199,6 +161,66 @@ components:
       - dramatic
       - bold
       type: string
+    PendingImageGenerationResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AssetDetail:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    PreviewUrl:
+      type: object
+      properties:
+        preview_size:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type:
+          - string
+          - 'null'
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+      additionalProperties: false
+    MediaType:
+      enum:
+      - photography
+      - illustration
+      type: string
+    ImageGenerationsResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type:
+          - string
+          - 'null'
+        seed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        results:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageDataResponse'
+        original_asset:
+          $ref: '#/components/schemas/AssetDetail'
+      additionalProperties: false
   securitySchemes:
     Api-Key:
       type: apiKey

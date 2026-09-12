@@ -1,0 +1,147 @@
+generated: '2026-09-12'
+method: probed
+source: >-
+  Live probes of https://scim.gettyimages.com/v2/*, the RFC 8414 document at
+  https://api.gettyimages.com/.well-known/oauth-authorization-server, and
+  openapi/_original/getty-images-swagger-v3-openapi.json
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    https://api.gettyimages.com/.well-known/oauth-authorization-server (HTTP 200) declares
+    issuer https://authentication.gettyimages.com with authorization_endpoint /oauth2/auth,
+    token_endpoint /oauth2/token, grant_types_supported
+    [client_credentials, authorization_code, refresh_token] and
+    token_endpoint_auth_methods_supported [client_secret_basic, client_secret_post]. The live
+    OpenAPI declares a matching oauth2 securityScheme with all three flows.
+  file: well-known/getty-images-oauth-authorization-server.json
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: >-
+    A conforming RFC 8414 document is served at /.well-known/oauth-authorization-server on
+    three separate hosts (api., mcp. and authentication.gettyimages.com), byte-identical
+    across all three.
+  file: well-known/getty-images-oauth-authorization-server.json
+- id: rfc7636-pkce
+  conforms: true
+  evidence: >-
+    code_challenge_methods_supported: ["S256"] in the RFC 8414 document; the authorization
+    docs additionally document `plain` and cite RFC 7636 by name.
+- id: oidc
+  conforms: false
+  evidence: >-
+    /.well-known/openid-configuration returns 404 on the apex and www hosts and 403 (AWS API
+    Gateway unmatched-route) on api./mcp./authentication.gettyimages.com. Getty runs OAuth
+    2.0 authorization, not OpenID Connect, for API clients. (Getty does support SAML 2.0 SSO
+    for its web product — a different surface; see /single-sign-on/.)
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: >-
+    https://www.gettyimages.com/.well-known/security.txt (HTTP 200) with Contact and Expires
+    fields.
+  file: well-known/getty-images-security.txt
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json anywhere in the live spec or the docs. Getty uses a vendor
+    envelope, application/vnd.getty.error+json with ErrorCode/ErrorMessage, plus a terse
+    {"message": "..."} gateway shape. See errors/getty-images-problem-types.yml.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    Neither Sunset nor Deprecation response headers are documented or returned; retirements
+    are announced only as dated release-note and status-page posts.
+- id: idempotency-key
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or equivalent replay protection appears in the docs or the live
+    spec across 27 mutating operations.
+- id: pagination
+  conforms: true
+  evidence: >-
+    Documented page / page_size querystring pagination with an enumerated page_size value set
+    and a result_count response field.
+- id: cors
+  conforms: true
+  evidence: >-
+    CORS supported on all endpoints except /v4/oauth2/token and /v4/oauth2/auth, per
+    https://developer.gettyimages.com/docs/.
+- id: json-api
+  conforms: false
+  evidence: Plain JSON resource representations; no JSON:API media type or document structure.
+- id: openapi
+  conforms: true
+  evidence: >-
+    OpenAPI 3.0.4 served first-party and unauthenticated at
+    https://api.gettyimages.com/swagger/v3/swagger.json (67 paths, 76 operations,
+    215 component schemas), rendered at https://api.gettyimages.com/swagger.
+  file: openapi/_original/getty-images-swagger-v3-openapi.json
+domain_standards:
+- id: scim2
+  name: SCIM 2.0 (System for Cross-domain Identity Management, RFC 7643 / RFC 7644)
+  conforms: true
+  market: enterprise identity / user lifecycle management
+  discovery_base: https://scim.gettyimages.com/v2
+  evidence: >-
+    DEFINITIVE, read from the contract rather than from a prose claim. Three SCIM discovery
+    endpoints are served anonymously and returned HTTP 200 on 2026-09-12:
+    /v2/ServiceProviderConfig, /v2/Schemas and /v2/ResourceTypes. The Schemas response is a
+    urn:ietf:params:scim:api:messages:2.0:ListResponse carrying the core schema URN
+    urn:ietf:params:scim:schemas:core:2.0:User; the ResourceTypes response declares resource
+    type User at endpoint /Users with schema urn:ietf:params:scim:schemas:core:2.0:User and
+    the schema extension urn:ietf:params:scim:schemas:extension:enterprise:2.0:User. This is
+    the SCIM schema-URN signature the domain-standard check looks for.
+  files:
+  - conformance/getty-images-scim-service-provider-config.json
+  - conformance/getty-images-scim-schemas.json
+  - conformance/getty-images-scim-resource-types.json
+  capabilities:
+    patch: true
+    bulk: false
+    filter: false
+    sort: false
+    etag: false
+    changePassword: false
+    authenticationSchemes: [oauthbearertoken]
+    filter_max_results: 100
+    bulk_max_operations: 1
+    bulk_max_payload_size: 10240000
+  supported_operations: [create user, update user attributes, deactivate user]
+  docs: https://developer.gettyimages.com/scim/
+  note: >-
+    Protected resources (/v2/Users) require an OAuth bearer token and returned 401; the
+    discovery triad is open, which is what SCIM 2.0 requires. A partial implementation —
+    filter, sort, bulk and etag are all declared unsupported — but the schema URNs are
+    genuine and a caller that already speaks SCIM needs no bespoke connector to provision
+    Getty Images users.
+- id: saml2
+  name: SAML 2.0 single sign-on
+  conforms: true
+  market: enterprise identity federation
+  evidence: >-
+    https://developer.gettyimages.com/single-sign-on/ publishes SAML 2.0 configuration guides
+    for Okta, Google and generic identity providers. Documentation claim, not a probed
+    contract — the SAML metadata document is provisioned per customer, so there is no public
+    endpoint to fetch.
+  docs: https://developer.gettyimages.com/single-sign-on/
+- id: eu-ai-act-training-data-summary
+  name: EU AI Act Article 53(1)(d) public summary of training content
+  conforms: true
+  market: generative AI model providers placing models on the EU market
+  evidence: >-
+    https://developer.gettyimages.com/ai-generation/summary-of-training-content/ publishes a
+    Summary of Training Content naming the EU authorised representative (Getty Images France
+    SAS, RCS Paris 433 960 895), the date of placement on the Union market (November 2025),
+    the versioned model name and the upstream model dependency (Bria Fibo Lite) with a link
+    to that provider's own summary. A companion model card is published at
+    https://developer.gettyimages.com/ai-generation/model-card/ (last updated April 2026).
+  docs: https://developer.gettyimages.com/ai-generation/summary-of-training-content/
+compliance_program:
+  published: false
+  trust_center: null
+  certifications: []
+  note: >-
+    No trust centre, certification list or compliance page was found. trust.gettyimages.com
+    does not resolve (curl exit 6, no DNS); www.gettyimages.com/company/trust returns 404.
+    Getty publishes a security.txt contact but no SOC 2 / ISO 27001 / PCI / FedRAMP posture in
+    public. No Compliance pointer is emitted for this record, because none is earned.

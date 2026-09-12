@@ -1,0 +1,122 @@
+# Getty Images API
+
+> The Getty Images API brings the best visual content straight to you and your customers,
+> letting you integrate outstanding images, videos, and illustrations from Getty Images and
+> iStock directly into your platform. One REST API at version 3 (67 paths / 76 operations)
+> plus a remote MCP server. Access is sales-gated: API credentials are issued by a Getty
+> Images account representative against an existing content licence agreement. There is no
+> self-service sign-up, no free tier and no published API pricing.
+
+Generated 2026-09-12 by the API Evangelist enrichment pipeline. Getty Images does not publish
+an llms.txt of its own (https://developer.gettyimages.com/llms.txt returns 404), so this file
+is generated from the provider's live contract and documentation, not served by the provider.
+
+## Base URLs
+
+- REST v3: https://api.gettyimages.com/v3/
+- MCP server: https://mcp.gettyimages.com/v1
+- OAuth authorization server: https://authentication.gettyimages.com
+- SCIM 2.0: https://scim.gettyimages.com/v2
+
+## Specs
+
+- [OpenAPI 3.0.4 (live, first-party)](https://api.gettyimages.com/swagger/v3/swagger.json): 67 paths, 76 operations, 215 component schemas. No operationIds, no in-spec examples.
+- [Swagger UI](https://api.gettyimages.com/swagger): interactive reference, served anonymously.
+- [OAuth authorization server metadata (RFC 8414)](https://api.gettyimages.com/.well-known/oauth-authorization-server)
+- [SCIM 2.0 ServiceProviderConfig](https://scim.gettyimages.com/v2/ServiceProviderConfig), [Schemas](https://scim.gettyimages.com/v2/Schemas), [ResourceTypes](https://scim.gettyimages.com/v2/ResourceTypes): all served anonymously.
+
+## Docs
+
+- [Developer portal](https://developer.gettyimages.com/)
+- [Technical documentation](https://developer.gettyimages.com/docs/): auth, throttling, field expansion, pagination, error codes, caching, hypermedia.
+- [Authorization](https://developer.gettyimages.com/docs/authorization/): OAuth 2.0 grants, PKCE, token lifetime.
+- [Getting started](https://developer.gettyimages.com/docs/gettingstarted/): token -> search -> download walkthrough.
+- [Search](https://developer.gettyimages.com/docs/search/)
+- [Asset Changes](https://developer.gettyimages.com/asset-change/): pull-based catalogue synchronisation.
+- [Asset Metadata](https://developer.gettyimages.com/asset-metadata/)
+- [Generative AI by Getty Images](https://developer.gettyimages.com/ai-generation/)
+- [Model card](https://developer.gettyimages.com/ai-generation/model-card/) and [Summary of training content (EU AI Act Art. 53)](https://developer.gettyimages.com/ai-generation/summary-of-training-content/)
+- [MCP server](https://developer.gettyimages.com/mcp/)
+- [Affiliates](https://developer.gettyimages.com/affiliates/): the `<istock-affiliate>` web component and the affiliate search endpoints.
+- [SDKs and sample code](https://developer.gettyimages.com/sdks/)
+- [SCIM configuration](https://developer.gettyimages.com/scim/) and [SAML 2.0 SSO](https://developer.gettyimages.com/single-sign-on/)
+- [Release notes](https://developer.gettyimages.com/release-notes/) ([RSS](https://developer.gettyimages.com/release-notes/index.xml))
+- [Status and notifications](https://developer.gettyimages.com/status/)
+- [API solutions and contact](https://www.gettyimages.com/api)
+
+## Capabilities
+
+- Search: creative and editorial image and video search, reverse image search
+  (`/v3/image-match/search`, `/v3/search/images/creative/by-image`), event search, artist
+  search, affiliate search. Enhanced natural-language search is on by default; opt out with
+  `enhanced_search=false`.
+- Metadata: `/v3/images`, `/v3/videos`, similar assets, same-series assets, download history.
+- Licensing and downloads: `POST /v3/downloads/images/{id}` and `/videos/{id}` license the
+  asset against the customer's agreement and return an opaque delivery URI.
+- Generative AI: text-to-image, refine (inpaint), extend (outpaint), object removal,
+  background removal/replacement/generation, colour and composition influence by reference
+  image, variations, prompt enhancement, generation history, file registrations.
+- Boards: collaborative boards, board assets, board and asset comments.
+- Catalogue sync: Asset Changes channels and change sets (pull, ack-confirmed).
+- Commerce and account: current customer, products, orders, purchased assets, asset
+  licensing, usage batches.
+- Identity: SCIM 2.0 user provisioning and SAML 2.0 SSO for the enterprise product.
+
+## Authentication
+
+- `Api-Key: <key>` header is required on EVERY request. Missing it returns
+  `401 {"message":"Unauthorized"}`.
+- `Authorization: Bearer <token>` is additionally required for elevated operations —
+  downloads, `fields=downloads|download_sizes|largest_downloads`, boards, purchase history
+  and all Generative AI endpoints.
+- OAuth 2.0 grants: `client_credentials`, `authorization_code` (PKCE, S256 or plain),
+  `refresh_token`. Token endpoint `https://authentication.gettyimages.com/oauth2/token`,
+  authorization endpoint `.../oauth2/auth`. Access tokens live 1800 seconds; reuse them —
+  token calls count against the rate limit.
+- No scopes are declared. Authorization is by licence agreement, not by scope.
+
+## Runtime semantics an agent needs
+
+- Errors: vendor envelope `application/vnd.getty.error+json` with `ErrorCode` (branch on
+  this) and `ErrorMessage` (never match its wording). Edge failures return terse
+  `{"message": "..."}` with no ErrorCode. NOT RFC 9457.
+- Rate limits: per-API-key queries-per-second, assigned at onboarding and NOT published. The
+  MCP server is throttled at 20 QPS. Exhaustion returns 429; there are NO `RateLimit-*` or
+  `Retry-After` headers, only `X-Error-Detail: Account Over Queries Per Second Limit`. On
+  `/v3/ai/image-generations/*` a 429 may mean concurrency rather than QPS — the two are
+  indistinguishable. Getty's guidance: back off with a fault-handling library; for Gen AI,
+  wait one second.
+- 410 Gone is permanent — never retry a generation request id that returns it.
+- Idempotency: NONE. No Idempotency-Key header exists across 27 mutating operations. A
+  retried `POST /v3/downloads/...` is a second licence event.
+- Reversibility: boards, comments and file registrations have DELETE counterparts with no
+  stated window. Downloads and generation credits have NO reversal operation at all.
+- No sandbox, no test keys, no dry-run. First call is production.
+- Pagination: `page` (default 1) and `page_size` (default 30; only the enumerated values
+  1,2,3,4,5,6,10,12,15,20,25,30,50,60,75,100). Use `result_count` to compute page count;
+  overshooting returns 400 `InvalidPage`.
+- Field expansion: `fields=summary_set` (default) | `detail_set` | a comma-delimited list.
+  `download_sizes`, `largest_downloads`, `downloads` and the display sizes must be requested
+  explicitly.
+- Follow redirects — 302 and 307 are used, including on delivery URLs. Delivery URIs are
+  opaque; read `content-disposition` for the filename.
+- No webhooks. Catalogue changes are pulled via Asset Changes; treat New/Update as upsert and
+  ignore Delete for unknown assets.
+
+## SDKs
+
+- [JavaScript / Node.js](https://www.npmjs.com/package/gettyimages-api) — `gettyimages-api` 6.7.0 (2026-08-19)
+- [C# / .NET](https://www.nuget.org/packages/GettyImages.Api) — `GettyImages.Api` 10.0.0 (2026-02-09)
+- [PHP](https://packagist.org/packages/gettyimages/gettyimages-api) — `gettyimages/gettyimages-api` 6.0.0 (2025-11-24)
+- Ruby `gettyimages-api` 3.2.6 (2025-08-06) and Java `com.gettyimages:gettyimagesapi-sdk` 3.1.9 (2023-11-15) exist but their repositories are archived — treat as unmaintained.
+- No first-party Python client is published.
+- [Sample code and GitHub org](https://github.com/gettyimages/gettyimages-api)
+
+## Access
+
+- [Contact for API access](https://engage.gettyimages.com/api-contact) — existing customers should ask their Account Manager. API support: apisupport@gettyimages.com.
+- [Sign in](https://www.gettyimages.com/sign-in)
+- [Terms of use](https://www.gettyimages.com/company/terms)
+- [Privacy policy](https://www.gettyimages.com/company/privacy-policy)
+- [Customer support](https://www.gettyimages.com/customer-support)
+- [Security contact](https://www.gettyimages.com/.well-known/security.txt) — security@gettyimages.com

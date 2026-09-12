@@ -1,0 +1,138 @@
+generated: '2026-09-12'
+method: probed
+source: live GET probes of every host in apis.yml (registrable domain + www, API baseURL host,
+  docs/portal host, the MCP host named in the provider's MCP documentation, and the OAuth
+  issuer host named by the fetched oauth-authorization-server document)
+notes: >-
+  Two real documents were found. www.gettyimages.com and the apex gettyimages.com serve an
+  RFC 9116 security.txt. api.gettyimages.com, mcp.gettyimages.com and
+  authentication.gettyimages.com each serve an identical (byte-for-byte, md5
+  d82698b5e0a74e270978036c8b2033b2) RFC 8414 OAuth authorization-server metadata document
+  naming https://authentication.gettyimages.com as the issuer. Every other path missed.
+  The API/MCP/auth hosts sit behind AWS API Gateway, which answers unmatched paths with
+  HTTP 403 {"message":"Missing Authentication Token"} rather than 404 — that is a miss, not
+  a gate, and it is recorded as the status actually observed. The www/apex host answers
+  unmatched paths with an HTTP 404 carrying the full marketing SPA shell (~302 KB); those
+  are recorded as 404 misses.
+path_echo_control: passed
+soft_404_control:
+  path: /.well-known/getty-images-negative-control-3n61m78f.json
+  gettyimages.com: {status: 404, bytes: 302458}
+  api.gettyimages.com: {status: 403, bytes: 42}
+  developer.gettyimages.com: {status: 404, bytes: 583}
+  note: no host returned 2xx for the impossible path, so no hit on this record is a path echo.
+hit_count: 2
+hosts:
+- host: https://gettyimages.com
+  documents:
+  - {path: /.well-known/security.txt, status: 200, file: getty-images-security.txt}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/aauth-resource.json, status: 404}
+  - {path: /.well-known/ucp.json, status: 404}
+  - {path: /.well-known/acp.json, status: 404}
+  - {path: /.well-known/apis.json, status: 404}
+  - {path: /apis.json, status: 404}
+  - {path: /apis.yml, status: 404}
+- host: https://www.gettyimages.com
+  documents:
+  - {path: /.well-known/security.txt, status: 200, file: getty-images-security.txt}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/aauth-resource.json, status: 404}
+  - {path: /.well-known/ucp.json, status: 404}
+  - {path: /.well-known/acp.json, status: 404}
+  - {path: /.well-known/apis.json, status: 404}
+  - {path: /apis.json, status: 404}
+  - {path: /apis.yml, status: 404}
+- host: https://api.gettyimages.com
+  documents:
+  - {path: /.well-known/oauth-authorization-server, status: 200, file: getty-images-oauth-authorization-server.json}
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-protected-resource, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}
+  - {path: /.well-known/agent-card.json, status: 403}
+  - {path: /.well-known/agent.json, status: 403}
+  - {path: /.well-known/aauth-resource.json, status: 403}
+  - {path: /.well-known/ucp.json, status: 403}
+  - {path: /.well-known/acp.json, status: 403}
+  - {path: /.well-known/apis.json, status: 403}
+  - {path: /apis.json, status: 403}
+  - {path: /apis.yml, status: 403}
+- host: https://mcp.gettyimages.com
+  documents:
+  - {path: /.well-known/oauth-authorization-server, status: 200, file: getty-images-oauth-authorization-server.json}
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-protected-resource, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}
+  - {path: /.well-known/agent-card.json, status: 403}
+  - {path: /.well-known/agent.json, status: 403}
+  - {path: /.well-known/aauth-resource.json, status: 403}
+  - {path: /.well-known/ucp.json, status: 403}
+  - {path: /.well-known/acp.json, status: 403}
+  - {path: /.well-known/apis.json, status: 403}
+  - {path: /apis.json, status: 403}
+  - {path: /apis.yml, status: 403}
+- host: https://authentication.gettyimages.com
+  documents:
+  - {path: /.well-known/oauth-authorization-server, status: 200, file: getty-images-oauth-authorization-server.json}
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-protected-resource, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}
+  - {path: /.well-known/agent-card.json, status: 403}
+  - {path: /.well-known/agent.json, status: 403}
+  - {path: /.well-known/aauth-resource.json, status: 403}
+  - {path: /.well-known/ucp.json, status: 403}
+  - {path: /.well-known/acp.json, status: 403}
+  - {path: /.well-known/apis.json, status: 403}
+  - {path: /apis.json, status: 403}
+  - {path: /apis.yml, status: 403}
+- host: https://developer.gettyimages.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/aauth-resource.json, status: 404}
+  - {path: /.well-known/ucp.json, status: 404}
+  - {path: /.well-known/acp.json, status: 404}
+  - {path: /.well-known/apis.json, status: 404}
+  - {path: /apis.json, status: 404}
+  - {path: /apis.yml, status: 404}
+- host: https://developers.gettyimages.com
+  note: 301 redirects to developer.gettyimages.com; probed after following redirects.
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/aauth-resource.json, status: 404}
+  - {path: /.well-known/ucp.json, status: 404}
+  - {path: /.well-known/acp.json, status: 404}
+  - {path: /.well-known/apis.json, status: 404}
+  - {path: /apis.json, status: 404}
+  - {path: /apis.yml, status: 404}

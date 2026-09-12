@@ -1,0 +1,557 @@
+generated: '2026-09-12'
+method: searched
+source: openapi/getty-images-affiliates-api-openapi.yml, openapi/getty-images-ai-api-openapi.yml, openapi/getty-images-ai-generator-api-openapi.yml,
+  openapi/getty-images-artists-api-openapi.yml, openapi/getty-images-assets-api-openapi.yml, openapi/getty-images-background-api-openapi.yml,
+  openapi/getty-images-batches-api-openapi.yml, openapi/getty-images-boards-api-openapi.yml, openapi/getty-images-change-api-openapi.yml,
+  openapi/getty-images-changes-api-openapi.yml, openapi/getty-images-channels-api-openapi.yml, openapi/getty-images-collections-api-openapi.yml,
+  openapi/getty-images-color-api-openapi.yml, openapi/getty-images-comments-api-openapi.yml, openapi/getty-images-compositions-api-openapi.yml,
+  openapi/getty-images-countries-api-openapi.yml, openapi/getty-images-creative-api-openapi.yml, openapi/getty-images-current-api-openapi.yml,
+  openapi/getty-images-customers-api-openapi.yml, openapi/getty-images-downloads-api-openapi.yml, openapi/getty-images-editorial-api-openapi.yml,
+  openapi/getty-images-events-api-openapi.yml, openapi/getty-images-extend-api-openapi.yml, openapi/getty-images-files-api-openapi.yml,
+  openapi/getty-images-generation-api-openapi.yml, openapi/getty-images-generations-api-openapi.yml, openapi/getty-images-history-api-openapi.yml,
+  openapi/getty-images-image-api-openapi.yml, openapi/getty-images-images-api-openapi.yml, openapi/getty-images-index-api-openapi.yml,
+  openapi/getty-images-influence-api-openapi.yml, openapi/getty-images-licensing-api-openapi.yml, openapi/getty-images-management-api-openapi.yml,
+  openapi/getty-images-name-api-openapi.yml, openapi/getty-images-objects-api-openapi.yml, openapi/getty-images-orders-api-openapi.yml,
+  openapi/getty-images-products-api-openapi.yml, openapi/getty-images-purchased-api-openapi.yml, openapi/getty-images-refine-api-openapi.yml,
+  openapi/getty-images-registrations-api-openapi.yml, openapi/getty-images-removal-api-openapi.yml, openapi/getty-images-request-api-openapi.yml,
+  openapi/getty-images-search-api-openapi.yml, openapi/getty-images-send-api-openapi.yml, openapi/getty-images-series-api-openapi.yml,
+  openapi/getty-images-set-api-openapi.yml, openapi/getty-images-sets-api-openapi.yml, openapi/getty-images-similar-api-openapi.yml,
+  openapi/getty-images-uploads-api-openapi.yml, openapi/getty-images-usage-api-openapi.yml, openapi/getty-images-variations-api-openapi.yml,
+  openapi/getty-images-videos-api-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/getty-images-affiliates-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-ai-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-ai-generator-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-artists-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-assets-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-background-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-batches-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-boards-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-change-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-changes-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-channels-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-collections-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-color-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-comments-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-compositions-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-countries-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-creative-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-current-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-customers-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-downloads-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-editorial-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-events-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-extend-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-files-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-generation-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-generations-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-history-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-image-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-images-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-index-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-influence-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-licensing-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-management-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-name-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-objects-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-orders-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-products-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-purchased-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-refine-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-registrations-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-removal-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-request-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-search-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-send-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-series-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-set-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-sets-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-similar-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-uploads-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-usage-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-variations-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+- name: OAuth2
+  source: openapi/getty-images-videos-api-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: clientCredentials
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+  - flow: authorizationCode
+    authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
+    tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+scopes: []
+docs: https://developer.gettyimages.com/docs/authorization/
+finding: 'Getty Images declares OAuth 2.0 but publishes NO SCOPES. The live RFC 8414 document at https://api.gettyimages.com/.well-known/oauth-authorization-server
+  carries no scopes_supported member, and the live OpenAPI 3.0.4 declares an EMPTY scopes map on all three oauth2
+  flows (password, clientCredentials, authorizationCode). The authorization docs describe grants, PKCE and token
+  handling in detail and never mention a scope. Authorization is granted by LICENCE AGREEMENT — what an account
+  may download, which products it holds, and whether it has a Gen AI licence — resolved server-side from the Api-Key,
+  not negotiated per request. This is a real finding, not a gap in the harvest: there is no scopes reference page
+  to search for and no permissions catalogue to enumerate. An agent cannot request least privilege here; it gets
+  the whole of whatever the key is entitled to.'
+scope_count: 0
+authoritative_endpoints:
+  authorization: https://authentication.gettyimages.com/oauth2/auth
+  token: https://authentication.gettyimages.com/oauth2/token
+  note: The v4 api.gettyimages.com endpoints in the derived schemes[] below come from the older split specs and
+    are stale; see authentication/getty-images-authentication.yml.

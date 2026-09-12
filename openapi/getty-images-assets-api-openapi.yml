@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Assets API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -31,10 +34,11 @@ paths:
         in: query
         description: Specifies the number of assets to return. The default is 2200; maximum is 2200.
         schema:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: Specifies the number of assets to return. The default is 2200; maximum is 2200.
           format: int32
-          nullable: true
       responses:
         '200':
           description: Success - Channel contains unconfirmed asset change notifications
@@ -143,11 +147,12 @@ paths:
         description: Getty Images assetId - examples 520621493, 112301284
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Getty Images assetId - examples 520621493, 112301284
-          nullable: true
       requestBody:
-        description: "Structure that specifies an array of LicenseTypes (multiseat, unlimited, resale, indemnification) to acquire,\r\n            and whether or not to use Team Credits. Authenticated User must have access to Team Credits if UseTeamCredits is set to \"true\"."
+        description: "Structure that specifies an array of LicenseTypes (multiseat, unlimited, resale, indemnification) to acquire,\n            and whether or not to use Team Credits. Authenticated User must have access to Team Credits if UseTeamCredits is set to \"true\"."
         content:
           application/json:
             schema:
@@ -180,20 +185,26 @@ paths:
           description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
       - name: last_offset
         in: query
-        description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+        description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
+
+          Events occuring _after_ the `last_offset` value provided will be returned.'
         schema:
-          type: string
-          description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+          type:
+          - string
+          - 'null'
+          description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
+
+            Events occuring _after_ the `last_offset` value provided will be returned.'
           format: date-time
-          nullable: true
       - name: event_count
         in: query
         description: Specifies the number of events to return. Default is 50, maximum value is 100.
         schema:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: Specifies the number of events to return. Default is 50, maximum value is 100.
           format: int32
-          nullable: true
       responses:
         '200':
           description: Success
@@ -226,19 +237,21 @@ paths:
         description: Specify the board to add assets to.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to add assets to.
-          nullable: true
       requestBody:
         description: List assets to add to the board.
         content:
           application/json:
             schema:
-              type: array
+              type:
+              - array
+              - 'null'
               items:
                 $ref: '#/components/schemas/BoardAsset'
               description: List assets to add to the board.
-              nullable: true
       responses:
         '201':
           description: Created
@@ -270,18 +283,20 @@ paths:
         description: Specify the board to remove assets from.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to remove assets from.
-          nullable: true
       - name: asset_ids
         in: query
         description: List the assets to be removed from the board.
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: List the assets to be removed from the board.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -310,17 +325,19 @@ paths:
         description: Specify the board to add an asset to.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to add an asset to.
-          nullable: true
       - name: asset_id
         in: path
         description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the asset to add to the board. If it is already in the board's asset collection, no action is taken.
-          nullable: true
       responses:
         '201':
           description: Created
@@ -348,17 +365,19 @@ paths:
         description: Specify the board to remove an asset from.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the board to remove an asset from.
-          nullable: true
       - name: asset_id
         in: path
         description: Specify the asset to remove from the board.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specify the asset to remove from the board.
-          nullable: true
       responses:
         '200':
           description: Success
@@ -387,10 +406,11 @@ paths:
         in: query
         description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: If specified, retrieves previous purchases on or before this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
           format: date-time
-          nullable: true
       - name: page
         in: query
         description: Identifies page to return. Default is 1.
@@ -411,10 +431,11 @@ paths:
         in: query
         description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: If specified, retrieves previous purchases on or after this date. Dates should be submitted in ISO 8601 format (i.e., YYYY-MM-DD).
           format: date-time
-          nullable: true
       - name: company_purchases
         in: query
         description: If specified, returns the list of previously purchased assets for all users in your company. Your account must be enabled for this functionality. Contact your Getty Images account rep for more information. Default is false.
@@ -437,74 +458,6 @@ paths:
           description: InsufficientPermissions
 components:
   schemas:
-    BoardAsset:
-      required:
-      - asset_id
-      type: object
-      properties:
-        asset_id:
-          type: string
-      additionalProperties: false
-    AssetChanges:
-      type: object
-      properties:
-        change_set_id:
-          type: string
-          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
-          nullable: true
-        changed_assets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChangedAssetDetail'
-          description: Contains a list of ChangedAssetList results for the query.
-          nullable: true
-      additionalProperties: false
-    AssetEvent:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        asset_id:
-          type: string
-          nullable: true
-        email_address:
-          type: string
-          nullable: true
-      additionalProperties: false
-    Channel:
-      type: object
-      properties:
-        ChannelId:
-          type: integer
-          format: int32
-        AssetFamily:
-          $ref: '#/components/schemas/AssetFamily'
-        AssetChangeType:
-          type: string
-          nullable: true
-        CreateDateUtc:
-          type: string
-          format: date-time
-        NotificationCount:
-          type: integer
-          format: int32
-        AssetType:
-          $ref: '#/components/schemas/AssetType'
-        OldestChangeNotificationDateUtc:
-          type: string
-          format: date-time
-        Metadata:
-          type: string
-          nullable: true
-      additionalProperties: false
-    AssetType:
-      enum:
-      - NotSet
-      - Image
-      - Film
-      - Music
-      type: string
     ExtendedLicenses:
       enum:
       - multiseat
@@ -512,115 +465,6 @@ components:
       - resale
       - indemnification
       type: string
-    AddBoardAssetsResult:
-      type: object
-      properties:
-        assets_added:
-          type: array
-          items:
-            $ref: '#/components/schemas/BoardAsset'
-          nullable: true
-        assets_not_added:
-          type: array
-          items:
-            type: string
-          nullable: true
-      additionalProperties: false
-    ChangedAssetDetail:
-      type: object
-      properties:
-        asset_changed_utc_datetime:
-          type: string
-          description: Contains the date of the asset change.
-          format: date-time
-        asset_lifecycle:
-          type: string
-          description: Contains the type of change this asset change is. (i.e. "New," "Updated" or "Deleted")
-          nullable: true
-        asset_type:
-          type: string
-          description: Contains the type of asset this asset change is (i.e. "Image").
-          nullable: true
-        id:
-          type: string
-          description: Contains the Id for the asset change.
-          nullable: true
-        uri:
-          type: string
-          description: Contains the asset download URL for assets with an AssetLifecycle of "New."
-          nullable: true
-      additionalProperties: false
-    AssetLicensingResponse:
-      type: object
-      properties:
-        credits_used:
-          type: integer
-          format: int32
-        acquired_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtendedLicenses'
-          nullable: true
-      additionalProperties: false
-    PreviousAssetPurchase:
-      type: object
-      properties:
-        date_purchased:
-          type: string
-          format: date-time
-        purchased_by:
-          type: string
-          nullable: true
-        asset_id:
-          type: string
-          nullable: true
-        asset_type:
-          type: string
-          nullable: true
-        license_model:
-          type: string
-          nullable: true
-        order_id:
-          type: string
-          nullable: true
-        thumb_uri:
-          type: string
-          nullable: true
-        size_name:
-          type: string
-          nullable: true
-        file_size_in_bytes:
-          type: string
-          nullable: true
-        download_uri:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PreviousAssetPurchases:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        previous_purchases:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreviousAssetPurchase'
-          nullable: true
-      additionalProperties: false
-    GetSendEventsResponse:
-      type: object
-      properties:
-        last_offset:
-          type: string
-          format: date-time
-          nullable: true
-        asset_send_events:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssetEvent'
-          nullable: true
-      additionalProperties: false
     AcquireAssetLicensesRequest:
       required:
       - extended_licenses
@@ -634,6 +478,173 @@ components:
           type: boolean
           description: Defaults to false.
       additionalProperties: false
+    PreviousAssetPurchase:
+      type: object
+      properties:
+        date_purchased:
+          type: string
+          format: date-time
+        purchased_by:
+          type:
+          - string
+          - 'null'
+        asset_id:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        license_model:
+          type:
+          - string
+          - 'null'
+        order_id:
+          type:
+          - string
+          - 'null'
+        thumb_uri:
+          type:
+          - string
+          - 'null'
+        size_name:
+          type:
+          - string
+          - 'null'
+        file_size_in_bytes:
+          type:
+          - string
+          - 'null'
+        download_uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    PreviousAssetPurchases:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        previous_purchases:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PreviousAssetPurchase'
+      additionalProperties: false
+    AssetChanges:
+      type: object
+      properties:
+        change_set_id:
+          type:
+          - string
+          - 'null'
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+        changed_assets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
+      additionalProperties: false
+    AssetEvent:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        asset_id:
+          type:
+          - string
+          - 'null'
+        email_address:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Channel:
+      type: object
+      properties:
+        ChannelId:
+          type: integer
+          format: int32
+        AssetFamily:
+          $ref: '#/components/schemas/AssetFamily'
+        AssetChangeType:
+          type:
+          - string
+          - 'null'
+        CreateDateUtc:
+          type: string
+          format: date-time
+        NotificationCount:
+          type: integer
+          format: int32
+        AssetType:
+          $ref: '#/components/schemas/AssetType'
+        OldestChangeNotificationDateUtc:
+          type: string
+          format: date-time
+        Metadata:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ChangedAssetDetail:
+      type: object
+      properties:
+        asset_changed_utc_datetime:
+          type: string
+          description: Contains the date of the asset change.
+          format: date-time
+        asset_lifecycle:
+          type:
+          - string
+          - 'null'
+          description: Contains the type of change this asset change is. (i.e. "New," "Updated" or "Deleted")
+        asset_type:
+          type:
+          - string
+          - 'null'
+          description: Contains the type of asset this asset change is (i.e. "Image").
+        id:
+          type:
+          - string
+          - 'null'
+          description: Contains the Id for the asset change.
+        uri:
+          type:
+          - string
+          - 'null'
+          description: Contains the asset download URL for assets with an AssetLifecycle of "New."
+      additionalProperties: false
+    AddBoardAssetsResult:
+      type: object
+      properties:
+        assets_added:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BoardAsset'
+        assets_not_added:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    BoardAsset:
+      required:
+      - asset_id
+      type: object
+      properties:
+        asset_id:
+          type: string
+      additionalProperties: false
     AssetFamily:
       enum:
       - NotSet
@@ -641,6 +652,41 @@ components:
       - Creative
       - Both
       type: string
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        asset_send_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssetEvent'
+      additionalProperties: false
+    AssetType:
+      enum:
+      - NotSet
+      - Image
+      - Film
+      - Music
+      type: string
+    AssetLicensingResponse:
+      type: object
+      properties:
+        credits_used:
+          type: integer
+          format: int32
+        acquired_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+      additionalProperties: false
   securitySchemes:
     Api-Key:
       type: apiKey

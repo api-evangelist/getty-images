@@ -1,0 +1,51 @@
+generated: '2026-09-12'
+method: searched
+source: https://www.gettyimages.com/api
+sources:
+- https://www.gettyimages.com/api
+- https://developer.gettyimages.com/docs/
+- https://api.gettyimages.com/swagger
+published_sandbox: false
+self_service: false
+description: >-
+  Getty Images publishes no self-service sandbox, no test-mode key prefix, no test fixtures
+  and no documented sample credentials. This file records that absence with the evidence, so
+  the gap is legible rather than looking unexamined.
+what_exists:
+- name: Interactive Swagger UI
+  url: https://api.gettyimages.com/swagger
+  anonymous: partial
+  note: >-
+    The Swagger UI page and its underlying OpenAPI 3.0.4 document
+    (https://api.gettyimages.com/swagger/v3/swagger.json) are both served anonymously, so a
+    developer can read and explore the full 76-operation contract before signing anything.
+    Try-it-out calls still require a real Api-Key — an unauthenticated
+    GET /v3/search/images?phrase=cat returns HTTP 401 {"message":"Unauthorized"} (probed
+    2026-09-12). This is a public reference console, not a sandbox.
+- name: Test account (on request)
+  url: https://www.gettyimages.com/api
+  anonymous: false
+  note: >-
+    Getty's API FAQ states: "If you are exploring whether our API is right for your business,
+    please contact us for more information and access to a test account." A test account
+    therefore exists, but it is issued by a human through a sales conversation and nothing
+    about it is documented publicly — no key format, no seeded data, no reset behaviour, no
+    limits. It cannot be verified from outside.
+absent:
+- test_vs_live_key_prefixes: >-
+    None documented. Getty keys are sent in the Api-Key header with no documented prefix
+    scheme, so a client cannot tell a test key from a production key by inspection.
+- test_data_fixtures: >-
+    None. There are no magic asset ids, no reserved test identifiers and no seeded catalogue.
+    Getty's own getting-started examples use real production asset ids (83454800, 3231670).
+- time_simulation: 'None. No test clocks or time-travel controls.'
+- trigger_tooling: 'None. No way to force a 429, a 410 or a failed generation for testing.'
+- dry_run: >-
+    None. See dry_run_mode in conventions/getty-images-conventions.yml. The nearest pre-flight
+    signals are read-only: fields=download_sizes / largest_downloads previews what a download
+    would return, and GET /v3/downloads reports what has already been licensed.
+agent_impact: >-
+  The combination matters for agent use: the consequential operations (POST /v3/downloads/...
+  licenses an asset; POST /v3/ai/image-generations may deduct a credit) have no sandbox to
+  rehearse in, no idempotency key to make a retry safe, and no reversal operation. An agent
+  integrating Getty is writing against production on its first call.

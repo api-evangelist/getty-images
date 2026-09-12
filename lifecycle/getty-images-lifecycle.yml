@@ -1,0 +1,83 @@
+generated: '2026-09-12'
+method: searched
+source: https://developer.gettyimages.com/docs/
+sources:
+- https://developer.gettyimages.com/docs/
+- https://developer.gettyimages.com/release-notes/
+- https://developer.gettyimages.com/status/
+versioning:
+  scheme: uri-path
+  current: v3
+  base: https://api.gettyimages.com/v3/
+  docs: https://developer.gettyimages.com/docs/
+  note: >-
+    Getty states "The Getty Images API is currently at version 3." A v4 path exists for the
+    OAuth endpoints referenced in the CORS exclusion list (/v4/oauth2/token, /v4/oauth2/auth)
+    but the v3 refined specs in this repo still carry the older api.gettyimages.com/v4/oauth2
+    token URLs while the live spec and the live RFC 8414 metadata both name
+    authentication.gettyimages.com/oauth2/token. Treat authentication.gettyimages.com as
+    authoritative.
+  prerelease_channel:
+    label: beta
+    note: >-
+      New Generative AI endpoints land under /beta/ai/... and are later promoted to /v3/.
+      Release notes record the 2024-02-02 promotion of most AiGenerator endpoints from beta
+      to v3, with the beta versions kept alive "while we work with existing clients on making
+      the transition" — a migration-by-arrangement posture, not a dated sunset.
+deprecation:
+  policy_url: https://developer.gettyimages.com/release-notes/
+  formal_policy: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    Getty has no standalone deprecation-policy page and returns neither the Sunset nor the
+    Deprecation response header (RFC 8594). Retirements are announced as dated entries in the
+    release notes and on the status page, with a lead time, and that is the only mechanism.
+    It works — but it is human-readable only; an agent cannot detect an impending retirement
+    from a response.
+  announced_changes:
+  - date: '2026-03-02'
+    change: >-
+      order_id in GET /v3/purchased-assets responses has historically been emitted as a
+      32-bit integer in string form; clients depending on 32-bit-integer semantics are told to
+      move to treating it solely as a string. Behaviour continues "in the near term" — an
+      advisory with no stated end date.
+    kind: soft-deprecation
+  - date: '2024-02-02'
+    change: Most AiGenerator endpoints promoted from /beta/ to /v3/; beta versions remain supported.
+    kind: path-migration
+  - date: '2021-01-21'
+    change: TLS 1.0 and 1.1 support removed; TLS 1.2+ only.
+    kind: platform-retirement
+    announced: '2020-12-03'
+    lead_time_days: 49
+  - date: '2025-03-01'
+    change: >-
+      Asset Changes channels permanently consolidated — lifecycle-specific channels (separate
+      new / update / delete channels) merged into one channel per asset type and family.
+    kind: contract-change
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in the live OpenAPI 3.0.4 contract carries deprecated: true.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime target is published. Getty's API solutions page advertises
+    "globally distributed sales and technical support teams … 24/7" but commits to no numbers
+    in public; terms are set per customer agreement.
+status_page: https://developer.gettyimages.com/status/
+status_page_style: hand-maintained post log
+status_page_note: >-
+  A dated, first-party incident log on the developer portal rather than a hosted status
+  service (no Statuspage/Atlassian component model, no RSS incident feed beyond the portal's
+  own Hugo /index.xml, no machine-readable status endpoint, no subscribe). History runs
+  2021-2026; most recent entry 2026-08-27 (intermittent 500s across API and websites,
+  resolved in 2h35m).
+changelog: https://developer.gettyimages.com/release-notes/
+support:
+  channel: account representative / API support staff
+  note: >-
+    Rate-limit changes, GI-Country-Code access and API access itself are all handled by a
+    named account rep rather than self-service.

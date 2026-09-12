@@ -3,89 +3,96 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Getty Images
 providerId: getty-images
+generated: '2026-09-12'
+method: searched
+source: https://developer.gettyimages.com/docs/
+sources:
+- https://developer.gettyimages.com/docs/
+- https://developer.gettyimages.com/mcp/
+- https://developer.gettyimages.com/ai-generation/
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Images
-  - Media
-  - Photos
-  - Videos
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Getty Images API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+modified: '2026-09-12'
+description: >-
+  Published rate-limit behaviour for the Getty Images API v3 and the Getty Images MCP server,
+  read from the provider's own documentation on 2026-09-12. This replaces the 2026-05-04
+  scaffold, whose tiers, numbers and RateLimit-* headers were bulk-sweep defaults Getty does
+  not publish and does not return.
+limit_count: 3
+limits_with_published_values: 1
+limit_count_note: >-
+  Three distinct rate-limit surfaces are documented (REST QPS, Gen AI concurrency, MCP QPS).
+  Only one of the three — the MCP server's 20 QPS — carries a number Getty publishes; the
+  other two are per-customer values set at onboarding and disclosed only to that customer.
+model: per-account queries-per-second, assigned at onboarding
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  errorDetail: X-Error-Detail
+headers_note: >-
+  Getty returns NO RateLimit-* or X-RateLimit-* headers and NO Retry-After. The only runtime
+  signal is the 429 status plus, on the queries-per-second path, the X-Error-Detail response
+  header carrying "Account Over Queries Per Second Limit". An agent therefore cannot read its
+  remaining budget or a server-directed wait; it can only observe rejection. This is the
+  single largest agent-readiness gap in an otherwise well-documented runtime contract.
 responseCodes:
   throttled: 429
   quotaExceeded: 429
-  serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Getty Images API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Getty Images API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Getty Images API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Getty Images API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Getty Images API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- id: rest-qps
+  scope: api-key
+  applies_to: https://api.gettyimages.com/v3/ (all operations)
+  metric: queries_per_second
+  limit: null
+  burst: null
+  timeFrame: second
+  published: false
+  note: >-
+    Getty documents the MECHANISM but not the NUMBER: "The Getty Images API throttles client
+    requests based on limits associated with the client's API Key. These rate limits are
+    configured when a customer is initially setup to use the API." The only figure that
+    appears anywhere is an explicitly hypothetical illustration — "A rate limit could be
+    defined as 5 QPS for example" — which is not a published limit and is not recorded as one
+    here. Limits are adjusted by Getty support staff on request.
+  exhaustion:
+    status: 429
+    body: '{"message":"Too Many Requests"}'
+    header: 'X-Error-Detail: Account Over Queries Per Second Limit'
+  counts_against:
+  - note: >-
+      OAuth token requests count against the customer's rate limit. Getty's guidance is to
+      reuse an access token until it expires (expires_in 1800 seconds) rather than re-minting.
+  remediation: >-
+    Use a fault-handling library — Getty names Polly for .NET and Tenacity for Python.
+- id: gen-ai-concurrency
+  scope: account
+  applies_to: https://api.gettyimages.com/v3/ai/image-generations/*
+  metric: concurrent_pending_generations
+  limit: null
+  timeFrame: concurrent
+  published: false
+  note: >-
+    A second, independent limit on the Generative AI endpoints: the number of generations
+    that may be pending at once. Getty publishes no number for it. Critically, exceeding it
+    returns the SAME 429 as the QPS limit, so a client under its QPS limit that still sees 429
+    on /v3/ai/image-generations/* is hitting concurrency — the two causes are
+    indistinguishable from the response.
+  exhaustion:
+    status: 429
+    body: '{"message":"Too Many Requests"}'
+  remediation: Wait 1 second and call again (provider's stated guidance).
+- id: mcp-qps
+  scope: mcp-endpoint
+  applies_to: https://mcp.gettyimages.com/v1
+  metric: queries_per_second
+  limit: 20
+  burst: null
+  timeFrame: second
+  published: true
+  source: https://developer.gettyimages.com/mcp/
+  note: >-
+    The one hard published number in Getty's entire rate-limit surface: "Throttling – calls
+    are throttled at a rate of 20 queries per second." It applies to the MCP server, not the
+    REST API.

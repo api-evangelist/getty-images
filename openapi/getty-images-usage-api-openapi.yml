@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Usage API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -25,11 +28,12 @@ paths:
         description: Specifies a unique batch transaction id to identify the report.
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specifies a unique batch transaction id to identify the report.
-          nullable: true
       requestBody:
-        description: "Specifies up to 1000 sets of asset Id, usage count, and date of use to submit usages for. \r\n            Note that all asset Ids specified must be valid or the operation will fail causing no usages to be recorded. \r\n            All dates must be on or before this date and the format should be ISO 8601 (ex: YYYY-MM-DD), time is not needed."
+        description: "Specifies up to 1000 sets of asset Id, usage count, and date of use to submit usages for. \n            Note that all asset Ids specified must be valid or the operation will fail causing no usages to be recorded. \n            All dates must be on or before this date and the format should be ISO 8601 (ex: YYYY-MM-DD), time is not needed."
         content:
           application/json:
             schema:
@@ -51,40 +55,32 @@ paths:
           description: TransactionIdDuplicated
 components:
   schemas:
-    report_usage_batch_request:
-      type: object
-      properties:
-        asset_usages:
-          type: array
-          items:
-            $ref: '#/components/schemas/asset_usage'
-          description: Identifies the list of asset id, usage count and date of usage combinations to record.
-          nullable: true
-      additionalProperties: false
-      description: Specifies the request information for the Batch Usages endpoint.
     report_usage_batch_response:
       type: object
       properties:
         invalid_assets:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
-          nullable: true
         total_asset_usages_processed:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: Specifies the number of asset usage records that were successfully recorded.
           format: int32
-          nullable: true
       additionalProperties: false
       description: Specifies the response from the Batch Usages endpoint.
     asset_usage:
       type: object
       properties:
         asset_id:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Specifies the Id of the asset that was used.
-          nullable: true
         quantity:
           type: integer
           description: Specifies the number of times the asset was used.
@@ -95,6 +91,18 @@ components:
           format: date-time
       additionalProperties: false
       description: Specifies the id, usage Quantity, and date of when an asset was used.
+    report_usage_batch_request:
+      type: object
+      properties:
+        asset_usages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/asset_usage'
+          description: Identifies the list of asset id, usage count and date of usage combinations to record.
+      additionalProperties: false
+      description: Specifies the request information for the Batch Usages endpoint.
   securitySchemes:
     Api-Key:
       type: apiKey

@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Collections API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -46,34 +49,40 @@ components:
       type: object
       properties:
         collections:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Collection'
-          nullable: true
       additionalProperties: false
     Collection:
       type: object
       properties:
         asset_family:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         code:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         id:
           type: integer
           format: int32
         license_model:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         product_types:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          nullable: true
       additionalProperties: false
   securitySchemes:
     Api-Key:

@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Licensing API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -30,11 +33,12 @@ paths:
         description: Getty Images assetId - examples 520621493, 112301284
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Getty Images assetId - examples 520621493, 112301284
-          nullable: true
       requestBody:
-        description: "Structure that specifies an array of LicenseTypes (multiseat, unlimited, resale, indemnification) to acquire,\r\n            and whether or not to use Team Credits. Authenticated User must have access to Team Credits if UseTeamCredits is set to \"true\"."
+        description: "Structure that specifies an array of LicenseTypes (multiseat, unlimited, resale, indemnification) to acquire,\n            and whether or not to use Team Credits. Authenticated User must have access to Team Credits if UseTeamCredits is set to \"true\"."
         content:
           application/json:
             schema:
@@ -63,6 +67,19 @@ components:
       - resale
       - indemnification
       type: string
+    AssetLicensingResponse:
+      type: object
+      properties:
+        credits_used:
+          type: integer
+          format: int32
+        acquired_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+      additionalProperties: false
     AcquireAssetLicensesRequest:
       required:
       - extended_licenses
@@ -75,18 +92,6 @@ components:
         use_team_credits:
           type: boolean
           description: Defaults to false.
-      additionalProperties: false
-    AssetLicensingResponse:
-      type: object
-      properties:
-        credits_used:
-          type: integer
-          format: int32
-        acquired_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtendedLicenses'
-          nullable: true
       additionalProperties: false
   securitySchemes:
     Api-Key:

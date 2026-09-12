@@ -1,0 +1,175 @@
+generated: '2026-09-12'
+method: derived
+source: >-
+  https://developer.gettyimages.com/mcp/ (capability prose) crosswalked against
+  openapi/_original/getty-images-swagger-v3-openapi.json (the provider's live OpenAPI 3.0.4,
+  fetched from https://api.gettyimages.com/swagger/v3/swagger.json on 2026-09-12)
+confidence_note: >-
+  THIS IS NOT A TOOL LIST. The Getty Images MCP server's tools/list is auth-gated (HTTP 401,
+  probed 2026-09-12) and the provider publishes no llms.txt and no static tool inventory, so
+  the real tool names and inputSchemas are unknown. What Getty DOES publish is a four-item
+  prose description of what the server does. Each row below binds one of those published
+  capability areas to the REST operations that back it, so a reader can see the real input
+  contract for the underlying operation. Every binding is confidence: low or medium for that
+  reason, and `tool` values are capability-area labels, not asserted tool names. Getty's own
+  guidance reinforces this: "please do not hard code to specific tools and/or parameters …
+  let your agent discover what is available at the time it's needed."
+surfaces:
+  openapi:
+    file: openapi/_original/getty-images-swagger-v3-openapi.json
+    url: https://api.gettyimages.com/swagger/v3/swagger.json
+    operations: 76
+    paths: 67
+    gated: false
+    note: >-
+      The spec declares no operationId on any operation, so rest[] rows below are addressed
+      by METHOD + PATH rather than operationId.
+  mcp:
+    url: https://mcp.gettyimages.com/v1
+    gated: true
+    probe_status: 401
+  graphql:
+    present: false
+crosswalk:
+- tool: authentication
+  category: auth
+  rest: []
+  binding: oauth
+  confidence: high
+  note: >-
+    Not a REST operation. The MCP server and the REST API share one authorization server:
+    POST https://authentication.gettyimages.com/oauth2/token (client_credentials or
+    authorization_code), per the RFC 8414 document at
+    https://mcp.gettyimages.com/.well-known/oauth-authorization-server.
+- tool: search
+  category: discovery
+  rest:
+  - GET /v3/search/images
+  - GET /v3/search/images/creative
+  - GET /v3/search/images/editorial
+  - GET /v3/search/videos/creative
+  - GET /v3/search/videos/editorial
+  - GET /v3/search/events
+  - GET /v3/image-match/search
+  - GET /v3/search/images/creative/by-image
+  - GET /v3/search/videos/creative/by-image
+  binding: rest
+  confidence: medium
+  note: >-
+    Getty describes the capability as "searching for images and videos from your
+    organization's Getty Images license agreement". Which of these nine search operations the
+    server actually exposes, and whether it fans one tool across several, cannot be
+    determined without an authenticated tools/list.
+- tool: asset_metadata
+  category: metadata
+  rest:
+  - GET /v3/images
+  - GET /v3/images/{id}
+  - GET /v3/videos
+  - GET /v3/videos/{id}
+  - GET /v3/images/{id}/similar
+  - GET /v3/images/{id}/same-series
+  - GET /v3/videos/{id}/similar
+  - GET /v3/videos/{id}/same-series
+  binding: rest
+  confidence: medium
+  note: >-
+    "Retrieving asset metadata." The REST field-expansion contract (fields=summary_set |
+    detail_set | explicit list) is the real shape of this capability — see
+    conventions/getty-images-conventions.yml.
+- tool: download
+  category: fulfillment
+  rest:
+  - POST /v3/downloads/images/{id}
+  - POST /v3/downloads/videos/{id}
+  - GET /v3/downloads
+  binding: rest
+  confidence: medium
+  note: >-
+    "Downloading image and video files." This is the consequential surface: a POST to
+    /v3/downloads/{images,videos}/{id} licenses an asset against the customer's agreement and
+    may consume a download credit. It is not reversible via the API — see the reversibility
+    block in conventions/getty-images-conventions.yml.
+mcp_only: []
+rest_only:
+- capability: generative-ai
+  operations:
+  - POST /v3/ai/image-generations
+  - POST /v3/ai/image-generations/background-generations
+  - POST /v3/ai/image-generations/background-removal
+  - POST /v3/ai/image-generations/background-replacement
+  - POST /v3/ai/image-generations/extend
+  - POST /v3/ai/image-generations/refine
+  - POST /v3/ai/image-generations/object-removal
+  - POST /v3/ai/image-generations/influence-color-by-image
+  - POST /v3/ai/image-generations/influence-composition-by-image
+  - POST /v3/ai/image-generations/{generationRequestId}/images/{index}/variations
+  - POST /v3/ai/enhance-prompt
+  - GET /v3/ai/generation-history
+  - GET /v3/ai/generation-history/{generationRequestId}
+  - GET /v3/ai/image-generations/{generationRequestId}
+  - PUT /v3/ai/image-generations/{generationRequestId}/images/{index}/download
+  - GET /v3/ai/image-generations/{generationRequestId}/images/{index}/download-sizes
+  - POST /v3/ai/redownloads
+  - POST /v3/ai/file-registrations
+  - GET /v3/ai/file-registrations
+  - GET /v3/ai/file-registrations/{fileRegistrationId}
+  - DELETE /v3/ai/file-registrations/{fileRegistrationId}
+  note: >-
+    Generative AI by Getty Images is the largest block of REST surface with no counterpart in
+    the published MCP capability list. Getty says the MCP tool set will grow, so this may
+    close; today an agent cannot generate or modify imagery through the MCP server.
+- capability: boards-and-collaboration
+  operations:
+  - GET /v3/boards
+  - POST /v3/boards
+  - GET /v3/boards/{board_id}
+  - PUT /v3/boards/{board_id}
+  - DELETE /v3/boards/{board_id}
+  - PUT /v3/boards/{board_id}/assets
+  - DELETE /v3/boards/{board_id}/assets
+  - PUT /v3/boards/{board_id}/assets/{asset_id}
+  - DELETE /v3/boards/{board_id}/assets/{asset_id}
+  - GET /v3/boards/{board_id}/comments
+  - POST /v3/boards/{board_id}/comments
+  - DELETE /v3/boards/{board_id}/comments/{comment_id}
+  - POST /v3/boards/{board_id}/assets/{asset_id}/comments
+  - DELETE /v3/boards/{board_id}/assets/{asset_id}/comments/{comment_id}
+- capability: catalog-synchronisation
+  operations:
+  - GET /v3/asset-changes/channels
+  - PUT /v3/asset-changes/change-sets
+  - DELETE /v3/asset-changes/change-sets/{change-set-id}
+  note: >-
+    The Asset Changes pull-based change feed — the closest thing Getty has to an event
+    surface. See asyncapi/ (absent by design) and conventions/.
+- capability: account-and-commerce
+  operations:
+  - GET /v3/customers/current
+  - GET /v3/products
+  - GET /v3/orders/{id}
+  - GET /v3/purchased-assets
+  - GET /v3/downloads
+  - GET /v3/images/{id}/downloadhistory
+  - GET /v3/videos/{id}/downloadhistory
+  - POST /v3/asset-licensing/{assetId}
+  - PUT /v3/usage-batches/{id}
+- capability: reference-and-affiliate
+  operations:
+  - GET /v3/countries
+  - GET /v3/collections
+  - GET /v3/events
+  - GET /v3/events/{id}
+  - GET /v3/artists/images
+  - GET /v3/artists/videos
+  - GET /v3/affiliates/search/images
+  - GET /v3/affiliates/search/videos
+  - PUT /v3/search/by-image/uploads/{file-name}
+coverage:
+  capability_areas_published: 4
+  capability_areas_bound_to_rest: 3
+  tools_named_by_provider: 0
+  mcp_only: 0
+  rest_operations_total: 76
+  rest_operations_plausibly_reachable_via_mcp: 20
+  rest_operations_with_no_mcp_counterpart: 56

@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Events API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -26,20 +29,26 @@ paths:
           description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
       - name: last_offset
         in: query
-        description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+        description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
+
+          Events occuring _after_ the `last_offset` value provided will be returned.'
         schema:
-          type: string
-          description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+          type:
+          - string
+          - 'null'
+          description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
+
+            Events occuring _after_ the `last_offset` value provided will be returned.'
           format: date-time
-          nullable: true
       - name: event_count
         in: query
         description: Specifies the number of events to return. Default is 50, maximum value is 100.
         schema:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: Specifies the number of events to return. Default is 50, maximum value is 100.
           format: int32
-          nullable: true
       responses:
         '200':
           description: Success
@@ -74,23 +83,25 @@ paths:
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: integer
             format: int32
           description: A comma separated list of event ids.
-          nullable: true
       - name: fields
         in: query
         description: A comma separated list of fields to return in the response.
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/EventDetailFieldValues'
           description: A comma separated list of fields to return in the response.
-          nullable: true
       responses:
         '200':
           description: OK
@@ -127,11 +138,12 @@ paths:
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/EventDetailFieldValues'
           description: A comma separated list of fields to return in the response.
-          nullable: true
       responses:
         '200':
           description: OK
@@ -177,29 +189,32 @@ paths:
         in: query
         description: Filters to events that start on or after this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Filters to events that start on or after this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
           format: date-time
-          nullable: true
       - name: date_to
         in: query
         description: Filters to events that start on or before this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Filters to events that start on or before this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
           format: date-time
-          nullable: true
       - name: fields
         in: query
         description: Specifies fields to return. Default set is 'id','name','start_date'.
         style: form
         explode: false
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/EventFieldValues'
           description: Specifies fields to return. Default set is 'id','name','start_date'.
-          nullable: true
       - name: page
         in: query
         description: Request results starting at a page number (default is 1, maximum is 50).
@@ -220,10 +235,11 @@ paths:
         in: query
         description: Filters to events related to this phrase
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Filters to events related to this phrase
           default: ''
-          nullable: true
       - name: sort_order
         in: query
         description: Specifies the order in which to sort the results. Default is `newest`.
@@ -244,74 +260,6 @@ paths:
           description: UnauthorizedDisplaySize
 components:
   schemas:
-    HeroImage:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-        display_sizes:
-          type: array
-          items:
-            $ref: '#/components/schemas/HeroImageDisplaySize'
-          nullable: true
-      additionalProperties: false
-    AssetEvent:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        asset_id:
-          type: string
-          nullable: true
-        email_address:
-          type: string
-          nullable: true
-      additionalProperties: false
-    EventSearchSortOrder:
-      enum:
-      - newest
-      - oldest
-      type: string
-    LocationEvent:
-      type: object
-      properties:
-        city:
-          type: string
-          nullable: true
-        country:
-          type: string
-          nullable: true
-        state_province:
-          type: string
-          nullable: true
-        venue:
-          type: string
-          nullable: true
-      additionalProperties: false
-    GetSendEventsResponse:
-      type: object
-      properties:
-        last_offset:
-          type: string
-          format: date-time
-          nullable: true
-        asset_send_events:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssetEvent'
-          nullable: true
-      additionalProperties: false
-    EditorialSegmentContract:
-      enum:
-      - archival
-      - entertainment
-      - news
-      - publicity
-      - royalty
-      - sport
-      type: string
     Event:
       type: object
       properties:
@@ -319,10 +267,11 @@ components:
           type: integer
           format: int32
         editorial_segments:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          nullable: true
         hero_image:
           $ref: '#/components/schemas/HeroImage'
         id:
@@ -334,13 +283,72 @@ components:
         location:
           $ref: '#/components/schemas/LocationEvent'
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         start_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    EventsSearchResult:
+      type: object
+      properties:
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Event'
+        result_count:
+          type: integer
+          format: int32
+      additionalProperties: false
+    AssetEvent:
+      type: object
+      properties:
+        timestamp:
           type: string
           format: date-time
-          nullable: true
+        asset_id:
+          type:
+          - string
+          - 'null'
+        email_address:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
+    LocationEvent:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        state_province:
+          type:
+          - string
+          - 'null'
+        venue:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    EditorialSegmentContract:
+      enum:
+      - archival
+      - entertainment
+      - news
+      - publicity
+      - royalty
+      - sport
+      type: string
     EventFieldValues:
       enum:
       - id
@@ -354,29 +362,53 @@ components:
       - start_date
       - type
       type: string
-    EventsSearchResult:
+    HeroImage:
       type: object
       properties:
-        events:
-          type: array
+        id:
+          type:
+          - string
+          - 'null'
+        display_sizes:
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/Event'
-          nullable: true
-        result_count:
-          type: integer
-          format: int32
+            $ref: '#/components/schemas/HeroImageDisplaySize'
+      additionalProperties: false
+    EventSearchSortOrder:
+      enum:
+      - newest
+      - oldest
+      type: string
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        asset_send_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssetEvent'
       additionalProperties: false
     HeroImageDisplaySize:
       type: object
       properties:
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         is_watermarked:
           type: boolean
         uri:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     EventDetailFieldValues:
       enum:

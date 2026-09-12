@@ -1,0 +1,258 @@
+generated: '2026-09-12'
+method: derived
+source: openapi/_original/getty-images-swagger-v3-openapi.json
+source_url: https://api.gettyimages.com/swagger/v3/swagger.json
+description: >-
+  Entity-relationship graph for the Getty Images API v3, derived from the 215 component
+  schemas and 67 paths of the provider's live OpenAPI 3.0.4 contract plus the object
+  behaviour documented at https://developer.gettyimages.com/docs/.
+identifiers:
+  style: opaque numeric strings
+  note: >-
+    Getty uses no type-prefixed identifiers (no img_, no gen_). Asset ids are numeric strings
+    ("83454800", "3231670"); generation request ids and file registration ids are opaque
+    strings; board ids are opaque strings. Because ids carry no type tag, an agent cannot
+    tell an image id from a video id from the value alone — the endpoint chosen decides the
+    interpretation, and GET /v3/images/{id} with a video id returns 404 ImageNotFound.
+  caveat: >-
+    order_id on GET /v3/purchased-assets is emitted as a 32-bit integer in string form and is
+    being loosened to a pure string; see the 2026-03-02 release note.
+entities:
+- name: Image
+  schema: AssetDetail / ImageDetailFieldValues
+  primary_endpoints: [GET /v3/images, 'GET /v3/images/{id}']
+  relationships:
+  - type: 'has_many'
+    target: 'DownloadSize'
+    via: 'download_sizes'
+    note: 'requires fields=download_sizes and a bearer token'
+  - type: 'has_many'
+    target: 'DisplaySize'
+    via: 'display_set'
+  - type: 'has_many'
+    target: 'Download'
+    via: 'largest_downloads[].downloads[]'
+    note: 'hypermedia URI to the download endpoint'
+  - type: 'belongs_to'
+    target: 'Artist'
+    via: 'artist'
+  - type: 'belongs_to'
+    target: 'Collection'
+    via: 'collection_id'
+  - type: 'belongs_to'
+    target: 'Event'
+    via: 'event_ids'
+    note: 'editorial assets only'
+  - type: 'has_many'
+    target: 'Image'
+    via: '/v3/images/{id}/similar'
+  - type: 'has_many'
+    target: 'Image'
+    via: '/v3/images/{id}/same-series'
+  - type: 'has_many'
+    target: 'DownloadHistoryEntry'
+    via: '/v3/images/{id}/downloadhistory'
+- name: Video
+  schema: AssetDetail (video field set)
+  primary_endpoints: [GET /v3/videos, 'GET /v3/videos/{id}']
+  relationships:
+  - type: 'has_many'
+    target: 'DownloadSize'
+    via: 'download_sizes'
+  - type: 'has_many'
+    target: 'Download'
+    via: 'largest_downloads[].downloads[]'
+  - type: 'belongs_to'
+    target: 'Artist'
+    via: 'artist'
+  - type: 'has_many'
+    target: 'Video'
+    via: '/v3/videos/{id}/similar'
+  - type: 'has_many'
+    target: 'Video'
+    via: '/v3/videos/{id}/same-series'
+  - type: 'has_many'
+    target: 'DownloadHistoryEntry'
+    via: '/v3/videos/{id}/downloadhistory'
+- name: Download
+  schema: DownloadResponse / DownloadSizeResponse / DownloadSizesResponse
+  primary_endpoints: ['POST /v3/downloads/images/{id}', 'POST /v3/downloads/videos/{id}', GET /v3/downloads]
+  relationships:
+  - type: 'belongs_to'
+    target: 'Image'
+    via: 'asset id in the path'
+  - type: 'belongs_to'
+    target: 'Video'
+    via: 'asset id in the path'
+  - type: 'belongs_to'
+    target: 'Product'
+    via: 'product_type'
+  fields_of_note:
+  - name: 'uri'
+    note: 'opaque delivery URI on delivery.gettyimages.com; introspect content-disposition for a filename'
+  - name: 'license_model'
+    values: [royaltyfree, rightsmanaged, rightsready]
+    added: '2023-06-12'
+  consequence: Creates a licence event against the customer's agreement. No reversal operation exists.
+- name: Board
+  schema: BoardDetail / BoardList / BoardListBoard / BoardInfo / BoardCreated
+  primary_endpoints: [GET /v3/boards, POST /v3/boards, 'GET /v3/boards/{board_id}']
+  relationships:
+  - type: 'has_many'
+    target: 'BoardAsset'
+    via: '/v3/boards/{board_id}/assets'
+  - type: 'has_many'
+    target: 'Comment'
+    via: '/v3/boards/{board_id}/comments'
+  - type: 'has_many'
+    target: 'Collaborator'
+    via: 'collaborators'
+  - type: 'has_one'
+    target: 'BoardPermissions'
+    via: 'permissions'
+  - type: 'has_one'
+    target: 'BoardSortOrder'
+    via: 'sort_order'
+- name: BoardAsset
+  schema: BoardAsset / AddBoardAssetsResult
+  primary_endpoints: ['PUT /v3/boards/{board_id}/assets', 'PUT /v3/boards/{board_id}/assets/{asset_id}']
+  relationships:
+  - type: 'belongs_to'
+    target: 'Board'
+    via: 'board_id'
+  - type: 'belongs_to'
+    target: 'Image'
+    via: 'asset_id'
+  - type: 'belongs_to'
+    target: 'Video'
+    via: 'asset_id'
+  - type: 'has_many'
+    target: 'AssetComment'
+    via: '/v3/boards/{board_id}/assets/{asset_id}/comments'
+- name: Comment
+  schema: Comment / CommentsList / CommentCreated / CommentRequest / CommentPermissions
+  relationships:
+  - type: 'belongs_to'
+    target: 'Board'
+    via: 'board_id'
+  - type: 'belongs_to'
+    target: 'BoardAsset'
+    via: 'asset_id'
+    note: 'AssetComment variant only'
+- name: GenerationRequest
+  schema: GenerationHistoryItemResponse / GenerationHistoryResponse / GenerationOptions / GenerationType
+  primary_endpoints:
+  - POST /v3/ai/image-generations
+  - GET /v3/ai/image-generations/{generationRequestId}
+  - GET /v3/ai/generation-history
+  relationships:
+  - type: 'has_many'
+    target: 'GeneratedImage'
+    via: 'images[index]'
+  - type: 'belongs_to'
+    target: 'FileRegistration'
+    via: 'reference/mask file for refine, extend, object-removal, influence-*'
+  - type: 'belongs_to'
+    target: 'Image'
+    via: 'source creative asset id for extend/refine/background operations'
+  lifecycle_note: >-
+    A generation request is transient — GET on an expired id returns 410 GenerationRequestGone
+    and must never be retried. GET /v3/ai/generation-history is the durable record.
+  consequence: May deduct a credit depending on licence terms. No reversal operation exists.
+- name: GeneratedImage
+  primary_endpoints:
+  - PUT /v3/ai/image-generations/{generationRequestId}/images/{index}/download
+  - GET /v3/ai/image-generations/{generationRequestId}/images/{index}/download-sizes
+  - POST /v3/ai/image-generations/{generationRequestId}/images/{index}/variations
+  relationships:
+  - type: 'belongs_to'
+    target: 'GenerationRequest'
+    via: 'generationRequestId'
+  - type: 'has_many'
+    target: 'GeneratedImage'
+    via: 'variations'
+  note: Addressed by (generationRequestId, index) — a composite key, not an id of its own.
+- name: FileRegistration
+  schema: FileRegistration / FileRegistrationRequest / FileRegistrationResponse / GetFileRegistrationResponse
+  primary_endpoints:
+  - POST /v3/ai/file-registrations
+  - GET /v3/ai/file-registrations
+  - GET /v3/ai/file-registrations/{fileRegistrationId}
+  - DELETE /v3/ai/file-registrations/{fileRegistrationId}
+  note: >-
+    Registers a client-supplied file (a mask for refine/object-removal, or a reference image)
+    for use by the generation endpoints. The one Gen AI object with a real delete.
+- name: AssetChangeSet
+  schema: AssetChanges / ChangedAssetDetail
+  primary_endpoints:
+  - GET /v3/asset-changes/channels
+  - PUT /v3/asset-changes/change-sets
+  - DELETE /v3/asset-changes/change-sets/{change-set-id}
+  relationships:
+  - type: 'belongs_to'
+    target: 'Channel'
+    via: 'channel id'
+  - type: 'has_many'
+    target: 'ChangedAsset'
+    via: 'change entries'
+  fields_of_note:
+  - name: 'asset_lifecycle'
+    values: [New, Update, Delete]
+    note: 'Getty says treat New and Update as an upsert'
+  note: >-
+    Since March 2025 one channel per (asset type x family) — Editorial Images, Creative
+    Images, Editorial Film, Creative Film — rather than one per lifecycle.
+- name: Customer
+  schema: Customer (GET /v3/customers/current)
+  relationships:
+  - type: 'has_many'
+    target: 'Product'
+    via: '/v3/products'
+  - type: 'has_many'
+    target: 'PurchasedAsset'
+    via: '/v3/purchased-assets'
+  - type: 'has_many'
+    target: 'Order'
+    via: '/v3/orders/{id}'
+- name: Product
+  schema: ProductFieldValues
+  values_seen: [easyaccess, editorialsubscription, premiumaccess]
+  note: >-
+    product_type is the join between an asset and what the customer is entitled to do with
+    it; it appears on downloads, largest_downloads and purchased assets.
+- name: Event
+  schema: EventDetailFieldValues / SingleEventDetailFieldValues / FacetEvent
+  primary_endpoints: [GET /v3/events, 'GET /v3/events/{id}', GET /v3/search/events]
+  relationships:
+  - type: 'has_many'
+    target: 'Image'
+    via: 'event_ids search filter'
+  - type: 'has_many'
+    target: 'Video'
+    via: 'event_ids search filter'
+- name: Artist
+  primary_endpoints: [GET /v3/artists/images, GET /v3/artists/videos]
+- name: Collection
+  primary_endpoints: [GET /v3/collections]
+- name: Country
+  primary_endpoints: [GET /v3/countries]
+  note: Reference data; also the canonical smoke-test endpoint in Getty's own auth examples.
+search_facets:
+  note: >-
+    Search responses can return facet objects (Artist, Location, SpecificPeople,
+    Entertainment, FacetEvent) alongside results, giving a second, aggregate-shaped view of
+    the same entities.
+schema_hygiene:
+  component_schemas: 215
+  operation_ids: 0
+  in_spec_examples: 0
+  fully_qualified_schema_names: true
+  note: >-
+    A large fraction of schema names are the .NET fully-qualified type names leaked by the
+    generator — e.g.
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeImagesFieldValues.
+    That is a real, harvestable observation about contract quality, not a defect introduced
+    here: the names are stable and resolvable, but they make generated client code and any
+    $ref-based tooling awkward, and they signal the spec is emitted from the implementation
+    rather than authored. Combined with zero operationIds and zero examples, it is the
+    clearest contract-quality gap to raise with the provider.

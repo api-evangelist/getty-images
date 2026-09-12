@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Generations API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -780,7 +783,9 @@ paths:
     get:
       tags:
       - Generations
-      summary: "Once the download process has started, this endpoint can be used to check the status of the download and get the\r\ndownload URL once it is completed."
+      summary: 'Once the download process has started, this endpoint can be used to check the status of the download and get the
+
+        download URL once it is completed.'
       description: '# AI Generator - Get Download Image
 
 
@@ -860,61 +865,85 @@ paths:
           description: GenerationRequestGone
 components:
   schemas:
-    ImageDataResponse:
-      type: object
-      properties:
-        index:
-          type: integer
-          format: int32
-        is_blocked:
-          type: boolean
-        preview_urls:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreviewUrl'
-          description: The preview URLs for the result
-          nullable: true
-        url:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PendingImageGenerationResponse:
+    ReferenceGeneration:
       type: object
       properties:
         generation_request_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The id from a previous request to generate images.
+        index:
+          type: integer
+          description: The index of the image from the specific images generation.
+          format: int32
       additionalProperties: false
-    DownloadResponse:
+    DownloadSizeResponse:
       type: object
       properties:
-        url:
-          type: string
-          nullable: true
-        generated_asset_id:
-          type: string
-          nullable: true
+        size_name:
+          type:
+          - string
+          - 'null'
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
       additionalProperties: false
+    BackgroundRemovalRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+      additionalProperties: false
+      description: Remove a background
     ImageGenerationsRequest:
       type: object
       properties:
         prompt:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The only required parameter, this is the primary text used for the generation of the images.
-          nullable: true
         seed:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: The seed to use for generation. This is not used for most generation cases but is available for use to ensure a repeatable result.
           format: int32
-          nullable: true
         negative_prompt:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Concepts to exclude from the result
-          nullable: true
         aspect_ratio:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Aspect ratio of the result images.  Must be one of 1:1, 3:4, 4:3, 9:16, or 16:9
-          nullable: true
         media_type:
           $ref: '#/components/schemas/MediaType'
         mood:
@@ -924,20 +953,378 @@ components:
         depth_of_field:
           $ref: '#/components/schemas/DepthOfField'
         product_id:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: If you have multiple Getty products, indicate which one you would like to use for this generation request
           format: int32
-          nullable: true
         project_code:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The project code to use for the generation request.  Some products require this value.
-          nullable: true
         notes:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The notes to use for the generation request.  Some products require this value.
-          nullable: true
       additionalProperties: false
       description: Payload with all generation request parameters
+    PreviewUrl:
+      type: object
+      properties:
+        preview_size:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type:
+          - string
+          - 'null'
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+      additionalProperties: false
+    DownloadResponse:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+        generated_asset_id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    InfluenceCompositionByImageRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        reference_file_registration_id:
+          type:
+          - string
+          - 'null'
+          description: File Id to modify.
+        prompt:
+          type:
+          - string
+          - 'null'
+          description: This is the primary text used for refining the images.
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+          description: Concepts to exclude from the result.
+        influence_level:
+          type:
+          - number
+          - 'null'
+          description: Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.
+          format: float
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        seed:
+          type:
+          - integer
+          - 'null'
+          description: The seed used for the generation
+          format: int32
+        product_id:
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+      additionalProperties: false
+      description: Payload with all influence composition by image parameters
+    ExtendRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        prompt:
+          type:
+          - string
+          - 'null'
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        left_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        right_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        top_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        bottom_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+      additionalProperties: false
+    BackgroundGenerationRequest:
+      type: object
+      properties:
+        reference_file_registration_id:
+          type:
+          - string
+          - 'null'
+        prompt:
+          type:
+          - string
+          - 'null'
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        left_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        right_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        top_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+        bottom_percentage:
+          type:
+          - number
+          - 'null'
+          format: float
+      additionalProperties: false
+    AssetDetail:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    MediaType:
+      enum:
+      - photography
+      - illustration
+      type: string
+    InfluenceColorByImageRequest:
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        reference_file_registration_id:
+          type:
+          - string
+          - 'null'
+          description: File Id to modify.
+        prompt:
+          type:
+          - string
+          - 'null'
+          description: This is the primary text used for refining the images.
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+          description: Concepts to exclude from the result.
+        noise_level:
+          type:
+          - number
+          - 'null'
+          description: Accepted values are 0-1. Higher values will increase differences between the reference and generated images.
+          format: float
+        media_type:
+          $ref: '#/components/schemas/MediaType'
+        mood:
+          $ref: '#/components/schemas/Mood'
+        seed:
+          type:
+          - integer
+          - 'null'
+          description: The seed used for the generation
+          format: int32
+        product_id:
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+      additionalProperties: false
+      description: Payload with all influence color by image parameters
+    ImageDownloadRequest:
+      type: object
+      properties:
+        notes:
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the download request.  Some products require this value.
+        project_code:
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the download request.  Some products require this value.
+        size_name:
+          type:
+          - string
+          - 'null'
+          description: The size name.  Valid values are 1k or 4k.
+      additionalProperties: false
+      description: Parameters for requesting an AI generation image download
+    PendingImageGenerationResponse:
+      type: object
+      properties:
+        generation_request_id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DownloadSizesResponse:
+      type: object
+      properties:
+        download_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DownloadSizeResponse'
+      additionalProperties: false
+    RefineRequest:
+      required:
+      - mask_url
+      type: object
+      properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
+        prompt:
+          type:
+          - string
+          - 'null'
+        negative_prompt:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        project_code:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        mask_url:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    ImageDataResponse:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        is_blocked:
+          type: boolean
+        preview_urls:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PreviewUrl'
+          description: The preview URLs for the result
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     Mood:
       enum:
       - black_and_white
@@ -948,392 +1335,90 @@ components:
       - dramatic
       - bold
       type: string
-    ImageDownloadRequest:
+    ImageVariationRequest:
       type: object
       properties:
-        notes:
-          type: string
-          description: The notes to use for the download request.  Some products require this value.
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the download request.  Some products require this value.
-          nullable: true
-        size_name:
-          type: string
-          description: The size name.  Valid values are 1k or 4k.
-          nullable: true
-      additionalProperties: false
-      description: Parameters for requesting an AI generation image download
-    DownloadSizeResponse:
-      type: object
-      properties:
-        size_name:
-          type: string
-          nullable: true
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    BackgroundGenerationRequest:
-      type: object
-      properties:
-        reference_file_registration_id:
-          type: string
-          nullable: true
-        prompt:
-          type: string
-          nullable: true
-        negative_prompt:
-          type: string
-          nullable: true
         product_id:
-          type: integer
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
           format: int32
-          nullable: true
         project_code:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the generation request.  Some products require this value.
         notes:
-          type: string
-          nullable: true
-        left_percentage:
-          type: number
-          format: float
-          nullable: true
-        right_percentage:
-          type: number
-          format: float
-          nullable: true
-        top_percentage:
-          type: number
-          format: float
-          nullable: true
-        bottom_percentage:
-          type: number
-          format: float
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the generation request.  Some products require this value.
       additionalProperties: false
-    AssetDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-      additionalProperties: false
-    DownloadSizesResponse:
-      type: object
-      properties:
-        download_sizes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DownloadSizeResponse'
-          nullable: true
-      additionalProperties: false
-    BackgroundRemovalRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Remove a background
-    ExtendRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        prompt:
-          type: string
-          nullable: true
-        negative_prompt:
-          type: string
-          nullable: true
-        product_id:
-          type: integer
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          nullable: true
-        notes:
-          type: string
-          nullable: true
-        left_percentage:
-          type: number
-          format: float
-          nullable: true
-        right_percentage:
-          type: number
-          format: float
-          nullable: true
-        top_percentage:
-          type: number
-          format: float
-          nullable: true
-        bottom_percentage:
-          type: number
-          format: float
-          nullable: true
-      additionalProperties: false
-    RemoveObjectRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-        mask_url:
-          type: string
-          description: The location of the mask.
-          nullable: true
-      additionalProperties: false
-      description: Payload with all parameters for removing objects from an image
-    MediaType:
-      enum:
-      - photography
-      - illustration
-      type: string
-    ImageGenerationsResponse:
-      type: object
-      properties:
-        generation_request_id:
-          type: string
-          nullable: true
-        seed:
-          type: integer
-          format: int32
-          nullable: true
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageDataResponse'
-          nullable: true
-        original_asset:
-          $ref: '#/components/schemas/AssetDetail'
-      additionalProperties: false
-    InfluenceCompositionByImageRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        reference_file_registration_id:
-          type: string
-          description: File Id to modify.
-          nullable: true
-        prompt:
-          type: string
-          description: This is the primary text used for refining the images.
-          nullable: true
-        negative_prompt:
-          type: string
-          description: Concepts to exclude from the result.
-          nullable: true
-        influence_level:
-          type: number
-          description: Accepted values are 0-1. Higher values will increase the similarities between the reference and generated images.
-          format: float
-          nullable: true
-        media_type:
-          $ref: '#/components/schemas/MediaType'
-        mood:
-          $ref: '#/components/schemas/Mood'
-        seed:
-          type: integer
-          description: The seed used for the generation
-          format: int32
-          nullable: true
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Payload with all influence composition by image parameters
-    InfluenceColorByImageRequest:
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          description: Asset Id to modify.
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        reference_file_registration_id:
-          type: string
-          description: File Id to modify.
-          nullable: true
-        prompt:
-          type: string
-          description: This is the primary text used for refining the images.
-          nullable: true
-        negative_prompt:
-          type: string
-          description: Concepts to exclude from the result.
-          nullable: true
-        noise_level:
-          type: number
-          description: Accepted values are 0-1. Higher values will increase differences between the reference and generated images.
-          format: float
-          nullable: true
-        media_type:
-          $ref: '#/components/schemas/MediaType'
-        mood:
-          $ref: '#/components/schemas/Mood'
-        seed:
-          type: integer
-          description: The seed used for the generation
-          format: int32
-          nullable: true
-        product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          description: The project code to use for the request.  Some products require this value.
-          nullable: true
-        notes:
-          type: string
-          description: The notes to use for the request.  Some products require this value.
-          nullable: true
-      additionalProperties: false
-      description: Payload with all influence color by image parameters
+      description: Payload with all images variation parameters
     LensType:
       enum:
       - wide_angle
       - telephoto
       type: string
-    ImageVariationRequest:
+    RemoveObjectRequest:
       type: object
       properties:
+        reference_asset_id:
+          type:
+          - string
+          - 'null'
+          description: Asset Id to modify.
+        reference_generation:
+          $ref: '#/components/schemas/ReferenceGeneration'
         product_id:
-          type: integer
-          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
+          type:
+          - integer
+          - 'null'
+          description: If you have multiple Getty products, indicate which one you would like to use for this refine request
           format: int32
-          nullable: true
         project_code:
-          type: string
-          description: The project code to use for the generation request.  Some products require this value.
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The project code to use for the request.  Some products require this value.
         notes:
-          type: string
-          description: The notes to use for the generation request.  Some products require this value.
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The notes to use for the request.  Some products require this value.
+        mask_url:
+          type:
+          - string
+          - 'null'
+          description: The location of the mask.
       additionalProperties: false
-      description: Payload with all images variation parameters
-    PreviewUrl:
-      type: object
-      properties:
-        preview_size:
-          type: string
-          nullable: true
-        image_url:
-          type: string
-          nullable: true
-        width:
-          type: integer
-          format: int32
-        height:
-          type: integer
-          format: int32
-      additionalProperties: false
+      description: Payload with all parameters for removing objects from an image
     DepthOfField:
       enum:
       - shallow
       - deep
       type: string
-    ReferenceGeneration:
+    ImageGenerationsResponse:
       type: object
       properties:
         generation_request_id:
-          type: string
-          description: The id from a previous request to generate images.
-          nullable: true
-        index:
-          type: integer
-          description: The index of the image from the specific images generation.
+          type:
+          - string
+          - 'null'
+        seed:
+          type:
+          - integer
+          - 'null'
           format: int32
-      additionalProperties: false
-    RefineRequest:
-      required:
-      - mask_url
-      type: object
-      properties:
-        reference_asset_id:
-          type: string
-          nullable: true
-        reference_generation:
-          $ref: '#/components/schemas/ReferenceGeneration'
-        prompt:
-          type: string
-          nullable: true
-        negative_prompt:
-          type: string
-          nullable: true
-        product_id:
-          type: integer
-          format: int32
-          nullable: true
-        project_code:
-          type: string
-          nullable: true
-        notes:
-          type: string
-          nullable: true
-        mask_url:
-          minLength: 1
-          type: string
+        results:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageDataResponse'
+        original_asset:
+          $ref: '#/components/schemas/AssetDetail'
       additionalProperties: false
   securitySchemes:
     Api-Key:

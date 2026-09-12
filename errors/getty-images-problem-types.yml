@@ -1,0 +1,110 @@
+generated: '2026-09-12'
+method: searched
+source: https://developer.gettyimages.com/docs/
+sources:
+- https://developer.gettyimages.com/docs/
+- https://developer.gettyimages.com/ai-generation/
+- openapi/_original/getty-images-swagger-v3-openapi.json
+format: vendor
+rfc9457: false
+envelopes:
+- name: getty-error
+  media_type: application/vnd.getty.error+json
+  fields:
+  - {name: ErrorCode, role: machine-readable cause, stable: true}
+  - {name: ErrorMessage, role: human-readable detail, stable: false}
+  guidance: >-
+    Branch application logic on ErrorCode. ErrorMessage is informational and its wording must
+    not be matched in code.
+- name: gateway-error
+  media_type: application/json
+  fields:
+  - {name: message, role: terse edge message, stable: true}
+  guidance: >-
+    Returned by the AWS API Gateway edge / authorizer for 401, 403 and 429. Carries no
+    ErrorCode, so a client cannot distinguish "bad key" from "asset outside your agreement"
+    from the body alone.
+problems:
+- status: 400
+  title: Bad Request
+  envelope: getty-error
+  description: >-
+    Malformed request — an unrecognised querystring parameter, an invalid value, or a page
+    number beyond the available result set.
+  codes:
+  - code: InvalidPage
+    example_message: 'page must be less than or equal to 7, results count 698'
+    remediation: >-
+      Compute page count from result_count before paging. The ErrorMessage names the real
+      maximum, so a client can clamp and retry.
+  retryable: false
+- status: 401
+  title: Unauthorized
+  envelope: gateway-error
+  body: '{"message":"Unauthorized"}'
+  description: >-
+    Api-Key header missing, misspelled or invalid; OR a download was attempted for an asset
+    that is not part of the customer's agreement.
+  challenge: 'WWW-Authenticate: Bearer realm="Download",error="invalid_token",error_description="The access token is missing"'
+  remediation: >-
+    Send the Api-Key header on every request. For elevated operations also send
+    Authorization: Bearer <access_token> obtained from
+    https://authentication.gettyimages.com/oauth2/token.
+  retryable: false
+- status: 403
+  title: Forbidden
+  envelope: gateway-error
+  body: '{"message":"Forbidden"}'
+  description: The caller does not have permission to access the resource.
+  remediation: >-
+    Do not retry with the same credentials. Getty documents this as a credential/permission
+    problem, not a transient one.
+  retryable: false
+- status: 404
+  title: Not Found
+  envelope: getty-error
+  description: The route does not exist, or the identified asset does not exist.
+  codes:
+  - code: ImageNotFound
+    example_message: 'Image id not found: *****'
+  retryable: false
+- status: 410
+  title: Gone
+  envelope: getty-error
+  description: The resource existed and is permanently unavailable.
+  codes:
+  - code: GenerationRequestGone
+    example_message: The generation request with the given identifier is gone
+  remediation: >-
+    Never retry. Getty states explicitly that the same request will always return 410.
+  retryable: false
+- status: 429
+  title: Too Many Requests
+  envelope: gateway-error
+  body: '{"message":"Too Many Requests"}'
+  headers:
+  - name: X-Error-Detail
+    value: Account Over Queries Per Second Limit
+    note: Present on the calls-per-second path. No Retry-After and no RateLimit-* headers are returned.
+  description: >-
+    Either the account's queries-per-second limit was exceeded, or — on any
+    /v3/ai/image-generations/* endpoint — the account's concurrent-pending-generation limit
+    was exceeded. The two causes are not distinguishable from the response.
+  remediation: >-
+    Back off and retry. Getty recommends a fault-handling library (Polly for .NET, Tenacity
+    for Python) and, for the Gen AI endpoints, waiting 1 second before retrying. Reusing an
+    unexpired access token avoids spending budget on token calls.
+  retryable: true
+- status: 500
+  title: Internal Server Error
+  envelope: gateway-error
+  description: Server-side failure.
+  remediation: >-
+    Resend after a brief delay; if it persists, notify Getty Images support. The published
+    status page records several multi-minute 500 incidents, most recently 2026-08-27.
+  retryable: true
+notes: >-
+  Getty publishes no exhaustive error-code registry; the codes above are the ones the
+  provider documents by name. The live OpenAPI 3.0.4 contract declares response codes per
+  operation but carries no error schema examples and no application/problem+json anywhere
+  (searched: zero matches), so this catalogue is docs-led rather than spec-derived.

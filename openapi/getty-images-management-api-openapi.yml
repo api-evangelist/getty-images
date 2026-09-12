@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Management API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -26,20 +29,26 @@ paths:
           description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
       - name: last_offset
         in: query
-        description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+        description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
+
+          Events occuring _after_ the `last_offset` value provided will be returned.'
         schema:
-          type: string
-          description: "Specifies a date/time (with timezone information) for continuing retrieval of events.\r\nEvents occuring _after_ the `last_offset` value provided will be returned."
+          type:
+          - string
+          - 'null'
+          description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
+
+            Events occuring _after_ the `last_offset` value provided will be returned.'
           format: date-time
-          nullable: true
       - name: event_count
         in: query
         description: Specifies the number of events to return. Default is 50, maximum value is 100.
         schema:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: Specifies the number of events to return. Default is 50, maximum value is 100.
           format: int32
-          nullable: true
       responses:
         '200':
           description: Success
@@ -57,6 +66,21 @@ paths:
           description: EventCountOutOfRange
 components:
   schemas:
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        asset_send_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssetEvent'
+      additionalProperties: false
     AssetEvent:
       type: object
       properties:
@@ -64,24 +88,13 @@ components:
           type: string
           format: date-time
         asset_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         email_address:
-          type: string
-          nullable: true
-      additionalProperties: false
-    GetSendEventsResponse:
-      type: object
-      properties:
-        last_offset:
-          type: string
-          format: date-time
-          nullable: true
-        asset_send_events:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssetEvent'
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:

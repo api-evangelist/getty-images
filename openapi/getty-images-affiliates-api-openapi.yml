@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Affiliates API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -35,9 +38,10 @@ paths:
         in: query
         description: Search images using a search phrase.
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Search images using a search phrase.
-          nullable: true
       - name: style
         in: query
         description: Filter based on graphical style of the image.
@@ -70,8 +74,9 @@ paths:
       - name: phrase
         in: query
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Success
@@ -81,59 +86,15 @@ paths:
                 $ref: '#/components/schemas/AffiliateVideoSearchResponse'
 components:
   schemas:
-    AffiliateImage:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        caption:
-          type: string
-          nullable: true
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateImageUrls'
-        destination_url:
-          type: string
-          nullable: true
-      additionalProperties: false
-    AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
-    AffiliateVideo:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        caption:
-          type: string
-          nullable: true
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateVideoUrls'
-        destination_url:
-          type: string
-          nullable: true
-        clip_length:
-          type: string
-          nullable: true
-      additionalProperties: false
     AffiliateVideoSearchResponse:
       type: object
       properties:
         videos:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/AffiliateVideo'
-          nullable: true
         auto_corrections:
           $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
@@ -141,29 +102,89 @@ components:
       type: object
       properties:
         small_still:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         medium_still:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         large_still:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         small_motion:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         large_motion:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
+    AffiliateVideo:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          $ref: '#/components/schemas/AffiliateVideoUrls'
+        destination_url:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AffiliateImage:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          $ref: '#/components/schemas/AffiliateImageUrls'
+        destination_url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
     AffiliateImageSearchResponse:
       type: object
       properties:
         images:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/AffiliateImage'
-          nullable: true
         auto_corrections:
           $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
@@ -171,8 +192,9 @@ components:
       type: object
       properties:
         small:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         small_height:
           type: integer
           format: int32
@@ -180,8 +202,9 @@ components:
           type: integer
           format: int32
         medium:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         medium_height:
           type: integer
           format: int32
@@ -189,8 +212,9 @@ components:
           type: integer
           format: int32
         large:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         large_height:
           type: integer
           format: int32
@@ -202,8 +226,9 @@ components:
       type: object
       properties:
         phrase:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:

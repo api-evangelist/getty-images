@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Getty Images Countries API
   version: '3'
@@ -7,6 +7,9 @@ info:
     Developer resources for the Getty Images API including SDK, documentation,
 
     release notes, status, notifications and sample code.'
+servers:
+- url: https://api.gettyimages.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - Api-Key: []
 - OAuth2: []
@@ -42,27 +45,31 @@ paths:
           description: Unauthorized
 components:
   schemas:
-    CountriesList:
-      type: object
-      properties:
-        countries:
-          type: array
-          items:
-            $ref: '#/components/schemas/Country'
-          nullable: true
-      additionalProperties: false
     Country:
       type: object
       properties:
         iso_alpha_2:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         iso_alpha_3:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CountriesList:
+      type: object
+      properties:
+        countries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Country'
       additionalProperties: false
   securitySchemes:
     Api-Key:
