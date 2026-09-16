@@ -94,20 +94,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-ai-overlay.yaml
-- aid: getty-images:getty-images-ai-generator-api
-  name: Getty Images Ai Generator API
-  description: The Ai Generator API from Getty Images — 2 operation(s) for ai generator.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Ai Generator
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-ai-generator-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-ai-generator-overlay.yaml
 - aid: getty-images:getty-images-artists-api
   name: Getty Images Artists API
   description: The Artists API from Getty Images — 2 operation(s) for artists.
@@ -136,34 +122,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-assets-overlay.yaml
-- aid: getty-images:getty-images-background-api
-  name: Getty Images Background API
-  description: The Background API from Getty Images — 2 operation(s) for background.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Background
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-background-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-background-overlay.yaml
-- aid: getty-images:getty-images-batches-api
-  name: Getty Images Batches API
-  description: The Batches API from Getty Images — 1 operation(s) for batches.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Batches
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-batches-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-batches-overlay.yaml
 - aid: getty-images:getty-images-boards-api
   name: Getty Images Boards API
   description: The Boards API from Getty Images — 6 operation(s) for boards.
@@ -178,48 +136,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-boards-overlay.yaml
-- aid: getty-images:getty-images-change-api
-  name: Getty Images Change API
-  description: The Change API from Getty Images — 2 operation(s) for change.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Change
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-change-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-change-overlay.yaml
-- aid: getty-images:getty-images-changes-api
-  name: Getty Images Changes API
-  description: The Changes API from Getty Images — 3 operation(s) for changes.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Changes
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-changes-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-changes-overlay.yaml
-- aid: getty-images:getty-images-channels-api
-  name: Getty Images Channels API
-  description: The Channels API from Getty Images — 1 operation(s) for channels.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Channels
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-channels-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-channels-overlay.yaml
 - aid: getty-images:getty-images-collections-api
   name: Getty Images Collections API
   description: The Collections API from Getty Images — 1 operation(s) for collections.
@@ -236,48 +152,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-collections-overlay.yaml
-- aid: getty-images:getty-images-color-api
-  name: Getty Images Color API
-  description: The Color API from Getty Images — 1 operation(s) for color.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Color
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-color-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-color-overlay.yaml
-- aid: getty-images:getty-images-comments-api
-  name: Getty Images Comments API
-  description: The Comments API from Getty Images — 2 operation(s) for comments.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Comments
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-comments-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-comments-overlay.yaml
-- aid: getty-images:getty-images-compositions-api
-  name: Getty Images Compositions API
-  description: The Compositions API from Getty Images — 1 operation(s) for compositions.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Compositions
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-compositions-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-compositions-overlay.yaml
 - aid: getty-images:getty-images-countries-api
   name: Getty Images Countries API
   description: The Countries API from Getty Images — 1 operation(s) for countries.
@@ -292,34 +166,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-countries-overlay.yaml
-- aid: getty-images:getty-images-creative-api
-  name: Getty Images Creative API
-  description: The Creative API from Getty Images — 4 operation(s) for creative.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Creative
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-creative-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-creative-overlay.yaml
-- aid: getty-images:getty-images-current-api
-  name: Getty Images Current API
-  description: The Current API from Getty Images — 1 operation(s) for current.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Current
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-current-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-current-overlay.yaml
 - aid: getty-images:getty-images-customers-api
   name: Getty Images Customers API
   description: The Customers API from Getty Images — 1 operation(s) for customers.
@@ -348,20 +194,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-downloads-overlay.yaml
-- aid: getty-images:getty-images-editorial-api
-  name: Getty Images Editorial API
-  description: The Editorial API from Getty Images — 2 operation(s) for editorial.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Editorial
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-editorial-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-editorial-overlay.yaml
 - aid: getty-images:getty-images-events-api
   name: Getty Images Events API
   description: The Events API from Getty Images — 4 operation(s) for events.
@@ -378,92 +210,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-events-overlay.yaml
-- aid: getty-images:getty-images-extend-api
-  name: Getty Images Extend API
-  description: The Extend API from Getty Images — 1 operation(s) for extend.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Extend
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-extend-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-extend-overlay.yaml
-- aid: getty-images:getty-images-files-api
-  name: Getty Images Files API
-  description: The Files API from Getty Images — 3 operation(s) for files.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - File
-  tags_raw:
-  - Files
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-files-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-files-overlay.yaml
-- aid: getty-images:getty-images-generation-api
-  name: Getty Images Generation API
-  description: The Generation API from Getty Images — 6 operation(s) for generation.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Generation
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-generation-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-generation-overlay.yaml
-- aid: getty-images:getty-images-generations-api
-  name: Getty Images Generations API
-  description: The Generations API from Getty Images — 12 operation(s) for generations.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Generations
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-generations-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-generations-overlay.yaml
-- aid: getty-images:getty-images-history-api
-  name: Getty Images History API
-  description: The History API from Getty Images — 2 operation(s) for history.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - History
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-history-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-history-overlay.yaml
-- aid: getty-images:getty-images-image-api
-  name: Getty Images Image API
-  description: The Image API from Getty Images — 15 operation(s) for image.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Image
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-image-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-image-overlay.yaml
 - aid: getty-images:getty-images-images-api
   name: Getty Images API
   description: The Images API from Getty Images — 15 operation(s) for images.
@@ -480,90 +226,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-images-overlay.yaml
-- aid: getty-images:getty-images-index-api
-  name: Getty Images Index API
-  description: The Index API from Getty Images — 3 operation(s) for index.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Index
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-index-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-index-overlay.yaml
-- aid: getty-images:getty-images-influence-api
-  name: Getty Images Influence API
-  description: The Influence API from Getty Images — 2 operation(s) for influence.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Influence
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-influence-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-influence-overlay.yaml
-- aid: getty-images:getty-images-licensing-api
-  name: Getty Images Licensing API
-  description: The Licensing API from Getty Images — 1 operation(s) for licensing.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Licensing
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-licensing-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-licensing-overlay.yaml
-- aid: getty-images:getty-images-management-api
-  name: Getty Images Management API
-  description: The Management API from Getty Images — 1 operation(s) for management.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Management
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-management-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-management-overlay.yaml
-- aid: getty-images:getty-images-name-api
-  name: Getty Images Name API
-  description: The Name API from Getty Images — 1 operation(s) for name.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Name
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-name-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-name-overlay.yaml
-- aid: getty-images:getty-images-objects-api
-  name: Getty Images Objects API
-  description: The Objects API from Getty Images — 1 operation(s) for objects.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Objects
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-objects-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-objects-overlay.yaml
 - aid: getty-images:getty-images-orders-api
   name: Getty Images Orders API
   description: The Orders API from Getty Images — 1 operation(s) for orders.
@@ -610,62 +272,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-purchased-overlay.yaml
-- aid: getty-images:getty-images-refine-api
-  name: Getty Images Refine API
-  description: The Refine API from Getty Images — 1 operation(s) for refine.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Refine
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-refine-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-refine-overlay.yaml
-- aid: getty-images:getty-images-registrations-api
-  name: Getty Images Registrations API
-  description: The Registrations API from Getty Images — 2 operation(s) for registrations.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Registrations
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-registrations-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-registrations-overlay.yaml
-- aid: getty-images:getty-images-removal-api
-  name: Getty Images Removal API
-  description: The Removal API from Getty Images — 2 operation(s) for removal.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Removal
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-removal-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-removal-overlay.yaml
-- aid: getty-images:getty-images-request-api
-  name: Getty Images Request API
-  description: The Request API from Getty Images — 5 operation(s) for request.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Request
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-request-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-request-overlay.yaml
 - aid: getty-images:getty-images-search-api
   name: Getty Images Search API
   description: The Search API from Getty Images — 11 operation(s) for search.
@@ -680,90 +286,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-search-overlay.yaml
-- aid: getty-images:getty-images-send-api
-  name: Getty Images Send API
-  description: The Send API from Getty Images — 1 operation(s) for send.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Send
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-send-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-send-overlay.yaml
-- aid: getty-images:getty-images-series-api
-  name: Getty Images Series API
-  description: The Series API from Getty Images — 2 operation(s) for series.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Series
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-series-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-series-overlay.yaml
-- aid: getty-images:getty-images-set-api
-  name: Getty Images Set API
-  description: The Set API from Getty Images — 1 operation(s) for set.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Set
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-set-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-set-overlay.yaml
-- aid: getty-images:getty-images-sets-api
-  name: Getty Images Sets API
-  description: The Sets API from Getty Images — 2 operation(s) for sets.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Sets
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-sets-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-sets-overlay.yaml
-- aid: getty-images:getty-images-similar-api
-  name: Getty Images Similar API
-  description: The Similar API from Getty Images — 2 operation(s) for similar.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Similar
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-similar-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-similar-overlay.yaml
-- aid: getty-images:getty-images-uploads-api
-  name: Getty Images Uploads API
-  description: The Uploads API from Getty Images — 1 operation(s) for uploads.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Uploads
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-uploads-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-uploads-overlay.yaml
 - aid: getty-images:getty-images-usage-api
   name: Getty Images Usage API
   description: The Usage API from Getty Images — 1 operation(s) for usage.
@@ -778,20 +300,6 @@ apis:
     url: https://developer.gettyimages.com/docs/
   - type: Overlay
     url: overlays/getty-images-usage-overlay.yaml
-- aid: getty-images:getty-images-variations-api
-  name: Getty Images Variations API
-  description: The Variations API from Getty Images — 1 operation(s) for variations.
-  humanURL: https://developer.gettyimages.com/
-  baseURL: https://api.gettyimages.com
-  tags:
-  - Variations
-  properties:
-  - type: OpenAPI
-    url: openapi/getty-images-variations-api-openapi.yml
-  - type: Documentation
-    url: https://developer.gettyimages.com/docs/
-  - type: Overlay
-    url: overlays/getty-images-variations-overlay.yaml
 - aid: getty-images:getty-images-videos-api
   name: Getty Images Videos API
   description: The Videos API from Getty Images — 11 operation(s) for videos.
@@ -870,7 +378,8 @@ apis:
     url: https://developer.gettyimages.com/docs/authentication
 - aid: getty-images:getty-images-mcp-server
   name: Getty Images MCP Server
-  description: The Getty Images MCP Server is a remote Model Context Protocol endpoint at https://mcp.gettyimages.com/v1
+  description: >-
+    The Getty Images MCP Server is a remote Model Context Protocol endpoint at https://mcp.gettyimages.com/v1
     that gives AI agents tools for authenticating with OAuth 2.0, searching images and videos within the
     organization's Getty Images licence agreement, retrieving asset metadata and downloading image and
     video files. Credentials are issued by a Getty Images account representative; calls are throttled
@@ -901,7 +410,8 @@ apis:
     url: authentication/getty-images-authentication.yml
 - aid: getty-images:getty-images-scim-api
   name: Getty Images SCIM API
-  description: Getty Images serves a SCIM 2.0 (RFC 7643 / RFC 7644) user-provisioning surface at https://scim.gettyimages.com/v2
+  description: >-
+    Getty Images serves a SCIM 2.0 (RFC 7643 / RFC 7644) user-provisioning surface at https://scim.gettyimages.com/v2
     for enterprise customers who manage Getty Images users from their own identity provider. Supported
     operations are create user, update user attributes and deactivate user, against the core schema urn:ietf:params:scim:schemas:core:2.0:User
     plus the enterprise extension. Authorization is OAuth 2.0 bearer token. The discovery triad — ServiceProviderConfig,
@@ -929,7 +439,149 @@ apis:
     url: conformance/getty-images-scim-schemas.json
   - type: Authentication
     url: authentication/getty-images-authentication.yml
+- aid: getty-images:getty-images-affiliatesearch-api
+  name: Getty Images Affiliate Search API
+  description: The AffiliateSearch API from Getty Images — 2 operation(s) for affiliatesearch.
+  humanURL: https://developer.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - AffiliateSearch
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-affiliatesearch-api-openapi.yml
+  - type: Documentation
+    url: https://developer.gettyimages.com/docs/
+- aid: getty-images:getty-images-aigenerator-api
+  name: Getty Images AI Generator API
+  description: The AiGenerator API from Getty Images — 19 operation(s) for aigenerator.
+  humanURL: https://developer.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - AiGenerator
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-aigenerator-api-openapi.yml
+  - type: Documentation
+    url: https://developer.gettyimages.com/docs/
+- aid: getty-images:getty-images-assetchanges-api
+  name: Getty Images Asset Changes API
+  description: The AssetChanges API from Getty Images — 3 operation(s) for assetchanges.
+  humanURL: https://developer.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - AssetChanges
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-assetchanges-api-openapi.yml
+  - type: Documentation
+    url: https://developer.gettyimages.com/docs/
+- aid: getty-images:getty-images-assetlicensing-api
+  name: Getty Images Asset Licensing API
+  description: The AssetLicensing API from Getty Images — 1 operation(s) for assetlicensing.
+  humanURL: https://developer.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - AssetLicensing
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-assetlicensing-api-openapi.yml
+  - type: Documentation
+    url: https://developer.gettyimages.com/docs/
+- aid: getty-images:getty-images-imagematch-api
+  name: Getty Images Image Match API
+  description: The ImageMatch API from Getty Images — 1 operation(s) for imagematch.
+  humanURL: https://developer.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - ImageMatch
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-imagematch-api-openapi.yml
+  - type: Documentation
+    url: https://developer.gettyimages.com/docs/
+- aid: getty-images:getty-images-purchases-api
+  name: Getty Images Purchases API
+  description: The Purchases API from Getty Images — 1 operation(s) for purchases.
+  humanURL: https://developer.gettyimages.com/
+  baseURL: https://api.gettyimages.com
+  tags:
+  - Purchases
+  properties:
+  - type: OpenAPI
+    url: openapi/getty-images-purchases-api-openapi.yml
+  - type: Documentation
+    url: https://developer.gettyimages.com/docs/
 common:
+- type: Overlay
+  url: overlays/getty-images-ai-generator-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-background-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-batches-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-change-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-changes-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-channels-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-color-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-comments-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-compositions-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-creative-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-current-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-editorial-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-extend-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-files-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-generation-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-generations-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-history-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-image-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-index-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-influence-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-licensing-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-management-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-name-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-objects-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-refine-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-registrations-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-removal-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-request-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-send-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-series-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-set-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-sets-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-similar-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-uploads-overlay.yaml
+- type: Overlay
+  url: overlays/getty-images-variations-overlay.yaml
 - type: OAuthScopes
   url: scopes/getty-images-scopes.yml
 - type: Authentication
