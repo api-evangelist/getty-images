@@ -1,14 +1,15 @@
 aid: getty-images
 name: Getty Images
-description: 'The Getty Images API brings the best visual content straight to you and your customers, letting you
-  integrate outstanding images, videos, and illustrations from Getty Images and iStock directly into your platform.
-  One REST API at version 3 — 67 paths and 76 operations across creative and editorial image and video search, reverse
-  image search, asset metadata, licensing and download, collaborative boards, pull-based catalogue synchronisation
-  via Asset Changes, and Generative AI by Getty Images (text-to-image, refine, extend, object and background removal,
-  reference-image influence). A remote MCP server at https://mcp.gettyimages.com/v1 exposes search, metadata and
-  download to AI agents. Enterprise identity is served by a live SCIM 2.0 surface and SAML 2.0 SSO. Access is sales-gated:
-  credentials are issued by a Getty Images account representative against an existing content licence agreement,
-  with no self-service sign-up, no free tier and no published API pricing.'
+description: 'The Getty Images API brings the best visual content straight to you and your customers,
+  letting you integrate outstanding images, videos, and illustrations from Getty Images and iStock directly
+  into your platform. One REST API at version 3 — 67 paths and 76 operations across creative and editorial
+  image and video search, reverse image search, asset metadata, licensing and download, collaborative
+  boards, pull-based catalogue synchronisation via Asset Changes, and Generative AI by Getty Images (text-to-image,
+  refine, extend, object and background removal, reference-image influence). A remote MCP server at https://mcp.gettyimages.com/v1
+  exposes search, metadata and download to AI agents. Enterprise identity is served by a live SCIM 2.0
+  surface and SAML 2.0 SSO. Access is sales-gated: credentials are issued by a Getty Images account representative
+  against an existing content licence agreement, with no self-service sign-up, no free tier and no published
+  API pricing.'
 kind: contract
 deliveryModel:
   model: unknown
@@ -36,7 +37,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/getty-images.png
 access: 3rd-Party
 created: '2024-11-13'
-modified: '2026-09-12'
+modified: '2026-09-16'
 position: Consuming
 url: https://raw.githubusercontent.com/api-evangelist/getty-images/refs/heads/main/apis.yml
 specificationVersion: '0.23'
@@ -50,7 +51,7 @@ tags:
 - Search
 - Content Licensing
 - Digital Asset Management
-- Model Context Protocol
+- MCP
 tags_raw:
 - Images
 - Media
@@ -464,7 +465,7 @@ apis:
   - type: Overlay
     url: overlays/getty-images-image-overlay.yaml
 - aid: getty-images:getty-images-images-api
-  name: Getty Images Images API
+  name: Getty Images API
   description: The Images API from Getty Images — 15 operation(s) for images.
   humanURL: https://developer.gettyimages.com/
   baseURL: https://api.gettyimages.com
@@ -818,7 +819,7 @@ apis:
   - type: Authentication
     url: https://developer.gettyimages.com/docs/authentication
 - aid: getty-images:getty-images-api
-  name: Getty Images Images API
+  name: Getty Images API
   description: The Images API from Getty Images — 2 operation(s) for images.
   humanURL: https://developer.gettyimages.com/docs/
   baseURL: https://api.gettyimages.com/v3
@@ -870,14 +871,15 @@ apis:
 - aid: getty-images:getty-images-mcp-server
   name: Getty Images MCP Server
   description: The Getty Images MCP Server is a remote Model Context Protocol endpoint at https://mcp.gettyimages.com/v1
-    that gives AI agents tools for authenticating with OAuth 2.0, searching images and videos within the organization's
-    Getty Images licence agreement, retrieving asset metadata and downloading image and video files. Credentials
-    are issued by a Getty Images account representative; calls are throttled at 20 queries per second. Getty asks
-    clients not to hard-code tool names or parameters and to discover the tool set at call time.
+    that gives AI agents tools for authenticating with OAuth 2.0, searching images and videos within the
+    organization's Getty Images licence agreement, retrieving asset metadata and downloading image and
+    video files. Credentials are issued by a Getty Images account representative; calls are throttled
+    at 20 queries per second. Getty asks clients not to hard-code tool names or parameters and to discover
+    the tool set at call time.
   humanURL: https://developer.gettyimages.com/mcp/
   baseURL: https://mcp.gettyimages.com/v1
   tags:
-  - Model Context Protocol
+  - MCP
   - Artificial Intelligence
   - Search
   - Image
@@ -900,15 +902,15 @@ apis:
 - aid: getty-images:getty-images-scim-api
   name: Getty Images SCIM API
   description: Getty Images serves a SCIM 2.0 (RFC 7643 / RFC 7644) user-provisioning surface at https://scim.gettyimages.com/v2
-    for enterprise customers who manage Getty Images users from their own identity provider. Supported operations
-    are create user, update user attributes and deactivate user, against the core schema urn:ietf:params:scim:schemas:core:2.0:User
+    for enterprise customers who manage Getty Images users from their own identity provider. Supported
+    operations are create user, update user attributes and deactivate user, against the core schema urn:ietf:params:scim:schemas:core:2.0:User
     plus the enterprise extension. Authorization is OAuth 2.0 bearer token. The discovery triad — ServiceProviderConfig,
     Schemas and ResourceTypes — is served anonymously; protected resources require a token.
   humanURL: https://developer.gettyimages.com/scim/
   baseURL: https://scim.gettyimages.com/v2
   tags:
   - Identity
-  - Single Sign On
+  - SSO
   - SCIM
   - Provisioning
   - Security
