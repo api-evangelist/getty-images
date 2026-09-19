@@ -45,7 +45,7 @@ tags:
 - Image
 - Media
 - Photos
-- Videos
+- Video
 - Stock Photography
 - Artificial Intelligence
 - Search
@@ -306,6 +306,8 @@ apis:
   humanURL: https://developer.gettyimages.com/
   baseURL: https://api.gettyimages.com
   tags:
+  - Video
+  tags_raw:
   - Videos
   properties:
   - type: OpenAPI
@@ -370,6 +372,8 @@ apis:
   humanURL: https://developer.gettyimages.com/docs/
   baseURL: https://api.gettyimages.com/v3
   tags:
+  - Video
+  tags_raw:
   - Videos
   properties:
   - type: Documentation
@@ -392,7 +396,7 @@ apis:
   - Artificial Intelligence
   - Search
   - Image
-  - Videos
+  - Video
   tags_raw:
   - MCP
   - AI
