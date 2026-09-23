@@ -2,14 +2,7 @@ openapi: 3.2.0
 info:
   title: Getty Images Products API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Products across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
@@ -26,9 +19,7 @@ paths:
         a fully authorized access_token. The product data can then be used as search filters, restricting results to images from a specific product.
 
 
-        You''ll need an API key and access token to use this resource.
-
-        '
+        You''ll need an API key and access token to use this resource.'
       parameters:
       - name: Accept-Language
         in: header
@@ -61,18 +52,10 @@ paths:
           description: Unauthorized
         '500':
           description: CreditPack
+      operationId: getV3Products
+      x-operation-id-source: derived
 components:
   schemas:
-    ProductTypeResponse:
-      enum:
-      - easyaccess
-      - editorialsubscription
-      - imagepack
-      - premiumaccess
-      - royaltyfreesubscription
-      - creditpack
-      - aigen
-      type: string
     ProductFieldValues:
       enum:
       - download_requirements
@@ -100,20 +83,21 @@ components:
           - boolean
           - 'null'
       additionalProperties: false
-    DownloadRequirements:
-      type: object
-      properties:
-        is_note_required:
-          type: boolean
-        is_project_code_required:
-          type: boolean
-        project_codes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
+    ProductTypeResponse:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
+    ProductStatus:
+      enum:
+      - active
+      - inactive
+      type: string
     Product:
       type: object
       properties:
@@ -181,11 +165,6 @@ components:
           - 'null'
           format: int32
       additionalProperties: false
-    ProductStatus:
-      enum:
-      - active
-      - inactive
-      type: string
     ProductsResult:
       type: object
       properties:
@@ -196,6 +175,153 @@ components:
           items:
             $ref: '#/components/schemas/Product'
       additionalProperties: false
+    DownloadRequirements:
+      type: object
+      properties:
+        is_note_required:
+          type: boolean
+        is_project_code_required:
+          type: boolean
+        project_codes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Products.ProductFieldValues:
+      enum:
+      - download_requirements
+      type: string
+    GettyImages.Services.Connect.Public.Models.ProductTypeResponse:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
+    GettyImages.Services.Connect.Public.Models.Products.Product:
+      type: object
+      properties:
+        application_website:
+          type:
+          - string
+          - 'null'
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        download_limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        download_limit_duration:
+          type:
+          - string
+          - 'null'
+        download_limit_reset_utc_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        downloads_remaining:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        expiration_utc_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ProductStatus'
+        type:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ProductTypeResponse'
+        ai_gen_requirements:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.DownloadRequirements'
+        download_requirements:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.DownloadRequirements'
+        overage:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.OverageDetails'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+        imagepack_resolution:
+          type:
+          - string
+          - 'null'
+        team_credits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Products.OverageDetails:
+      type: object
+      properties:
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        remaining:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        overages_reached:
+          type:
+          - boolean
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Products.ProductsResult:
+      type: object
+      properties:
+        products:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.Product'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Products.DownloadRequirements:
+      type: object
+      properties:
+        is_note_required:
+          type: boolean
+        is_project_code_required:
+          type: boolean
+        project_codes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.ProductStatus:
+      enum:
+      - active
+      - inactive
+      type: string
   securitySchemes:
     Api-Key:
       type: apiKey
@@ -216,3 +342,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

@@ -2,88 +2,13 @@ openapi: 3.2.0
 info:
   title: Getty Images Search API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Search across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
 tags:
 - name: Search
 paths:
-  /v3/affiliates/search/images:
-    get:
-      tags:
-      - Search
-      summary: ''
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: phrase
-        in: query
-        description: Search images using a search phrase.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search images using a search phrase.
-      - name: style
-        in: query
-        description: Filter based on graphical style of the image.
-        schema:
-          $ref: '#/components/schemas/AffiliateSearchStyle'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AffiliateImageSearchResponse'
-  /v3/affiliates/search/videos:
-    get:
-      tags:
-      - Search
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: phrase
-        in: query
-        schema:
-          type:
-          - string
-          - 'null'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AffiliateVideoSearchResponse'
   /v3/search/events:
     get:
       tags:
@@ -95,9 +20,7 @@ paths:
         This endpoint will provide events based on a search phrase or editorial segment and an optional from/to date filter. You can show different information in the response by specifying values on the "fields" parameter. The results will include events whose associated images or videos may not be included in your product(s).
 
 
-        This endpoint requires only an API key.  An access token is NOT required.
-
-        '
+        This endpoint requires only an API key. An access token is NOT required.'
       parameters:
       - name: Accept-Language
         in: header
@@ -189,12 +112,239 @@ paths:
           description: AuthorizationTokenRequired
         '403':
           description: UnauthorizedDisplaySize
+      operationId: getV3SearchEvents
+      x-operation-id-source: derived
   /v3/search/images/creative:
     get:
       tags:
       - Search
       summary: Search for creative images only
-      description: "Use this endpoint to search our contemporary stock photos, illustrations and archival images.\n\nYou'll need an API key and access token to use this resource.\n \nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to \nbuild search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to \nbuild a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution\nfiles that are most frequently used to build a UI displaying search results. The following fields are provided for every image \nin your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Enhanced Search\n\nOur enhanced search uses machine-learning models to understand natural, conversational language. Meaning you can search for longer phrases and get more relevant results from our creative image and creative video libraries.  Default is `true`. Set `enhanced_search` to `false` if you require a precise result set and not one expanded through enhanced search."
+      description: 'Use this endpoint to search our contemporary stock photos, illustrations and archival images.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        You can show different information in the response by specifying values on the "fields" parameter (see details below).
+
+        You can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search). If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request. Please consult our Authorization FAQ for more information on authorization tokens, and our Authorization Workflows for code examples of getting a token.
+
+
+        Search requests without a phrase parameter are not supported and may not always work.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to
+
+        build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "license_model",
+
+        "max_dimensions",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to
+
+        build a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "copyright",
+
+        "date_created",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "editorial_segments",
+
+        "event_ids",
+
+        "graphical_style",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "orientation",
+
+        "product_types",
+
+        "quality_rank",
+
+        "referral_destinations",
+
+        "title"
+
+        ]
+
+        ]
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution
+
+        files that are most frequently used to build a UI displaying search results. The following fields are provided for every image
+
+        in your result set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```
+
+
+        ## Enhanced Search
+
+
+        Our enhanced search uses machine-learning models to understand natural, conversational language. Meaning you can search for longer phrases and get more relevant results from our creative image and creative video libraries. Default is `true`. Set `enhanced_search` to `false` if you require a precise result set and not one expanded through enhanced search.'
       parameters:
       - name: Accept-Language
         in: header
@@ -511,12 +661,14 @@ paths:
           description: UnauthorizedDisplaySize
         '500':
           description: InvalidIStockCollection
+      operationId: getV3SearchImagesCreative
+      x-operation-id-source: derived
   /v3/search/images/creative/by-image:
     get:
       tags:
       - Search
       summary: Search for creative images based on url
-      description: 'Search for **similar creative images** by passing an `image_url` to an uploaded image OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.
+      description: 'Search for **similar creative images** by passing an `image_url` to an uploaded image OR an `asset_id` of an asset in our catalog. All responses will have the `exclude_nudity` filter automatically applied.
 
 
         ## Searching by URL
@@ -550,9 +702,7 @@ paths:
         ## Searching by asset id
 
 
-        When searching by `asset_id`, any image or video asset id in the Getty/iStock catalog can be used as the source for similar images.
-
-        '
+        When searching by `asset_id`, any image or video asset id in the Getty/iStock catalog can be used as the source for similar images.'
       parameters:
       - name: Accept-Language
         in: header
@@ -684,12 +834,230 @@ paths:
           description: AssetNotFound
         '500':
           description: InvalidIStockCollection
+      operationId: getV3SearchImagesCreativeByImage
+      x-operation-id-source: derived
   /v3/search/images/editorial:
     get:
       tags:
       - Search
       summary: Search for editorial images only
-      description: "Use this endpoint to search our editorial stock photos, illustrations and archival images.  Editorial images represent newsworthy events or illustrate matters of general interest, such as news, sport and entertainment and are generally intended for editorial use.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\nTo include your API token in the search request, add it to the headers as a Bearer token (example in curl):\n\n\t-H \"Authorization: Bearer <your-token>\"\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```"
+      description: 'Use this endpoint to search our editorial stock photos, illustrations and archival images. Editorial images represent newsworthy events or illustrate matters of general interest, such as news, sport and entertainment and are generally intended for editorial use.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        You can show different information in the response by specifying values on the "fields" parameter (see details below).
+
+        You can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search). If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request. Please consult our Authorization FAQ for more information on authorization tokens, and our Authorization Workflows for code examples of getting a token.
+
+        To include your API token in the search request, add it to the headers as a Bearer token (example in curl):
+
+
+        -H "Authorization: Bearer "
+
+
+        Search requests without a phrase parameter are not supported and may not always work.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "license_model",
+
+        "max_dimensions",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "copyright",
+
+        "date_created",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "editorial_segments",
+
+        "event_ids",
+
+        "graphical_style",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "orientation",
+
+        "product_types",
+
+        "quality_rank",
+
+        "referral_destinations",
+
+        "title"
+
+        ]
+
+        ]
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```'
       parameters:
       - name: Accept-Language
         in: header
@@ -1016,12 +1384,255 @@ paths:
           description: AuthorizationTokenRequired
         '403':
           description: UnauthorizedDisplaySize
+      operationId: getV3SearchImagesEditorial
+      x-operation-id-source: derived
   /v3/search/videos/creative:
     get:
       tags:
       - Search
       summary: Search for creative videos
-      description: "Use this endpoint to search premium stock video, from archival film to contemporary 4K and HD footage.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without\nbeing logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only \nassets that you have a license to use, you need to also include an authorization token in the header of your request.\nPlease consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens.\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search\nresponse results. The following fields are provided for every video in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"asset_family\", \n        \"caption\",\n        \"collection_code\",\n        \"collection_name\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\", \n\t\t\"call_for_image\",\n        \"caption\", \n        \"clip_length\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\", \n        \"color_type\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"era\",\n        \"license_model\",\n        \"mastered_to\",\n        \"originally_shot_on\",\n        \"product_types\",\n        \"quality_rank\",\n        \"shot_speed\",\n        \"source\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files \nthat are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result \nset when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"videos\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Enhanced Search\n\nOur enhanced search uses machine-learning models to understand natural, conversational language. Meaning you can search for longer phrases and get more relevant results from our creative image and creative video libraries.  Default is `true`. Set `enhanced_search` to `false` if you require a precise result set and not one expanded through enhanced search."
+      description: 'Use this endpoint to search premium stock video, from archival film to contemporary 4K and HD footage.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        You can show different information in the response by specifying values on the "fields" parameter (see details below).
+
+        You can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without
+
+        being logged in (anonymous search). If you are a Getty Images API customer and would like to ensure that your API searches return only
+
+        assets that you have a license to use, you need to also include an authorization token in the header of your request.
+
+        Please consult our Authorization FAQ for more information on authorization tokens.
+
+
+        Search requests without a phrase parameter are not supported and may not always work.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search
+
+        response results. The following fields are provided for every video in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "videos":
+
+        [
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_name",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "license_model",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a
+
+        detailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "videos":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "clip_length",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "color_type",
+
+        "copyright",
+
+        "date_created",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "era",
+
+        "license_model",
+
+        "mastered_to",
+
+        "originally_shot_on",
+
+        "product_types",
+
+        "quality_rank",
+
+        "shot_speed",
+
+        "source",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files
+
+        that are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result
+
+        set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "videos":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```
+
+
+        ## Enhanced Search
+
+
+        Our enhanced search uses machine-learning models to understand natural, conversational language. Meaning you can search for longer phrases and get more relevant results from our creative image and creative video libraries. Default is `true`. Set `enhanced_search` to `false` if you require a precise result set and not one expanded through enhanced search.'
       parameters:
       - name: Accept-Language
         in: header
@@ -1363,12 +1974,14 @@ paths:
           description: UnauthorizedDisplaySize
         '500':
           description: InvalidIStockCollection
+      operationId: getV3SearchVideosCreative
+      x-operation-id-source: derived
   /v3/search/videos/creative/by-image:
     get:
       tags:
       - Search
       summary: Search for creative videos based on url
-      description: 'Search for **similar creative videos** by passing an `image_url` to an uploaded image/frame grab from a video OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.
+      description: 'Search for **similar creative videos** by passing an `image_url` to an uploaded image/frame grab from a video OR an `asset_id` of an asset in our catalog. All responses will have the `exclude_nudity` filter automatically applied.
 
 
         ## Searching by URL
@@ -1402,9 +2015,7 @@ paths:
         ## Searching by asset id
 
 
-        When searching by `asset_id`, any image or video asset id in the Getty/iStock catalog can be used as the source for similar videos.
-
-        '
+        When searching by `asset_id`, any image or video asset id in the Getty/iStock catalog can be used as the source for similar videos.'
       parameters:
       - name: Accept-Language
         in: header
@@ -1536,12 +2147,237 @@ paths:
           description: AssetNotFound
         '500':
           description: InvalidIStockCollection
+      operationId: getV3SearchVideosCreativeByImage
+      x-operation-id-source: derived
   /v3/search/videos/editorial:
     get:
       tags:
       - Search
       summary: Search for editorial videos
-      description: "Use this endpoint to search current and archival video clips of celebrities, newsmakers, and events.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every video in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"asset_family\", \n        \"caption\",\n        \"collection_code\",\n        \"collection_name\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"videos\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\", \n\t\t\"call_for_image\",\n        \"caption\", \n        \"clip_length\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\", \n        \"color_type\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\":\n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"era\",\n        \"event_ids\",\n        \"license_model\",\n        \"mastered_to\",\n        \"originally_shot_on\",\n        \"product_types\",\n        \"quality_rank\",\n        \"shot_speed\",\n        \"source\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"videos\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```"
+      description: 'Use this endpoint to search current and archival video clips of celebrities, newsmakers, and events.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        You can show different information in the response by specifying values on the "fields" parameter (see details below).
+
+        You can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search). If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request. Please consult our Authorization FAQ for more information on authorization tokens, and our Authorization Workflows for code examples of getting a token.
+
+
+        Search requests without a phrase parameter are not supported and may not always work.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every video in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "videos":
+
+        [
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_name",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "license_model",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of videos. The following fields are provided for every video in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "videos":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "clip_length",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "color_type",
+
+        "copyright",
+
+        "date_created",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "era",
+
+        "event_ids",
+
+        "license_model",
+
+        "mastered_to",
+
+        "originally_shot_on",
+
+        "product_types",
+
+        "quality_rank",
+
+        "shot_speed",
+
+        "source",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every video in your result set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "videos":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```'
       parameters:
       - name: Accept-Language
         in: header
@@ -1856,6 +2692,8 @@ paths:
           description: AuthorizationTokenRequired
         '403':
           description: UnauthorizedDisplaySize
+      operationId: getV3SearchVideosEditorial
+      x-operation-id-source: derived
   /v3/search/by-image/uploads/{file-name}:
     put:
       tags:
@@ -1897,12 +2735,243 @@ paths:
           description: AuthorizationTokenRequired
         '403':
           description: UnauthorizedDisplaySize
+      operationId: putV3SearchByImageUploadsByFileName
+      x-operation-id-source: derived
   /v3/search/images:
     get:
       tags:
       - Search
       summary: Search for both creative and editorial images - *** DEPRECATED ***
-      description: "## _This endpoint draws from such a large diversity of content, the results will not be as relevant as when the more specific Creative or Editorial endpoints are used. Additionally, the response time for this endpoint is slower compared to that for Creative and Editorial-specific endpoints. For these reasons,_ _**it is highly recommended that those endpoints are used instead of this blended endpoint.**_\n\n\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.<br>\nTo include your API token in the search request, add it to the headers as a Bearer token (example in curl):\n\n\t-H \"Authorization: Bearer <your-token>\"\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of images. \nThe following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most \nfrequently used to build a UI displaying search results. The following fields are provided for every image in your result set when you include **display_set**\nin your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Request Usage Considerations\n\n- Specifying the \"entity_details\" response field can have significant performance implications. The field should be used only when necessary.\n"
+      description: '## _This endpoint draws from such a large diversity of content, the results will not be as relevant as when the more specific Creative or Editorial endpoints are used. Additionally, the response time for this endpoint is slower compared to that for Creative and Editorial-specific endpoints. For these reasons,_ _**it is highly recommended that those endpoints are used instead of this blended endpoint.**_
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        You can show different information in the response by specifying values on the "fields" parameter (see details below).
+
+        You can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search). If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request. Please consult our Authorization FAQ for more information on authorization tokens, and our Authorization Workflows for code examples of getting a token.
+
+
+        To include your API token in the search request, add it to the headers as a Bearer token (example in curl):
+
+
+        -H "Authorization: Bearer "
+
+
+        Search requests without a phrase parameter are not supported and may not always work.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "license_model",
+
+        "max_dimensions",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of images.
+
+        The following fields are provided for every image in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "copyright",
+
+        "date_created",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "editorial_segments",
+
+        "event_ids",
+
+        "graphical_style",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "orientation",
+
+        "product_types",
+
+        "quality_rank",
+
+        "referral_destinations",
+
+        "title"
+
+        ]
+
+        ]
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most
+
+        frequently used to build a UI displaying search results. The following fields are provided for every image in your result set when you include **display_set**
+
+        in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```
+
+
+        ## Request Usage Considerations
+
+
+        - Specifying the "entity_details" response field can have significant performance implications. The field should be used only when necessary.'
       parameters:
       - name: Accept-Language
         in: header
@@ -2164,13 +3233,206 @@ paths:
           description: AuthorizationTokenRequired
         '403':
           description: UnauthorizedDisplaySize
+      operationId: getV3SearchImages
+      x-operation-id-source: derived
 components:
   schemas:
-    EditorialVideoType:
+    CreativeVideosFieldValues:
       enum:
-      - raw
-      - produced
+      - allowed_use
+      - artist
+      - aspect_ratio
+      - asset_family
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - era
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - mastered_to
+      - object_name
+      - orientation
+      - originally_shot_on
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - shot_speed
+      - summary_set
+      - thumb
+      - title
       type: string
+    MaxDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    EventsSearchResult:
+      type: object
+      properties:
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Event'
+        result_count:
+          type: integer
+          format: int32
+      additionalProperties: false
+    CreateVideoSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    GraphicalStylesFilterType:
+      enum:
+      - include
+      - exclude
+      type: string
+    CreativeVideoSearchItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VideoSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        era:
+          type:
+          - string
+          - 'null'
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        mastered_to:
+          type:
+          - string
+          - 'null'
+        originally_shot_on:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+        shot_speed:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        istock_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IStockLicense'
+      additionalProperties: false
     EditorialVideosFieldValues:
       enum:
       - allowed_use
@@ -2215,54 +3477,244 @@ components:
       - title
       - istock_licenses
       type: string
+    Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        entity_uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        entity_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
     ReleaseStatus:
       enum:
       - release_not_important
       - fully_released
       type: string
-    VideoSearchItemDisplaySize:
+    IStockLicense:
       type: object
       properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        aspect_ratio:
-          type:
-          - string
-          - 'null'
+        license_type:
+          $ref: '#/components/schemas/AssetLicenseName'
+        credits:
+          type: integer
+          format: int32
       additionalProperties: false
-    CreateImageSearchFacetsFields:
+    EditorialVideoType:
       enum:
-      - artists
-      - locations
+      - raw
+      - produced
       type: string
-    NumberOfPeopleFilterType:
+    CompositionsFilterType:
       enum:
-      - none
-      - one
-      - two
-      - group
+      - abstract
+      - candid
+      - close_up
+      - copy_space
+      - cut_out
+      - full_frame
+      - full_length
+      - headshot
+      - looking_at_camera
+      - macro
+      - medium_shot
+      - part_of_a_series
+      - portrait
+      - sparse
+      - still_life
+      - three_quarter_length
+      - waist_up
+      - wide_shot
       type: string
-    EventsSearchResult:
+    VideoOrientationRequest:
+      enum:
+      - horizontal
+      - vertical
+      type: string
+    EventSearchSortOrder:
+      enum:
+      - newest
+      - oldest
+      type: string
+    ImageSearchItemCreative:
       type: object
       properties:
-        events:
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type: boolean
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Event'
+            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        quality_rank:
+          type: integer
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CreativeImageSearchResults:
+      type: object
+      properties:
         result_count:
           type: integer
           format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageSearchItemCreative'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
       additionalProperties: false
+    EditorialImageSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
+      type: string
+    EventFieldValues:
+      enum:
+      - id
+      - child_event_count
+      - editorial_segments
+      - hero_image
+      - image_count
+      - keywords
+      - location
+      - name
+      - start_date
+      - type
+      type: string
     EditorialImagesFieldValues:
       enum:
       - allowed_use
@@ -2305,114 +3757,246 @@ components:
       - title
       - uri_oembed
       type: string
-    EditorialSegmentContract:
-      enum:
-      - archival
-      - entertainment
-      - news
-      - publicity
-      - royalty
-      - sport
-      type: string
-    Keyword:
-      type: object
-      properties:
-        keyword_id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        relevance:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        entity_uris:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        entity_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    AffiliateImage:
+    HeroImage:
       type: object
       properties:
         id:
           type:
           - string
           - 'null'
-        title:
+        display_sizes:
           type:
-          - string
+          - array
           - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateImageUrls'
-        destination_url:
-          type:
-          - string
-          - 'null'
+          items:
+            $ref: '#/components/schemas/HeroImageDisplaySize'
       additionalProperties: false
-    MoodFilterType:
-      enum:
-      - black_and_white
-      - bold
-      - cool
-      - dramatic
-      - natural
-      - vivid
-      - warm
-      type: string
-    AffiliateImageUrls:
+    CreativeVideoSearchResults:
       type: object
       properties:
-        small:
+        result_count:
+          type: integer
+          format: int32
+        videos:
           type:
-          - string
+          - array
           - 'null'
-        small_height:
-          type: integer
-          format: int32
-        small_width:
-          type: integer
-          format: int32
-        medium:
+          items:
+            $ref: '#/components/schemas/CreativeVideoSearchItem'
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+        related_searches:
           type:
-          - string
+          - array
           - 'null'
-        medium_height:
-          type: integer
-          format: int32
-        medium_width:
-          type: integer
-          format: int32
-        large:
-          type:
-          - string
-          - 'null'
-        large_height:
-          type: integer
-          format: int32
-        large_width:
-          type: integer
-          format: int32
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
       additionalProperties: false
+    LocationEvent:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        state_province:
+          type:
+          - string
+          - 'null'
+        venue:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    EditorialVideoSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EditorialVideoSearchItem'
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+      additionalProperties: false
+    AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImageSearchItemSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageSearchItem'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+      additionalProperties: false
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImagesFieldValues:
+      enum:
+      - accessrestriction
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - editorial_source
+      - entity_details
+      - event_ids
+      - graphical_style
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - people
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+    AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    VideoFormatsRequest:
+      enum:
+      - sd
+      - hd
+      - 4k
+      - hd_web
+      type: string
+    SpecificPeople:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ViewpointsFilterType:
+      enum:
+      - lockdown
+      - panning
+      - tracking_shot
+      - aerial_view
+      - high_angle_view
+      - low_angle_view
+      - tilt
+      - point_of_view
+      type: string
+    ImageOrientationRequest:
+      enum:
+      - horizontal
+      - vertical
+      - square
+      - panoramic_horizontal
+      - panoramic_vertical
+      type: string
+    LicenseModelVideoRequest:
+      enum:
+      - rightsready
+      - royaltyfree
+      type: string
+    VideoSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    VideoAspectRatioFilterType:
+      enum:
+      - '16:9'
+      - '9:16'
+      - '3:4'
+      - '4:3'
+      - '4:5'
+      - '2:1'
+      - '17:9'
+      - '9:17'
+      type: string
     HeroImageDisplaySize:
       type: object
       properties:
@@ -2427,17 +4011,181 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    EventSearchSortOrder:
+    CreativeVideoSortOrder:
       enum:
+      - best_match
+      - most_popular
       - newest
-      - oldest
+      - random
       type: string
-    EditorialSource:
+    ImageTechniquesFilterType:
+      enum:
+      - realtime
+      - time_lapse
+      - slow_motion
+      - color
+      - black_and_white
+      - animation
+      - selective_focus
+      type: string
+    EditorialSegmentContract:
+      enum:
+      - archival
+      - entertainment
+      - news
+      - publicity
+      - royalty
+      - sport
+      type: string
+    Artist:
       type: object
       properties:
-        id:
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GraphicalStyle:
+      enum:
+      - fine_art
+      - illustration
+      - photography
+      - vector
+      type: string
+    CreativeImagesFieldValues:
+      enum:
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - graphical_style
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+    Download:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    SearchByImageResourceResults:
+      type: object
+      properties:
+        image_fingerprint:
+          type:
+          - string
+          - 'null'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+          deprecated: true
+        result_count:
           type: integer
           format: int32
+        images: {}
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+      additionalProperties: false
+    BlendedImageSortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - random
+      type: string
+    ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    SearchFacetsResponse:
+      type: object
+      properties:
+        specific_people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SpecificPeople'
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FacetEvent'
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Location'
+        artists:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Artist'
+        entertainment:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Entertainment'
       additionalProperties: false
     EthnicityFilterType:
       enum:
@@ -2454,61 +4202,91 @@ components:
       - south_asian
       - southeast_asian
       type: string
-    EditorialImageSearchFacetsFields:
+    MoodFilterType:
+      enum:
+      - black_and_white
+      - bold
+      - cool
+      - dramatic
+      - natural
+      - vivid
+      - warm
+      type: string
+    CreateImageSearchFacetsFields:
       enum:
       - artists
-      - events
       - locations
-      - specific_people
       type: string
-    CreativeVideoSortOrder:
+    FacetEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    SearchFileType:
+      enum:
+      - eps
+      type: string
+    CreativeImageSortOrder:
       enum:
       - best_match
       - most_popular
       - newest
       - random
       type: string
-    CreativeVideosFieldValues:
-      enum:
-      - allowed_use
-      - artist
-      - aspect_ratio
-      - asset_family
-      - call_for_image
-      - caption
-      - clip_length
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - copyright
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - download_product
-      - download_sizes
-      - era
-      - id
-      - istock_collection
-      - keywords
-      - largest_downloads
-      - license_model
-      - mastered_to
-      - object_name
-      - orientation
-      - originally_shot_on
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - shot_speed
-      - summary_set
-      - thumb
-      - title
-      type: string
-    CreativeImageSearchResults:
+    RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Event:
+      type: object
+      properties:
+        child_event_count:
+          type: integer
+          format: int32
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hero_image:
+          $ref: '#/components/schemas/HeroImage'
+        id:
+          type: integer
+          format: int32
+        image_count:
+          type: integer
+          format: int32
+        location:
+          $ref: '#/components/schemas/LocationEvent'
+        name:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    EditorialImageSearchResults:
       type: object
       properties:
         result_count:
@@ -2519,9 +4297,7 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ImageSearchItemCreative'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
+            $ref: '#/components/schemas/ImageSearchItemEditorial'
         related_searches:
           type:
           - array
@@ -2529,10 +4305,70 @@ components:
           items:
             $ref: '#/components/schemas/RelatedSearch'
       additionalProperties: false
-    GraphicalStylesFilterType:
+    EditorialGraphicalStyle:
       enum:
-      - include
-      - exclude
+      - photography
+      - illustration
+      - vector
+      type: string
+    NumberOfPeopleFilterType:
+      enum:
+      - none
+      - one
+      - two
+      - group
+      type: string
+    AgeOfPeopleFilterType:
+      enum:
+      - newborn
+      - baby
+      - child
+      - teenager
+      - young_adult
+      - adult
+      - adults_only
+      - mature_adult
+      - senior_adult
+      - 0-1_months
+      - 2-5_months
+      - 6-11_months
+      - 12-17_months
+      - 18-23_months
+      - 2-3_years
+      - 4-5_years
+      - 6-7_years
+      - 8-9_years
+      - 10-11_years
+      - 12-13_years
+      - 14-15_years
+      - 16-17_years
+      - 18-19_years
+      - 20-24_years
+      - 20-29_years
+      - 25-29_years
+      - 30-34_years
+      - 30-39_years
+      - 35-39_years
+      - 40-44_years
+      - 40-49_years
+      - 45-49_years
+      - 50-54_years
+      - 50-59_years
+      - 55-59_years
+      - 60-64_years
+      - 60-69_years
+      - 65-69_years
+      - 70-79_years
+      - 80-89_years
+      - 90_plus_years
+      - 100_over
+      type: string
+    EditorialVideoSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
       type: string
     EditorialVideoSearchItem:
       type: object
@@ -2661,133 +4497,6 @@ components:
           items:
             $ref: '#/components/schemas/IStockLicense'
       additionalProperties: false
-    AffiliateImageSearchResponse:
-      type: object
-      properties:
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    Location:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CreativeVideoSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CreativeVideoSearchItem'
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    AssetLicenseName:
-      enum:
-      - Standard
-      - Multiseat
-      - Unlimited
-      - Resale
-      - Indemnification
-      type: string
-    AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
-    ImageOrientationRequest:
-      enum:
-      - horizontal
-      - vertical
-      - square
-      - panoramic_horizontal
-      - panoramic_vertical
-      type: string
-    EditorialImageSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItemEditorial'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    MaxDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    AffiliateVideoSearchResponse:
-      type: object
-      properties:
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateVideo'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    BlendedImageSortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - random
-      type: string
-    VideoAspectRatioFilterType:
-      enum:
-      - '16:9'
-      - '9:16'
-      - '3:4'
-      - '4:3'
-      - '4:5'
-      - '2:1'
-      - '17:9'
-      - '9:17'
-      type: string
     ImageSearchItemEditorial:
       type: object
       properties:
@@ -2929,518 +4638,6 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    EventFieldValues:
-      enum:
-      - id
-      - child_event_count
-      - editorial_segments
-      - hero_image
-      - image_count
-      - keywords
-      - location
-      - name
-      - start_date
-      - type
-      type: string
-    SortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - oldest
-      - random
-      type: string
-    ImageSearchItemSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItem'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    SearchFileType:
-      enum:
-      - eps
-      type: string
-    LocationEvent:
-      type: object
-      properties:
-        city:
-          type:
-          - string
-          - 'null'
-        country:
-          type:
-          - string
-          - 'null'
-        state_province:
-          type:
-          - string
-          - 'null'
-        venue:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    HeroImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/HeroImageDisplaySize'
-      additionalProperties: false
-    EditorialVideoSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EditorialVideoSearchItem'
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    EditorialGraphicalStyle:
-      enum:
-      - photography
-      - illustration
-      - vector
-      type: string
-    SearchFacetsResponse:
-      type: object
-      properties:
-        specific_people:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SpecificPeople'
-        events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FacetEvent'
-        locations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Location'
-        artists:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Artist'
-        entertainment:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Entertainment'
-      additionalProperties: false
-    GraphicalStyle:
-      enum:
-      - fine_art
-      - illustration
-      - photography
-      - vector
-      type: string
-    CreativeImagesFieldValues:
-      enum:
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - call_for_image
-      - caption
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - comp_webp
-      - copyright
-      - date_camera_shot
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - download_product
-      - download_sizes
-      - graphical_style
-      - id
-      - istock_collection
-      - keywords
-      - largest_downloads
-      - license_model
-      - max_dimensions
-      - orientation
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      - uri_oembed
-      type: string
-    EditorialVideoSearchFacetsFields:
-      enum:
-      - artists
-      - events
-      - locations
-      - specific_people
-      type: string
-    CompositionsFilterType:
-      enum:
-      - abstract
-      - candid
-      - close_up
-      - copy_space
-      - cut_out
-      - full_frame
-      - full_length
-      - headshot
-      - looking_at_camera
-      - macro
-      - medium_shot
-      - part_of_a_series
-      - portrait
-      - sparse
-      - still_life
-      - three_quarter_length
-      - waist_up
-      - wide_shot
-      type: string
-    RelatedSearch:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-        url:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    SpecificPeople:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ImageTechniquesFilterType:
-      enum:
-      - realtime
-      - time_lapse
-      - slow_motion
-      - color
-      - black_and_white
-      - animation
-      - selective_focus
-      type: string
-    ViewpointsFilterType:
-      enum:
-      - lockdown
-      - panning
-      - tracking_shot
-      - aerial_view
-      - high_angle_view
-      - low_angle_view
-      - tilt
-      - point_of_view
-      type: string
-    AgeOfPeopleFilterType:
-      enum:
-      - newborn
-      - baby
-      - child
-      - teenager
-      - young_adult
-      - adult
-      - adults_only
-      - mature_adult
-      - senior_adult
-      - 0-1_months
-      - 2-5_months
-      - 6-11_months
-      - 12-17_months
-      - 18-23_months
-      - 2-3_years
-      - 4-5_years
-      - 6-7_years
-      - 8-9_years
-      - 10-11_years
-      - 12-13_years
-      - 14-15_years
-      - 16-17_years
-      - 18-19_years
-      - 20-24_years
-      - 20-29_years
-      - 25-29_years
-      - 30-34_years
-      - 30-39_years
-      - 35-39_years
-      - 40-44_years
-      - 40-49_years
-      - 45-49_years
-      - 50-54_years
-      - 50-59_years
-      - 55-59_years
-      - 60-64_years
-      - 60-69_years
-      - 65-69_years
-      - 70-79_years
-      - 80-89_years
-      - 90_plus_years
-      - 100_over
-      type: string
-    AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AffiliateVideo:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateVideoUrls'
-        destination_url:
-          type:
-          - string
-          - 'null'
-        clip_length:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ImagesFieldValues:
-      enum:
-      - accessrestriction
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - call_for_image
-      - caption
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - comp_webp
-      - copyright
-      - date_camera_shot
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - download_product
-      - download_sizes
-      - editorial_segments
-      - editorial_source
-      - entity_details
-      - event_ids
-      - graphical_style
-      - id
-      - istock_collection
-      - keywords
-      - largest_downloads
-      - license_model
-      - max_dimensions
-      - orientation
-      - people
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      - uri_oembed
-      type: string
-    IStockLicense:
-      type: object
-      properties:
-        license_type:
-          $ref: '#/components/schemas/AssetLicenseName'
-        credits:
-          type: integer
-          format: int32
-      additionalProperties: false
-    SearchByImageResourceResults:
-      type: object
-      properties:
-        image_fingerprint:
-          type:
-          - string
-          - 'null'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-          deprecated: true
-        result_count:
-          type: integer
-          format: int32
-        images: {}
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    CollectionsFilterType:
-      enum:
-      - include
-      - exclude
-      type: string
-    AffiliateVideoUrls:
-      type: object
-      properties:
-        small_still:
-          type:
-          - string
-          - 'null'
-        medium_still:
-          type:
-          - string
-          - 'null'
-        large_still:
-          type:
-          - string
-          - 'null'
-        small_motion:
-          type:
-          - string
-          - 'null'
-        large_motion:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ReferralDestination:
-      type: object
-      properties:
-        site_name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    LicenseModelVideoRequest:
-      enum:
-      - rightsready
-      - royaltyfree
-      type: string
-    AllowedUse:
-      type: object
-      properties:
-        how_can_i_use_it:
-          type:
-          - string
-          - 'null'
-          description: Indicates how the asset can be used
-        release_info:
-          type:
-          - string
-          - 'null'
-          description: Indicates release status
-        usage_restrictions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Indicates asset usage restriction, if any
-      additionalProperties: false
-    Event:
-      type: object
-      properties:
-        child_event_count:
-          type: integer
-          format: int32
-        editorial_segments:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        hero_image:
-          $ref: '#/components/schemas/HeroImage'
-        id:
-          type: integer
-          format: int32
-        image_count:
-          type: integer
-          format: int32
-        location:
-          $ref: '#/components/schemas/LocationEvent'
-        name:
-          type:
-          - string
-          - 'null'
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      additionalProperties: false
     VideoFrameRates:
       enum:
       - '23.98'
@@ -3452,6 +4649,46 @@ components:
       - '59.94'
       - '60'
       type: string
+    TeeShirtSize:
+      enum:
+      - x_small
+      - small
+      - medium
+      - large
+      - x_large
+      - xx_large
+      - vector
+      type: string
+    CollectionsFilterType:
+      enum:
+      - include
+      - exclude
+      type: string
+    ImageSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Entertainment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     ImageSearchItem:
       type: object
       properties:
@@ -3597,209 +4834,245 @@ components:
           items:
             $ref: '#/components/schemas/IStockLicense'
       additionalProperties: false
-    TeeShirtSize:
-      enum:
-      - x_small
-      - small
-      - medium
-      - large
-      - x_large
-      - xx_large
-      - vector
-      type: string
-    ImageSearchItemCreative:
+    EditorialSource:
       type: object
       properties:
-        allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
-        alternative_ids:
+        id:
+          type: integer
+          format: int32
+      additionalProperties: false
+    AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties:
+          description: Indicates how the asset can be used
+        release_info:
+          type:
+          - string
+          - 'null'
+          description: Indicates release status
+        usage_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
             type: string
-        artist:
-          type:
-          - string
-          - 'null'
-        asset_family:
-          type:
-          - string
-          - 'null'
-        call_for_image:
-          type: boolean
-        caption:
-          type:
-          - string
-          - 'null'
-        collection_code:
-          type:
-          - string
-          - 'null'
-        collection_id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        collection_name:
-          type:
-          - string
-          - 'null'
-        color_type:
-          type:
-          - string
-          - 'null'
-        copyright:
-          type:
-          - string
-          - 'null'
-        date_camera_shot:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
-        download_product:
-          type:
-          - string
-          - 'null'
-        graphical_style:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - string
-          - 'null'
-        keywords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Keyword'
-        largest_downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Download'
-        license_model:
-          type:
-          - string
-          - 'null'
-        max_dimensions:
-          $ref: '#/components/schemas/MaxDimensions'
-        orientation:
-          type:
-          - string
-          - 'null'
-        quality_rank:
-          type: integer
-          format: int32
-        referral_destinations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ReferralDestination'
-        title:
-          type:
-          - string
-          - 'null'
-        uri_oembed:
-          type:
-          - string
-          - 'null'
+          description: Indicates asset usage restriction, if any
       additionalProperties: false
-    Download:
-      type: object
-      properties:
-        product_id:
-          type:
-          - string
-          - 'null'
-        product_type:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        agreement_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CreateVideoSearchFacetsFields:
+    SortOrder:
       enum:
-      - artists
-      - locations
+      - best_match
+      - most_popular
+      - newest
+      - oldest
+      - random
       type: string
-    VideoOrientationRequest:
+    GettyImages.Services.Connect.Public.Models.LicenseModelVideoRequest:
       enum:
-      - horizontal
-      - vertical
+      - rightsready
+      - royaltyfree
       type: string
-    Entertainment:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CreativeImageSortOrder:
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.BlendedImageSortOrder:
       enum:
       - best_match
       - most_popular
       - newest
       - random
       type: string
-    VideoFormatsRequest:
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage
+    : type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeImagesFieldValues:
       enum:
-      - sd
-      - hd
-      - 4k
-      - hd_web
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - display_set
+      - download_product
+      - download_sizes
+      - graphical_style
+      - id
+      - istock_collection
+      - istock_exclusive
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
       type: string
-    Artist:
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.CreateImageSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.NumberOfPeopleFilterType:
+      enum:
+      - none
+      - one
+      - two
+      - group
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialVideoType:
+      enum:
+      - raw
+      - produced
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.GraphicalStyle:
+      enum:
+      - fine_art
+      - illustration
+      - photography
+      - vector
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeVideosFieldValues:
+      enum:
+      - allowed_use
+      - artist
+      - aspect_ratio
+      - asset_family
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - display_set
+      - download_product
+      - download_sizes
+      - era
+      - id
+      - istock_collection
+      - istock_exclusive
+      - keywords
+      - largest_downloads
+      - license_model
+      - mastered_to
+      - object_name
+      - orientation
+      - originally_shot_on
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - shot_speed
+      - summary_set
+      - thumb
+      - title
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo:
       type: object
       properties:
-        name:
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        editorial_source:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.EditorialSource'
+        era:
           type:
           - string
           - 'null'
-      additionalProperties: false
-    CreativeVideoSearchItem:
-      type: object
-      properties:
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        source:
+          type:
+          - string
+          - 'null'
         id:
           type:
           - string
           - 'null'
         allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
         artist:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
           type:
           - string
           - 'null'
         asset_family:
           type:
           - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
           - 'null'
         caption:
           type:
@@ -3830,7 +5103,17 @@ components:
           type:
           - string
           - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
         date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_submitted:
           type:
           - string
           - 'null'
@@ -3840,39 +5123,48 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/VideoSearchItemDisplaySize'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize'
         download_product:
           type:
           - string
           - 'null'
-        era:
-          type:
-          - string
-          - 'null'
-        event_ids:
+        download_sizes:
           type:
           - array
           - 'null'
           items:
-            type: integer
-            format: int32
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize'
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
         keywords:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Keyword'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
         largest_downloads:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Download'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
         license_model:
           type:
           - string
           - 'null'
         mastered_to:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
           type:
           - string
           - 'null'
@@ -3886,12 +5178,17 @@ components:
           - 'null'
           items:
             type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
         referral_destinations:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ReferralDestination'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
         shot_speed:
           type:
           - string
@@ -3905,9 +5202,1400 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/IStockLicense'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.IStockLicense'
+        object_name:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    ImageSearchItemDisplaySize:
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.LocationEvent:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        state_province:
+          type:
+          - string
+          - 'null'
+        venue:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.VideoOrientationRequest:
+      enum:
+      - horizontal
+      - vertical
+      type: string
+    GettyImages.Services.Connect.Public.Models.Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Download:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EventFieldValues:
+      enum:
+      - id
+      - child_event_count
+      - editorial_segments
+      - hero_image
+      - image_count
+      - keywords
+      - location
+      - name
+      - start_date
+      - type
+      type: string
+    GettyImages.Services.Connect.Public.Models.MaxDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialVideosFieldValues:
+      enum:
+      - allowed_use
+      - artist
+      - aspect_ratio
+      - asset_family
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - era
+      - event_ids
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - mastered_to
+      - object_name
+      - orientation
+      - originally_shot_on
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - shot_speed
+      - source
+      - summary_set
+      - thumb
+      - title
+      - istock_licenses
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EthnicityFilterType:
+      enum:
+      - black
+      - white
+      - east_asian
+      - hispanic_latinx
+      - japanese
+      - middle_eastern
+      - multiracial_person
+      - multiethnic_group
+      - native_american_first_nations
+      - pacific_islander
+      - south_asian
+      - southeast_asian
+      type: string
+    GettyImages.Services.Connect.Public.Models.Contributor:
+      type: object
+      properties:
+        member_name:
+          type:
+          - string
+          - 'null'
+          description: The contributor's member name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The contributor's display name
+      additionalProperties: false
+      description: Contributor information for an image or video
+    GettyImages.Services.Connect.Public.Models.TerritoryRestriction:
+      type: object
+      properties:
+        country_code:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.SearchByImageResourceResults:
+      type: object
+      properties:
+        image_fingerprint:
+          type:
+          - string
+          - 'null'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+          deprecated: true
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.EditorialVideoSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
+      type: string
+    GettyImages.Services.Connect.Public.Models.TeeShirtSize:
+      enum:
+      - x_small
+      - small
+      - medium
+      - large
+      - x_large
+      - xx_large
+      - vector
+      type: string
+    GettyImages.Services.Connect.Public.Models.Events.ChildEvent:
+      type: object
+      properties:
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hero_image:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImage'
+        id:
+          type: integer
+          format: int32
+        image_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.EventKeyword'
+        location:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.LocationEvent'
+        name:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        type:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ImageTechniquesFilterType:
+      enum:
+      - realtime
+      - time_lapse
+      - slow_motion
+      - color
+      - black_and_white
+      - animation
+      - selective_focus
+      type: string
+    GettyImages.Services.Connect.Public.Models.Events.EventKeyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.AgeOfPeopleFilterType:
+      enum:
+      - newborn
+      - baby
+      - child
+      - teenager
+      - young_adult
+      - adult
+      - adults_only
+      - mature_adult
+      - senior_adult
+      - 0-1_months
+      - 2-5_months
+      - 6-11_months
+      - 12-17_months
+      - 18-23_months
+      - 2-3_years
+      - 4-5_years
+      - 6-7_years
+      - 8-9_years
+      - 10-11_years
+      - 12-13_years
+      - 14-15_years
+      - 16-17_years
+      - 18-19_years
+      - 20-24_years
+      - 20-29_years
+      - 25-29_years
+      - 30-34_years
+      - 30-39_years
+      - 35-39_years
+      - 40-44_years
+      - 40-49_years
+      - 45-49_years
+      - 50-54_years
+      - 50-59_years
+      - 55-59_years
+      - 60-64_years
+      - 60-69_years
+      - 65-69_years
+      - 70-79_years
+      - 80-89_years
+      - 90_plus_years
+      - 100_over
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage:
+      type: object
+      properties:
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        editorial_source:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.EditorialSource'
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        era:
+          type:
+          - string
+          - 'null'
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        contributor:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Contributor'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        download_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        territory_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TerritoryRestriction'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ViewpointsFilterType:
+      enum:
+      - lockdown
+      - panning
+      - tracking_shot
+      - aerial_view
+      - high_angle_view
+      - low_angle_view
+      - tilt
+      - point_of_view
+      type: string
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage
+    : type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization'
+        height:
+          type: integer
+          format: int32
+        media_type:
+          type:
+          - string
+          - 'null'
+        name:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TeeShirtSize'
+        width:
+          type: integer
+          format: int32
+        dpi:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CompositionsFilterType:
+      enum:
+      - abstract
+      - candid
+      - close_up
+      - copy_space
+      - cut_out
+      - full_frame
+      - full_length
+      - headshot
+      - looking_at_camera
+      - macro
+      - medium_shot
+      - part_of_a_series
+      - portrait
+      - sparse
+      - still_life
+      - three_quarter_length
+      - waist_up
+      - wide_shot
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.VideoAspectRatioFilterType:
+      enum:
+      - '16:9'
+      - '9:16'
+      - '3:4'
+      - '4:3'
+      - '4:5'
+      - '2:1'
+      - '17:9'
+      - '9:17'
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.MoodFilterType:
+      enum:
+      - black_and_white
+      - bold
+      - cool
+      - dramatic
+      - natural
+      - vivid
+      - warm
+      type: string
+    GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        is_watermarked:
+          type: boolean
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.ImageOrientationRequest:
+      enum:
+      - horizontal
+      - vertical
+      - square
+      - panoramic_horizontal
+      - panoramic_vertical
+      type: string
+    GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.VideoSearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo
+    : type: object
+      properties:
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+        result_count:
+          type: integer
+          format: int32
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize:
+      type: object
+      properties:
+        bit_depth:
+          type:
+          - string
+          - 'null'
+        broadcast_video_standard:
+          type:
+          - string
+          - 'null'
+        compression:
+          type:
+          - string
+          - 'null'
+        content_type:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization'
+        format:
+          type:
+          - string
+          - 'null'
+        frame_rate:
+          type:
+          - number
+          - 'null'
+          format: double
+        frame_size:
+          type:
+          - string
+          - 'null'
+        height:
+          type:
+          - number
+          - 'null'
+          format: double
+        interlaced:
+          type: boolean
+        bytes:
+          type: integer
+          format: int64
+        name:
+          type:
+          - string
+          - 'null'
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.VideoFormatsRequest:
+      enum:
+      - sd
+      - hd
+      - 4k
+      - hd_web
+      type: string
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.VideoSearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video
+    : type: object
+      properties:
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+        result_count:
+          type: integer
+          format: int32
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Events.Event:
+      type: object
+      properties:
+        child_event_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        child_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.ChildEvent'
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hero_image:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImage'
+        id:
+          type: integer
+          format: int32
+        image_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.EventKeyword'
+        location:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.LocationEvent'
+        name:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        type:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.EditorialImageSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CollectionsFilterType:
+      enum:
+      - include
+      - exclude
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialGraphicalStyle:
+      enum:
+      - photography
+      - illustration
+      - vector
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ImagesFieldValues:
+      enum:
+      - accessrestriction
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - editorial_source
+      - event_ids
+      - graphical_style
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - people
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeImageSortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - random
+      type: string
+    GettyImages.Services.Connect.Public.Models.IStockLicense:
+      type: object
+      properties:
+        license_type:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName'
+        credits:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialImagesFieldValues:
+      enum:
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - editorial_source
+      - event_ids
+      - graphical_style
+      - id
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - people
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.SortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - oldest
+      - random
+      type: string
+    GettyImages.Services.Connect.Public.Models.AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
+          type:
+          - string
+          - 'null'
+          description: Indicates how the asset can be used
+        release_info:
+          type:
+          - string
+          - 'null'
+          description: Indicates release status
+        usage_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Indicates asset usage restriction, if any
+        editorial_use_only:
+          type: boolean
+          description: Indicates whether the asset is for editorial use only
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.EditorialSource:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.EditorialSegmentContract:
+      enum:
+      - archival
+      - entertainment
+      - news
+      - publicity
+      - royalty
+      - sport
+      type: string
+    GettyImages.Services.Connect.Public.Models.Events.EventsSearchResult:
+      type: object
+      properties:
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.Event'
+        result_count:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.VideoFrameRates:
+      enum:
+      - '23.98'
+      - '24'
+      - '25'
+      - '29.97'
+      - '30'
+      - '50'
+      - '59.94'
+      - '60'
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeVideoSortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - random
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.SearchFileType:
+      enum:
+      - eps
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.SearchByImageResourceVideoResults:
+      type: object
+      properties:
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+          deprecated: true
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        result_count:
+          type: integer
+          format: int32
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage:
+      type: object
+      properties:
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        contributor:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Contributor'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        download_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        territory_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TerritoryRestriction'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse:
+      type: object
+      properties:
+        specific_people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople'
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent'
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location'
+        artists:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist'
+        entertainment:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ReleaseStatus:
+      enum:
+      - release_not_important
+      - fully_released
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize:
       type: object
       properties:
         is_watermarked:
@@ -3921,19 +6609,205 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    FacetEvent:
+    GettyImages.Services.Connect.Public.Models.HeroImage:
       type: object
       properties:
         id:
-          type: integer
-          format: int32
-        name:
           type:
           - string
           - 'null'
-        date:
-          type: string
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.GraphicalStylesFilterType:
+      enum:
+      - include
+      - exclude
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.EventSearchSortOrder:
+      enum:
+      - newest
+      - oldest
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.CreateVideoSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        artist:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
           format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        download_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize'
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        mastered_to:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        originally_shot_on:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        shot_speed:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        istock_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.IStockLicense'
+        object_name:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:
@@ -3955,3 +6829,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

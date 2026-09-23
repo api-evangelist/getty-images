@@ -2,74 +2,32 @@ openapi: 3.2.0
 info:
   title: Getty Images Events API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Events across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
 tags:
 - name: Events
 paths:
-  /v3/asset-management/assets/send-events:
-    get:
-      tags:
-      - Events
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: last_offset
-        in: query
-        description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
-
-          Events occuring _after_ the `last_offset` value provided will be returned.'
-        schema:
-          type:
-          - string
-          - 'null'
-          description: 'Specifies a date/time (with timezone information) for continuing retrieval of events.
-
-            Events occuring _after_ the `last_offset` value provided will be returned.'
-          format: date-time
-      - name: event_count
-        in: query
-        description: Specifies the number of events to return. Default is 50, maximum value is 100.
-        schema:
-          type:
-          - integer
-          - 'null'
-          description: Specifies the number of events to return. Default is 50, maximum value is 100.
-          format: int32
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/GetSendEventsResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetSendEventsResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/GetSendEventsResponse'
-        '400':
-          description: EventCountOutOfRange
   /v3/events:
     get:
       tags:
       - Events
       summary: Get metadata for multiple events
-      description: "This endpoint returns the detailed event metadata for all specified events. Getty Images news, sports and entertainment photographers and\nvideographers cover editorially relevant events occurring around the world.  All images or video clips produced in association with \nan event, are assigned the same EventID. EventIDs are part of the meta-data returned in SearchForImages Results. Only content \nproduced under a Getty Images brand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image) \nwill be consistently assigned an EventID. The Event framework may also be used to group similar content, such as \n\"Hats from the Royal Wedding\" or \"Odd-ballOffbeat images of the week\". \n\nYou'll need an API key and access token to use this resource.\n"
+      description: 'This endpoint returns the detailed event metadata for all specified events. Getty Images news, sports and entertainment photographers and
+
+        videographers cover editorially relevant events occurring around the world. All images or video clips produced in association with
+
+        an event, are assigned the same EventID. EventIDs are part of the meta-data returned in SearchForImages Results. Only content
+
+        produced under a Getty Images brand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image)
+
+        will be consistently assigned an EventID. The Event framework may also be used to group similar content, such as
+
+        "Hats from the Royal Wedding" or "Odd-ballOffbeat images of the week".
+
+
+        You''ll need an API key and access token to use this resource.'
       parameters:
       - name: Accept-Language
         in: header
@@ -111,12 +69,29 @@ paths:
           description: Unauthorized
         '404':
           description: EventNotFound
+      operationId: getV3Events
+      x-operation-id-source: derived
   /v3/events/{id}:
     get:
       tags:
       - Events
       summary: Get metadata for a single event
-      description: "This endpoint returns the detailed event metadata for a specified event. Getty Images news, sports and entertainment \nphotographers and videographers cover editorially relevant events occurring around the world.  \nAll images or video clips produced in association with an event, are assigned the same EventID. \nEventIDs are part of the meta-data returned in SearchForImages Results. Only content produced under a Getty Images \nbrand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image) will be \nconsistently assigned an EventID. The Event framework may also be used to group similar content, such as \n\"Hats from the Royal Wedding\" or \"Odd-ballOffbeat images of the week\". \n\nYou'll need an API key and access token to use this resource.\n"
+      description: 'This endpoint returns the detailed event metadata for a specified event. Getty Images news, sports and entertainment
+
+        photographers and videographers cover editorially relevant events occurring around the world.
+
+        All images or video clips produced in association with an event, are assigned the same EventID.
+
+        EventIDs are part of the meta-data returned in SearchForImages Results. Only content produced under a Getty Images
+
+        brand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image) will be
+
+        consistently assigned an EventID. The Event framework may also be used to group similar content, such as
+
+        "Hats from the Royal Wedding" or "Odd-ballOffbeat images of the week".
+
+
+        You''ll need an API key and access token to use this resource.'
       parameters:
       - name: Accept-Language
         in: header
@@ -153,119 +128,71 @@ paths:
           description: Unauthorized
         '404':
           description: EventNotFound
-  /v3/search/events:
-    get:
-      tags:
-      - Events
-      summary: Search for events
-      description: 'Use this endpoint to search Getty Images news, sports and entertainment events. Getty Images photographers and videographers cover editorially-relevant events occurring around the world. All images or video clips produced in association with a specific event are assigned the same event ID. Event IDs are part of the metadata returned in Search results. Only content produced under a Getty Images brand name (Getty Images News, Getty Images Sports, Getty Images Entertainment, Film Magic, Wire Image) will be consistently assigned an event ID.
-
-
-        This endpoint will provide events based on a search phrase or editorial segment and an optional from/to date filter. You can show different information in the response by specifying values on the "fields" parameter. The results will include events whose associated images or videos may not be included in your product(s).
-
-
-        This endpoint requires only an API key.  An access token is NOT required.
-
-        '
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: editorial_segment
-        in: query
-        description: Filters to events with a matching editorial segment.
-        schema:
-          $ref: '#/components/schemas/EditorialSegmentContract'
-      - name: date_from
-        in: query
-        description: Filters to events that start on or after this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
-        schema:
+      operationId: getV3EventsById
+      x-operation-id-source: derived
+components:
+  schemas:
+    EventDetailFieldValues:
+      enum:
+      - id
+      - child_event_count
+      - editorial_segments
+      - hero_image
+      - image_count
+      - location
+      - name
+      - start_date
+      - type
+      type: string
+    GettyImages.Services.Connect.Public.Models.Events.EventKeyword:
+      type: object
+      properties:
+        keyword_id:
           type:
           - string
           - 'null'
-          description: Filters to events that start on or after this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
-          format: date-time
-      - name: date_to
-        in: query
-        description: Filters to events that start on or before this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
-        schema:
+        text:
           type:
           - string
           - 'null'
-          description: Filters to events that start on or before this date. Use ISO 8601 format (e.g., 1999-12-31). Defaults to UTC unless otherwise specified.
-          format: date-time
-      - name: fields
-        in: query
-        description: Specifies fields to return. Default set is 'id','name','start_date'.
-        style: form
-        explode: false
-        schema:
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.HeroImage:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        display_sizes:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/EventFieldValues'
-          description: Specifies fields to return. Default set is 'id','name','start_date'.
-      - name: page
-        in: query
-        description: Request results starting at a page number (default is 1, maximum is 50).
-        schema:
-          type: integer
-          description: Request results starting at a page number (default is 1, maximum is 50).
-          format: int32
-          default: 1
-      - name: page_size
-        in: query
-        description: Request number of events to return in each page. Default is 30, maximum page_size is 100.
-        schema:
-          type: integer
-          description: Request number of events to return in each page. Default is 30, maximum page_size is 100.
-          format: int32
-          default: 30
-      - name: phrase
-        in: query
-        description: Filters to events related to this phrase
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Filters to events related to this phrase
-          default: ''
-      - name: sort_order
-        in: query
-        description: Specifies the order in which to sort the results. Default is `newest`.
-        schema:
-          $ref: '#/components/schemas/EventSearchSortOrder'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsSearchResult'
-        '400':
-          description: InvalidParameterValue
-        '401':
-          description: AuthorizationTokenRequired
-        '403':
-          description: UnauthorizedDisplaySize
-components:
-  schemas:
-    Event:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Events.Event:
       type: object
       properties:
         child_event_count:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
+        child_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.ChildEvent'
         editorial_segments:
           type:
           - array
@@ -273,15 +200,23 @@ components:
           items:
             type: string
         hero_image:
-          $ref: '#/components/schemas/HeroImage'
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImage'
         id:
           type: integer
           format: int32
         image_count:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.EventKeyword'
         location:
-          $ref: '#/components/schemas/LocationEvent'
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.LocationEvent'
         name:
           type:
           - string
@@ -291,36 +226,12 @@ components:
           - string
           - 'null'
           format: date-time
-      additionalProperties: false
-    EventsSearchResult:
-      type: object
-      properties:
-        events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Event'
-        result_count:
-          type: integer
-          format: int32
-      additionalProperties: false
-    AssetEvent:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        asset_id:
-          type:
-          - string
-          - 'null'
-        email_address:
+        type:
           type:
           - string
           - 'null'
       additionalProperties: false
-    LocationEvent:
+    GettyImages.Services.Connect.Public.Models.LocationEvent:
       type: object
       properties:
         city:
@@ -340,19 +251,52 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    EditorialSegmentContract:
-      enum:
-      - archival
-      - entertainment
-      - news
-      - publicity
-      - royalty
-      - sport
-      type: string
-    EventFieldValues:
+    GettyImages.Services.Connect.Public.Models.Events.ChildEvent:
+      type: object
+      properties:
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hero_image:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImage'
+        id:
+          type: integer
+          format: int32
+        image_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.EventKeyword'
+        location:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.LocationEvent'
+        name:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        type:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Events.SingleEventDetailFieldValues:
       enum:
       - id
       - child_event_count
+      - child_events
       - editorial_segments
       - hero_image
       - image_count
@@ -362,41 +306,7 @@ components:
       - start_date
       - type
       type: string
-    HeroImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/HeroImageDisplaySize'
-      additionalProperties: false
-    EventSearchSortOrder:
-      enum:
-      - newest
-      - oldest
-      type: string
-    GetSendEventsResponse:
-      type: object
-      properties:
-        last_offset:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        asset_send_events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AssetEvent'
-      additionalProperties: false
-    HeroImageDisplaySize:
+    GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize:
       type: object
       properties:
         name:
@@ -410,13 +320,31 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    EventDetailFieldValues:
+    GettyImages.Services.Connect.Public.Models.Events.EventsResponse:
+      type: object
+      properties:
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.Event'
+        events_not_found:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Events.EventDetailFieldValues:
       enum:
       - id
       - child_event_count
       - editorial_segments
       - hero_image
       - image_count
+      - keywords
       - location
       - name
       - start_date
@@ -442,3 +370,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

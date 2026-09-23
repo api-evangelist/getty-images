@@ -1,20 +1,17 @@
 openapi: 3.2.0
 info:
-  title: Getty Images Affiliates API
+  title: Getty Images Affiliate Search API
   version: '3'
-  description: 'Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
 security:
 - Api-Key: []
 - OAuth2: []
 tags:
-- name: Affiliates
+- name: AffiliateSearch
 paths:
   /v3/affiliates/search/images:
     get:
       tags:
-      - Affiliates
+      - AffiliateSearch
       summary: Get affiliates search images
       parameters:
       - name: Accept-Language
@@ -33,29 +30,26 @@ paths:
         in: query
         description: Search images using a search phrase.
         schema:
-          type:
-          - string
-          - 'null'
-          description: Search images using a search phrase.
+          type: string
       - name: style
         in: query
         description: Filter based on graphical style of the image.
         schema:
-          $ref: '#/components/schemas/AffiliateSearchStyle'
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateSearchStyle'
       responses:
         '200':
-          description: Success
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AffiliateImageSearchResponse'
+                $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse'
       x-summary-source: derived
       operationId: getV3AffiliatesSearchImages
       x-operation-id-source: derived
   /v3/affiliates/search/videos:
     get:
       tags:
-      - Affiliates
+      - AffiliateSearch
       parameters:
       - name: Accept-Language
         in: header
@@ -72,55 +66,21 @@ paths:
       - name: phrase
         in: query
         schema:
-          type:
-          - string
-          - 'null'
+          type: string
       responses:
         '200':
-          description: Success
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AffiliateVideoSearchResponse'
+                $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoSearchResponse'
       summary: Get affiliates search videos
       x-summary-source: derived
       operationId: getV3AffiliatesSearchVideos
       x-operation-id-source: derived
 components:
   schemas:
-    AffiliateVideoUrls:
-      type: object
-      properties:
-        small_still:
-          type:
-          - string
-          - 'null'
-        medium_still:
-          type:
-          - string
-          - 'null'
-        large_still:
-          type:
-          - string
-          - 'null'
-        small_motion:
-          type:
-          - string
-          - 'null'
-        large_motion:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AffiliateVideo:
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage:
       type: object
       properties:
         id:
@@ -136,69 +96,13 @@ components:
           - string
           - 'null'
         preview_urls:
-          $ref: '#/components/schemas/AffiliateVideoUrls'
-        destination_url:
-          type:
-          - string
-          - 'null'
-        clip_length:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AffiliateImageSearchResponse:
-      type: object
-      properties:
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    AffiliateVideoSearchResponse:
-      type: object
-      properties:
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateVideo'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    AffiliateImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateImageUrls'
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageUrls'
         destination_url:
           type:
           - string
           - 'null'
       additionalProperties: false
-    AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
-    AffiliateImageUrls:
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageUrls:
       type: object
       properties:
         small:
@@ -232,6 +136,94 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoSearchResponse:
+      type: object
+      properties:
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls:
+      type: object
+      properties:
+        small_still:
+          type:
+          - string
+          - 'null'
+        medium_still:
+          type:
+          - string
+          - 'null'
+        large_still:
+          type:
+          - string
+          - 'null'
+        small_motion:
+          type:
+          - string
+          - 'null'
+        large_motion:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls'
+        destination_url:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse:
+      type: object
+      properties:
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
   securitySchemes:
     Api-Key:
       type: apiKey
@@ -241,14 +233,14 @@ components:
       type: oauth2
       flows:
         password:
-          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
-          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          refreshUrl: https://authentication.gettyimages.com/oauth2/token
           scopes: {}
         clientCredentials:
-          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
           scopes: {}
         authorizationCode:
-          authorizationUrl: https://api.gettyimages.com/v4/oauth2/auth
-          tokenUrl: https://api.gettyimages.com/v4/oauth2/token
-          refreshUrl: https://api.gettyimages.com/v4/oauth2/token
+          authorizationUrl: https://authentication.gettyimages.com/oauth2/auth
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          refreshUrl: https://authentication.gettyimages.com/oauth2/token
           scopes: {}

@@ -2,14 +2,7 @@ openapi: 3.2.0
 info:
   title: Getty Images Orders API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Orders across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
@@ -21,7 +14,12 @@ paths:
       tags:
       - Orders
       summary: Get order metadata
-      description: "This endpoint returns detailed order metadata for a specified order.\nUse of this endpoint requires configuration changes to your API key. \n\nYou'll need an API key and access token to use this resource."
+      description: 'This endpoint returns detailed order metadata for a specified order.
+
+        Use of this endpoint requires configuration changes to your API key.
+
+
+        You''ll need an API key and access token to use this resource.'
       parameters:
       - name: Accept-Language
         in: header
@@ -50,24 +48,14 @@ paths:
           description: NoAccessToOrderMetadata
         '404':
           description: OrderNotFound
+      operationId: getV3OrdersById
+      x-operation-id-source: derived
 components:
   schemas:
-    OrderNotes:
+    AssetIdFromOrder:
       type: object
       properties:
-        licensee_name:
-          type:
-          - string
-          - 'null'
-        purchase_order_number:
-          type:
-          - string
-          - 'null'
-        project_title:
-          type:
-          - string
-          - 'null'
-        ordered_by:
+        id:
           type:
           - string
           - 'null'
@@ -99,10 +87,77 @@ components:
           items:
             $ref: '#/components/schemas/AssetIdFromOrder'
       additionalProperties: false
-    AssetIdFromOrder:
+    OrderNotes:
+      type: object
+      properties:
+        licensee_name:
+          type:
+          - string
+          - 'null'
+        purchase_order_number:
+          type:
+          - string
+          - 'null'
+        project_title:
+          type:
+          - string
+          - 'null'
+        ordered_by:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Orders.AssetIdFromOrder:
       type: object
       properties:
         id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Orders.OrderDetail:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        invoice_number:
+          type:
+          - string
+          - 'null'
+        order_date:
+          type: string
+          format: date-time
+        end_client:
+          type:
+          - string
+          - 'null'
+        notes:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Orders.OrderNotes'
+        assets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Orders.AssetIdFromOrder'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Orders.OrderNotes:
+      type: object
+      properties:
+        licensee_name:
+          type:
+          - string
+          - 'null'
+        purchase_order_number:
+          type:
+          - string
+          - 'null'
+        project_title:
+          type:
+          - string
+          - 'null'
+        ordered_by:
           type:
           - string
           - 'null'
@@ -127,3 +182,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

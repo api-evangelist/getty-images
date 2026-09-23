@@ -1,0 +1,73 @@
+openapi: 3.2.0
+info:
+  title: Getty Images Image Match API
+  version: '3'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: ImageMatch
+paths:
+  /v3/image-match/search:
+    get:
+      tags:
+      - ImageMatch
+      summary: Searches for image matches using the provided URL
+      description: 'Search for a single matching image in the Getty Images catalog.
+
+
+        Image Match is used to determine if a source image also exists in the Getty Images catalog.
+
+
+        Access to this functionality is restricted. Please contact your Getty Images account rep for more information.'
+      parameters:
+      - name: url
+        in: query
+        description: The URL of the image to search for.
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: Not Found
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: InvalidImageUrl
+      operationId: getV3ImageMatchSearch
+      x-operation-id-source: derived
+components:
+  schemas:
+    SearchResponse:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+      description: Response model for image search operations
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          refreshUrl: https://authentication.gettyimages.com/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://authentication.gettyimages.com/oauth2/auth
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          refreshUrl: https://authentication.gettyimages.com/oauth2/token
+          scopes: {}

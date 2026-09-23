@@ -1,0 +1,241 @@
+openapi: 3.2.0
+info:
+  title: Getty Images Asset Changes API
+  version: '3'
+security:
+- Api-Key: []
+- OAuth2: []
+tags:
+- name: AssetChanges
+paths:
+  /v3/asset-changes/change-sets:
+    put:
+      tags:
+      - AssetChanges
+      summary: Get asset change notifications
+      description: '# Asset Changes
+
+
+        Get notifications about new, updated or deleted assets for a specific channel.
+
+
+        ## Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Maximum batch size is 2200.
+
+
+        Change-sets must be confirmed before a new batch of notifications can be retrieved from this endpoint. Use the DELETE asset-changes/change-sets/{change-set-id} endpoint to confirm reciept of these notifications.
+
+
+        Values returned for asset_type include Image, Film, and null. Values returned for asset_lifecycle include New, Update, and Delete.
+
+
+        Delete notifications may be provided for asset ids that have not previously been received as New or Update notifications. Delete notifications may return null for the asset_type. Delete notifications for videos and images are often duplicated across each other''s channels. For example, a delete notification for a video may be duplicated in a channel for image messages.
+
+
+        If there are no notifications in the channel an empty response body will be returned.
+
+
+        Notifications older than 14 days will be removed from partner channels.'
+      parameters:
+      - name: channel_id
+        in: query
+        description: Specifies the id of the channel for the asset data. Valid channel ids can be found in the results of the Get Partner Channel query.
+        schema:
+          type: integer
+          format: int32
+      - name: batch_size
+        in: query
+        description: Specifies the number of assets to return. The default is 2200; maximum is 2200.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetChanges'
+        '200':
+          description: Success - Channel contains unconfirmed asset change notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetChanges'
+        '403':
+          description: Your access token does not authorize access to this resource
+        '404':
+          description: The channel you specified does not exist
+        '400':
+          description: InvalidChannelIdException
+      operationId: putV3AssetChangesChangeSets
+      x-operation-id-source: derived
+  /v3/asset-changes/change-sets/{change-set-id}:
+    delete:
+      tags:
+      - AssetChanges
+      summary: Confirm asset change notifications
+      description: '# Delete Asset Changes
+
+
+        Confirm asset changes acknowledges receipt of asset changes (from the PUT asset-changes endpoint).
+
+
+        ## Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Use the change_set_id from the PUT asset-changes/change-sets endpoint to confirm receipt of notifications.'
+      parameters:
+      - name: change-set-id
+        in: path
+        description: Specify the change-set-id associated with a transaction resource whose receipt you want to confirm.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+        '403':
+          description: Your access token does not authorize access to this resource
+        '404':
+          description: Transaction was not found
+        '400':
+          description: InvalidChangeSetId
+      operationId: deleteV3AssetChangesChangeSetsByChangeSetId
+      x-operation-id-source: derived
+  /v3/asset-changes/channels:
+    get:
+      tags:
+      - AssetChanges
+      summary: Get a list of asset change notification channels
+      description: '# Get Partner Channels
+
+
+        Retrieves the channel data for the partner. This data can be used to populate the channel_id parameter in the Put Asset Changes query.
+
+
+        ## Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        Partners who have a channel that has been removed should contact their sales representative to be set up again.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartnerChannel'
+        '404':
+          description: ChannelsNotFound
+        '403':
+          description: UnauthorizedToAccessResource
+      operationId: getV3AssetChangesChannels
+      x-operation-id-source: derived
+components:
+  schemas:
+    AssetChanges:
+      type: object
+      properties:
+        changeSetId:
+          type:
+          - string
+          - 'null'
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+        changedAssetList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
+      additionalProperties: false
+    PartnerChannel:
+      type: object
+      properties:
+        assetFamily:
+          type:
+          - string
+          - 'null'
+          description: 'Specifies the asset family for the channel: "Editorial", "Creative" or "Both"'
+        channelId:
+          type: integer
+          description: Specifies the identification number for the channel
+          format: int32
+        channelType:
+          type:
+          - string
+          - 'null'
+          description: 'Specifies the lifecycle type(s) in the channel: "New", "Update", "Delete", or a combination of these, separated by commas'
+        startDate:
+          type: string
+          description: ''
+          format: date-time
+        assetType:
+          type:
+          - string
+          - 'null'
+          description: 'Specifies asset type in the channel: "Image", "Film", or "Music"'
+      additionalProperties: false
+      description: partner_channel
+    ChangedAssetDetail:
+      type: object
+      properties:
+        assetChangedUtcDateTime:
+          type: string
+          description: Contains the date of the asset change.
+          format: date-time
+        assetLifecycle:
+          type:
+          - string
+          - 'null'
+          description: 'Specifies the lifecycle: "New", "Update", or "Delete"'
+        assetType:
+          type:
+          - string
+          - 'null'
+          description: 'Specifies asset type: "Image", "Film", or "Music"'
+        id:
+          type:
+          - string
+          - 'null'
+          description: Contains the Id for the asset change.
+        uri:
+          type:
+          - string
+          - 'null'
+          description: Contains the asset download URL for assets with an AssetLifecycle of "New."
+      additionalProperties: false
+  securitySchemes:
+    Api-Key:
+      type: apiKey
+      name: Api-Key
+      in: header
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          refreshUrl: https://authentication.gettyimages.com/oauth2/token
+          scopes: {}
+        clientCredentials:
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: https://authentication.gettyimages.com/oauth2/auth
+          tokenUrl: https://authentication.gettyimages.com/oauth2/token
+          refreshUrl: https://authentication.gettyimages.com/oauth2/token
+          scopes: {}

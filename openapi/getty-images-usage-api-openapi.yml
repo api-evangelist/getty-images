@@ -2,14 +2,7 @@ openapi: 3.2.0
 info:
   title: Getty Images Usage API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Usage across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
@@ -20,8 +13,20 @@ paths:
     put:
       tags:
       - Usage
-      summary: Report usage of assets via a batch format.
-      description: "# Report Usage\n\nUse this endpoint to report the usages of a set of assets. The count of assets submitted in a single batch to this endpoint is limited to 1000. Note that all asset Ids specified must be valid or the operation will fail causing no usages to be recorded. In this case, you will need to remove the invalid asset Ids from the query request and re-submit the query.\n\n##  Quickstart\n\nYou'll need an API key and an access token to use this resource. \n\n_Note_: Date of use can be in any unambiguous date format.\n"
+      summary: Report usage of assets via a batch format
+      description: '# Report Usage
+
+
+        Use this endpoint to report the usages of a set of assets. The count of assets submitted in a single batch to this endpoint is limited to 1000. Note that all asset Ids specified must be valid or the operation will fail causing no usages to be recorded. In this case, you will need to remove the invalid asset Ids from the query request and re-submit the query.
+
+
+        ## Quickstart
+
+
+        You''ll need an API key and an access token to use this resource.
+
+
+        _Note_: Date of use can be in any unambiguous date format.'
       parameters:
       - name: id
         in: path
@@ -53,26 +58,10 @@ paths:
           description: UnauthorizedToReportUsage
         '409':
           description: TransactionIdDuplicated
+      operationId: putV3UsageBatchesById
+      x-operation-id-source: derived
 components:
   schemas:
-    report_usage_batch_response:
-      type: object
-      properties:
-        invalid_assets:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
-        total_asset_usages_processed:
-          type:
-          - integer
-          - 'null'
-          description: Specifies the number of asset usage records that were successfully recorded.
-          format: int32
-      additionalProperties: false
-      description: Specifies the response from the Batch Usages endpoint.
     asset_usage:
       type: object
       properties:
@@ -103,6 +92,24 @@ components:
           description: Identifies the list of asset id, usage count and date of usage combinations to record.
       additionalProperties: false
       description: Specifies the request information for the Batch Usages endpoint.
+    report_usage_batch_response:
+      type: object
+      properties:
+        invalid_assets:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
+        total_asset_usages_processed:
+          type:
+          - integer
+          - 'null'
+          description: Specifies the number of asset usage records that were successfully recorded.
+          format: int32
+      additionalProperties: false
+      description: Specifies the response from the Batch Usages endpoint.
   securitySchemes:
     Api-Key:
       type: apiKey
@@ -123,3 +130,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

@@ -2,526 +2,218 @@ openapi: 3.2.0
 info:
   title: Getty Images API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Images across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
 tags:
 - name: Images
 paths:
-  /v3/affiliates/search/images:
-    get:
-      tags:
-      - Images
-      summary: ''
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: phrase
-        in: query
-        description: Search images using a search phrase.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search images using a search phrase.
-      - name: style
-        in: query
-        description: Filter based on graphical style of the image.
-        schema:
-          $ref: '#/components/schemas/AffiliateSearchStyle'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AffiliateImageSearchResponse'
-  /v3/ai/image-generations/{generationRequestId}/images/{index}/variations:
-    post:
-      tags:
-      - Images
-      summary: Get variations on a generated image
-      description: '# AI Generator - Generate Variations
-
-
-        Generate image variations from a previously-generated image.
-
-
-        ## The Image Variation Request
-
-
-        The `ImageVariationRequest` payload to be posted contains the optional
-
-        parameters:
-
-
-        | Parameter           | Purpose                                                                                                                                                                                      |
-
-        |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-
-        | `product_id`        | If you have multiple AI Generation Getty Images products, indicate which one you would like to use for this generation request.  If you have multiple products, this property is _required_. Can be retrieved from products (`GET /v3/products`). |
-
-        | `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |
-
-        | `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |
-
-
-        ## Fulfilled and Pending Results
-
-
-        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
-
-        result and a payload including URLs to the result images and a generation request `id` value.
-
-
-        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
-
-        this call is `HTTP 202 Accepted` and the payload will only contain a generation request `id` value. This value must be
-
-        retained by the client for subsequent polling of the `GET v3/ai/image-generations/{generationRequestId}` Get Images Generation endpoint.
-
-
-        ## Lifetime of Generated Images
-
-
-        Generated images will be retained for 6 months after generation.
-
-        '
-      parameters:
-      - name: generationRequestId
-        in: path
-        description: The ID from a previous request to generate images
-        required: true
-        style: simple
-        schema:
-          type: string
-      - name: index
-        in: path
-        description: The index of the image from the specific images generation
-        required: true
-        style: simple
-        schema:
-          type: integer
-          format: int32
-      requestBody:
-        description: Request parameters
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ImageVariationRequest'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/ImageVariationRequest'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/ImageVariationRequest'
-      responses:
-        '200':
-          description: Returns the result of a request to generate a variation of images
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ImageGenerationsResponse'
-        '202':
-          description: Returns the request ID for a pending request to generate a variation of images
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PendingImageGenerationResponse'
-        '400':
-          description: InvalidProduct
-        '403':
-          description: Product quota exceeded
-        '404':
-          description: Either the generation id does not exist, the index is incorrect, or the generation is still pending
-        '429':
-          description: TooManyConcurrentGenerations
-  /v3/ai/image-generations/{generationRequestId}/images/{index}/download-sizes:
-    get:
-      tags:
-      - Images
-      summary: Get download sizes for a generated image
-      description: '# AI Generator - Get Download Sizes
-
-
-        Given a fulfilled generation request `id` and the `index` of a generated image, gets a list of download sizes for the image.
-
-        '
-      parameters:
-      - name: generationRequestId
-        in: path
-        description: The ID from a previous request to generate images
-        required: true
-        style: simple
-        schema:
-          type: string
-      - name: index
-        in: path
-        description: The index of the image from the specific images generation
-        required: true
-        style: simple
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Returns the result of a request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DownloadSizesResponse'
-        '400':
-          description: InvalidProduct
-        '404':
-          description: Either the generation id does not exist, the index is incorrect, or the generation is still pending
-        '410':
-          description: GenerationRequestGone
-  /v3/ai/image-generations/{generationRequestId}/images/{index}/download:
-    put:
-      tags:
-      - Images
-      summary: Begin the download process
-      description: '# AI Generator - Download Image
-
-
-        Download a generated image. Initiating the download process for a 4K file may incur a cost depending on the terms of your agreement.
-
-
-        ## Download Image Request body details
-
-
-        The `ImageDownloadRequest` payload to be posted contains the required `size` as well as some other optional
-
-        parameters:
-
-
-        | Parameter         | Purpose                                                                                      |
-
-        |-------------------|----------------------------------------------------------------------------------------------|
-
-        | `size_name` _Required_ | Must be one of the valid download sizes retrieved through the "Get Download Sizes" endpoint |
-
-        | `notes`             | This is an optional free text parameter often used by clients who wish to include notes specific to their integration. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                                       |
-
-        | `project_code`      | If your Getty Images Generative AI product requires project_codes, use of this parameter is required. If your product does not require a project_code, this parameter must be excluded from the request. This is for use by Getty Images customers only (not iStock). The products endpoint (`GET /v3/products`) provides this information.                                                                                                                  |
-
-
-        ## Fulfilled and Pending Results
-
-
-        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
-
-        result and a payload including a URL for the download.
-
-
-        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
-
-        this call is `HTTP 202 Accepted` with no payload. This client should then
-
-        poll `GET v3/ai/image-generations/{generationRequestId}/images/{index}/download` periodically to get the final
-
-        download.
-
-        '
-      parameters:
-      - name: generationRequestId
-        in: path
-        description: The ID from a previous request to generate images
-        required: true
-        style: simple
-        schema:
-          type: string
-      - name: index
-        in: path
-        description: The index of the image from the specific images generation
-        required: true
-        style: simple
-        schema:
-          type: integer
-          format: int32
-      requestBody:
-        description: Request parameters
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ImageDownloadRequest'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/ImageDownloadRequest'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/ImageDownloadRequest'
-      responses:
-        '200':
-          description: Download request was successful and is complete
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-        '202':
-          description: Download request was successful put is pending
-        '400':
-          description: InvalidProduct
-        '403':
-          description: ProductQuotaExceeded
-        '404':
-          description: GenerationRequestIdNotFound
-        '409':
-          description: A download is already in progress for the given `generationRequestId` and `index`.
-        '410':
-          description: GenerationRequestGone
-    get:
-      tags:
-      - Images
-      summary: 'Once the download process has started, this endpoint can be used to check the status of the download and get the
-
-        download URL once it is completed.'
-      description: '# AI Generator - Get Download Image
-
-
-        Get the download for a generated image
-
-
-        ## Fulfilled and Pending Results
-
-
-        In many cases the result of this call will be the final fulfilled result. In these cases, you will see a `HTTP 200 OK`
-
-        result and a payload including a URL for the download.
-
-
-        However some generations may take more time than can be accommodated in the initial call. In these cases the result of
-
-        this call is `HTTP 202 Accepted` with no payload. This client should then
-
-        poll `GET v3/ai/image-generations/{generationRequestId}/images/{index}/download` periodically to get the final
-
-        download.
-
-
-        Like the `PUT v3/ai/image-generations/{generationRequestId}/images/{index}/download` endpoint, the result of calling
-
-        this endpoint will be either:
-
-
-        - `HTTP 200 OK` with the download URL
-
-        - `HTTP 202 Accepted` with no payload
-
-
-        `HTTP 202 Accepted` is returned in the case where the download preparation has not yet completed. In this case it is
-
-        expected that the client will occasionally poll this endpoint until a `HTTP 200 OK` result with a full payload is
-
-        returned.
-
-        '
-      parameters:
-      - name: generationRequestId
-        in: path
-        description: The ID from a previous request to generate images
-        required: true
-        style: simple
-        schema:
-          type: string
-      - name: index
-        in: path
-        description: The index of the image from the specific images generation
-        required: true
-        style: simple
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Download request was successful and is complete
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-        '202':
-          description: Download request was successful put is pending
-        '400':
-          description: InvalidProduct
-        '404':
-          description: GenerationRequestIdNotFound
-        '410':
-          description: GenerationRequestGone
-  /v3/artists/images:
-    get:
-      tags:
-      - Images
-      summary: Search for images by a photographer
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: artist_name
-        in: query
-        description: Name of artist for desired images
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Name of artist for desired images
-      - name: fields
-        in: query
-        description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ArtistsImageSearchFieldValues'
-          description: Comma separated list of fields. Allows restricting which fields are returned. If no fields are selected, the summary_set of fields are returned.
-      - name: page
-        in: query
-        description: Identifies page to return. Default page is 1.
-        schema:
-          type: integer
-          description: Identifies page to return. Default page is 1.
-          format: int32
-          default: 1
-      - name: page_size
-        in: query
-        description: Specifies page size. Default page_size is 10, maximum page_size is 100.
-        schema:
-          type: integer
-          description: Specifies page size. Default page_size is 10, maximum page_size is 100.
-          format: int32
-          default: 10
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: InvalidParameterValue
-        '401':
-          description: Unauthorized
-  /v3/downloads/images/{id}:
-    post:
-      tags:
-      - Images
-      summary: Download an image
-      description: "Use this endpoint to generate download URLs and related data for images you are authorized to download.\n\nMost product offerings have enforced periodic download limits such as monthly, weekly, and daily. When this operation executes, the count of allowed downloads is decremented by one for the product offering. Once the download limit is reached for a given product offering, no further downloads may be requested for that product offering until the next download period.\n\nThe download limit for a given download period is covered in your product agreement established with Getty Images.\n\nYou'll need an API key and a [Resource Owner Grant or Implicit Grant](http://developers.gettyimages.com/en/authorization-faq.html) access token to use this resource.\n\n## Auto Downloads\nThe `auto_download` request query parameter specifies whether to automatically download the image.\n\nIf the `auto_download` request query parameter is set to _true_, the API will return an HTTP status code 303 *See Other*.Your client code will need to process this response and redirect to the URI specified in the *Location* header to enable you to automatically download the file. The redirection workflow follows the [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4.4).\n\nClient Request:\n\n```\nhttps://api.gettyimages.com/v3/downloads/images/[asset_id]?auto_download=true\n```\n\nServer Response:\n\nYour client code should follow redirect (3xx) status codes returned from the URI in the response Location header. More information here: [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4).\n\n```\nHTTP/1.1 303 See Other\nLocation: https://delivery.gettyimages.com/...\n```\n\nIf the `auto_download` request query parameter is set to false, the API will return a HTTP status code 200, along with the URI in the response body which can be used to download the image. \n\nClient Request:\n\n```\nhttps://api.gettyimages.com/v3/downloads/images/[asset_id]?auto_download=false\n```\n\nServer Response:\n\n```\nHTTP/1.1 200 OK\n{\n\t\"uri\": \"https://delivery.gettyimages.com/...\"\n}\n```\n## Downloading Via the Returned URI\n\nYour client code should follow redirect (3xx) status codes returned from the URI in the response. More information here: [HTTP 1.1 protocol](https://tools.ietf.org/html/rfc7231#section-6.4).\n\nThe URI returned by this call should be considered opaque and the format could change at any time.\nIn order to get the filename, length or file type, the response headers must be inspected. An example\nresponse follows:\n\n```\ncontent-length: 33959979\ncontent-type: image/jpeg\ncontent-disposition: attachment; filename=GettyImages-1167612765.jpg\n```\n\nThe `content-disposition` header must be parsed to get a usable filename.\n\n## Download URI expiration\n\nDownload URIs are _**only valid for 24 hours**_, starting from the moment they are returned from this call.\n"
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: id
-        in: path
-        description: "<remarks>\n                    Id of image to download.\n                </remarks>"
-        required: true
-        schema:
-          type:
-          - string
-          - 'null'
-          description: "<remarks>\n                    Id of image to download.\n                </remarks>"
-      - name: auto_download
-        in: query
-        description: "<remarks>\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\n                    Location header set to the location of the image.\n                    If false is specified, the download URI will be returned in the response message. Default is true.\n                </remarks>"
-        schema:
-          type: boolean
-          description: "<remarks>\n                    Specifies whether to auto-download the image. If true is specified, a 303 SeeOther status is returned with a\n                    Location header set to the location of the image.\n                    If false is specified, the download URI will be returned in the response message. Default is true.\n                </remarks>"
-          default: true
-      - name: file_type
-        in: query
-        description: "<remarks>\n                    File Type expressed with three character file extension.\n                </remarks>"
-        schema:
-          $ref: '#/components/schemas/DownloadFileType'
-      - name: height
-        in: query
-        description: "<remarks>\n                    Specifies the pixel height of the particular image to download.\n                    Available heights can be found in the images/{ids} response for the specific image.\n                    If left blank, it will return the largest available size.\n                </remarks>"
-        schema:
-          type:
-          - string
-          - 'null'
-          description: "<remarks>\n                    Specifies the pixel height of the particular image to download.\n                    Available heights can be found in the images/{ids} response for the specific image.\n                    If left blank, it will return the largest available size.\n                </remarks>"
-      - name: product_id
-        in: query
-        description: "<remarks>\n                    Identifier of the instance for the selected product offering type.\n                </remarks>"
-        schema:
-          type:
-          - integer
-          - 'null'
-          description: "<remarks>\n                    Identifier of the instance for the selected product offering type.\n                </remarks>"
-          format: int32
-      - name: product_type
-        in: query
-        description: "<remarks>\n                    Product types easyaccess, editorialsubscription, imagepack, and premiumaccess are for GettyImages API keys. Product types royaltyfreesubscription and creditpack are for iStock API keys. Default product type for iStock API keys is creditpack.\n                </remarks>"
-        schema:
-          $ref: '#/components/schemas/ProductTypeForDownloads'
-      - name: use_team_credits
-        in: query
-        description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
-        schema:
-          type:
-          - boolean
-          - 'null'
-          description: Specifies whether to download the image with iStock Team Credits. Only applicable to iStock API keys authenticated with a user that has Team Credits. Blank is the same as False.
-          default: false
-      requestBody:
-        description: "<remarks>\n                    Additional information required from specific customers when downloading. \n                    Only users who have been set up with a project code by Getty Images Sales need to use this field.\n                </remarks>"
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PremiumAccessDownloadData'
-      responses:
-        '200':
-          description: OK
-        '303':
-          description: See Other
-        '400':
-          description: MissingRequiredQueryParameters
-        '401':
-          description: AuthorizationTokenRequired
-        '403':
-          description: OverageLimitReached
-        '404':
-          description: ImageNotFound
   /v3/images:
     get:
       tags:
       - Images
       summary: Get metadata for multiple images by supplying multiple image ids
-      description: "This endpoint returns the detailed image metadata for all specified images.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build \nsearch response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"artist\",\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"allowed_use\",\n        \"artist\", \n        \"artist_title\", \n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\", \n        \"city\",\n        \"collection_code\",\n        \"collection_id\", \n        \"collection_name\",\n        \"color_type\", \n        \"copyright\", \n        \"country\", \n        \"credit_line\", \n        \"date_created\", \n        \"date_submitted\",\n        \"download_sizes\", \n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"state_province\", \n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution\nfiles that are most frequently used to build a UI displaying search results. The following fields are provided for every image \nin your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Request Usage Considerations\n\n- Specifying the \"entity_details\" response field can have significant performance implications. The field should be used only when necessary.\n"
+      description: 'This endpoint returns the detailed image metadata for all specified images.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build
+
+        search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "artist",
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a
+
+        detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "artist_title",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "city",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "color_type",
+
+        "copyright",
+
+        "country",
+
+        "credit_line",
+
+        "date_created",
+
+        "date_submitted",
+
+        "download_sizes",
+
+        "editorial_segments",
+
+        "event_ids",
+
+        "graphical_style",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "orientation",
+
+        "product_types",
+
+        "quality_rank",
+
+        "referral_destinations",
+
+        "state_province",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution
+
+        files that are most frequently used to build a UI displaying search results. The following fields are provided for every image
+
+        in your result set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```
+
+
+        ## Request Usage Considerations
+
+
+        - Specifying the "entity_details" response field can have significant performance implications. The field should be used only when necessary.'
       parameters:
       - name: Accept-Language
         in: header
@@ -570,12 +262,222 @@ paths:
           description: ImageNotFound
         '500':
           description: InvalidIStockCollection
+      operationId: getV3Images
+      x-operation-id-source: derived
   /v3/images/{id}:
     get:
       tags:
       - Images
       summary: Get metadata for a single image by supplying one image id
-      description: "This endpoint returns the detailed image metadata for a specified image.\n\nYou'll need an API key and access token to use this resource. \n \n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that\nare often used to build search response results. The following fields are provided for every image in your\nresult set when you include **summary_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"artist\",\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are \noften used to build a detailed view of images. The following fields are provided for every image in your \nresult set when you include **detail_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"allowed_use\",\n        \"artist\", \n        \"artist_title\", \n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\", \n        \"city\",\n        \"collection_code\",\n        \"collection_id\", \n        \"collection_name\",\n        \"color_type\", \n        \"copyright\", \n        \"country\", \n        \"credit_line\", \n        \"date_created\", \n        \"date_submitted\",\n        \"download_sizes\", \n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"state_province\", \n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low\nresolution files that are most frequently used to build a UI displaying search results. The following fields are provided\nfor every image in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Request Usage Considerations\n\n- Specifying the \"entity_details\" response field can have significant performance implications. The field should be used only when necessary.\n\n\n\n          \"name\": \"string\",\n          \"uri\": \"string\""
+      description: 'This endpoint returns the detailed image metadata for a specified image.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that
+
+        are often used to build search response results. The following fields are provided for every image in your
+
+        result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "artist",
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are
+
+        often used to build a detailed view of images. The following fields are provided for every image in your
+
+        result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "artist_title",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "city",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "color_type",
+
+        "copyright",
+
+        "country",
+
+        "credit_line",
+
+        "date_created",
+
+        "date_submitted",
+
+        "download_sizes",
+
+        "editorial_segments",
+
+        "event_ids",
+
+        "graphical_style",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "orientation",
+
+        "product_types",
+
+        "quality_rank",
+
+        "referral_destinations",
+
+        "state_province",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low
+
+        resolution files that are most frequently used to build a UI displaying search results. The following fields are provided
+
+        for every image in your result set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```
+
+
+        ## Request Usage Considerations
+
+
+        - Specifying the "entity_details" response field can have significant performance implications. The field should be used only when necessary.
+
+
+        "name": "string",
+
+        "uri": "string"'
       parameters:
       - name: Accept-Language
         in: header
@@ -621,6 +523,8 @@ paths:
           description: ImageNotFound
         '500':
           description: InvalidIStockCollection
+      operationId: getV3ImagesById
+      x-operation-id-source: derived
   /v3/images/{id}/downloadhistory:
     get:
       tags:
@@ -666,12 +570,225 @@ paths:
           description: ImageNotFound
         '500':
           description: InvalidIStockCollection
+      operationId: getV3ImagesByIdDownloadhistory
+      x-operation-id-source: derived
   /v3/images/{id}/same-series:
     get:
       tags:
       - Images
       summary: Retrieve creative images from the same series
-      description: "This endpoint will provide the list of images, if any exist, from the same series as the specified creative asset id. These images are typically from the same photo shoot. This functionality will not work for editorial assets.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build\nsearch response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ]\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files \nthat are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result\nset when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n"
+      description: 'This endpoint will provide the list of images, if any exist, from the same series as the specified creative asset id. These images are typically from the same photo shoot. This functionality will not work for editorial assets.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build
+
+        search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ]
+
+        "license_model",
+
+        "max_dimensions",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a
+
+        detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "copyright",
+
+        "date_created",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "editorial_segments",
+
+        "event_ids",
+
+        "graphical_style",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "orientation",
+
+        "product_types",
+
+        "quality_rank",
+
+        "referral_destinations",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files
+
+        that are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result
+
+        set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```'
       parameters:
       - name: Accept-Language
         in: header
@@ -733,12 +850,225 @@ paths:
           description: ImageNotFound
         '500':
           description: InvalidIStockCollection
+      operationId: getV3ImagesByIdSameSeries
+      x-operation-id-source: derived
   /v3/images/{id}/similar:
     get:
       tags:
       - Images
       summary: Retrieve similar images
-      description: "This endpoint will provide a list of images that are similar to the specified asset id.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build\nsearch response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ]\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files \nthat are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result\nset when you include **display_set** in your request.\n\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n"
+      description: 'This endpoint will provide a list of images that are similar to the specified asset id.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        ## Working with Fields Sets
+
+
+        Fields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:
+
+
+        #### Summary Fields Set
+
+
+        The **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build
+
+        search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "asset_family",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ]
+
+        "license_model",
+
+        "max_dimensions",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Detail Fields Set
+
+
+        The **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a
+
+        detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "allowed_use",
+
+        "artist",
+
+        "asset_family",
+
+        "call_for_image",
+
+        "caption",
+
+        "collection_code",
+
+        "collection_id",
+
+        "collection_name",
+
+        "copyright",
+
+        "date_created",
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "name": "comp"
+
+        },
+
+        {
+
+        "name": "preview"
+
+        },
+
+        {
+
+        "name": "thumb"
+
+        }
+
+        ],
+
+        "editorial_segments",
+
+        "event_ids",
+
+        "graphical_style",
+
+        "license_model",
+
+        "max_dimensions",
+
+        "orientation",
+
+        "product_types",
+
+        "quality_rank",
+
+        "referral_destinations",
+
+        "title"
+
+        ]
+
+        }
+
+        ```
+
+
+        #### Display Fields Set
+
+
+        The **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files
+
+        that are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result
+
+        set when you include **display_set** in your request.
+
+
+        The URI provided is subject to change at any time and must be used as-is with no modification.
+
+
+        ```
+
+        {
+
+        "images":
+
+        [
+
+        "display_sizes":
+
+        [
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "comp",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "preview",
+
+        "uri": ""
+
+        },
+
+        {
+
+        "is_watermarked": ,
+
+        "name": "thumb",
+
+        "uri": ""
+
+        }
+
+        ]
+
+        ]
+
+        }
+
+        ```'
       parameters:
       - name: Accept-Language
         in: header
@@ -800,1130 +1130,13 @@ paths:
           description: ImageNotFound
         '500':
           description: InvalidIStockCollection
-  /v3/search/images/creative:
-    get:
-      tags:
-      - Images
-      summary: Search for creative images only
-      description: "Use this endpoint to search our contemporary stock photos, illustrations and archival images.\n\nYou'll need an API key and access token to use this resource.\n \nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to \nbuild search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to \nbuild a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution\nfiles that are most frequently used to build a UI displaying search results. The following fields are provided for every image \nin your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Enhanced Search\n\nOur enhanced search uses machine-learning models to understand natural, conversational language. Meaning you can search for longer phrases and get more relevant results from our creative image and creative video libraries.  Default is `true`. Set `enhanced_search` to `false` if you require a precise result set and not one expanded through enhanced search."
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: age_of_people
-        in: query
-        description: Filter based on the age of individuals in an image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgeOfPeopleFilterType'
-          description: Filter based on the age of individuals in an image.
-      - name: artists
-        in: query
-        description: Search for images by specific artists (free-text, comma-separated list of artists).
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search for images by specific artists (free-text, comma-separated list of artists).
-      - name: collection_codes
-        in: query
-        description: Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type.
-      - name: collections_filter_type
-        in: query
-        description: Use to include or exclude collections from search. The default is include
-        schema:
-          $ref: '#/components/schemas/CollectionsFilterType'
-      - name: color
-        in: query
-        description: 'Filter based on predominant color in an image. Use 6 character hexadecimal format (e.g., #002244).'
-        schema:
-          type:
-          - string
-          - 'null'
-          description: 'Filter based on predominant color in an image. Use 6 character hexadecimal format (e.g., #002244).'
-      - name: compositions
-        in: query
-        description: Filter based on image composition.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CompositionsFilterType'
-          description: Filter based on image composition.
-      - name: download_product
-        in: query
-        description: "Filters based on which product the asset will download against.\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-        schema:
-          type:
-          - string
-          - 'null'
-          description: "Filters based on which product the asset will download against.\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-      - name: embed_content_only
-        in: query
-        description: Restrict search results to embeddable images. The default is false.
-        schema:
-          type: boolean
-          description: Restrict search results to embeddable images. The default is false.
-          default: false
-      - name: enhanced_search
-        in: query
-        description: If set to {false}, your search will not use enhanced search. Defaults to {true}.
-        schema:
-          type:
-          - boolean
-          - 'null'
-          description: If set to {false}, your search will not use enhanced search. Defaults to {true}.
-          default: true
-      - name: ethnicity
-        in: query
-        description: Filter search results based on the ethnicity of individuals in an image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EthnicityFilterType'
-          description: Filter search results based on the ethnicity of individuals in an image.
-      - name: exclude_editorial_use_only
-        in: query
-        description: Exclude images that are only available for editorial (non-commercial) use. Default value is false.
-        schema:
-          type:
-          - boolean
-          - 'null'
-          description: Exclude images that are only available for editorial (non-commercial) use. Default value is false.
-      - name: exclude_keyword_ids
-        in: query
-        description: Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-          description: Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned.
-      - name: exclude_nudity
-        in: query
-        description: Excludes images containing nudity. The default is false.
-        schema:
-          type: boolean
-          description: Excludes images containing nudity. The default is false.
-          default: false
-      - name: facet_fields
-        in: query
-        description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CreateImageSearchFacetsFields'
-          description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
-      - name: facet_max_count
-        in: query
-        description: Specifies the maximum number of facets to return per type. Default is 300.
-        schema:
-          type: integer
-          description: Specifies the maximum number of facets to return per type. Default is 300.
-          format: int32
-          default: 300
-      - name: fields
-        in: query
-        description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CreativeImagesFieldValues'
-          description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-      - name: file_types
-        in: query
-        description: Return only images having a specific file type.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SearchFileType'
-          description: Return only images having a specific file type.
-      - name: graphical_styles
-        in: query
-        description: Filter based on graphical style of the image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GraphicalStyle'
-          description: Filter based on graphical style of the image.
-      - name: graphical_styles_filter_type
-        in: query
-        description: Provides searching based on specified graphical style(s). The default is include.
-        schema:
-          $ref: '#/components/schemas/GraphicalStylesFilterType'
-      - name: include_facets
-        in: query
-        description: Specifies whether or not to include facets in the result set. Default is "false".
-        schema:
-          type:
-          - boolean
-          - 'null'
-          description: Specifies whether or not to include facets in the result set. Default is "false".
-      - name: include_related_searches
-        in: query
-        description: Specifies whether or not to include related searches in the response. The default is false.
-        schema:
-          type: boolean
-          description: Specifies whether or not to include related searches in the response. The default is false.
-          default: false
-      - name: keyword_ids
-        in: query
-        description: Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-          description: Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned.
-      - name: minimum_size
-        in: query
-        description: Filter based on minimum size requested. The default is x-small.
-        schema:
-          $ref: '#/components/schemas/TeeShirtSize'
-      - name: moods
-        in: query
-        description: Filter based on predominant mood in an image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/MoodFilterType'
-          description: Filter based on predominant mood in an image.
-      - name: number_of_people
-        in: query
-        description: Filter based on the number of people in the image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NumberOfPeopleFilterType'
-          description: Filter based on the number of people in the image.
-      - name: orientations
-        in: query
-        description: Return only images with selected aspect ratios.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageOrientationRequest'
-          description: Return only images with selected aspect ratios.
-      - name: page
-        in: query
-        description: Request results starting at a page number (default is 1).
-        schema:
-          type: integer
-          description: Request results starting at a page number (default is 1).
-          format: int32
-          default: 1
-      - name: page_size
-        in: query
-        description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-        schema:
-          type: integer
-          description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-          format: int32
-          default: 30
-      - name: phrase
-        in: query
-        description: Search images using a search phrase.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search images using a search phrase.
-          default: ''
-      - name: safe_search
-        in: query
-        description: Setting safe_search to "true" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative.
-        schema:
-          type: boolean
-          description: Setting safe_search to "true" excludes images containing nudity, death, profanity, drugs and alcohol, suggestive content, and graphic content from the result set. The default is false. Because this is a keyword-based filter, it's possible that a small number of unsafe images may not be caught by the filter. Please direct feedback to your Getty Images Account or API support representative.
-          default: false
-      - name: sort_order
-        in: query
-        description: Select sort order of results.  The default is best_match
-        schema:
-          $ref: '#/components/schemas/CreativeImageSortOrder'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreativeImageSearchResults'
-        '400':
-          description: InvalidParameterValue
-        '401':
-          description: AuthorizationTokenRequired
-        '403':
-          description: UnauthorizedDisplaySize
-        '500':
-          description: InvalidIStockCollection
-  /v3/search/images/creative/by-image:
-    get:
-      tags:
-      - Images
-      summary: Search for creative images based on url
-      description: 'Search for **similar creative images** by passing an `image_url` to an uploaded image OR an `asset_id` of an asset in our catalog.  All responses will have the `exclude_nudity` filter automatically applied.
-
-
-        ## Searching by URL
-
-
-        Before calling the search by image endpoint, an image in JPEG format must be uploaded to `https://api.gettyimages.com/v3/search/by-image/uploads/{CLIENT_IMAGE.jpg}`, where the client defines the `{CLIENT_IMAGE.jpg}` portion of the URL.
-
-
-        For example, using cURL:
-
-
-        ``` sh
-
-        curl -i -X PUT https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg -H ''Content-Type: image/jpeg'' -H ''Api-Key: API_KEY'' --data-binary "@testimage.jpg"
-
-        ```
-
-
-        Once the image has been uploaded, use the full URL in the `image_url` parameter, e.g. `image_url=https://api.gettyimages.com/v3/search/by-image/uploads/my-test-image.jpg`.
-
-
-        - Uploaded files must be 10MB or smaller.
-
-        - Uploads to the same URL will overwrite each other, so ensure that the client application is handling naming uniqueness appropriately.
-
-        - Uploads expire after 24 hours.
-
-        - Uploads and searches must be performed using the _same_ API Key.
-
-
-        ## Searching by asset id
-
-
-        When searching by `asset_id`, any image or video asset id in the Getty/iStock catalog can be used as the source for similar images.
-
-        '
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: asset_id
-        in: query
-        description: Specifies the Getty image id to use in the search.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Specifies the Getty image id to use in the search.
-      - name: exclude_editorial_use_only
-        in: query
-        description: Exclude images that are only available for editorial (non-commercial) use. Default value is false.
-        schema:
-          type:
-          - boolean
-          - 'null'
-          description: Exclude images that are only available for editorial (non-commercial) use. Default value is false.
-      - name: facet_fields
-        in: query
-        description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CreateImageSearchFacetsFields'
-          description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                    The include_facets parameter must be set to \"true\" for facets to be returned."
-      - name: facet_max_count
-        in: query
-        description: Specifies the maximum number of facets to return per type. Default is 300.
-        schema:
-          type: integer
-          description: Specifies the maximum number of facets to return per type. Default is 300.
-          format: int32
-          default: 300
-      - name: fields
-        in: query
-        description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CreativeImagesFieldValues'
-          description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-      - name: image_url
-        in: query
-        description: Specifies the location of the image to use in the search.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Specifies the location of the image to use in the search.
-      - name: include_facets
-        in: query
-        description: Specifies whether or not to include facets in the result set. Default is "false".
-        schema:
-          type:
-          - boolean
-          - 'null'
-          description: Specifies whether or not to include facets in the result set. Default is "false".
-      - name: page
-        in: query
-        description: Request results starting at a page number (default is 1).
-        schema:
-          type: integer
-          description: Request results starting at a page number (default is 1).
-          format: int32
-          default: 1
-      - name: page_size
-        in: query
-        description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-        schema:
-          type: integer
-          description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-          format: int32
-          default: 30
-      - name: phrase
-        in: query
-        description: Free-text search query.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Free-text search query.
-          default: ''
-      - name: product_types
-        in: query
-        description: "Filter images to those from one of your product types. \n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: "Filter images to those from one of your product types. \n                    Allowed values are easyaccess, imagepack, premiumaccess and royaltyfreesubscription. \n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the product_types value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SearchByImageResourceResults'
-        '400':
-          description: InvalidParameterValue
-        '401':
-          description: AuthorizationTokenRequired
-        '403':
-          description: UnauthorizedDisplaySize
-        '404':
-          description: AssetNotFound
-        '500':
-          description: InvalidIStockCollection
-  /v3/search/images/editorial:
-    get:
-      tags:
-      - Images
-      summary: Search for editorial images only
-      description: "Use this endpoint to search our editorial stock photos, illustrations and archival images.  Editorial images represent newsworthy events or illustrate matters of general interest, such as news, sport and entertainment and are generally intended for editorial use.\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.\nTo include your API token in the search request, add it to the headers as a Bearer token (example in curl):\n\n\t-H \"Authorization: Bearer <your-token>\"\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result set when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```"
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: age_of_people
-        in: query
-        description: Filter based on the age of individuals in an image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgeOfPeopleFilterType'
-          description: Filter based on the age of individuals in an image.
-      - name: artists
-        in: query
-        description: Search for images by specific artists (free-text, comma-separated list of artists).
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search for images by specific artists (free-text, comma-separated list of artists).
-      - name: collection_codes
-        in: query
-        description: Filter by collections (comma-separated list of collection codes). Include or exclude based on collections_filter_type.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Filter by collections (comma-separated list of collection codes). Include or exclude based on collections_filter_type.
-      - name: collections_filter_type
-        in: query
-        description: Use to include or exclude collections from search. The default is include
-        schema:
-          $ref: '#/components/schemas/CollectionsFilterType'
-      - name: compositions
-        in: query
-        description: Filter based on image composition.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CompositionsFilterType'
-          description: Filter based on image composition.
-      - name: date_from
-        in: query
-        description: Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31).
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Return only images that are created on or after this date. Use ISO 8601 format (e.g., 1999-12-31).
-          format: date-time
-      - name: date_to
-        in: query
-        description: Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31).
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Return only images that are created on or before this date. Use ISO 8601 format (e.g., 1999-12-31).
-          format: date-time
-      - name: download_product
-        in: query
-        description: "Filters based on which product the asset will download against.\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-        schema:
-          type:
-          - string
-          - 'null'
-          description: "Filters based on which product the asset will download against.\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-      - name: editorial_segments
-        in: query
-        description: Return only events with a matching editorial segment.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EditorialSegmentContract'
-          description: Return only events with a matching editorial segment.
-      - name: embed_content_only
-        in: query
-        description: Restrict search results to embeddable images. The default is false.
-        schema:
-          type: boolean
-          description: Restrict search results to embeddable images. The default is false.
-          default: false
-      - name: ethnicity
-        in: query
-        description: Filter search results based on the ethnicity of individuals in an image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EthnicityFilterType'
-          description: Filter search results based on the ethnicity of individuals in an image.
-      - name: event_ids
-        in: query
-        description: Filter based on specific events
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-          description: Filter based on specific events
-      - name: exclude_keyword_ids
-        in: query
-        description: Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-          description: Return only images not tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also do not contain the requested keyword(s) are returned.
-      - name: fields
-        in: query
-        description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EditorialImagesFieldValues'
-          description: 'Specifies fields to return. Defaults to ''summary_set''. NOTE: Bytes, height, and width returned by ''download_sizes'' field are estimates.'
-      - name: file_types
-        in: query
-        description: Return only images having a specific file type.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SearchFileType'
-          description: Return only images having a specific file type.
-      - name: graphical_styles
-        in: query
-        description: Filter based on graphical style of the image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EditorialGraphicalStyle'
-          description: Filter based on graphical style of the image.
-      - name: graphical_styles_filter_type
-        in: query
-        description: Provides searching based on specified graphical style(s). The default is include.
-        schema:
-          $ref: '#/components/schemas/GraphicalStylesFilterType'
-      - name: include_related_searches
-        in: query
-        description: Specifies whether or not to include related searches in the response. The default is false.
-        schema:
-          type: boolean
-          description: Specifies whether or not to include related searches in the response. The default is false.
-          default: false
-      - name: keyword_ids
-        in: query
-        description: Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-          description: Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned.
-      - name: minimum_size
-        in: query
-        description: Filter based on minimum size requested. The default is x-small.
-        schema:
-          $ref: '#/components/schemas/TeeShirtSize'
-      - name: number_of_people
-        in: query
-        description: Filter based on the number of people in the image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NumberOfPeopleFilterType'
-          description: Filter based on the number of people in the image.
-      - name: orientations
-        in: query
-        description: Return only images with selected aspect ratios.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageOrientationRequest'
-          description: Return only images with selected aspect ratios.
-      - name: page
-        in: query
-        description: Request results starting at a page number (default is 1).
-        schema:
-          type: integer
-          description: Request results starting at a page number (default is 1).
-          format: int32
-          default: 1
-      - name: page_size
-        in: query
-        description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-        schema:
-          type: integer
-          description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-          format: int32
-          default: 30
-      - name: phrase
-        in: query
-        description: Search images using a search phrase.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search images using a search phrase.
-      - name: sort_order
-        in: query
-        description: Select sort order of results.  The default is best_match
-        schema:
-          $ref: '#/components/schemas/SortOrder'
-      - name: specific_people
-        in: query
-        description: Return only images associated with specific people (using a comma-delimited list).
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Return only images associated with specific people (using a comma-delimited list).
-      - name: minimum_quality_rank
-        in: query
-        description: Filter search results based on minimum quality ranking. Possible values 1, 2, 3 with 1 being best.
-        schema:
-          type:
-          - integer
-          - 'null'
-          description: Filter search results based on minimum quality ranking. Possible values 1, 2, 3 with 1 being best.
-          format: int32
-      - name: facet_fields
-        in: query
-        description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EditorialImageSearchFacetsFields'
-          description: "Specifies the facets to return in the response. Facets provide additional search parameters to refine your results.\n                   The include_facets parameter must be set to \"true\" for facets to be returned."
-      - name: include_facets
-        in: query
-        description: Specifies whether or not to include facets in the result set. Default is "false".
-        schema:
-          type:
-          - boolean
-          - 'null'
-          description: Specifies whether or not to include facets in the result set. Default is "false".
-      - name: facet_max_count
-        in: query
-        description: Specifies the maximum number of facets to return per type. Default is 300.
-        schema:
-          type: integer
-          description: Specifies the maximum number of facets to return per type. Default is 300.
-          format: int32
-          default: 300
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EditorialImageSearchResults'
-        '400':
-          description: InvalidParameterValue
-        '401':
-          description: AuthorizationTokenRequired
-        '403':
-          description: UnauthorizedDisplaySize
-  /v3/search/images:
-    get:
-      tags:
-      - Images
-      summary: Search for both creative and editorial images - *** DEPRECATED ***
-      description: "## _This endpoint draws from such a large diversity of content, the results will not be as relevant as when the more specific Creative or Editorial endpoints are used. Additionally, the response time for this endpoint is slower compared to that for Creative and Editorial-specific endpoints. For these reasons,_ _**it is highly recommended that those endpoints are used instead of this blended endpoint.**_\n\n\n\nYou'll need an API key and access token to use this resource.\n\nYou can show different information in the response by specifying values on the \"fields\" parameter (see details below).\nYou can search with only an API key, and that will give you search results that are equivalent to doing a search on the GettyImages.com site without being logged in (anonymous search).  If you are a Getty Images API customer and would like to ensure that your API searches return only assets that you have a license to use, you need to also include an authorization token in the header of your request.  Please consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens, and our [Authorization Workflows](https://github.com/gettyimages/gettyimages-api/blob/master/OAuth2Workflow.md) for code examples of getting a token.<br>\nTo include your API token in the search request, add it to the headers as a Bearer token (example in curl):\n\n\t-H \"Authorization: Bearer <your-token>\"\n\nSearch requests without a phrase parameter are not supported and may not always work.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build search response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a detailed view of images. \nThe following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\": \n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n]\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files that are most \nfrequently used to build a UI displaying search results. The following fields are provided for every image in your result set when you include **display_set**\nin your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n\n## Request Usage Considerations\n\n- Specifying the \"entity_details\" response field can have significant performance implications. The field should be used only when necessary.\n"
-      parameters:
-      - name: Accept-Language
-        in: header
-        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-        schema:
-          type: string
-          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
-      - name: GI-Country-Code
-        in: header
-        description: Receive regionally relevant search results based on the value specified. Accepts only ISO Alpha-3 country codes. The Countries operation can be used to retrieve the codes.
-        schema:
-          type: string
-          description: Use of this parameter requires configuration changes to your API key. Please contact your sales representative to learn more.
-      - name: age_of_people
-        in: query
-        description: Filter based on the age of individuals in an image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgeOfPeopleFilterType'
-          description: Filter based on the age of individuals in an image.
-      - name: artists
-        in: query
-        description: Search for images by specific artists (free-text, comma-separated list of artists).
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search for images by specific artists (free-text, comma-separated list of artists).
-      - name: collection_codes
-        in: query
-        description: Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Filter by collection codes (comma-separated list). Include or exclude based on collections_filter_type.
-      - name: collections_filter_type
-        in: query
-        description: Provides searching based on specified collection(s). The default is Include
-        schema:
-          $ref: '#/components/schemas/CollectionsFilterType'
-      - name: color
-        in: query
-        description: 'Filter based on predominant color in an image. Use 6 character hexidecimal format (e.g., #002244). Note: when specified, results will not contain editorial images.'
-        schema:
-          type:
-          - string
-          - 'null'
-          description: 'Filter based on predominant color in an image. Use 6 character hexidecimal format (e.g., #002244). Note: when specified, results will not contain editorial images.'
-      - name: compositions
-        in: query
-        description: Filter based on image composition.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CompositionsFilterType'
-          description: Filter based on image composition.
-      - name: download_product
-        in: query
-        description: "Filters based on which product the asset will download against.\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-        schema:
-          type:
-          - string
-          - 'null'
-          description: "Filters based on which product the asset will download against.\n                    Allowed values are easyaccess, editorialsubscription, imagepack, premiumaccess and royaltyfreesubscription.\n                    If you have more than one instance of a product, you may also include the ID of the product instance you wish to filter on. \n                    For example, some users may have more than one premiumaccess product, so the download_product value would be premiumaccess:1234. \n                    Product ID can be obtained from the GET /products response."
-      - name: embed_content_only
-        in: query
-        description: Restrict search results to embeddable images. The default is false.
-        schema:
-          type: boolean
-          description: Restrict search results to embeddable images. The default is false.
-          default: false
-      - name: event_ids
-        in: query
-        description: Filter based on specific events
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-          description: Filter based on specific events
-      - name: ethnicity
-        in: query
-        description: Filter search results based on the ethnicity of individuals in an image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EthnicityFilterType'
-          description: Filter search results based on the ethnicity of individuals in an image.
-      - name: exclude_nudity
-        in: query
-        description: Excludes images containing nudity. The default is false.
-        schema:
-          type: boolean
-          description: Excludes images containing nudity. The default is false.
-          default: false
-      - name: fields
-        in: query
-        description: Specifies fields to return. Defaults to 'summary_set'.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImagesFieldValues'
-          description: Specifies fields to return. Defaults to 'summary_set'.
-      - name: file_types
-        in: query
-        description: Return only images having a specific file type.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SearchFileType'
-          description: Return only images having a specific file type.
-      - name: graphical_styles
-        in: query
-        description: Filter based on graphical style of the image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GraphicalStyle'
-          description: Filter based on graphical style of the image.
-      - name: graphical_styles_filter_type
-        in: query
-        description: Provides searching based on specified graphical style(s). The default is Include
-        schema:
-          $ref: '#/components/schemas/GraphicalStylesFilterType'
-      - name: include_related_searches
-        in: query
-        description: Specifies whether or not to include related searches in the response. The default is false.
-        schema:
-          type: boolean
-          description: Specifies whether or not to include related searches in the response. The default is false.
-          default: false
-      - name: keyword_ids
-        in: query
-        description: Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-          description: Return only images tagged with specific keyword(s). Specify using a comma-separated list of keyword Ids. If keyword Ids and phrase are both specified, only those images matching the query phrase which also contain the requested keyword(s) are returned.
-      - name: minimum_size
-        in: query
-        description: Filter based on minimum size requested. The default is x-small
-        schema:
-          $ref: '#/components/schemas/TeeShirtSize'
-      - name: number_of_people
-        in: query
-        description: Filter based on the number of people in the image.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NumberOfPeopleFilterType'
-          description: Filter based on the number of people in the image.
-      - name: orientations
-        in: query
-        description: Return only images with selected aspect ratios.
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageOrientationRequest'
-          description: Return only images with selected aspect ratios.
-      - name: page
-        in: query
-        description: Request results starting at a page number (default is 1).
-        schema:
-          type: integer
-          description: Request results starting at a page number (default is 1).
-          format: int32
-          default: 1
-      - name: page_size
-        in: query
-        description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-        schema:
-          type: integer
-          description: Request number of images to return in each page. Default is 30, maximum page_size is 100.
-          format: int32
-          default: 30
-      - name: phrase
-        in: query
-        description: Search images using a search phrase.
-        schema:
-          type:
-          - string
-          - 'null'
-          description: Search images using a search phrase.
-      - name: sort_order
-        in: query
-        description: Select sort order of results.  The default is best_match
-        schema:
-          $ref: '#/components/schemas/BlendedImageSortOrder'
-      - name: specific_people
-        in: query
-        description: Return only images associated with specific people (using a comma-delimited list).
-        style: form
-        explode: false
-        schema:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Return only images associated with specific people (using a comma-delimited list).
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ImageSearchItemSearchResults'
-        '400':
-          description: InvalidParameterValue
-        '401':
-          description: AuthorizationTokenRequired
-        '403':
-          description: UnauthorizedDisplaySize
+      operationId: getV3ImagesByIdSimilar
+      x-operation-id-source: derived
 components:
   schemas:
-    AllowedUse:
+    MaxDimensions:
       type: object
       properties:
-        how_can_i_use_it:
-          type:
-          - string
-          - 'null'
-          description: Indicates how the asset can be used
-        release_info:
-          type:
-          - string
-          - 'null'
-          description: Indicates release status
-        usage_restrictions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Indicates asset usage restriction, if any
-      additionalProperties: false
-    DownloadSizeResponse:
-      type: object
-      properties:
-        size_name:
-          type:
-          - string
-          - 'null'
         height:
           type: integer
           format: int32
@@ -1931,65 +1144,147 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    Location:
+    ImageDetailFieldValues:
+      enum:
+      - allowed_use
+      - alternative_ids
+      - artist
+      - artist_title
+      - asset_family
+      - call_for_image
+      - caption
+      - city
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - country
+      - credit_line
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_sizes
+      - download_product
+      - downloads
+      - editorial_segments
+      - editorial_source
+      - entity_details
+      - event_ids
+      - graphical_style
+      - id
+      - is_ai_editable
+      - istock_collection
+      - istock_licenses
+      - keywords
+      - largest_downloads
+      - license_model
+      - links
+      - max_dimensions
+      - object_name
+      - orientation
+      - people
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - state_province
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+    ImageSearchItemSearchResults:
       type: object
       properties:
-        id:
+        result_count:
           type: integer
           format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AffiliateImageSearchResponse:
-      type: object
-      properties:
         images:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
+            $ref: '#/components/schemas/ImageSearchItem'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
       additionalProperties: false
-    SearchFacetsResponse:
+    Download:
       type: object
       properties:
-        specific_people:
+        product_id:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/SpecificPeople'
-        events:
+        product_type:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/FacetEvent'
-        locations:
+        uri:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/Location'
-        artists:
+        agreement_name:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/Artist'
-        entertainment:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Entertainment'
       additionalProperties: false
-    CreativeImagesFieldValues:
+    Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        entity_uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        entity_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImagesFieldValues:
       enum:
+      - accessrestriction
       - allowed_use
       - alternative_ids
       - artist
@@ -2010,6 +1305,10 @@ components:
       - display_set
       - download_product
       - download_sizes
+      - editorial_segments
+      - editorial_source
+      - entity_details
+      - event_ids
       - graphical_style
       - id
       - istock_collection
@@ -2018,6 +1317,7 @@ components:
       - license_model
       - max_dimensions
       - orientation
+      - people
       - preview
       - product_types
       - quality_rank
@@ -2027,49 +1327,12 @@ components:
       - title
       - uri_oembed
       type: string
-    CompositionsFilterType:
-      enum:
-      - abstract
-      - candid
-      - close_up
-      - copy_space
-      - cut_out
-      - full_frame
-      - full_length
-      - headshot
-      - looking_at_camera
-      - macro
-      - medium_shot
-      - part_of_a_series
-      - portrait
-      - sparse
-      - still_life
-      - three_quarter_length
-      - waist_up
-      - wide_shot
-      type: string
-    GraphicalStyle:
-      enum:
-      - fine_art
-      - illustration
-      - photography
-      - vector
-      type: string
-    PreviewUrl:
+    IStockLicense:
       type: object
       properties:
-        preview_size:
-          type:
-          - string
-          - 'null'
-        image_url:
-          type:
-          - string
-          - 'null'
-        width:
-          type: integer
-          format: int32
-        height:
+        license_type:
+          $ref: '#/components/schemas/AssetLicenseName'
+        credits:
           type: integer
           format: int32
       additionalProperties: false
@@ -2081,57 +1344,31 @@ components:
       - Resale
       - Indemnification
       type: string
-    RelatedSearch:
+    ImagesDetailResults:
       type: object
       properties:
-        phrase:
+        images: {}
+        images_not_found:
           type:
-          - string
+          - array
           - 'null'
-        url:
-          type:
-          - string
-          - 'null'
+          items:
+            type: string
       additionalProperties: false
-    SpecificPeople:
+    ImageSearchItemDisplaySize:
       type: object
       properties:
-        id:
-          type: integer
-          format: int32
+        is_watermarked:
+          type: boolean
         name:
           type:
           - string
           - 'null'
-      additionalProperties: false
-    AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
-    PremiumAccessDownloadData:
-      type: object
-      properties:
-        download_notes:
-          type:
-          - string
-          - 'null'
-        project_code:
+        uri:
           type:
           - string
           - 'null'
       additionalProperties: false
-    ProductTypeForDownloads:
-      enum:
-      - easyaccess
-      - editorialsubscription
-      - imagepack
-      - premiumaccess
-      - royaltyfreesubscription
-      - creditpack
-      - aigen
-      type: string
     ImageSearchItem:
       type: object
       properties:
@@ -2277,134 +1514,49 @@ components:
           items:
             $ref: '#/components/schemas/IStockLicense'
       additionalProperties: false
-    ImageOrientationRequest:
-      enum:
-      - horizontal
-      - vertical
-      - square
-      - panoramic_horizontal
-      - panoramic_vertical
-      type: string
-    CreateImageSearchFacetsFields:
-      enum:
-      - artists
-      - locations
-      type: string
-    ImageSearchItemCreative:
+    AssetDownloadHistoryResults:
       type: object
       properties:
-        allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
-        alternative_ids:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        artist:
-          type:
-          - string
-          - 'null'
-        asset_family:
-          type:
-          - string
-          - 'null'
-        call_for_image:
-          type: boolean
-        caption:
-          type:
-          - string
-          - 'null'
-        collection_code:
-          type:
-          - string
-          - 'null'
-        collection_id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        collection_name:
-          type:
-          - string
-          - 'null'
-        color_type:
-          type:
-          - string
-          - 'null'
-        copyright:
-          type:
-          - string
-          - 'null'
-        date_camera_shot:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
-        download_product:
-          type:
-          - string
-          - 'null'
-        graphical_style:
-          type:
-          - string
-          - 'null'
         id:
           type:
           - string
           - 'null'
-        keywords:
+        downloads: {}
+      additionalProperties: false
+    AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
+          type:
+          - string
+          - 'null'
+          description: Indicates how the asset can be used
+        release_info:
+          type:
+          - string
+          - 'null'
+          description: Indicates release status
+        usage_restrictions:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Keyword'
-        largest_downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Download'
-        license_model:
-          type:
-          - string
-          - 'null'
-        max_dimensions:
-          $ref: '#/components/schemas/MaxDimensions'
-        orientation:
+            type: string
+          description: Indicates asset usage restriction, if any
+      additionalProperties: false
+    RelatedSearch:
+      type: object
+      properties:
+        phrase:
           type:
           - string
           - 'null'
-        quality_rank:
-          type: integer
-          format: int32
-        referral_destinations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ReferralDestination'
-        title:
-          type:
-          - string
-          - 'null'
-        uri_oembed:
+        url:
           type:
           - string
           - 'null'
       additionalProperties: false
-    Download:
+    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization:
       type: object
       properties:
         product_id:
@@ -2424,169 +1576,61 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    EditorialImageSearchResults:
+    GettyImages.Services.Connect.Public.Models.IStockLicense:
       type: object
       properties:
-        result_count:
+        license_type:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName'
+        credits:
           type: integer
           format: int32
-        images:
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage:
+      type: object
+      properties:
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        editorial_segments:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ImageSearchItemEditorial'
-        related_searches:
+            type: string
+        editorial_source:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.EditorialSource'
+        event_ids:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    MaxDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    DownloadResponse:
-      type: object
-      properties:
-        url:
+            type: integer
+            format: int32
+        era:
           type:
           - string
           - 'null'
-        generated_asset_id:
+        people:
           type:
-          - string
+          - array
           - 'null'
-      additionalProperties: false
-    NumberOfPeopleFilterType:
-      enum:
-      - none
-      - one
-      - two
-      - group
-      type: string
-    TeeShirtSize:
-      enum:
-      - x_small
-      - small
-      - medium
-      - large
-      - x_large
-      - xx_large
-      - vector
-      type: string
-    ArtistsImageSearchFieldValues:
-      enum:
-      - id
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - asset_type
-      - call_for_image
-      - caption
-      - collection_id
-      - collection_code
-      - collection_name
-      - comp
-      - comp_webp
-      - copyright
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - editorial_segments
-      - event_ids
-      - graphical_style
-      - high_res_comp_webp
-      - keywords
-      - license_model
-      - max_dimensions
-      - mid_res_comp_webp
-      - orientation
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      type: string
-    BlendedImageSortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - random
-      type: string
-    EditorialImagesFieldValues:
-      enum:
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - call_for_image
-      - caption
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - comp_webp
-      - copyright
-      - date_camera_shot
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - download_product
-      - download_sizes
-      - editorial_segments
-      - editorial_source
-      - event_ids
-      - graphical_style
-      - id
-      - keywords
-      - largest_downloads
-      - license_model
-      - max_dimensions
-      - orientation
-      - people
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      - uri_oembed
-      type: string
-    AssetDetail:
-      type: object
-      properties:
-        id:
+          items:
+            type: string
+        istock_exclusive:
           type:
-          - string
+          - boolean
           - 'null'
-      additionalProperties: false
-    ImageSearchItemEditorial:
-      type: object
-      properties:
         allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
         alternative_ids:
           type:
           - object
           - 'null'
           additionalProperties:
-            type: string
+            type:
+            - string
+            - 'null'
         artist:
           type:
           - string
@@ -2595,8 +1639,14 @@ components:
           type:
           - string
           - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
         call_for_image:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
         caption:
           type:
           - string
@@ -2618,6 +1668,8 @@ components:
           type:
           - string
           - 'null'
+        contributor:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Contributor'
         copyright:
           type:
           - string
@@ -2637,26 +1689,17 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize'
         download_product:
           type:
           - string
           - 'null'
-        editorial_segments:
+        download_sizes:
           type:
           - array
           - 'null'
           items:
-            type: string
-        editorial_source:
-          $ref: '#/components/schemas/EditorialSource'
-        event_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
         graphical_style:
           type:
           - string
@@ -2670,29 +1713,23 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Keyword'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
         largest_downloads:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Download'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
         license_model:
           type:
           - string
           - 'null'
         max_dimensions:
-          $ref: '#/components/schemas/MaxDimensions'
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
         orientation:
           type:
           - string
           - 'null'
-        people:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
         product_types:
           type:
           - array
@@ -2700,14 +1737,22 @@ components:
           items:
             type: string
         quality_rank:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
         referral_destinations:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ReferralDestination'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        territory_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TerritoryRestriction'
         title:
           type:
           - string
@@ -2716,240 +1761,13 @@ components:
           type:
           - string
           - 'null'
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
       additionalProperties: false
-    EditorialSegmentContract:
-      enum:
-      - archival
-      - entertainment
-      - news
-      - publicity
-      - royalty
-      - sport
-      type: string
-    AgeOfPeopleFilterType:
-      enum:
-      - newborn
-      - baby
-      - child
-      - teenager
-      - young_adult
-      - adult
-      - adults_only
-      - mature_adult
-      - senior_adult
-      - 0-1_months
-      - 2-5_months
-      - 6-11_months
-      - 12-17_months
-      - 18-23_months
-      - 2-3_years
-      - 4-5_years
-      - 6-7_years
-      - 8-9_years
-      - 10-11_years
-      - 12-13_years
-      - 14-15_years
-      - 16-17_years
-      - 18-19_years
-      - 20-24_years
-      - 20-29_years
-      - 25-29_years
-      - 30-34_years
-      - 30-39_years
-      - 35-39_years
-      - 40-44_years
-      - 40-49_years
-      - 45-49_years
-      - 50-54_years
-      - 50-59_years
-      - 55-59_years
-      - 60-64_years
-      - 60-69_years
-      - 65-69_years
-      - 70-79_years
-      - 80-89_years
-      - 90_plus_years
-      - 100_over
-      type: string
-    Keyword:
-      type: object
-      properties:
-        keyword_id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        relevance:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        entity_uris:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        entity_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    Entertainment:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AffiliateImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateImageUrls'
-        destination_url:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CreativeImageSortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - random
-      type: string
-    MoodFilterType:
-      enum:
-      - black_and_white
-      - bold
-      - cool
-      - dramatic
-      - natural
-      - vivid
-      - warm
-      type: string
-    AffiliateImageUrls:
-      type: object
-      properties:
-        small:
-          type:
-          - string
-          - 'null'
-        small_height:
-          type: integer
-          format: int32
-        small_width:
-          type: integer
-          format: int32
-        medium:
-          type:
-          - string
-          - 'null'
-        medium_height:
-          type: integer
-          format: int32
-        medium_width:
-          type: integer
-          format: int32
-        large:
-          type:
-          - string
-          - 'null'
-        large_height:
-          type: integer
-          format: int32
-        large_width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    DownloadFileType:
-      enum:
-      - eps
-      - jpg
-      type: string
-    Artist:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ImageDownloadRequest:
-      type: object
-      properties:
-        notes:
-          type:
-          - string
-          - 'null'
-          description: The notes to use for the download request.  Some products require this value.
-        project_code:
-          type:
-          - string
-          - 'null'
-          description: The project code to use for the download request.  Some products require this value.
-        size_name:
-          type:
-          - string
-          - 'null'
-          description: The size name.  Valid values are 1k or 4k.
-      additionalProperties: false
-      description: Parameters for requesting an AI generation image download
-    PendingImageGenerationResponse:
-      type: object
-      properties:
-        generation_request_id:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    SortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - oldest
-      - random
-      type: string
-    SearchFileType:
-      enum:
-      - eps
-      type: string
-    ImageDetailFieldValues:
+    GettyImages.Services.Connect.Public.Controllers.Images.ImageDetailFieldValues:
       enum:
       - allowed_use
       - alternative_ids
@@ -2971,19 +1789,18 @@ components:
       - date_camera_shot
       - date_created
       - date_submitted
-      - detail_set
       - display_set
       - download_sizes
       - download_product
       - downloads
       - editorial_segments
       - editorial_source
-      - entity_details
       - event_ids
       - graphical_style
       - id
       - is_ai_editable
       - istock_collection
+      - istock_exclusive
       - istock_licenses
       - keywords
       - largest_downloads
@@ -2997,14 +1814,38 @@ components:
       - product_types
       - quality_rank
       - referral_destinations
+      - series_id
       - state_province
       - summary_set
       - thumb
       - title
       - uri_oembed
       type: string
-    ImageSearchItemSearchResults:
+    GettyImages.Services.Connect.Public.Models.Images.EditorialSource:
       type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage
+    : type: object
       properties:
         result_count:
           type: integer
@@ -3014,25 +1855,812 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ImageSearchItem'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
         related_searches:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/RelatedSearch'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
       additionalProperties: false
-    DownloadSizesResponse:
+    GettyImages.Services.Connect.Public.Models.Keyword:
       type: object
       properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization'
+        height:
+          type: integer
+          format: int32
+        media_type:
+          type:
+          - string
+          - 'null'
+        name:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TeeShirtSize'
+        width:
+          type: integer
+          format: int32
+        dpi:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
+          type:
+          - string
+          - 'null'
+          description: Indicates how the asset can be used
+        release_info:
+          type:
+          - string
+          - 'null'
+          description: Indicates release status
+        usage_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Indicates asset usage restriction, if any
+        editorial_use_only:
+          type: boolean
+          description: Indicates whether the asset is for editorial use only
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.EditorialSource:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Download:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.Image:
+      type: object
+      properties:
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        contributor:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Contributor'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
         download_sizes:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/DownloadSizeResponse'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        territory_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TerritoryRestriction'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
       additionalProperties: false
-    ImagesFieldValues:
+    GettyImages.Services.Connect.Public.Models.Images.ImageDetailDisplaySize:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          description: Indicates the height in pixels
+          format: int32
+        is_watermarked:
+          type: boolean
+          description: Indicates whether the image is watermarked.
+        name:
+          type:
+          - string
+          - 'null'
+          description: Identifies the name of the display size
+        uri:
+          type:
+          - string
+          - 'null'
+          description: Identifies the URI for the image
+        width:
+          type:
+          - integer
+          - 'null'
+          description: Indicates the width in pixels
+          format: int32
+      additionalProperties: false
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.Image
+    : type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Image'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Downloads.User:
+      type: object
+      properties:
+        username:
+          type:
+          - string
+          - 'null'
+        first_name:
+          type:
+          - string
+          - 'null'
+        middle_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.MaxDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Images.ImagesDetail:
+      type: object
+      properties:
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDetail'
+        images_not_found:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.AssetDownloadHistory.AssetDownloadHistoryResponse:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AssetDownloadHistory.AssetDownload'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.AssetDownloadHistory.AssetDownload:
+      type: object
+      properties:
+        agreement_name:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        date_downloaded:
+          type: string
+          format: date-time
+        download_notes:
+          type:
+          - string
+          - 'null'
+        download_source:
+          type:
+          - string
+          - 'null'
+        product_id:
+          type: integer
+          format: int32
+        product_type:
+          type:
+          - string
+          - 'null'
+        project_code:
+          type:
+          - string
+          - 'null'
+        thumb_uri:
+          type:
+          - string
+          - 'null'
+        user:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Downloads.User'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Images.Link:
+      type: object
+      properties:
+        rel:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Contributor:
+      type: object
+      properties:
+        member_name:
+          type:
+          - string
+          - 'null'
+          description: The contributor's member name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The contributor's display name
+      additionalProperties: false
+      description: Contributor information for an image or video
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse:
+      type: object
+      properties:
+        specific_people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople'
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent'
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location'
+        artists:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist'
+        entertainment:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.TerritoryRestriction:
+      type: object
+      properties:
+        country_code:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.TeeShirtSize:
+      enum:
+      - x_small
+      - small
+      - medium
+      - large
+      - x_large
+      - xx_large
+      - vector
+      type: string
+    GettyImages.Services.Connect.Public.Models.Images.ImageDetail:
+      type: object
+      properties:
+        allowed_use:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        artist:
+          type:
+          - string
+          - 'null'
+        artist_title:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        credit_line:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDetailDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        download_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        editorial_source:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.EditorialSource'
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        is_ai_editable:
+          type:
+          - boolean
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
+        license_model:
+          type:
+          - string
+          - 'null'
+        links:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.Link'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        state_province:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+        istock_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.IStockLicense'
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
+        contributor:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Contributor'
+        object_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ImagesFieldValues:
       enum:
       - accessrestriction
       - allowed_use
@@ -3051,13 +2679,11 @@ components:
       - date_camera_shot
       - date_created
       - date_submitted
-      - detail_set
       - display_set
       - download_product
       - download_sizes
       - editorial_segments
       - editorial_source
-      - entity_details
       - event_ids
       - graphical_style
       - id
@@ -3077,226 +2703,14 @@ components:
       - title
       - uri_oembed
       type: string
-    IStockLicense:
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist:
       type: object
       properties:
-        license_type:
-          $ref: '#/components/schemas/AssetLicenseName'
-        credits:
-          type: integer
-          format: int32
-      additionalProperties: false
-    EditorialSource:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-      additionalProperties: false
-    EthnicityFilterType:
-      enum:
-      - black
-      - white
-      - east_asian
-      - hispanic_latinx
-      - japanese
-      - middle_eastern
-      - multiracial_person
-      - multiethnic_group
-      - native_american_first_nations
-      - pacific_islander
-      - south_asian
-      - southeast_asian
-      type: string
-    SearchByImageResourceResults:
-      type: object
-      properties:
-        image_fingerprint:
-          type:
-          - string
-          - 'null'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-          deprecated: true
-        result_count:
-          type: integer
-          format: int32
-        images: {}
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    CollectionsFilterType:
-      enum:
-      - include
-      - exclude
-      type: string
-    EditorialImageSearchFacetsFields:
-      enum:
-      - artists
-      - events
-      - locations
-      - specific_people
-      type: string
-    ImagesDetailResults:
-      type: object
-      properties:
-        images: {}
-        images_not_found:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    ImageDataResponse:
-      type: object
-      properties:
-        index:
-          type: integer
-          format: int32
-        is_blocked:
-          type: boolean
-        preview_urls:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PreviewUrl'
-          description: The preview URLs for the result
-        url:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AssetDownloadHistoryResults:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        downloads: {}
-      additionalProperties: false
-    ReferralDestination:
-      type: object
-      properties:
-        site_name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ImageVariationRequest:
-      type: object
-      properties:
-        product_id:
-          type:
-          - integer
-          - 'null'
-          description: If you have multiple Getty products, indicate which one you would like to use for this generation request
-          format: int32
-        project_code:
-          type:
-          - string
-          - 'null'
-          description: The project code to use for the generation request.  Some products require this value.
-        notes:
-          type:
-          - string
-          - 'null'
-          description: The notes to use for the generation request.  Some products require this value.
-      additionalProperties: false
-      description: Payload with all images variation parameters
-    CreativeImageSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItemCreative'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    GraphicalStylesFilterType:
-      enum:
-      - include
-      - exclude
-      type: string
-    ImageSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
         name:
           type:
           - string
           - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
       additionalProperties: false
-    FacetEvent:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-        date:
-          type: string
-          format: date-time
-      additionalProperties: false
-    ImageGenerationsResponse:
-      type: object
-      properties:
-        generation_request_id:
-          type:
-          - string
-          - 'null'
-        seed:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        results:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageDataResponse'
-        original_asset:
-          $ref: '#/components/schemas/AssetDetail'
-      additionalProperties: false
-    EditorialGraphicalStyle:
-      enum:
-      - photography
-      - illustration
-      - vector
-      type: string
   securitySchemes:
     Api-Key:
       type: apiKey
@@ -3317,3 +2731,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

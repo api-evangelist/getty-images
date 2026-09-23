@@ -2,14 +2,7 @@ openapi: 3.2.0
 info:
   title: Getty Images Boards API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Boards across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
@@ -65,6 +58,8 @@ paths:
           description: InvalidParameterValue
         '401':
           description: Unauthorized
+      operationId: getV3Boards
+      x-operation-id-source: derived
     post:
       tags:
       - Boards
@@ -93,6 +88,8 @@ paths:
           description: InvalidParameterValue
         '401':
           description: Unauthorized
+      operationId: postV3Boards
+      x-operation-id-source: derived
   /v3/boards/{board_id}:
     get:
       tags:
@@ -127,6 +124,8 @@ paths:
           description: Unauthorized
         '404':
           description: BoardNotFound
+      operationId: getV3BoardsByBoardId
+      x-operation-id-source: derived
     delete:
       tags:
       - Boards
@@ -160,6 +159,8 @@ paths:
           description: InsufficientAccess
         '404':
           description: BoardNotFound
+      operationId: deleteV3BoardsByBoardId
+      x-operation-id-source: derived
     put:
       tags:
       - Boards
@@ -199,6 +200,8 @@ paths:
           description: InsufficientAccess
         '404':
           description: BoardNotFound
+      operationId: putV3BoardsByBoardId
+      x-operation-id-source: derived
   /v3/boards/{board_id}/assets:
     put:
       tags:
@@ -246,6 +249,8 @@ paths:
           description: InsufficientAccess
         '404':
           description: BoardNotFound
+      operationId: putV3BoardsByBoardIdAssets
+      x-operation-id-source: derived
     delete:
       tags:
       - Boards
@@ -287,6 +292,8 @@ paths:
           description: InsufficientAccess
         '404':
           description: BoardNotFound
+      operationId: deleteV3BoardsByBoardIdAssets
+      x-operation-id-source: derived
   /v3/boards/{board_id}/assets/{asset_id}:
     put:
       tags:
@@ -328,6 +335,8 @@ paths:
           description: AssetNotFound
         '404':
           description: BoardNotFound
+      operationId: putV3BoardsByBoardIdAssetsByAssetId
+      x-operation-id-source: derived
     delete:
       tags:
       - Boards
@@ -368,6 +377,8 @@ paths:
           description: InsufficientAccess
         '404':
           description: BoardNotFound
+      operationId: deleteV3BoardsByBoardIdAssetsByAssetId
+      x-operation-id-source: derived
   /v3/boards/{board_id}/comments:
     get:
       tags:
@@ -402,6 +413,8 @@ paths:
           description: Unauthorized
         '404':
           description: BoardNotFound
+      operationId: getV3BoardsByBoardIdComments
+      x-operation-id-source: derived
     post:
       tags:
       - Boards
@@ -443,6 +456,8 @@ paths:
           description: InsufficientAccess
         '404':
           description: BoardNotFound
+      operationId: postV3BoardsByBoardIdComments
+      x-operation-id-source: derived
   /v3/boards/{board_id}/comments/{comment_id}:
     delete:
       tags:
@@ -486,89 +501,186 @@ paths:
           description: InsufficientAccess
         '404':
           description: BoardNotFound
+      operationId: deleteV3BoardsByBoardIdCommentsByCommentId
+      x-operation-id-source: derived
+  /v3/boards/{board_id}/assets/{asset_id}/comments:
+    post:
+      tags:
+      - Boards
+      summary: Add a comment to an asset on the specified board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specifies the board containing the asset.
+        required: true
+        schema:
+          type: string
+      - name: asset_id
+        in: path
+        description: Specifies the asset to add the comment to.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Specifies the text to add as a comment to the asset.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreateCommentResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCommentResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreateCommentResponse'
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '404':
+          description: BoardNotFound
+        '403':
+          description: InsufficientAccess
+      operationId: postV3BoardsByBoardIdAssetsByAssetIdComments
+      x-operation-id-source: derived
+  /v3/boards/{board_id}/assets/{asset_id}/comments/{comment_id}:
+    delete:
+      tags:
+      - Boards
+      summary: Delete a comment from an asset on the specified board
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+        schema:
+          type: string
+          description: 'Provide a header to specify the language of result values. Supported values: cs (iStock only), de, en-GB, en-US, es, fi (iStock only), fr, hu (iStock only), id (iStock only), it, ja, ko (creative assets only), nl, pl (creative assets only), pt-BR, pt-PT, ro (iStock only), ru (creative assets only), sv, th (iStock only), tr, uk (iStock only), vi (iStock only), zh-HK (creative assets only).'
+      - name: board_id
+        in: path
+        description: Specifies the board containing the asset.
+        required: true
+        schema:
+          type: string
+      - name: asset_id
+        in: path
+        description: Specifies the asset containing the comment.
+        required: true
+        schema:
+          type: string
+      - name: comment_id
+        in: path
+        description: Specifies the comment to delete.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: InvalidParameterValue
+        '401':
+          description: Unauthorized
+        '404':
+          description: BoardNotFound
+        '403':
+          description: InsufficientAccess
+      operationId: deleteV3BoardsByBoardIdAssetsByAssetIdCommentsByCommentId
+      x-operation-id-source: derived
 components:
   schemas:
-    CommentCreated:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BoardListBoard:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        asset_count:
-          type: integer
-          format: int32
-        date_created:
-          type: string
-          format: date-time
-        date_last_updated:
-          type: string
-          format: date-time
-        description:
-          type:
-          - string
-          - 'null'
-        hero_asset:
-          $ref: '#/components/schemas/Asset'
-        name:
-          type:
-          - string
-          - 'null'
-        board_relationship:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BoardCreated:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BoardRelationship:
-      enum:
-      - owned
-      - invited
-      type: string
     BoardCommentPermissions:
       type: object
       properties:
         can_add_comment:
           type: boolean
       additionalProperties: false
-    Comment:
+    Links:
       type: object
       properties:
-        created_by:
-          $ref: '#/components/schemas/Collaborator'
-        date_created:
-          type: string
-          format: date-time
-        id:
+        invitation:
           type:
           - string
           - 'null'
-        permissions:
-          $ref: '#/components/schemas/CommentPermissions'
-        text:
+        share:
           type:
           - string
           - 'null'
       additionalProperties: false
-    CommentRequest:
+    BoardInfo:
+      required:
+      - name
       type: object
       properties:
-        text:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DisplaySize:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Collaborator:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    BoardList:
+      type: object
+      properties:
+        boards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BoardListBoard'
+        board_count:
+          type: integer
+          format: int32
+      additionalProperties: false
+    CommentCreated:
+      type: object
+      properties:
+        id:
           type:
           - string
           - 'null'
@@ -589,6 +701,57 @@ components:
         can_remove_assets:
           type: boolean
       additionalProperties: false
+    CommentsList:
+      type: object
+      properties:
+        comments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Comment'
+        permissions:
+          $ref: '#/components/schemas/BoardCommentPermissions'
+      additionalProperties: false
+    BoardSortOrder:
+      enum:
+      - date_last_updated_descending
+      - date_last_updated_ascending
+      - name_ascending
+      - name_decending
+      type: string
+    BoardCreated:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Comment:
+      type: object
+      properties:
+        created_by:
+          $ref: '#/components/schemas/Collaborator'
+        date_created:
+          type: string
+          format: date-time
+        id:
+          type:
+          - string
+          - 'null'
+        permissions:
+          $ref: '#/components/schemas/CommentPermissions'
+        text:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    BoardRelationship:
+      enum:
+      - owned
+      - invited
+      type: string
     BoardDetail:
       type: object
       properties:
@@ -648,6 +811,37 @@ components:
           items:
             $ref: '#/components/schemas/DisplaySize'
       additionalProperties: false
+    BoardListBoard:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        asset_count:
+          type: integer
+          format: int32
+        date_created:
+          type: string
+          format: date-time
+        date_last_updated:
+          type: string
+          format: date-time
+        description:
+          type:
+          - string
+          - 'null'
+        hero_asset:
+          $ref: '#/components/schemas/Asset'
+        name:
+          type:
+          - string
+          - 'null'
+        board_relationship:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     AddBoardAssetsResult:
       type: object
       properties:
@@ -664,90 +858,10 @@ components:
           items:
             type: string
       additionalProperties: false
-    BoardAsset:
-      required:
-      - asset_id
+    CommentRequest:
       type: object
       properties:
-        asset_id:
-          type: string
-      additionalProperties: false
-    BoardInfo:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Links:
-      type: object
-      properties:
-        invitation:
-          type:
-          - string
-          - 'null'
-        share:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    DisplaySize:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CommentsList:
-      type: object
-      properties:
-        comments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Comment'
-        permissions:
-          $ref: '#/components/schemas/BoardCommentPermissions'
-      additionalProperties: false
-    BoardSortOrder:
-      enum:
-      - date_last_updated_descending
-      - date_last_updated_ascending
-      - name_ascending
-      - name_decending
-      type: string
-    BoardList:
-      type: object
-      properties:
-        boards:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BoardListBoard'
-        board_count:
-          type: integer
-          format: int32
-      additionalProperties: false
-    Collaborator:
-      type: object
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
+        text:
           type:
           - string
           - 'null'
@@ -757,6 +871,96 @@ components:
       properties:
         can_delete_comment:
           type: boolean
+      additionalProperties: false
+    BoardAsset:
+      required:
+      - asset_id
+      type: object
+      properties:
+        asset_id:
+          type: string
+      additionalProperties: false
+    BoardInfo_2:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CreateCommentRequest:
+      type: object
+      properties:
+        Text:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AssetComment:
+      type: object
+      properties:
+        created_by:
+          $ref: '#/components/schemas/Collaborator'
+        date_created:
+          type: string
+          format: date-time
+        id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Asset_2:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        date_added:
+          type: string
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DisplaySize'
+        comments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssetComment'
+      additionalProperties: false
+    BoardAsset_2:
+      required:
+      - asset_id
+      type: object
+      properties:
+        asset_id:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    CreateCommentResponse:
+      type: object
+      properties:
+        Id:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:
@@ -778,3 +982,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

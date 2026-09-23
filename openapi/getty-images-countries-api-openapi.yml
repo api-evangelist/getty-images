@@ -2,14 +2,7 @@ openapi: 3.2.0
 info:
   title: Getty Images Countries API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Countries across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
@@ -20,13 +13,11 @@ paths:
     get:
       tags:
       - Countries
-      summary: Gets countries codes and names.
+      summary: Gets countries codes and names
       description: 'Returns a list of country objects that contains country name, two letter ISO abbreviation and three letter ISO abbreviation.
 
 
-        You''ll need an API key and access token to use this resource.
-
-        '
+        You''ll need an API key and access token to use this resource.'
       parameters:
       - name: Accept-Language
         in: header
@@ -43,8 +34,20 @@ paths:
                 $ref: '#/components/schemas/CountriesList'
         '401':
           description: Unauthorized
+      operationId: getV3Countries
+      x-operation-id-source: derived
 components:
   schemas:
+    CountriesList:
+      type: object
+      properties:
+        countries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Country'
+      additionalProperties: false
     Country:
       type: object
       properties:
@@ -61,7 +64,7 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    CountriesList:
+    GettyImages.Services.Connect.Public.Models.Countries.CountriesList:
       type: object
       properties:
         countries:
@@ -69,7 +72,23 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Country'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Countries.Country'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Countries.Country:
+      type: object
+      properties:
+        iso_alpha_2:
+          type:
+          - string
+          - 'null'
+        iso_alpha_3:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:
@@ -91,3 +110,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

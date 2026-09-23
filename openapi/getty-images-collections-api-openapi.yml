@@ -2,14 +2,7 @@ openapi: 3.2.0
 info:
   title: Getty Images Collections API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Collections across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
@@ -20,13 +13,11 @@ paths:
     get:
       tags:
       - Collections
-      summary: Gets collections applicable for the customer.
-      description: 'Use this endpoint to retrieve collections associated with your Getty Images account. To browse available collections see our [Image collections page]( http://www.gettyimages.com/creative-images/collections).
+      summary: Gets collections applicable for the customer
+      description: 'Use this endpoint to retrieve collections associated with your Getty Images account. To browse available collections see our Image collections page.
 
 
-        You''ll need an API key and access token to use this resource.
-
-        '
+        You''ll need an API key and access token to use this resource.'
       parameters:
       - name: Accept-Language
         in: header
@@ -43,6 +34,8 @@ paths:
                 $ref: '#/components/schemas/CollectionsList'
         '401':
           description: Unauthorized
+      operationId: getV3Collections
+      x-operation-id-source: derived
 components:
   schemas:
     CollectionsList:
@@ -56,6 +49,45 @@ components:
             $ref: '#/components/schemas/Collection'
       additionalProperties: false
     Collection:
+      type: object
+      properties:
+        asset_family:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        id:
+          type: integer
+          format: int32
+        license_model:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Collections.CollectionsList:
+      type: object
+      properties:
+        collections:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Collections.Collection'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Collections.Collection:
       type: object
       properties:
         asset_family:
@@ -104,3 +136,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json

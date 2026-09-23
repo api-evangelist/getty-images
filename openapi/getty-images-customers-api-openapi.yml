@@ -2,14 +2,7 @@ openapi: 3.2.0
 info:
   title: Getty Images Customers API
   version: '3'
-  description: '
-
-    Developer resources for the Getty Images API including SDK, documentation,
-
-    release notes, status, notifications and sample code.'
-servers:
-- url: https://api.gettyimages.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Customers across 2 of this provider''s published API definitions: getty-images-openapi.yml, getty-images-swagger-v3-openapi.json. Each path carries the servers of the definition it was published in.'
 security:
 - Api-Key: []
 - OAuth2: []
@@ -20,8 +13,14 @@ paths:
     get:
       tags:
       - Customers
-      summary: Returns information about the current user.
-      description: "Returns the first, middle and last name of the authenticated user.\n\nYou'll need an API key and access token to use this resource.\n\t\nPlease consult our [Authorization FAQ](http://developers.gettyimages.com/en/authorization-faq.html) for more information on authorization tokens.\n"
+      summary: Returns information about the current user
+      description: 'Returns the first, middle and last name of the authenticated user.
+
+
+        You''ll need an API key and access token to use this resource.
+
+
+        Please consult our Authorization FAQ for more information on authorization tokens.'
       parameters:
       - name: Accept-Language
         in: header
@@ -42,9 +41,27 @@ paths:
           description: Unauthorized
         '503':
           description: ServiceUnavailable
+      operationId: getV3CustomersCurrent
+      x-operation-id-source: derived
 components:
   schemas:
     CustomerInfoResponse:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+        middle_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Customers.CustomerInfoResponse:
       type: object
       properties:
         first_name:
@@ -80,3 +97,6 @@ components:
           tokenUrl: https://api.gettyimages.com/v4/oauth2/token
           refreshUrl: https://api.gettyimages.com/v4/oauth2/token
           scopes: {}
+x-refined-from:
+- getty-images-openapi.yml
+- getty-images-swagger-v3-openapi.json
