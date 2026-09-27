@@ -147,22 +147,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AssetChanges:
-      type: object
-      properties:
-        changeSetId:
-          type:
-          - string
-          - 'null'
-          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
-        changedAssetList:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChangedAssetDetail'
-          description: Contains a list of ChangedAssetList results for the query.
-      additionalProperties: false
     PartnerChannel:
       type: object
       properties:
@@ -218,6 +202,22 @@ components:
           - string
           - 'null'
           description: Contains the asset download URL for assets with an AssetLifecycle of "New."
+      additionalProperties: false
+    AssetChanges:
+      type: object
+      properties:
+        changeSetId:
+          type:
+          - string
+          - 'null'
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+        changedAssetList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
       additionalProperties: false
   securitySchemes:
     Api-Key:

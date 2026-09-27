@@ -51,13 +51,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses:
-      enum:
-      - multiseat
-      - unlimited
-      - resale
-      - indemnification
-      type: string
     GettyImages.Services.Connect.Public.Controllers.AssetLicensing.AssetLicensingResponse:
       type: object
       properties:
@@ -84,6 +77,13 @@ components:
           type: boolean
           description: Defaults to false.
       additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses:
+      enum:
+      - multiseat
+      - unlimited
+      - resale
+      - indemnification
+      type: string
   securitySchemes:
     Api-Key:
       type: apiKey

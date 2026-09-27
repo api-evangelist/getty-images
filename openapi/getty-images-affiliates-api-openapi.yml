@@ -112,10 +112,24 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AutoCorrections:
+    AffiliateImage:
       type: object
       properties:
-        phrase:
+        id:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          $ref: '#/components/schemas/AffiliateImageUrls'
+        destination_url:
           type:
           - string
           - 'null'
@@ -146,58 +160,14 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AffiliateImageSearchResponse:
+    AutoCorrections:
       type: object
       properties:
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    AffiliateVideoSearchResponse:
-      type: object
-      properties:
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateVideo'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    AffiliateImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateImageUrls'
-        destination_url:
+        phrase:
           type:
           - string
           - 'null'
       additionalProperties: false
-    AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
     AffiliateImageUrls:
       type: object
       properties:
@@ -231,6 +201,36 @@ components:
         large_width:
           type: integer
           format: int32
+      additionalProperties: false
+    AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
+    AffiliateImageSearchResponse:
+      type: object
+      properties:
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AffiliateImage'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+      additionalProperties: false
+    AffiliateVideoSearchResponse:
+      type: object
+      properties:
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AffiliateVideo'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
   securitySchemes:
     Api-Key:

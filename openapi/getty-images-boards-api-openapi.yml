@@ -610,97 +610,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    BoardCommentPermissions:
-      type: object
-      properties:
-        can_add_comment:
-          type: boolean
-      additionalProperties: false
-    Links:
-      type: object
-      properties:
-        invitation:
-          type:
-          - string
-          - 'null'
-        share:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BoardInfo:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    DisplaySize:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Collaborator:
-      type: object
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BoardList:
-      type: object
-      properties:
-        boards:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BoardListBoard'
-        board_count:
-          type: integer
-          format: int32
-      additionalProperties: false
-    CommentCreated:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BoardPermissions:
-      type: object
-      properties:
-        can_delete_board:
-          type: boolean
-        can_invite_to_board:
-          type: boolean
-        can_update_name:
-          type: boolean
-        can_update_description:
-          type: boolean
-        can_add_assets:
-          type: boolean
-        can_remove_assets:
-          type: boolean
-      additionalProperties: false
     CommentsList:
       type: object
       properties:
@@ -713,45 +622,6 @@ components:
         permissions:
           $ref: '#/components/schemas/BoardCommentPermissions'
       additionalProperties: false
-    BoardSortOrder:
-      enum:
-      - date_last_updated_descending
-      - date_last_updated_ascending
-      - name_ascending
-      - name_decending
-      type: string
-    BoardCreated:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Comment:
-      type: object
-      properties:
-        created_by:
-          $ref: '#/components/schemas/Collaborator'
-        date_created:
-          type: string
-          format: date-time
-        id:
-          type:
-          - string
-          - 'null'
-        permissions:
-          $ref: '#/components/schemas/CommentPermissions'
-        text:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BoardRelationship:
-      enum:
-      - owned
-      - invited
-      type: string
     BoardDetail:
       type: object
       properties:
@@ -790,6 +660,94 @@ components:
         links:
           $ref: '#/components/schemas/Links'
       additionalProperties: false
+    CommentCreated:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Comment:
+      type: object
+      properties:
+        created_by:
+          $ref: '#/components/schemas/Collaborator'
+        date_created:
+          type: string
+          format: date-time
+        id:
+          type:
+          - string
+          - 'null'
+        permissions:
+          $ref: '#/components/schemas/CommentPermissions'
+        text:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    BoardPermissions:
+      type: object
+      properties:
+        can_delete_board:
+          type: boolean
+        can_invite_to_board:
+          type: boolean
+        can_update_name:
+          type: boolean
+        can_update_description:
+          type: boolean
+        can_add_assets:
+          type: boolean
+        can_remove_assets:
+          type: boolean
+      additionalProperties: false
+    Collaborator:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    BoardAsset:
+      required:
+      - asset_id
+      type: object
+      properties:
+        asset_id:
+          type: string
+      additionalProperties: false
+    BoardList:
+      type: object
+      properties:
+        boards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BoardListBoard'
+        board_count:
+          type: integer
+          format: int32
+      additionalProperties: false
+    DisplaySize:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     Asset:
       type: object
       properties:
@@ -810,6 +768,24 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/DisplaySize'
+      additionalProperties: false
+    BoardInfo:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CommentPermissions:
+      type: object
+      properties:
+        can_delete_comment:
+          type: boolean
       additionalProperties: false
     BoardListBoard:
       type: object
@@ -842,6 +818,13 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    BoardSortOrder:
+      enum:
+      - date_last_updated_descending
+      - date_last_updated_ascending
+      - name_ascending
+      - name_decending
+      type: string
     AddBoardAssetsResult:
       type: object
       properties:
@@ -866,57 +849,45 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    CommentPermissions:
+    BoardCommentPermissions:
       type: object
       properties:
-        can_delete_comment:
+        can_add_comment:
           type: boolean
       additionalProperties: false
-    BoardAsset:
+    BoardRelationship:
+      enum:
+      - owned
+      - invited
+      type: string
+    Links:
+      type: object
+      properties:
+        invitation:
+          type:
+          - string
+          - 'null'
+        share:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    BoardCreated:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    BoardAsset_2:
       required:
       - asset_id
       type: object
       properties:
         asset_id:
-          type: string
-      additionalProperties: false
-    BoardInfo_2:
-      required:
-      - name
-      type: object
-      properties:
-        name:
           minLength: 1
           type: string
-        description:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CreateCommentRequest:
-      type: object
-      properties:
-        Text:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AssetComment:
-      type: object
-      properties:
-        created_by:
-          $ref: '#/components/schemas/Collaborator'
-        date_created:
-          type: string
-          format: date-time
-        id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
       additionalProperties: false
     Asset_2:
       type: object
@@ -945,19 +916,48 @@ components:
           items:
             $ref: '#/components/schemas/AssetComment'
       additionalProperties: false
-    BoardAsset_2:
+    BoardInfo_2:
       required:
-      - asset_id
+      - name
       type: object
       properties:
-        asset_id:
+        name:
           minLength: 1
           type: string
+        description:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     CreateCommentResponse:
       type: object
       properties:
         Id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AssetComment:
+      type: object
+      properties:
+        created_by:
+          $ref: '#/components/schemas/Collaborator'
+        date_created:
+          type: string
+          format: date-time
+        id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CreateCommentRequest:
+      type: object
+      properties:
+        Text:
           type:
           - string
           - 'null'

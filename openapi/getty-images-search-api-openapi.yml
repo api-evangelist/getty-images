@@ -3237,6 +3237,92 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    VideoAspectRatioFilterType:
+      enum:
+      - '16:9'
+      - '9:16'
+      - '3:4'
+      - '4:3'
+      - '4:5'
+      - '2:1'
+      - '17:9'
+      - '9:17'
+      type: string
+    CreativeImageSortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - random
+      type: string
+    Entertainment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    FacetEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    CreativeVideoSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CreativeVideoSearchItem'
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+      additionalProperties: false
+    AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     CreativeVideosFieldValues:
       enum:
       - allowed_use
@@ -3277,404 +3363,7 @@ components:
       - thumb
       - title
       type: string
-    MaxDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    EventsSearchResult:
-      type: object
-      properties:
-        events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Event'
-        result_count:
-          type: integer
-          format: int32
-      additionalProperties: false
-    CreateVideoSearchFacetsFields:
-      enum:
-      - artists
-      - locations
-      type: string
-    GraphicalStylesFilterType:
-      enum:
-      - include
-      - exclude
-      type: string
-    CreativeVideoSearchItem:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
-        artist:
-          type:
-          - string
-          - 'null'
-        asset_family:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        clip_length:
-          type:
-          - string
-          - 'null'
-        collection_id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        collection_code:
-          type:
-          - string
-          - 'null'
-        collection_name:
-          type:
-          - string
-          - 'null'
-        color_type:
-          type:
-          - string
-          - 'null'
-        copyright:
-          type:
-          - string
-          - 'null'
-        date_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/VideoSearchItemDisplaySize'
-        download_product:
-          type:
-          - string
-          - 'null'
-        era:
-          type:
-          - string
-          - 'null'
-        event_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-        keywords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Keyword'
-        largest_downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Download'
-        license_model:
-          type:
-          - string
-          - 'null'
-        mastered_to:
-          type:
-          - string
-          - 'null'
-        originally_shot_on:
-          type:
-          - string
-          - 'null'
-        product_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        referral_destinations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ReferralDestination'
-        shot_speed:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        istock_licenses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IStockLicense'
-      additionalProperties: false
-    EditorialVideosFieldValues:
-      enum:
-      - allowed_use
-      - artist
-      - aspect_ratio
-      - asset_family
-      - call_for_image
-      - caption
-      - clip_length
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - copyright
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - download_product
-      - download_sizes
-      - editorial_segments
-      - era
-      - event_ids
-      - id
-      - istock_collection
-      - keywords
-      - largest_downloads
-      - license_model
-      - mastered_to
-      - object_name
-      - orientation
-      - originally_shot_on
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - shot_speed
-      - source
-      - summary_set
-      - thumb
-      - title
-      - istock_licenses
-      type: string
-    Keyword:
-      type: object
-      properties:
-        keyword_id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        relevance:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        entity_uris:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        entity_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    ReleaseStatus:
-      enum:
-      - release_not_important
-      - fully_released
-      type: string
-    IStockLicense:
-      type: object
-      properties:
-        license_type:
-          $ref: '#/components/schemas/AssetLicenseName'
-        credits:
-          type: integer
-          format: int32
-      additionalProperties: false
-    EditorialVideoType:
-      enum:
-      - raw
-      - produced
-      type: string
-    CompositionsFilterType:
-      enum:
-      - abstract
-      - candid
-      - close_up
-      - copy_space
-      - cut_out
-      - full_frame
-      - full_length
-      - headshot
-      - looking_at_camera
-      - macro
-      - medium_shot
-      - part_of_a_series
-      - portrait
-      - sparse
-      - still_life
-      - three_quarter_length
-      - waist_up
-      - wide_shot
-      type: string
-    VideoOrientationRequest:
-      enum:
-      - horizontal
-      - vertical
-      type: string
-    EventSearchSortOrder:
-      enum:
-      - newest
-      - oldest
-      type: string
-    ImageSearchItemCreative:
-      type: object
-      properties:
-        allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
-        alternative_ids:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        artist:
-          type:
-          - string
-          - 'null'
-        asset_family:
-          type:
-          - string
-          - 'null'
-        call_for_image:
-          type: boolean
-        caption:
-          type:
-          - string
-          - 'null'
-        collection_code:
-          type:
-          - string
-          - 'null'
-        collection_id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        collection_name:
-          type:
-          - string
-          - 'null'
-        color_type:
-          type:
-          - string
-          - 'null'
-        copyright:
-          type:
-          - string
-          - 'null'
-        date_camera_shot:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
-        download_product:
-          type:
-          - string
-          - 'null'
-        graphical_style:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - string
-          - 'null'
-        keywords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Keyword'
-        largest_downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Download'
-        license_model:
-          type:
-          - string
-          - 'null'
-        max_dimensions:
-          $ref: '#/components/schemas/MaxDimensions'
-        orientation:
-          type:
-          - string
-          - 'null'
-        quality_rank:
-          type: integer
-          format: int32
-        referral_destinations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ReferralDestination'
-        title:
-          type:
-          - string
-          - 'null'
-        uri_oembed:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CreativeImageSearchResults:
+    EditorialImageSearchResults:
       type: object
       properties:
         result_count:
@@ -3685,193 +3374,13 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ImageSearchItemCreative'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
+            $ref: '#/components/schemas/ImageSearchItemEditorial'
         related_searches:
           type:
           - array
           - 'null'
           items:
             $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    EditorialImageSearchFacetsFields:
-      enum:
-      - artists
-      - events
-      - locations
-      - specific_people
-      type: string
-    EventFieldValues:
-      enum:
-      - id
-      - child_event_count
-      - editorial_segments
-      - hero_image
-      - image_count
-      - keywords
-      - location
-      - name
-      - start_date
-      - type
-      type: string
-    EditorialImagesFieldValues:
-      enum:
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - call_for_image
-      - caption
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - comp_webp
-      - copyright
-      - date_camera_shot
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - download_product
-      - download_sizes
-      - editorial_segments
-      - editorial_source
-      - event_ids
-      - graphical_style
-      - id
-      - keywords
-      - largest_downloads
-      - license_model
-      - max_dimensions
-      - orientation
-      - people
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      - uri_oembed
-      type: string
-    HeroImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/HeroImageDisplaySize'
-      additionalProperties: false
-    CreativeVideoSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CreativeVideoSearchItem'
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    LocationEvent:
-      type: object
-      properties:
-        city:
-          type:
-          - string
-          - 'null'
-        country:
-          type:
-          - string
-          - 'null'
-        state_province:
-          type:
-          - string
-          - 'null'
-        venue:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    EditorialVideoSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EditorialVideoSearchItem'
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ImageSearchItemSearchResults:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItem'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-      additionalProperties: false
-    Location:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
       additionalProperties: false
     ImagesFieldValues:
       enum:
@@ -3918,399 +3427,30 @@ components:
       - title
       - uri_oembed
       type: string
-    AssetLicenseName:
-      enum:
-      - Standard
-      - Multiseat
-      - Unlimited
-      - Resale
-      - Indemnification
-      type: string
-    VideoFormatsRequest:
-      enum:
-      - sd
-      - hd
-      - 4k
-      - hd_web
-      type: string
-    SpecificPeople:
+    EventsSearchResult:
       type: object
       properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ViewpointsFilterType:
-      enum:
-      - lockdown
-      - panning
-      - tracking_shot
-      - aerial_view
-      - high_angle_view
-      - low_angle_view
-      - tilt
-      - point_of_view
-      type: string
-    ImageOrientationRequest:
-      enum:
-      - horizontal
-      - vertical
-      - square
-      - panoramic_horizontal
-      - panoramic_vertical
-      type: string
-    LicenseModelVideoRequest:
-      enum:
-      - rightsready
-      - royaltyfree
-      type: string
-    VideoSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        aspect_ratio:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    VideoAspectRatioFilterType:
-      enum:
-      - '16:9'
-      - '9:16'
-      - '3:4'
-      - '4:3'
-      - '4:5'
-      - '2:1'
-      - '17:9'
-      - '9:17'
-      type: string
-    HeroImageDisplaySize:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        is_watermarked:
-          type: boolean
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    CreativeVideoSortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - random
-      type: string
-    ImageTechniquesFilterType:
-      enum:
-      - realtime
-      - time_lapse
-      - slow_motion
-      - color
-      - black_and_white
-      - animation
-      - selective_focus
-      type: string
-    EditorialSegmentContract:
-      enum:
-      - archival
-      - entertainment
-      - news
-      - publicity
-      - royalty
-      - sport
-      type: string
-    Artist:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GraphicalStyle:
-      enum:
-      - fine_art
-      - illustration
-      - photography
-      - vector
-      type: string
-    CreativeImagesFieldValues:
-      enum:
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - call_for_image
-      - caption
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - comp_webp
-      - copyright
-      - date_camera_shot
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - download_product
-      - download_sizes
-      - graphical_style
-      - id
-      - istock_collection
-      - keywords
-      - largest_downloads
-      - license_model
-      - max_dimensions
-      - orientation
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      - uri_oembed
-      type: string
-    Download:
-      type: object
-      properties:
-        product_id:
-          type:
-          - string
-          - 'null'
-        product_type:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        agreement_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    SearchByImageResourceResults:
-      type: object
-      properties:
-        image_fingerprint:
-          type:
-          - string
-          - 'null'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
-          deprecated: true
-        result_count:
-          type: integer
-          format: int32
-        images: {}
-        facets:
-          $ref: '#/components/schemas/SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    BlendedImageSortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - random
-      type: string
-    ReferralDestination:
-      type: object
-      properties:
-        site_name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    SearchFacetsResponse:
-      type: object
-      properties:
-        specific_people:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SpecificPeople'
         events:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/FacetEvent'
-        locations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Location'
-        artists:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Artist'
-        entertainment:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Entertainment'
-      additionalProperties: false
-    EthnicityFilterType:
-      enum:
-      - black
-      - white
-      - east_asian
-      - hispanic_latinx
-      - japanese
-      - middle_eastern
-      - multiracial_person
-      - multiethnic_group
-      - native_american_first_nations
-      - pacific_islander
-      - south_asian
-      - southeast_asian
-      type: string
-    MoodFilterType:
-      enum:
-      - black_and_white
-      - bold
-      - cool
-      - dramatic
-      - natural
-      - vivid
-      - warm
-      type: string
-    CreateImageSearchFacetsFields:
-      enum:
-      - artists
-      - locations
-      type: string
-    FacetEvent:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-        date:
-          type: string
-          format: date-time
-      additionalProperties: false
-    SearchFileType:
-      enum:
-      - eps
-      type: string
-    CreativeImageSortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - random
-      type: string
-    RelatedSearch:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-        url:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Event:
-      type: object
-      properties:
-        child_event_count:
-          type: integer
-          format: int32
-        editorial_segments:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        hero_image:
-          $ref: '#/components/schemas/HeroImage'
-        id:
-          type: integer
-          format: int32
-        image_count:
-          type: integer
-          format: int32
-        location:
-          $ref: '#/components/schemas/LocationEvent'
-        name:
-          type:
-          - string
-          - 'null'
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      additionalProperties: false
-    EditorialImageSearchResults:
-      type: object
-      properties:
+            $ref: '#/components/schemas/Event'
         result_count:
           type: integer
           format: int32
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItemEditorial'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RelatedSearch'
       additionalProperties: false
-    EditorialGraphicalStyle:
-      enum:
-      - photography
-      - illustration
-      - vector
-      type: string
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     NumberOfPeopleFilterType:
       enum:
       - none
@@ -4318,57 +3458,10 @@ components:
       - two
       - group
       type: string
-    AgeOfPeopleFilterType:
+    LicenseModelVideoRequest:
       enum:
-      - newborn
-      - baby
-      - child
-      - teenager
-      - young_adult
-      - adult
-      - adults_only
-      - mature_adult
-      - senior_adult
-      - 0-1_months
-      - 2-5_months
-      - 6-11_months
-      - 12-17_months
-      - 18-23_months
-      - 2-3_years
-      - 4-5_years
-      - 6-7_years
-      - 8-9_years
-      - 10-11_years
-      - 12-13_years
-      - 14-15_years
-      - 16-17_years
-      - 18-19_years
-      - 20-24_years
-      - 20-29_years
-      - 25-29_years
-      - 30-34_years
-      - 30-39_years
-      - 35-39_years
-      - 40-44_years
-      - 40-49_years
-      - 45-49_years
-      - 50-54_years
-      - 50-59_years
-      - 55-59_years
-      - 60-64_years
-      - 60-69_years
-      - 65-69_years
-      - 70-79_years
-      - 80-89_years
-      - 90_plus_years
-      - 100_over
-      type: string
-    EditorialVideoSearchFacetsFields:
-      enum:
-      - artists
-      - events
-      - locations
-      - specific_people
+      - rightsready
+      - royaltyfree
       type: string
     EditorialVideoSearchItem:
       type: object
@@ -4496,198 +3589,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/IStockLicense'
-      additionalProperties: false
-    ImageSearchItemEditorial:
-      type: object
-      properties:
-        allowed_use:
-          $ref: '#/components/schemas/AllowedUse'
-        alternative_ids:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        artist:
-          type:
-          - string
-          - 'null'
-        asset_family:
-          type:
-          - string
-          - 'null'
-        call_for_image:
-          type: boolean
-        caption:
-          type:
-          - string
-          - 'null'
-        collection_code:
-          type:
-          - string
-          - 'null'
-        collection_id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        collection_name:
-          type:
-          - string
-          - 'null'
-        color_type:
-          type:
-          - string
-          - 'null'
-        copyright:
-          type:
-          - string
-          - 'null'
-        date_camera_shot:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
-        download_product:
-          type:
-          - string
-          - 'null'
-        editorial_segments:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        editorial_source:
-          $ref: '#/components/schemas/EditorialSource'
-        event_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-        graphical_style:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - string
-          - 'null'
-        keywords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Keyword'
-        largest_downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Download'
-        license_model:
-          type:
-          - string
-          - 'null'
-        max_dimensions:
-          $ref: '#/components/schemas/MaxDimensions'
-        orientation:
-          type:
-          - string
-          - 'null'
-        people:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        product_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        quality_rank:
-          type: integer
-          format: int32
-        referral_destinations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ReferralDestination'
-        title:
-          type:
-          - string
-          - 'null'
-        uri_oembed:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    VideoFrameRates:
-      enum:
-      - '23.98'
-      - '24'
-      - '25'
-      - '29.97'
-      - '30'
-      - '50'
-      - '59.94'
-      - '60'
-      type: string
-    TeeShirtSize:
-      enum:
-      - x_small
-      - small
-      - medium
-      - large
-      - x_large
-      - xx_large
-      - vector
-      type: string
-    CollectionsFilterType:
-      enum:
-      - include
-      - exclude
-      type: string
-    ImageSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Entertainment:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
       additionalProperties: false
     ImageSearchItem:
       type: object
@@ -4834,6 +3735,857 @@ components:
           items:
             $ref: '#/components/schemas/IStockLicense'
       additionalProperties: false
+    CollectionsFilterType:
+      enum:
+      - include
+      - exclude
+      type: string
+    CreativeVideoSearchItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VideoSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        era:
+          type:
+          - string
+          - 'null'
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        mastered_to:
+          type:
+          - string
+          - 'null'
+        originally_shot_on:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+        shot_speed:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        istock_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IStockLicense'
+      additionalProperties: false
+    BlendedImageSortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - random
+      type: string
+    EditorialVideoSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
+      type: string
+    Artist:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImageTechniquesFilterType:
+      enum:
+      - realtime
+      - time_lapse
+      - slow_motion
+      - color
+      - black_and_white
+      - animation
+      - selective_focus
+      type: string
+    VideoOrientationRequest:
+      enum:
+      - horizontal
+      - vertical
+      type: string
+    CreativeVideoSortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - random
+      type: string
+    HeroImage:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HeroImageDisplaySize'
+      additionalProperties: false
+    VideoFormatsRequest:
+      enum:
+      - sd
+      - hd
+      - 4k
+      - hd_web
+      type: string
+    TeeShirtSize:
+      enum:
+      - x_small
+      - small
+      - medium
+      - large
+      - x_large
+      - xx_large
+      - vector
+      type: string
+    ReleaseStatus:
+      enum:
+      - release_not_important
+      - fully_released
+      type: string
+    SpecificPeople:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImageSearchItemSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageSearchItem'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+      additionalProperties: false
+    MaxDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    EditorialVideoSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EditorialVideoSearchItem'
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+      additionalProperties: false
+    CreativeImageSearchResults:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageSearchItemCreative'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+      additionalProperties: false
+    GraphicalStylesFilterType:
+      enum:
+      - include
+      - exclude
+      type: string
+    CreateVideoSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    MoodFilterType:
+      enum:
+      - black_and_white
+      - bold
+      - cool
+      - dramatic
+      - natural
+      - vivid
+      - warm
+      type: string
+    LocationEvent:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        state_province:
+          type:
+          - string
+          - 'null'
+        venue:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    VideoFrameRates:
+      enum:
+      - '23.98'
+      - '24'
+      - '25'
+      - '29.97'
+      - '30'
+      - '50'
+      - '59.94'
+      - '60'
+      type: string
+    SortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - oldest
+      - random
+      type: string
+    ImageOrientationRequest:
+      enum:
+      - horizontal
+      - vertical
+      - square
+      - panoramic_horizontal
+      - panoramic_vertical
+      type: string
+    EditorialVideoType:
+      enum:
+      - raw
+      - produced
+      type: string
+    SearchByImageResourceResults:
+      type: object
+      properties:
+        image_fingerprint:
+          type:
+          - string
+          - 'null'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+          deprecated: true
+        result_count:
+          type: integer
+          format: int32
+        images: {}
+        facets:
+          $ref: '#/components/schemas/SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
+      additionalProperties: false
+    AgeOfPeopleFilterType:
+      enum:
+      - newborn
+      - baby
+      - child
+      - teenager
+      - young_adult
+      - adult
+      - adults_only
+      - mature_adult
+      - senior_adult
+      - 0-1_months
+      - 2-5_months
+      - 6-11_months
+      - 12-17_months
+      - 18-23_months
+      - 2-3_years
+      - 4-5_years
+      - 6-7_years
+      - 8-9_years
+      - 10-11_years
+      - 12-13_years
+      - 14-15_years
+      - 16-17_years
+      - 18-19_years
+      - 20-24_years
+      - 20-29_years
+      - 25-29_years
+      - 30-34_years
+      - 30-39_years
+      - 35-39_years
+      - 40-44_years
+      - 40-49_years
+      - 45-49_years
+      - 50-54_years
+      - 50-59_years
+      - 55-59_years
+      - 60-64_years
+      - 60-69_years
+      - 65-69_years
+      - 70-79_years
+      - 80-89_years
+      - 90_plus_years
+      - 100_over
+      type: string
+    ImageSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Event:
+      type: object
+      properties:
+        child_event_count:
+          type: integer
+          format: int32
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hero_image:
+          $ref: '#/components/schemas/HeroImage'
+        id:
+          type: integer
+          format: int32
+        image_count:
+          type: integer
+          format: int32
+        location:
+          $ref: '#/components/schemas/LocationEvent'
+        name:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    SearchFacetsResponse:
+      type: object
+      properties:
+        specific_people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SpecificPeople'
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FacetEvent'
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Location'
+        artists:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Artist'
+        entertainment:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Entertainment'
+      additionalProperties: false
+    AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    SearchFileType:
+      enum:
+      - eps
+      type: string
+    ImageSearchItemEditorial:
+      type: object
+      properties:
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type: boolean
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        editorial_source:
+          $ref: '#/components/schemas/EditorialSource'
+        event_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type: integer
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GraphicalStyle:
+      enum:
+      - fine_art
+      - illustration
+      - photography
+      - vector
+      type: string
+    EditorialImageSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
+      type: string
+    EventSearchSortOrder:
+      enum:
+      - newest
+      - oldest
+      type: string
+    CompositionsFilterType:
+      enum:
+      - abstract
+      - candid
+      - close_up
+      - copy_space
+      - cut_out
+      - full_frame
+      - full_length
+      - headshot
+      - looking_at_camera
+      - macro
+      - medium_shot
+      - part_of_a_series
+      - portrait
+      - sparse
+      - still_life
+      - three_quarter_length
+      - waist_up
+      - wide_shot
+      type: string
+    EditorialImagesFieldValues:
+      enum:
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - editorial_source
+      - event_ids
+      - graphical_style
+      - id
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - people
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+    IStockLicense:
+      type: object
+      properties:
+        license_type:
+          $ref: '#/components/schemas/AssetLicenseName'
+        credits:
+          type: integer
+          format: int32
+      additionalProperties: false
+    CreateImageSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    EditorialVideosFieldValues:
+      enum:
+      - allowed_use
+      - artist
+      - aspect_ratio
+      - asset_family
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - era
+      - event_ids
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - mastered_to
+      - object_name
+      - orientation
+      - originally_shot_on
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - shot_speed
+      - source
+      - summary_set
+      - thumb
+      - title
+      - istock_licenses
+      type: string
+    CreativeImagesFieldValues:
+      enum:
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - call_for_image
+      - caption
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - comp_webp
+      - copyright
+      - date_camera_shot
+      - date_created
+      - date_submitted
+      - detail_set
+      - display_set
+      - download_product
+      - download_sizes
+      - graphical_style
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - max_dimensions
+      - orientation
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      - uri_oembed
+      type: string
+    EditorialSegmentContract:
+      enum:
+      - archival
+      - entertainment
+      - news
+      - publicity
+      - royalty
+      - sport
+      type: string
     EditorialSource:
       type: object
       properties:
@@ -4841,6 +4593,35 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    EditorialGraphicalStyle:
+      enum:
+      - photography
+      - illustration
+      - vector
+      type: string
+    RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ViewpointsFilterType:
+      enum:
+      - lockdown
+      - panning
+      - tracking_shot
+      - aerial_view
+      - high_angle_view
+      - low_angle_view
+      - tilt
+      - point_of_view
+      type: string
     AllowedUse:
       type: object
       properties:
@@ -4862,19 +4643,423 @@ components:
             type: string
           description: Indicates asset usage restriction, if any
       additionalProperties: false
-    SortOrder:
+    VideoSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    EthnicityFilterType:
+      enum:
+      - black
+      - white
+      - east_asian
+      - hispanic_latinx
+      - japanese
+      - middle_eastern
+      - multiracial_person
+      - multiethnic_group
+      - native_american_first_nations
+      - pacific_islander
+      - south_asian
+      - southeast_asian
+      type: string
+    HeroImageDisplaySize:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        is_watermarked:
+          type: boolean
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ImageSearchItemCreative:
+      type: object
+      properties:
+        allowed_use:
+          $ref: '#/components/schemas/AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type: boolean
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        quality_rank:
+          type: integer
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ReferralDestination'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    EventFieldValues:
+      enum:
+      - id
+      - child_event_count
+      - editorial_segments
+      - hero_image
+      - image_count
+      - keywords
+      - location
+      - name
+      - start_date
+      - type
+      type: string
+    Download:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        entity_uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        entity_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.TerritoryRestriction:
+      type: object
+      properties:
+        country_code:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeImageSortOrder:
       enum:
       - best_match
       - most_popular
       - newest
-      - oldest
       - random
       type: string
-    GettyImages.Services.Connect.Public.Models.LicenseModelVideoRequest:
-      enum:
-      - rightsready
-      - royaltyfree
-      type: string
+    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize:
+      type: object
+      properties:
+        bit_depth:
+          type:
+          - string
+          - 'null'
+        broadcast_video_standard:
+          type:
+          - string
+          - 'null'
+        compression:
+          type:
+          - string
+          - 'null'
+        content_type:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization'
+        format:
+          type:
+          - string
+          - 'null'
+        frame_rate:
+          type:
+          - number
+          - 'null'
+          format: double
+        frame_size:
+          type:
+          - string
+          - 'null'
+        height:
+          type:
+          - number
+          - 'null'
+          format: double
+        interlaced:
+          type: boolean
+        bytes:
+          type: integer
+          format: int64
+        name:
+          type:
+          - string
+          - 'null'
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.VideoSearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo
+    : type: object
+      properties:
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+        result_count:
+          type: integer
+          format: int32
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Events.Event:
+      type: object
+      properties:
+        child_event_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        child_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.ChildEvent'
+        editorial_segments:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hero_image:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImage'
+        id:
+          type: integer
+          format: int32
+        image_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.EventKeyword'
+        location:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.LocationEvent'
+        name:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        type:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Search.Model.BlendedImageSortOrder:
       enum:
       - best_match
@@ -4882,28 +5067,274 @@ components:
       - newest
       - random
       type: string
-    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage
-    : type: object
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location:
+      type: object
       properties:
-        result_count:
+        id:
           type: integer
           format: int32
-        images:
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage:
+      type: object
+      properties:
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        artist:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        contributor:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Contributor'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage'
-        facets:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
-        related_searches:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        download_sizes:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
+        graphical_style:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        territory_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TerritoryRestriction'
+        title:
+          type:
+          - string
+          - 'null'
+        uri_oembed:
+          type:
+          - string
+          - 'null'
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.MaxDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.EditorialVideoSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
+      type: string
+    GettyImages.Services.Connect.Public.Models.VideoFormatsRequest:
+      enum:
+      - sd
+      - hd
+      - 4k
+      - hd_web
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.GraphicalStyle:
+      enum:
+      - fine_art
+      - illustration
+      - photography
+      - vector
+      type: string
+    GettyImages.Services.Connect.Public.Models.LocationEvent:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        state_province:
+          type:
+          - string
+          - 'null'
+        venue:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.EditorialSegmentContract:
+      enum:
+      - archival
+      - entertainment
+      - news
+      - publicity
+      - royalty
+      - sport
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EthnicityFilterType:
+      enum:
+      - black
+      - white
+      - east_asian
+      - hispanic_latinx
+      - japanese
+      - middle_eastern
+      - multiracial_person
+      - multiethnic_group
+      - native_american_first_nations
+      - pacific_islander
+      - south_asian
+      - southeast_asian
+      type: string
+    GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeImagesFieldValues:
       enum:
@@ -4944,70 +5375,249 @@ components:
       - title
       - uri_oembed
       type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.CreateImageSearchFacetsFields:
+    GettyImages.Services.Connect.Public.Models.Search.EditorialSource:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.SearchByImageResourceResults:
+      type: object
+      properties:
+        image_fingerprint:
+          type:
+          - string
+          - 'null'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+          deprecated: true
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EventFieldValues:
       enum:
-      - artists
-      - locations
+      - id
+      - child_event_count
+      - editorial_segments
+      - hero_image
+      - image_count
+      - keywords
+      - location
+      - name
+      - start_date
+      - type
       type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.NumberOfPeopleFilterType:
+    GettyImages.Services.Connect.Public.Models.ReferralDestination:
+      type: object
+      properties:
+        site_name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse:
+      type: object
+      properties:
+        specific_people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople'
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent'
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location'
+        artists:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist'
+        entertainment:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment'
+      additionalProperties: false
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage
+    : type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Download:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ImagesFieldValues:
       enum:
-      - none
-      - one
-      - two
-      - group
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialVideoType:
-      enum:
-      - raw
-      - produced
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.GraphicalStyle:
-      enum:
-      - fine_art
-      - illustration
-      - photography
-      - vector
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeVideosFieldValues:
-      enum:
+      - accessrestriction
       - allowed_use
+      - alternative_ids
       - artist
-      - aspect_ratio
       - asset_family
       - call_for_image
       - caption
-      - clip_length
       - collection_code
       - collection_id
       - collection_name
       - color_type
       - comp
+      - comp_webp
       - copyright
+      - date_camera_shot
       - date_created
       - date_submitted
       - display_set
       - download_product
       - download_sizes
-      - era
+      - editorial_segments
+      - editorial_source
+      - event_ids
+      - graphical_style
       - id
       - istock_collection
-      - istock_exclusive
       - keywords
       - largest_downloads
       - license_model
-      - mastered_to
-      - object_name
+      - max_dimensions
       - orientation
-      - originally_shot_on
+      - people
       - preview
       - product_types
       - quality_rank
       - referral_destinations
-      - shot_speed
       - summary_set
       - thumb
       - title
+      - uri_oembed
       type: string
+    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization'
+        height:
+          type: integer
+          format: int32
+        media_type:
+          type:
+          - string
+          - 'null'
+        name:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TeeShirtSize'
+        width:
+          type: integer
+          format: int32
+        dpi:
+          type: integer
+          format: int32
+      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo:
       type: object
       properties:
@@ -5208,350 +5818,17 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist:
+    GettyImages.Services.Connect.Public.Models.Events.EventsSearchResult:
       type: object
       properties:
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.LocationEvent:
-      type: object
-      properties:
-        city:
-          type:
-          - string
-          - 'null'
-        country:
-          type:
-          - string
-          - 'null'
-        state_province:
-          type:
-          - string
-          - 'null'
-        venue:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.VideoOrientationRequest:
-      enum:
-      - horizontal
-      - vertical
-      type: string
-    GettyImages.Services.Connect.Public.Models.Keyword:
-      type: object
-      properties:
-        keyword_id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        relevance:
-          type:
-          - integer
-          - 'null'
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Download:
-      type: object
-      properties:
-        product_id:
-          type:
-          - string
-          - 'null'
-        product_type:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        agreement_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.EventFieldValues:
-      enum:
-      - id
-      - child_event_count
-      - editorial_segments
-      - hero_image
-      - image_count
-      - keywords
-      - location
-      - name
-      - start_date
-      - type
-      type: string
-    GettyImages.Services.Connect.Public.Models.MaxDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialVideosFieldValues:
-      enum:
-      - allowed_use
-      - artist
-      - aspect_ratio
-      - asset_family
-      - call_for_image
-      - caption
-      - clip_length
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - copyright
-      - date_created
-      - date_submitted
-      - display_set
-      - download_product
-      - download_sizes
-      - editorial_segments
-      - era
-      - event_ids
-      - id
-      - istock_collection
-      - keywords
-      - largest_downloads
-      - license_model
-      - mastered_to
-      - object_name
-      - orientation
-      - originally_shot_on
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - shot_speed
-      - source
-      - summary_set
-      - thumb
-      - title
-      - istock_licenses
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.EthnicityFilterType:
-      enum:
-      - black
-      - white
-      - east_asian
-      - hispanic_latinx
-      - japanese
-      - middle_eastern
-      - multiracial_person
-      - multiethnic_group
-      - native_american_first_nations
-      - pacific_islander
-      - south_asian
-      - southeast_asian
-      type: string
-    GettyImages.Services.Connect.Public.Models.Contributor:
-      type: object
-      properties:
-        member_name:
-          type:
-          - string
-          - 'null'
-          description: The contributor's member name
-        display_name:
-          type:
-          - string
-          - 'null'
-          description: The contributor's display name
-      additionalProperties: false
-      description: Contributor information for an image or video
-    GettyImages.Services.Connect.Public.Models.TerritoryRestriction:
-      type: object
-      properties:
-        country_code:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.ReferralDestination:
-      type: object
-      properties:
-        site_name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.SearchByImageResourceResults:
-      type: object
-      properties:
-        image_fingerprint:
-          type:
-          - string
-          - 'null'
-        related_searches:
+        events:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
-          deprecated: true
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.Event'
         result_count:
           type: integer
-          format: int32
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage'
-        facets:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.EditorialVideoSearchFacetsFields:
-      enum:
-      - artists
-      - events
-      - locations
-      - specific_people
-      type: string
-    GettyImages.Services.Connect.Public.Models.TeeShirtSize:
-      enum:
-      - x_small
-      - small
-      - medium
-      - large
-      - x_large
-      - xx_large
-      - vector
-      type: string
-    GettyImages.Services.Connect.Public.Models.Events.ChildEvent:
-      type: object
-      properties:
-        editorial_segments:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        hero_image:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImage'
-        id:
-          type: integer
-          format: int32
-        image_count:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        keywords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.EventKeyword'
-        location:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.LocationEvent'
-        name:
-          type:
-          - string
-          - 'null'
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        type:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization:
-      type: object
-      properties:
-        product_id:
-          type:
-          - string
-          - 'null'
-        product_type:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        agreement_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.ImageTechniquesFilterType:
-      enum:
-      - realtime
-      - time_lapse
-      - slow_motion
-      - color
-      - black_and_white
-      - animation
-      - selective_focus
-      type: string
-    GettyImages.Services.Connect.Public.Models.Events.EventKeyword:
-      type: object
-      properties:
-        keyword_id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        relevance:
-          type:
-          - integer
-          - 'null'
           format: int32
       additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Search.Model.AgeOfPeopleFilterType:
@@ -5598,6 +5875,398 @@ components:
       - 80-89_years
       - 90_plus_years
       - 100_over
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CompositionsFilterType:
+      enum:
+      - abstract
+      - candid
+      - close_up
+      - copy_space
+      - cut_out
+      - full_frame
+      - full_length
+      - headshot
+      - looking_at_camera
+      - macro
+      - medium_shot
+      - part_of_a_series
+      - portrait
+      - sparse
+      - still_life
+      - three_quarter_length
+      - waist_up
+      - wide_shot
+      type: string
+    GettyImages.Services.Connect.Public.Models.VideoFrameRates:
+      enum:
+      - '23.98'
+      - '24'
+      - '25'
+      - '29.97'
+      - '30'
+      - '50'
+      - '59.94'
+      - '60'
+      type: string
+    GettyImages.Services.Connect.Public.Models.HeroImage:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        is_watermarked:
+          type: boolean
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialVideoType:
+      enum:
+      - raw
+      - produced
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        allowed_use:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
+        alternative_ids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        artist:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+        asset_family:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        call_for_image:
+          type:
+          - boolean
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+        collection_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        collection_code:
+          type:
+          - string
+          - 'null'
+        collection_name:
+          type:
+          - string
+          - 'null'
+        color_type:
+          type:
+          - string
+          - 'null'
+        copyright:
+          type:
+          - string
+          - 'null'
+        date_camera_shot:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_submitted:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize'
+        download_product:
+          type:
+          - string
+          - 'null'
+        download_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize'
+        istock_collection:
+          type:
+          - string
+          - 'null'
+        istock_exclusive:
+          type:
+          - boolean
+          - 'null'
+        keywords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
+        largest_downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
+        license_model:
+          type:
+          - string
+          - 'null'
+        mastered_to:
+          type:
+          - string
+          - 'null'
+        max_dimensions:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
+        orientation:
+          type:
+          - string
+          - 'null'
+        originally_shot_on:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        quality_rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        referral_destinations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
+        shot_speed:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        istock_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.IStockLicense'
+        object_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeVideosFieldValues:
+      enum:
+      - allowed_use
+      - artist
+      - aspect_ratio
+      - asset_family
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - display_set
+      - download_product
+      - download_sizes
+      - era
+      - id
+      - istock_collection
+      - istock_exclusive
+      - keywords
+      - largest_downloads
+      - license_model
+      - mastered_to
+      - object_name
+      - orientation
+      - originally_shot_on
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - shot_speed
+      - summary_set
+      - thumb
+      - title
+      type: string
+    GettyImages.Services.Connect.Public.Models.AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
+          type:
+          - string
+          - 'null'
+          description: Indicates how the asset can be used
+        release_info:
+          type:
+          - string
+          - 'null'
+          description: Indicates release status
+        usage_restrictions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Indicates asset usage restriction, if any
+        editorial_use_only:
+          type: boolean
+          description: Indicates whether the asset is for editorial use only
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialVideosFieldValues:
+      enum:
+      - allowed_use
+      - artist
+      - aspect_ratio
+      - asset_family
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_code
+      - collection_id
+      - collection_name
+      - color_type
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - display_set
+      - download_product
+      - download_sizes
+      - editorial_segments
+      - era
+      - event_ids
+      - id
+      - istock_collection
+      - keywords
+      - largest_downloads
+      - license_model
+      - mastered_to
+      - object_name
+      - orientation
+      - originally_shot_on
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - shot_speed
+      - source
+      - summary_set
+      - thumb
+      - title
+      - istock_licenses
+      type: string
+    GettyImages.Services.Connect.Public.Models.Events.EventKeyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.EditorialImageSearchFacetsFields:
+      enum:
+      - artists
+      - events
+      - locations
+      - specific_people
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ViewpointsFilterType:
+      enum:
+      - lockdown
+      - panning
+      - tracking_shot
+      - aerial_view
+      - high_angle_view
+      - low_angle_view
+      - tilt
+      - point_of_view
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ImageTechniquesFilterType:
+      enum:
+      - realtime
+      - time_lapse
+      - slow_motion
+      - color
+      - black_and_white
+      - animation
+      - selective_focus
       type: string
     GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage:
       type: object
@@ -5781,125 +6450,10 @@ components:
           - 'null'
           format: date-time
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-        url:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.ViewpointsFilterType:
+    GettyImages.Services.Connect.Public.Models.LicenseModelVideoRequest:
       enum:
-      - lockdown
-      - panning
-      - tracking_shot
-      - aerial_view
-      - high_angle_view
-      - low_angle_view
-      - tilt
-      - point_of_view
-      type: string
-    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage
-    : type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage'
-        facets:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-        downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization'
-        height:
-          type: integer
-          format: int32
-        media_type:
-          type:
-          - string
-          - 'null'
-        name:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TeeShirtSize'
-        width:
-          type: integer
-          format: int32
-        dpi:
-          type: integer
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-        date:
-          type: string
-          format: date-time
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.CompositionsFilterType:
-      enum:
-      - abstract
-      - candid
-      - close_up
-      - copy_space
-      - cut_out
-      - full_frame
-      - full_length
-      - headshot
-      - looking_at_camera
-      - macro
-      - medium_shot
-      - part_of_a_series
-      - portrait
-      - sparse
-      - still_life
-      - three_quarter_length
-      - waist_up
-      - wide_shot
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.VideoAspectRatioFilterType:
-      enum:
-      - '16:9'
-      - '9:16'
-      - '3:4'
-      - '4:3'
-      - '4:5'
-      - '2:1'
-      - '17:9'
-      - '9:17'
+      - rightsready
+      - royaltyfree
       type: string
     GettyImages.Services.Connect.Public.Controllers.Search.Model.MoodFilterType:
       enum:
@@ -5911,137 +6465,21 @@ components:
       - vivid
       - warm
       type: string
-    GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize:
+    GettyImages.Services.Connect.Public.Models.Contributor:
       type: object
       properties:
-        name:
+        member_name:
           type:
           - string
           - 'null'
-        is_watermarked:
-          type: boolean
-        uri:
+          description: The contributor's member name
+        display_name:
           type:
           - string
           - 'null'
+          description: The contributor's display name
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.ImageOrientationRequest:
-      enum:
-      - horizontal
-      - vertical
-      - square
-      - panoramic_horizontal
-      - panoramic_vertical
-      type: string
-    GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName:
-      enum:
-      - Standard
-      - Multiseat
-      - Unlimited
-      - Resale
-      - Indemnification
-      type: string
-    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.VideoSearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo
-    : type: object
-      properties:
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.EditorialVideo'
-        facets:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
-        result_count:
-          type: integer
-          format: int32
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize:
-      type: object
-      properties:
-        bit_depth:
-          type:
-          - string
-          - 'null'
-        broadcast_video_standard:
-          type:
-          - string
-          - 'null'
-        compression:
-          type:
-          - string
-          - 'null'
-        content_type:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization'
-        format:
-          type:
-          - string
-          - 'null'
-        frame_rate:
-          type:
-          - number
-          - 'null'
-          format: double
-        frame_size:
-          type:
-          - string
-          - 'null'
-        height:
-          type:
-          - number
-          - 'null'
-          format: double
-        interlaced:
-          type: boolean
-        bytes:
-          type: integer
-          format: int64
-        name:
-          type:
-          - string
-          - 'null'
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.VideoFormatsRequest:
-      enum:
-      - sd
-      - hd
-      - 4k
-      - hd_web
-      type: string
+      description: Contributor information for an image or video
     ? GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.VideoSearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video
     : type: object
       properties:
@@ -6065,20 +6503,96 @@ components:
         auto_corrections:
           $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Events.Event:
+    GettyImages.Services.Connect.Public.Models.IStockLicense:
       type: object
       properties:
-        child_event_count:
-          type:
-          - integer
-          - 'null'
+        license_type:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName'
+        credits:
+          type: integer
           format: int32
-        child_events:
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialGraphicalStyle:
+      enum:
+      - photography
+      - illustration
+      - vector
+      type: string
+    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization:
+      type: object
+      properties:
+        product_id:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.ChildEvent'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.CreateVideoSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.SearchFileType:
+      enum:
+      - eps
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.VideoAspectRatioFilterType:
+      enum:
+      - '16:9'
+      - '9:16'
+      - '3:4'
+      - '4:3'
+      - '4:5'
+      - '2:1'
+      - '17:9'
+      - '9:17'
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.NumberOfPeopleFilterType:
+      enum:
+      - none
+      - one
+      - two
+      - group
+      type: string
+    GettyImages.Services.Connect.Public.Models.Events.ChildEvent:
+      type: object
+      properties:
         editorial_segments:
           type:
           - array
@@ -6117,7 +6631,98 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location:
+    GettyImages.Services.Connect.Public.Controllers.Search.EventSearchSortOrder:
+      enum:
+      - newest
+      - oldest
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ? GettyImages.Services.Connect.Public.Models.Search.NewModels.SearchResponse_1_GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage
+    : type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.EditorialImage'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.SearchByImageResourceVideoResults:
+      type: object
+      properties:
+        related_searches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
+          deprecated: true
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video'
+        facets:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
+        result_count:
+          type: integer
+          format: int32
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.CreateImageSearchFacetsFields:
+      enum:
+      - artists
+      - locations
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.SortOrder:
+      enum:
+      - best_match
+      - most_popular
+      - newest
+      - oldest
+      - random
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.GraphicalStylesFilterType:
+      enum:
+      - include
+      - exclude
+      type: string
+    GettyImages.Services.Connect.Public.Models.VideoOrientationRequest:
+      enum:
+      - horizontal
+      - vertical
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople:
       type: object
       properties:
         id:
@@ -6128,103 +6733,21 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.EditorialImageSearchFacetsFields:
+    GettyImages.Services.Connect.Public.Models.TeeShirtSize:
       enum:
-      - artists
-      - events
-      - locations
-      - specific_people
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.CollectionsFilterType:
-      enum:
-      - include
-      - exclude
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialGraphicalStyle:
-      enum:
-      - photography
-      - illustration
+      - x_small
+      - small
+      - medium
+      - large
+      - x_large
+      - xx_large
       - vector
       type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.ImagesFieldValues:
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.ReleaseStatus:
       enum:
-      - accessrestriction
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - call_for_image
-      - caption
-      - collection_code
-      - collection_id
-      - collection_name
-      - color_type
-      - comp
-      - comp_webp
-      - copyright
-      - date_camera_shot
-      - date_created
-      - date_submitted
-      - display_set
-      - download_product
-      - download_sizes
-      - editorial_segments
-      - editorial_source
-      - event_ids
-      - graphical_style
-      - id
-      - istock_collection
-      - keywords
-      - largest_downloads
-      - license_model
-      - max_dimensions
-      - orientation
-      - people
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      - uri_oembed
+      - release_not_important
+      - fully_released
       type: string
-    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization:
-      type: object
-      properties:
-        product_id:
-          type:
-          - string
-          - 'null'
-        product_type:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        agreement_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeImageSortOrder:
-      enum:
-      - best_match
-      - most_popular
-      - newest
-      - random
-      type: string
-    GettyImages.Services.Connect.Public.Models.IStockLicense:
-      type: object
-      properties:
-        license_type:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName'
-        credits:
-          type: integer
-          format: int32
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Search.Model.EditorialImagesFieldValues:
       enum:
       - allowed_use
@@ -6266,96 +6789,14 @@ components:
       - title
       - uri_oembed
       type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.SortOrder:
+    GettyImages.Services.Connect.Public.Models.ImageOrientationRequest:
       enum:
-      - best_match
-      - most_popular
-      - newest
-      - oldest
-      - random
+      - horizontal
+      - vertical
+      - square
+      - panoramic_horizontal
+      - panoramic_vertical
       type: string
-    GettyImages.Services.Connect.Public.Models.AllowedUse:
-      type: object
-      properties:
-        how_can_i_use_it:
-          type:
-          - string
-          - 'null'
-          description: Indicates how the asset can be used
-        release_info:
-          type:
-          - string
-          - 'null'
-          description: Indicates release status
-        usage_restrictions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Indicates asset usage restriction, if any
-        editorial_use_only:
-          type: boolean
-          description: Indicates whether the asset is for editorial use only
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.EditorialSource:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.EditorialSegmentContract:
-      enum:
-      - archival
-      - entertainment
-      - news
-      - publicity
-      - royalty
-      - sport
-      type: string
-    GettyImages.Services.Connect.Public.Models.Events.EventsSearchResult:
-      type: object
-      properties:
-        events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Events.Event'
-        result_count:
-          type: integer
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.VideoFrameRates:
-      enum:
-      - '23.98'
-      - '24'
-      - '25'
-      - '29.97'
-      - '30'
-      - '50'
-      - '59.94'
-      - '60'
-      type: string
-    GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        aspect_ratio:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Search.Model.CreativeVideoSortOrder:
       enum:
       - best_match
@@ -6363,452 +6804,11 @@ components:
       - newest
       - random
       type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.SearchFileType:
-      enum:
-      - eps
-      type: string
-    GettyImages.Services.Connect.Public.Models.Search.SearchByImageResourceVideoResults:
-      type: object
-      properties:
-        related_searches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.Asset.RelatedSearch'
-          deprecated: true
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video'
-        facets:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse'
-        result_count:
-          type: integer
-          format: int32
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.NewModels.CreativeImage:
-      type: object
-      properties:
-        istock_collection:
-          type:
-          - string
-          - 'null'
-        istock_exclusive:
-          type:
-          - boolean
-          - 'null'
-        allowed_use:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
-        alternative_ids:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        artist:
-          type:
-          - string
-          - 'null'
-        asset_family:
-          type:
-          - string
-          - 'null'
-        asset_type:
-          type:
-          - string
-          - 'null'
-        call_for_image:
-          type:
-          - boolean
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        collection_code:
-          type:
-          - string
-          - 'null'
-        collection_id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        collection_name:
-          type:
-          - string
-          - 'null'
-        color_type:
-          type:
-          - string
-          - 'null'
-        contributor:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Contributor'
-        copyright:
-          type:
-          - string
-          - 'null'
-        date_camera_shot:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize'
-        download_product:
-          type:
-          - string
-          - 'null'
-        download_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize'
-        graphical_style:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - string
-          - 'null'
-        keywords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
-        largest_downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
-        license_model:
-          type:
-          - string
-          - 'null'
-        max_dimensions:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
-        orientation:
-          type:
-          - string
-          - 'null'
-        product_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        quality_rank:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        referral_destinations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
-        territory_restrictions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TerritoryRestriction'
-        title:
-          type:
-          - string
-          - 'null'
-        uri_oembed:
-          type:
-          - string
-          - 'null'
-        date_submitted:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.SearchFacetsResponse:
-      type: object
-      properties:
-        specific_people:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.SpecificPeople'
-        events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.FacetEvent'
-        locations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Location'
-        artists:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Artist'
-        entertainment:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Search.Facets.Entertainment'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.ReleaseStatus:
-      enum:
-      - release_not_important
-      - fully_released
-      type: string
-    GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.HeroImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Search.Model.GraphicalStylesFilterType:
+    GettyImages.Services.Connect.Public.Controllers.Search.Model.CollectionsFilterType:
       enum:
       - include
       - exclude
       type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.EventSearchSortOrder:
-      enum:
-      - newest
-      - oldest
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Search.Facets.CreateVideoSearchFacetsFields:
-      enum:
-      - artists
-      - locations
-      type: string
-    GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        allowed_use:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.AllowedUse'
-        alternative_ids:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        artist:
-          type:
-          - string
-          - 'null'
-        aspect_ratio:
-          type:
-          - string
-          - 'null'
-        asset_family:
-          type:
-          - string
-          - 'null'
-        asset_type:
-          type:
-          - string
-          - 'null'
-        call_for_image:
-          type:
-          - boolean
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        clip_length:
-          type:
-          - string
-          - 'null'
-        collection_id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        collection_code:
-          type:
-          - string
-          - 'null'
-        collection_name:
-          type:
-          - string
-          - 'null'
-        color_type:
-          type:
-          - string
-          - 'null'
-        copyright:
-          type:
-          - string
-          - 'null'
-        date_camera_shot:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_submitted:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize'
-        download_product:
-          type:
-          - string
-          - 'null'
-        download_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize'
-        istock_collection:
-          type:
-          - string
-          - 'null'
-        istock_exclusive:
-          type:
-          - boolean
-          - 'null'
-        keywords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Keyword'
-        largest_downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Download'
-        license_model:
-          type:
-          - string
-          - 'null'
-        mastered_to:
-          type:
-          - string
-          - 'null'
-        max_dimensions:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.MaxDimensions'
-        orientation:
-          type:
-          - string
-          - 'null'
-        originally_shot_on:
-          type:
-          - string
-          - 'null'
-        product_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        quality_rank:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        referral_destinations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.ReferralDestination'
-        shot_speed:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        istock_licenses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.IStockLicense'
-        object_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
   securitySchemes:
     Api-Key:
       type: apiKey

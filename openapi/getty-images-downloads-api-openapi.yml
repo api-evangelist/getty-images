@@ -491,6 +491,85 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    GetDownloadsResponse:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HistoricalDownload'
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        username:
+          type:
+          - string
+          - 'null'
+        first_name:
+          type:
+          - string
+          - 'null'
+        middle_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Dimensions:
+      type: object
+      properties:
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        dpi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    ProductTypeForDownloads:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
+    DownloadFileType:
+      enum:
+      - eps
+      - jpg
+      type: string
+    PremiumAccessDownloadData:
+      type: object
+      properties:
+        download_notes:
+          type:
+          - string
+          - 'null'
+        project_code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     DownloadDetails:
       type: object
       properties:
@@ -555,34 +634,7 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    ProductTypeForDownloads:
-      enum:
-      - easyaccess
-      - editorialsubscription
-      - imagepack
-      - premiumaccess
-      - royaltyfreesubscription
-      - creditpack
-      - aigen
-      type: string
-    DownloadFileType:
-      enum:
-      - eps
-      - jpg
-      type: string
-    PremiumAccessDownloadData:
-      type: object
-      properties:
-        download_notes:
-          type:
-          - string
-          - 'null'
-        project_code:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GetDownloadsResponse:
+    GettyImages.Services.Connect.Public.Models.Downloads.GetDownloadsResponse:
       type: object
       properties:
         result_count:
@@ -593,58 +645,7 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/HistoricalDownload'
-      additionalProperties: false
-    Dimensions:
-      type: object
-      properties:
-        width:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        height:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        dpi:
-          type:
-          - integer
-          - 'null'
-          format: int32
-      additionalProperties: false
-    User:
-      type: object
-      properties:
-        username:
-          type:
-          - string
-          - 'null'
-        first_name:
-          type:
-          - string
-          - 'null'
-        middle_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Downloads.DownloadDetails:
-      type: object
-      properties:
-        download_notes:
-          type:
-          - string
-          - 'null'
-        project_code:
-          type:
-          - string
-          - 'null'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Downloads.HistoricalDownload'
       additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Downloads.HistoricalDownload:
       type: object
@@ -698,29 +699,49 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Downloads.GetDownloadsResponse:
+    GettyImages.Services.Connect.Public.Models.Downloads.DownloadDetails:
       type: object
       properties:
-        result_count:
-          type: integer
-          format: int32
-        downloads:
+        download_notes:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Downloads.HistoricalDownload'
+        project_code:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.ProductTypeForDownloads:
-      enum:
-      - easyaccess
-      - editorialsubscription
-      - imagepack
-      - premiumaccess
-      - royaltyfreesubscription
-      - creditpack
-      - aigen
-      type: string
+    GettyImages.Services.Connect.Public.Models.Downloads.Dimensions:
+      type: object
+      properties:
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        dpi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Downloads.PremiumAccessDownloadData:
+      type: object
+      properties:
+        download_notes:
+          type:
+          - string
+          - 'null'
+        project_code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Downloads.User:
       type: object
       properties:
@@ -741,42 +762,21 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Downloads.PremiumAccessDownloadData:
-      type: object
-      properties:
-        download_notes:
-          type:
-          - string
-          - 'null'
-        project_code:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.ProductTypeForDownloads:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
     GettyImages.Services.Connect.Public.Controllers.Download.DownloadFileType:
       enum:
       - eps
       - jpg
       type: string
-    GettyImages.Services.Connect.Public.Models.Downloads.Dimensions:
-      type: object
-      properties:
-        width:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        height:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        dpi:
-          type:
-          - integer
-          - 'null'
-          format: int32
-      additionalProperties: false
   securitySchemes:
     Api-Key:
       type: apiKey

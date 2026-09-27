@@ -80,6 +80,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse:
+      type: object
+      properties:
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage:
       type: object
       properties:
@@ -148,44 +160,12 @@ components:
         auto_corrections:
           $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateSearchStyle:
       enum:
       - photography
       - vector
       type: string
       description: Specifies the graphical style of images desired.
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls:
-      type: object
-      properties:
-        small_still:
-          type:
-          - string
-          - 'null'
-        medium_still:
-          type:
-          - string
-          - 'null'
-        large_still:
-          type:
-          - string
-          - 'null'
-        small_motion:
-          type:
-          - string
-          - 'null'
-        large_motion:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo:
       type: object
       properties:
@@ -212,17 +192,37 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse:
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls:
       type: object
       properties:
-        images:
+        small_still:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+        medium_still:
+          type:
+          - string
+          - 'null'
+        large_still:
+          type:
+          - string
+          - 'null'
+        small_motion:
+          type:
+          - string
+          - 'null'
+        large_motion:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:

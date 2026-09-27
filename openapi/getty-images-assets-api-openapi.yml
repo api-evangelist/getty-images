@@ -251,34 +251,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Channel:
-      type: object
-      properties:
-        ChannelId:
-          type: integer
-          format: int32
-        AssetFamily:
-          $ref: '#/components/schemas/AssetFamily'
-        AssetChangeType:
-          type:
-          - string
-          - 'null'
-        CreateDateUtc:
-          type: string
-          format: date-time
-        NotificationCount:
-          type: integer
-          format: int32
-        AssetType:
-          $ref: '#/components/schemas/AssetType'
-        OldestChangeNotificationDateUtc:
-          type: string
-          format: date-time
-        Metadata:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     AssetLicensingResponse:
       type: object
       properties:
@@ -292,20 +264,20 @@ components:
           items:
             $ref: '#/components/schemas/ExtendedLicenses'
       additionalProperties: false
-    GetSendEventsResponse:
+    AssetEvent:
       type: object
       properties:
-        last_offset:
+        timestamp:
+          type: string
+          format: date-time
+        asset_id:
           type:
           - string
           - 'null'
-          format: date-time
-        asset_send_events:
+        email_address:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/AssetEvent'
       additionalProperties: false
     ChangedAssetDetail:
       type: object
@@ -335,40 +307,6 @@ components:
           - 'null'
           description: Contains the asset download URL for assets with an AssetLifecycle of "New."
       additionalProperties: false
-    AcquireAssetLicensesRequest:
-      required:
-      - extended_licenses
-      type: object
-      properties:
-        extended_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtendedLicenses'
-        use_team_credits:
-          type: boolean
-          description: Defaults to false.
-      additionalProperties: false
-    ExtendedLicenses:
-      enum:
-      - multiseat
-      - unlimited
-      - resale
-      - indemnification
-      type: string
-    AssetType:
-      enum:
-      - NotSet
-      - Image
-      - Film
-      - Music
-      type: string
-    AssetFamily:
-      enum:
-      - NotSet
-      - Editorial
-      - Creative
-      - Both
-      type: string
     AssetChanges:
       type: object
       properties:
@@ -385,21 +323,83 @@ components:
             $ref: '#/components/schemas/ChangedAssetDetail'
           description: Contains a list of ChangedAssetList results for the query.
       additionalProperties: false
-    AssetEvent:
+    Channel:
       type: object
       properties:
-        timestamp:
-          type: string
-          format: date-time
-        asset_id:
+        ChannelId:
+          type: integer
+          format: int32
+        AssetFamily:
+          $ref: '#/components/schemas/AssetFamily'
+        AssetChangeType:
           type:
           - string
           - 'null'
-        email_address:
+        CreateDateUtc:
+          type: string
+          format: date-time
+        NotificationCount:
+          type: integer
+          format: int32
+        AssetType:
+          $ref: '#/components/schemas/AssetType'
+        OldestChangeNotificationDateUtc:
+          type: string
+          format: date-time
+        Metadata:
           type:
           - string
           - 'null'
       additionalProperties: false
+    AssetType:
+      enum:
+      - NotSet
+      - Image
+      - Film
+      - Music
+      type: string
+    AcquireAssetLicensesRequest:
+      required:
+      - extended_licenses
+      type: object
+      properties:
+        extended_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+        use_team_credits:
+          type: boolean
+          description: Defaults to false.
+      additionalProperties: false
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        asset_send_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssetEvent'
+      additionalProperties: false
+    ExtendedLicenses:
+      enum:
+      - multiseat
+      - unlimited
+      - resale
+      - indemnification
+      type: string
+    AssetFamily:
+      enum:
+      - NotSet
+      - Editorial
+      - Creative
+      - Both
+      type: string
   securitySchemes:
     Api-Key:
       type: apiKey
