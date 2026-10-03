@@ -38,16 +38,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CountriesList:
-      type: object
-      properties:
-        countries:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Country'
-      additionalProperties: false
     Country:
       type: object
       properties:
@@ -63,6 +53,16 @@ components:
           type:
           - string
           - 'null'
+      additionalProperties: false
+    CountriesList:
+      type: object
+      properties:
+        countries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Country'
       additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Countries.CountriesList:
       type: object

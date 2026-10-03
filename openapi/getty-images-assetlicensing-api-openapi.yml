@@ -51,19 +51,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.AssetLicensingResponse:
-      type: object
-      properties:
-        credits_used:
-          type: integer
-          format: int32
-        acquired_licenses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.AssetLicensing.AcquireAssetLicensesRequest:
       required:
       - extended_licenses
@@ -84,6 +71,19 @@ components:
       - resale
       - indemnification
       type: string
+    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.AssetLicensingResponse:
+      type: object
+      properties:
+        credits_used:
+          type: integer
+          format: int32
+        acquired_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses'
+      additionalProperties: false
   securitySchemes:
     Api-Key:
       type: apiKey

@@ -89,19 +89,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PreviousAssetPurchases:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        previous_purchases:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PreviousAssetPurchase'
-      additionalProperties: false
     PreviousAssetPurchase:
       type: object
       properties:
@@ -144,6 +131,19 @@ components:
           type:
           - string
           - 'null'
+      additionalProperties: false
+    PreviousAssetPurchases:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        previous_purchases:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PreviousAssetPurchase'
       additionalProperties: false
   securitySchemes:
     Api-Key:

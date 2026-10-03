@@ -147,34 +147,22 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PartnerChannel:
+    AssetChanges:
       type: object
       properties:
-        assetFamily:
+        changeSetId:
           type:
           - string
           - 'null'
-          description: 'Specifies the asset family for the channel: "Editorial", "Creative" or "Both"'
-        channelId:
-          type: integer
-          description: Specifies the identification number for the channel
-          format: int32
-        channelType:
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+        changedAssetList:
           type:
-          - string
+          - array
           - 'null'
-          description: 'Specifies the lifecycle type(s) in the channel: "New", "Update", "Delete", or a combination of these, separated by commas'
-        startDate:
-          type: string
-          description: ''
-          format: date-time
-        assetType:
-          type:
-          - string
-          - 'null'
-          description: 'Specifies asset type in the channel: "Image", "Film", or "Music"'
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
       additionalProperties: false
-      description: partner_channel
     ChangedAssetDetail:
       type: object
       properties:
@@ -203,22 +191,34 @@ components:
           - 'null'
           description: Contains the asset download URL for assets with an AssetLifecycle of "New."
       additionalProperties: false
-    AssetChanges:
+    PartnerChannel:
       type: object
       properties:
-        changeSetId:
+        assetFamily:
           type:
           - string
           - 'null'
-          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
-        changedAssetList:
+          description: 'Specifies the asset family for the channel: "Editorial", "Creative" or "Both"'
+        channelId:
+          type: integer
+          description: Specifies the identification number for the channel
+          format: int32
+        channelType:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/ChangedAssetDetail'
-          description: Contains a list of ChangedAssetList results for the query.
+          description: 'Specifies the lifecycle type(s) in the channel: "New", "Update", "Delete", or a combination of these, separated by commas'
+        startDate:
+          type: string
+          description: ''
+          format: date-time
+        assetType:
+          type:
+          - string
+          - 'null'
+          description: 'Specifies asset type in the channel: "Image", "Film", or "Music"'
       additionalProperties: false
+      description: partner_channel
   securitySchemes:
     Api-Key:
       type: apiKey

@@ -56,20 +56,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ProductTypeResponse:
-      enum:
-      - easyaccess
-      - editorialsubscription
-      - imagepack
-      - premiumaccess
-      - royaltyfreesubscription
-      - creditpack
-      - aigen
-      type: string
-    ProductFieldValues:
-      enum:
-      - download_requirements
-      type: string
+    ProductsResult:
+      type: object
+      properties:
+        products:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Product'
+      additionalProperties: false
     DownloadRequirements:
       type: object
       properties:
@@ -83,39 +79,6 @@ components:
           - 'null'
           items:
             type: string
-      additionalProperties: false
-    OverageDetails:
-      type: object
-      properties:
-        limit:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        remaining:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        count:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        overages_reached:
-          type:
-          - boolean
-          - 'null'
-      additionalProperties: false
-    ProductsResult:
-      type: object
-      properties:
-        products:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Product'
       additionalProperties: false
     Product:
       type: object
@@ -189,6 +152,68 @@ components:
       - active
       - inactive
       type: string
+    ProductTypeResponse:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
+    ProductFieldValues:
+      enum:
+      - download_requirements
+      type: string
+    OverageDetails:
+      type: object
+      properties:
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        remaining:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        overages_reached:
+          type:
+          - boolean
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.ProductTypeResponse:
+      enum:
+      - easyaccess
+      - editorialsubscription
+      - imagepack
+      - premiumaccess
+      - royaltyfreesubscription
+      - creditpack
+      - aigen
+      type: string
+    GettyImages.Services.Connect.Public.Models.Products.ProductsResult:
+      type: object
+      properties:
+        products:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.Product'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.ProductStatus:
+      enum:
+      - active
+      - inactive
+      type: string
     GettyImages.Services.Connect.Public.Controllers.Products.ProductFieldValues:
       enum:
       - download_requirements
@@ -216,21 +241,6 @@ components:
           - boolean
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.ProductStatus:
-      enum:
-      - active
-      - inactive
-      type: string
-    GettyImages.Services.Connect.Public.Models.ProductTypeResponse:
-      enum:
-      - easyaccess
-      - editorialsubscription
-      - imagepack
-      - premiumaccess
-      - royaltyfreesubscription
-      - creditpack
-      - aigen
-      type: string
     GettyImages.Services.Connect.Public.Models.Products.DownloadRequirements:
       type: object
       properties:
@@ -311,16 +321,6 @@ components:
           - integer
           - 'null'
           format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Products.ProductsResult:
-      type: object
-      properties:
-        products:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.Product'
       additionalProperties: false
   securitySchemes:
     Api-Key:

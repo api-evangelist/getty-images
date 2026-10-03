@@ -62,6 +62,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    report_usage_batch_response:
+      type: object
+      properties:
+        invalid_assets:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
+        total_asset_usages_processed:
+          type:
+          - integer
+          - 'null'
+          description: Specifies the number of asset usage records that were successfully recorded.
+          format: int32
+      additionalProperties: false
+      description: Specifies the response from the Batch Usages endpoint.
     asset_usage:
       type: object
       properties:
@@ -92,24 +110,6 @@ components:
           description: Identifies the list of asset id, usage count and date of usage combinations to record.
       additionalProperties: false
       description: Specifies the request information for the Batch Usages endpoint.
-    report_usage_batch_response:
-      type: object
-      properties:
-        invalid_assets:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
-        total_asset_usages_processed:
-          type:
-          - integer
-          - 'null'
-          description: Specifies the number of asset usage records that were successfully recorded.
-          format: int32
-      additionalProperties: false
-      description: Specifies the response from the Batch Usages endpoint.
   securitySchemes:
     Api-Key:
       type: apiKey

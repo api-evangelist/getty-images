@@ -80,18 +80,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse:
-      type: object
-      properties:
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage:
       type: object
       properties:
@@ -110,6 +98,14 @@ components:
         preview_urls:
           $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageUrls'
         destination_url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
+      type: object
+      properties:
+        phrase:
           type:
           - string
           - 'null'
@@ -160,12 +156,6 @@ components:
         auto_corrections:
           $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo:
       type: object
       properties:
@@ -192,6 +182,24 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse:
+      type: object
+      properties:
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls:
       type: object
       properties:
@@ -212,14 +220,6 @@ components:
           - string
           - 'null'
         large_motion:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
-      type: object
-      properties:
-        phrase:
           type:
           - string
           - 'null'

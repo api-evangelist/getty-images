@@ -251,61 +251,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AssetLicensingResponse:
+    AcquireAssetLicensesRequest:
+      required:
+      - extended_licenses
       type: object
       properties:
-        credits_used:
-          type: integer
-          format: int32
-        acquired_licenses:
-          type:
-          - array
-          - 'null'
+        extended_licenses:
+          type: array
           items:
             $ref: '#/components/schemas/ExtendedLicenses'
-      additionalProperties: false
-    AssetEvent:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        asset_id:
-          type:
-          - string
-          - 'null'
-        email_address:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ChangedAssetDetail:
-      type: object
-      properties:
-        asset_changed_utc_datetime:
-          type: string
-          description: Contains the date of the asset change.
-          format: date-time
-        asset_lifecycle:
-          type:
-          - string
-          - 'null'
-          description: Contains the type of change this asset change is. (i.e. "New," "Updated" or "Deleted")
-        asset_type:
-          type:
-          - string
-          - 'null'
-          description: Contains the type of asset this asset change is (i.e. "Image").
-        id:
-          type:
-          - string
-          - 'null'
-          description: Contains the Id for the asset change.
-        uri:
-          type:
-          - string
-          - 'null'
-          description: Contains the asset download URL for assets with an AssetLifecycle of "New."
+        use_team_credits:
+          type: boolean
+          description: Defaults to false.
       additionalProperties: false
     AssetChanges:
       type: object
@@ -351,6 +308,41 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    AssetLicensingResponse:
+      type: object
+      properties:
+        credits_used:
+          type: integer
+          format: int32
+        acquired_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+      additionalProperties: false
+    AssetFamily:
+      enum:
+      - NotSet
+      - Editorial
+      - Creative
+      - Both
+      type: string
+    AssetEvent:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        asset_id:
+          type:
+          - string
+          - 'null'
+        email_address:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     AssetType:
       enum:
       - NotSet
@@ -358,19 +350,41 @@ components:
       - Film
       - Music
       type: string
-    AcquireAssetLicensesRequest:
-      required:
-      - extended_licenses
+    ChangedAssetDetail:
       type: object
       properties:
-        extended_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtendedLicenses'
-        use_team_credits:
-          type: boolean
-          description: Defaults to false.
+        asset_changed_utc_datetime:
+          type: string
+          description: Contains the date of the asset change.
+          format: date-time
+        asset_lifecycle:
+          type:
+          - string
+          - 'null'
+          description: Contains the type of change this asset change is. (i.e. "New," "Updated" or "Deleted")
+        asset_type:
+          type:
+          - string
+          - 'null'
+          description: Contains the type of asset this asset change is (i.e. "Image").
+        id:
+          type:
+          - string
+          - 'null'
+          description: Contains the Id for the asset change.
+        uri:
+          type:
+          - string
+          - 'null'
+          description: Contains the asset download URL for assets with an AssetLifecycle of "New."
       additionalProperties: false
+    ExtendedLicenses:
+      enum:
+      - multiseat
+      - unlimited
+      - resale
+      - indemnification
+      type: string
     GetSendEventsResponse:
       type: object
       properties:
@@ -386,20 +400,6 @@ components:
           items:
             $ref: '#/components/schemas/AssetEvent'
       additionalProperties: false
-    ExtendedLicenses:
-      enum:
-      - multiseat
-      - unlimited
-      - resale
-      - indemnification
-      type: string
-    AssetFamily:
-      enum:
-      - NotSet
-      - Editorial
-      - Creative
-      - Both
-      type: string
   securitySchemes:
     Api-Key:
       type: apiKey

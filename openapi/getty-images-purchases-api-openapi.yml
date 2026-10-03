@@ -77,19 +77,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GettyImages.Services.Connect.Public.Models.Purchases.PreviousAssetPurchases:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          format: int32
-        previous_purchases:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Purchases.PreviousAssetPurchase'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Purchases.PreviousAssetPurchase:
       type: object
       properties:
@@ -132,6 +119,19 @@ components:
           type:
           - string
           - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Purchases.PreviousAssetPurchases:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          format: int32
+        previous_purchases:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Purchases.PreviousAssetPurchase'
       additionalProperties: false
   securitySchemes:
     Api-Key:

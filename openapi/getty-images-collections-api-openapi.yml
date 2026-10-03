@@ -38,35 +38,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Collection:
-      type: object
-      properties:
-        asset_family:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
-        id:
-          type: integer
-          format: int32
-        license_model:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        product_types:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
     CollectionsList:
       type: object
       properties:
@@ -77,7 +48,7 @@ components:
           items:
             $ref: '#/components/schemas/Collection'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Collections.Collection:
+    Collection:
       type: object
       properties:
         asset_family:
@@ -115,6 +86,35 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Collections.Collection'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Collections.Collection:
+      type: object
+      properties:
+        asset_family:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        id:
+          type: integer
+          format: int32
+        license_model:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        product_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       additionalProperties: false
   securitySchemes:
     Api-Key:
