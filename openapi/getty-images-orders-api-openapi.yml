@@ -52,6 +52,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    OrderNotes:
+      type: object
+      properties:
+        licensee_name:
+          type:
+          - string
+          - 'null'
+        purchase_order_number:
+          type:
+          - string
+          - 'null'
+        project_title:
+          type:
+          - string
+          - 'null'
+        ordered_by:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     AssetIdFromOrder:
       type: object
       properties:
@@ -87,46 +107,6 @@ components:
           items:
             $ref: '#/components/schemas/AssetIdFromOrder'
       additionalProperties: false
-    OrderNotes:
-      type: object
-      properties:
-        licensee_name:
-          type:
-          - string
-          - 'null'
-        purchase_order_number:
-          type:
-          - string
-          - 'null'
-        project_title:
-          type:
-          - string
-          - 'null'
-        ordered_by:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Orders.OrderNotes:
-      type: object
-      properties:
-        licensee_name:
-          type:
-          - string
-          - 'null'
-        purchase_order_number:
-          type:
-          - string
-          - 'null'
-        project_title:
-          type:
-          - string
-          - 'null'
-        ordered_by:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Orders.OrderDetail:
       type: object
       properties:
@@ -158,6 +138,26 @@ components:
       type: object
       properties:
         id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Orders.OrderNotes:
+      type: object
+      properties:
+        licensee_name:
+          type:
+          - string
+          - 'null'
+        purchase_order_number:
+          type:
+          - string
+          - 'null'
+        project_title:
+          type:
+          - string
+          - 'null'
+        ordered_by:
           type:
           - string
           - 'null'

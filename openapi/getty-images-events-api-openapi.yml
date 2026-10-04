@@ -144,6 +144,20 @@ components:
       - start_date
       - type
       type: string
+    GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        is_watermarked:
+          type: boolean
+        uri:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.LocationEvent:
       type: object
       properties:
@@ -163,6 +177,20 @@ components:
           type:
           - string
           - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.HeroImage:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        display_sizes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize'
       additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Events.Event:
       type: object
@@ -216,34 +244,6 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Events.SingleEventDetailFieldValues:
-      enum:
-      - id
-      - child_event_count
-      - child_events
-      - editorial_segments
-      - hero_image
-      - image_count
-      - keywords
-      - location
-      - name
-      - start_date
-      - type
-      type: string
-    GettyImages.Services.Connect.Public.Models.HeroImage:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        display_sizes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Events.EventDetailFieldValues:
       enum:
       - id
@@ -257,20 +257,6 @@ components:
       - start_date
       - type
       type: string
-    GettyImages.Services.Connect.Public.Models.HeroImageDisplaySize:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        is_watermarked:
-          type: boolean
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Events.EventsResponse:
       type: object
       properties:
@@ -287,6 +273,41 @@ components:
           items:
             type: integer
             format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Events.SingleEventDetailFieldValues:
+      enum:
+      - id
+      - child_event_count
+      - child_events
+      - editorial_segments
+      - hero_image
+      - image_count
+      - keywords
+      - location
+      - name
+      - start_date
+      - type
+      type: string
+    GettyImages.Services.Connect.Public.Models.Events.EventKeyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
+          format: int32
       additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Events.ChildEvent:
       type: object
@@ -328,27 +349,6 @@ components:
           type:
           - string
           - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Events.EventKeyword:
-      type: object
-      properties:
-        keyword_id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        relevance:
-          type:
-          - integer
-          - 'null'
-          format: int32
       additionalProperties: false
   securitySchemes:
     Api-Key:

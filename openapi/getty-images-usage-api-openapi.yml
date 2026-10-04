@@ -62,24 +62,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    report_usage_batch_response:
+    report_usage_batch_request:
       type: object
       properties:
-        invalid_assets:
+        asset_usages:
           type:
           - array
           - 'null'
           items:
-            type: string
-          description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
-        total_asset_usages_processed:
-          type:
-          - integer
-          - 'null'
-          description: Specifies the number of asset usage records that were successfully recorded.
-          format: int32
+            $ref: '#/components/schemas/asset_usage'
+          description: Identifies the list of asset id, usage count and date of usage combinations to record.
       additionalProperties: false
-      description: Specifies the response from the Batch Usages endpoint.
+      description: Specifies the request information for the Batch Usages endpoint.
     asset_usage:
       type: object
       properties:
@@ -98,18 +92,24 @@ components:
           format: date-time
       additionalProperties: false
       description: Specifies the id, usage Quantity, and date of when an asset was used.
-    report_usage_batch_request:
+    report_usage_batch_response:
       type: object
       properties:
-        asset_usages:
+        invalid_assets:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/asset_usage'
-          description: Identifies the list of asset id, usage count and date of usage combinations to record.
+            type: string
+          description: Identifies a list of asset ids submitted that did not match known Getty asset ids.
+        total_asset_usages_processed:
+          type:
+          - integer
+          - 'null'
+          description: Specifies the number of asset usage records that were successfully recorded.
+          format: int32
       additionalProperties: false
-      description: Specifies the request information for the Batch Usages endpoint.
+      description: Specifies the response from the Batch Usages endpoint.
   securitySchemes:
     Api-Key:
       type: apiKey

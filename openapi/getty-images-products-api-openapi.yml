@@ -56,30 +56,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ProductsResult:
-      type: object
-      properties:
-        products:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Product'
-      additionalProperties: false
-    DownloadRequirements:
-      type: object
-      properties:
-        is_note_required:
-          type: boolean
-        is_project_code_required:
-          type: boolean
-        project_codes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
     Product:
       type: object
       properties:
@@ -152,6 +128,34 @@ components:
       - active
       - inactive
       type: string
+    ProductsResult:
+      type: object
+      properties:
+        products:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Product'
+      additionalProperties: false
+    DownloadRequirements:
+      type: object
+      properties:
+        is_note_required:
+          type: boolean
+        is_project_code_required:
+          type: boolean
+        project_codes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    ProductFieldValues:
+      enum:
+      - download_requirements
+      type: string
     ProductTypeResponse:
       enum:
       - easyaccess
@@ -161,10 +165,6 @@ components:
       - royaltyfreesubscription
       - creditpack
       - aigen
-      type: string
-    ProductFieldValues:
-      enum:
-      - download_requirements
       type: string
     OverageDetails:
       type: object
@@ -199,24 +199,10 @@ components:
       - creditpack
       - aigen
       type: string
-    GettyImages.Services.Connect.Public.Models.Products.ProductsResult:
-      type: object
-      properties:
-        products:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.Product'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.ProductStatus:
       enum:
       - active
       - inactive
-      type: string
-    GettyImages.Services.Connect.Public.Controllers.Products.ProductFieldValues:
-      enum:
-      - download_requirements
       type: string
     GettyImages.Services.Connect.Public.Models.Products.OverageDetails:
       type: object
@@ -255,6 +241,20 @@ components:
           items:
             type: string
       additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Products.ProductsResult:
+      type: object
+      properties:
+        products:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Products.Product'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Products.ProductFieldValues:
+      enum:
+      - download_requirements
+      type: string
     GettyImages.Services.Connect.Public.Models.Products.Product:
       type: object
       properties:

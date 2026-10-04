@@ -251,35 +251,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AcquireAssetLicensesRequest:
-      required:
-      - extended_licenses
-      type: object
-      properties:
-        extended_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtendedLicenses'
-        use_team_credits:
-          type: boolean
-          description: Defaults to false.
-      additionalProperties: false
-    AssetChanges:
-      type: object
-      properties:
-        change_set_id:
-          type:
-          - string
-          - 'null'
-          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
-        changed_assets:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChangedAssetDetail'
-          description: Contains a list of ChangedAssetList results for the query.
-      additionalProperties: false
+    AssetType:
+      enum:
+      - NotSet
+      - Image
+      - Film
+      - Music
+      type: string
     Channel:
       type: object
       properties:
@@ -308,18 +286,18 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AssetLicensingResponse:
+    AcquireAssetLicensesRequest:
+      required:
+      - extended_licenses
       type: object
       properties:
-        credits_used:
-          type: integer
-          format: int32
-        acquired_licenses:
-          type:
-          - array
-          - 'null'
+        extended_licenses:
+          type: array
           items:
             $ref: '#/components/schemas/ExtendedLicenses'
+        use_team_credits:
+          type: boolean
+          description: Defaults to false.
       additionalProperties: false
     AssetFamily:
       enum:
@@ -343,13 +321,19 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AssetType:
-      enum:
-      - NotSet
-      - Image
-      - Film
-      - Music
-      type: string
+    AssetLicensingResponse:
+      type: object
+      properties:
+        credits_used:
+          type: integer
+          format: int32
+        acquired_licenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExtendedLicenses'
+      additionalProperties: false
     ChangedAssetDetail:
       type: object
       properties:
@@ -399,6 +383,22 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/AssetEvent'
+      additionalProperties: false
+    AssetChanges:
+      type: object
+      properties:
+        change_set_id:
+          type:
+          - string
+          - 'null'
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+        changed_assets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
       additionalProperties: false
   securitySchemes:
     Api-Key:

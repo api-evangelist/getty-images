@@ -88,56 +88,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AffiliateVideoUrls:
-      type: object
-      properties:
-        small_still:
-          type:
-          - string
-          - 'null'
-        medium_still:
-          type:
-          - string
-          - 'null'
-        large_still:
-          type:
-          - string
-          - 'null'
-        small_motion:
-          type:
-          - string
-          - 'null'
-        large_motion:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
-    AffiliateImageSearchResponse:
-      type: object
-      properties:
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    AutoCorrections:
-      type: object
-      properties:
-        phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     AffiliateVideoSearchResponse:
       type: object
       properties:
@@ -150,27 +100,17 @@ components:
         auto_corrections:
           $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
-    AffiliateImage:
+    AffiliateImageSearchResponse:
       type: object
       properties:
-        id:
+        images:
           type:
-          - string
+          - array
           - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateImageUrls'
-        destination_url:
-          type:
-          - string
-          - 'null'
+          items:
+            $ref: '#/components/schemas/AffiliateImage'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
     AffiliateVideo:
       type: object
@@ -198,6 +138,12 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
     AffiliateImageUrls:
       type: object
       properties:
@@ -231,6 +177,60 @@ components:
         large_width:
           type: integer
           format: int32
+      additionalProperties: false
+    AffiliateVideoUrls:
+      type: object
+      properties:
+        small_still:
+          type:
+          - string
+          - 'null'
+        medium_still:
+          type:
+          - string
+          - 'null'
+        large_still:
+          type:
+          - string
+          - 'null'
+        small_motion:
+          type:
+          - string
+          - 'null'
+        large_motion:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AffiliateImage:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          $ref: '#/components/schemas/AffiliateImageUrls'
+        destination_url:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     Api-Key:

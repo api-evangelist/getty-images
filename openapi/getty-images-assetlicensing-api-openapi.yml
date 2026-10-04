@@ -51,26 +51,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.AcquireAssetLicensesRequest:
-      required:
-      - extended_licenses
-      type: object
-      properties:
-        extended_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses'
-        use_team_credits:
-          type: boolean
-          description: Defaults to false.
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses:
-      enum:
-      - multiseat
-      - unlimited
-      - resale
-      - indemnification
-      type: string
     GettyImages.Services.Connect.Public.Controllers.AssetLicensing.AssetLicensingResponse:
       type: object
       properties:
@@ -83,6 +63,26 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses:
+      enum:
+      - multiseat
+      - unlimited
+      - resale
+      - indemnification
+      type: string
+    GettyImages.Services.Connect.Public.Controllers.AssetLicensing.AcquireAssetLicensesRequest:
+      required:
+      - extended_licenses
+      type: object
+      properties:
+        extended_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.AssetLicensing.ExtendedLicenses'
+        use_team_credits:
+          type: boolean
+          description: Defaults to false.
       additionalProperties: false
   securitySchemes:
     Api-Key:
