@@ -1,0 +1,12 @@
+{
+ "url": "https://api.gettyimages.com/swagger/v3/swagger.json",
+ "requested_url": "https://api.gettyimages.com/swagger/v3/swagger.json",
+ "status": 200,
+ "content_type": "application/json;charset=utf-8",
+ "bytes": 526006,
+ "sha256": "f20ce986456b97297058a54593279f2ac00de1f120d8ba3fed24bbb532971d9d",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.987), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
