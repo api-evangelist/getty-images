@@ -37,7 +37,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/getty-images.png
 access: 3rd-Party
 created: '2024-11-13'
-modified: '2026-09-16'
+modified: '2026-10-06'
 position: Consuming
 url: https://raw.githubusercontent.com/api-evangelist/getty-images/refs/heads/main/apis.yml
 specificationVersion: '0.23'
@@ -516,6 +516,10 @@ apis:
   - type: Documentation
     url: https://developer.gettyimages.com/docs/
 common:
+- url: https://newsroom.gettyimages.com/en
+  type: Blog
+- url: https://newsroom.gettyimages.com/en/feed.rss
+  type: BlogRSS
 - type: Overlay
   url: overlays/getty-images-ai-generator-overlay.yaml
 - type: Overlay
