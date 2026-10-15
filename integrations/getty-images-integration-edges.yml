@@ -45,6 +45,23 @@ edges:
     detected: '2026-10-15'
   detected_by: sweep-media.py
   first_seen: '2026-10-15'
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/getty-images/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Getty Images
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
 generated: '2026-10-15'
 method: searched
 source:
@@ -53,3 +70,4 @@ source:
 checked:
 - https://ddex.net/membership/current-members/
 - https://raw.githubusercontent.com/c2pa-org/conformance-public/main/conforming-products/conforming-products-list.json
+- wordpress/integrations/wordpress-integration-edges.yml
