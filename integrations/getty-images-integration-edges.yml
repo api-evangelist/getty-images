@@ -1,0 +1,55 @@
+edges:
+- partner_name: C2PA (Content Credentials conformance programme)
+  partner: null
+  partner_match: register
+  type: register
+  direction: partner-built
+  channel: standard-directory
+  relationship: standard-participant
+  evidence: https://github.com/c2pa-org/conformance-public/blob/main/conforming-products/conforming-products-list.json
+  category: content provenance (Content Credentials) conformance
+  contract_reference:
+    register: C2PA conforming products list (c2pa-org/conformance-public)
+    spec_file: null
+    role: c2pa-conformant-applicant
+    registered_name: Getty Images (US), Inc.
+    register_id: Getty Images (US), Inc.
+    product_types:
+    - generatorProduct
+    assurance_levels:
+    - 1
+    spec_versions:
+    - '2.2'
+    media_types:
+    - image/avif
+    - image/jpeg
+    - image/png
+    - image/webp
+    products:
+    - product: Getty Images AI-Modified Image
+      record_id: 019f61b8-82c3-7afc-951e-4d2e3e9063be
+      conformance_date: '2026-07-15'
+    - product: Getty Images AI-Generated Image
+      record_id: 019eb73e-4e85-7b4c-9138-f05c365b575d
+      conformance_date: '2026-06-29'
+    - product: iStock AI-Modified Image
+      record_id: 019f6b49-79cd-7453-9bcd-79284820b026
+      conformance_date: '2026-07-28'
+    - product: iStock AI-Generated Image
+      record_id: 019f6165-37e6-75ce-8226-977096bcf071
+      conformance_date: '2026-07-15'
+    matched_domain: gettyimages.com
+    matched_by: domain
+    identity: wikidata Q1520122 'Getty Images' P856 https://www.gettyimages.com
+    detected_by: sweep-media.py
+    detected: '2026-10-15'
+  detected_by: sweep-media.py
+  first_seen: '2026-10-15'
+generated: '2026-10-15'
+method: searched
+source:
+- https://ddex.net/membership/current-members/
+- https://raw.githubusercontent.com/c2pa-org/conformance-public/main/conforming-products/conforming-products-list.json
+checked:
+- https://ddex.net/membership/current-members/
+- https://raw.githubusercontent.com/c2pa-org/conformance-public/main/conforming-products/conforming-products-list.json
