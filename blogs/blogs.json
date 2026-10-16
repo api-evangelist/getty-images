@@ -1,0 +1,21 @@
+{
+  "repo": "getty-images",
+  "feeds": [
+    {
+      "source": "https://newsroom.gettyimages.com/en",
+      "feed_url": "https://newsroom.gettyimages.com/en/feed.rss",
+      "title": "",
+      "saved": 2,
+      "method": "discovered"
+    },
+    {
+      "source": "https://newsroom.gettyimages.com/en/feed.rss",
+      "feed_url": "https://newsroom.gettyimages.com/en/feed.rss",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    }
+  ],
+  "post_count": 2,
+  "fetched": "2026-10-10T13:15:00Z"
+}
