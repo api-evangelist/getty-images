@@ -88,6 +88,12 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
     AffiliateVideoSearchResponse:
       type: object
       properties:
@@ -100,50 +106,6 @@ components:
         auto_corrections:
           $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
-    AffiliateImageSearchResponse:
-      type: object
-      properties:
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AffiliateImage'
-        auto_corrections:
-          $ref: '#/components/schemas/AutoCorrections'
-      additionalProperties: false
-    AffiliateVideo:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/AffiliateVideoUrls'
-        destination_url:
-          type:
-          - string
-          - 'null'
-        clip_length:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
     AffiliateImageUrls:
       type: object
       properties:
@@ -202,6 +164,14 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    AutoCorrections:
+      type: object
+      properties:
+        phrase:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     AffiliateImage:
       type: object
       properties:
@@ -224,13 +194,43 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AutoCorrections:
+    AffiliateVideo:
       type: object
       properties:
-        phrase:
+        id:
           type:
           - string
           - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          $ref: '#/components/schemas/AffiliateVideoUrls'
+        destination_url:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AffiliateImageSearchResponse:
+      type: object
+      properties:
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AffiliateImage'
+        auto_corrections:
+          $ref: '#/components/schemas/AutoCorrections'
       additionalProperties: false
   securitySchemes:
     Api-Key:

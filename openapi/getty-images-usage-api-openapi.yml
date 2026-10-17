@@ -74,24 +74,6 @@ components:
           description: Identifies the list of asset id, usage count and date of usage combinations to record.
       additionalProperties: false
       description: Specifies the request information for the Batch Usages endpoint.
-    asset_usage:
-      type: object
-      properties:
-        asset_id:
-          type:
-          - string
-          - 'null'
-          description: Specifies the Id of the asset that was used.
-        quantity:
-          type: integer
-          description: Specifies the number of times the asset was used.
-          format: int32
-        usage_date:
-          type: string
-          description: Identifies the date the asset was used, in ISO 8601 format (e.g., YYYY-MM-DD), time is not needed.
-          format: date-time
-      additionalProperties: false
-      description: Specifies the id, usage Quantity, and date of when an asset was used.
     report_usage_batch_response:
       type: object
       properties:
@@ -110,6 +92,24 @@ components:
           format: int32
       additionalProperties: false
       description: Specifies the response from the Batch Usages endpoint.
+    asset_usage:
+      type: object
+      properties:
+        asset_id:
+          type:
+          - string
+          - 'null'
+          description: Specifies the Id of the asset that was used.
+        quantity:
+          type: integer
+          description: Specifies the number of times the asset was used.
+          format: int32
+        usage_date:
+          type: string
+          description: Identifies the date the asset was used, in ISO 8601 format (e.g., YYYY-MM-DD), time is not needed.
+          format: date-time
+      additionalProperties: false
+      description: Specifies the id, usage Quantity, and date of when an asset was used.
   securitySchemes:
     Api-Key:
       type: apiKey

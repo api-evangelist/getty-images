@@ -125,41 +125,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ArtistsVideoSearchFieldValues:
-      enum:
-      - id
-      - allowed_use
-      - alternative_ids
-      - artist
-      - asset_family
-      - asset_type
-      - call_for_image
-      - caption
-      - clip_length
-      - collection_id
-      - collection_code
-      - collection_name
-      - comp
-      - copyright
-      - date_created
-      - date_submitted
-      - detail_set
-      - display_set
-      - editorial_segments
-      - event_ids
-      - graphical_style
-      - keywords
-      - license_model
-      - max_dimensions
-      - orientation
-      - preview
-      - product_types
-      - quality_rank
-      - referral_destinations
-      - summary_set
-      - thumb
-      - title
-      type: string
     ArtistsImageSearchFieldValues:
       enum:
       - id
@@ -197,149 +162,7 @@ components:
       - thumb
       - title
       type: string
-    GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize:
-      type: object
-      properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        aspect_ratio:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Download:
-      type: object
-      properties:
-        product_id:
-          type:
-          - string
-          - 'null'
-        product_type:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        agreement_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization:
-      type: object
-      properties:
-        product_id:
-          type:
-          - string
-          - 'null'
-        product_type:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-        agreement_name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.AllowedUse:
-      type: object
-      properties:
-        how_can_i_use_it:
-          type:
-          - string
-          - 'null'
-          description: Indicates how the asset can be used
-        release_info:
-          type:
-          - string
-          - 'null'
-          description: Indicates release status
-        usage_restrictions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Indicates asset usage restriction, if any
-        editorial_use_only:
-          type: boolean
-          description: Indicates whether the asset is for editorial use only
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize:
-      type: object
-      properties:
-        bit_depth:
-          type:
-          - string
-          - 'null'
-        broadcast_video_standard:
-          type:
-          - string
-          - 'null'
-        compression:
-          type:
-          - string
-          - 'null'
-        content_type:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        downloads:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization'
-        format:
-          type:
-          - string
-          - 'null'
-        frame_rate:
-          type:
-          - number
-          - 'null'
-          format: double
-        frame_size:
-          type:
-          - string
-          - 'null'
-        height:
-          type:
-          - number
-          - 'null'
-          format: double
-        interlaced:
-          type: boolean
-        bytes:
-          type: integer
-          format: int64
-        name:
-          type:
-          - string
-          - 'null'
-        width:
-          type: integer
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Artists.ArtistsVideoSearchFieldValues:
+    ArtistsVideoSearchFieldValues:
       enum:
       - id
       - allowed_use
@@ -357,6 +180,7 @@ components:
       - copyright
       - date_created
       - date_submitted
+      - detail_set
       - display_set
       - editorial_segments
       - event_ids
@@ -393,56 +217,15 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize:
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.ArtistImageSearchResponse:
       type: object
       properties:
-        is_watermarked:
-          type: boolean
-        name:
-          type:
-          - string
-          - 'null'
-        uri:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName:
-      enum:
-      - Standard
-      - Multiseat
-      - Unlimited
-      - Resale
-      - Indemnification
-      type: string
-    GettyImages.Services.Connect.Public.Models.IStockLicense:
-      type: object
-      properties:
-        license_type:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName'
-        credits:
-          type: integer
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.TeeShirtSize:
-      enum:
-      - x_small
-      - small
-      - medium
-      - large
-      - x_large
-      - xx_large
-      - vector
-      type: string
-    GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.ArtistVideoSearchResponse:
-      type: object
-      properties:
-        videos:
+        images:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Image'
         result_count:
           type: integer
           format: int32
@@ -604,43 +387,6 @@ components:
           - 'null'
           format: date-time
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Keyword:
-      type: object
-      properties:
-        keyword_id:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        relevance:
-          type:
-          - integer
-          - 'null'
-          format: int32
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.TerritoryRestriction:
-      type: object
-      properties:
-        country_code:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.ReferralDestination:
       type: object
       properties:
@@ -652,6 +398,29 @@ components:
           type:
           - string
           - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.MaxDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.ArtistVideoSearchResponse:
+      type: object
+      properties:
+        videos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video'
+        result_count:
+          type: integer
+          format: int32
       additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Search.NewModels.Video.Video:
       type: object
@@ -824,18 +593,191 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Models.Search.NewModels.ArtistImageSearchResponse:
+    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize:
       type: object
       properties:
-        images:
+        bytes:
+          type: integer
+          format: int64
+        downloads:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.NewModels.Image'
-        result_count:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization'
+        height:
           type: integer
           format: int32
+        media_type:
+          type:
+          - string
+          - 'null'
+        name:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TeeShirtSize'
+        width:
+          type: integer
+          format: int32
+        dpi:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Artists.ArtistsVideoSearchFieldValues:
+      enum:
+      - id
+      - allowed_use
+      - alternative_ids
+      - artist
+      - asset_family
+      - asset_type
+      - call_for_image
+      - caption
+      - clip_length
+      - collection_id
+      - collection_code
+      - collection_name
+      - comp
+      - copyright
+      - date_created
+      - date_submitted
+      - display_set
+      - editorial_segments
+      - event_ids
+      - graphical_style
+      - keywords
+      - license_model
+      - max_dimensions
+      - orientation
+      - preview
+      - product_types
+      - quality_rank
+      - referral_destinations
+      - summary_set
+      - thumb
+      - title
+      type: string
+    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization:
+      type: object
+      properties:
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadSize:
+      type: object
+      properties:
+        bit_depth:
+          type:
+          - string
+          - 'null'
+        broadcast_video_standard:
+          type:
+          - string
+          - 'null'
+        compression:
+          type:
+          - string
+          - 'null'
+        content_type:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        downloads:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Videos.VideoDownloadAuthorization'
+        format:
+          type:
+          - string
+          - 'null'
+        frame_rate:
+          type:
+          - number
+          - 'null'
+          format: double
+        frame_size:
+          type:
+          - string
+          - 'null'
+        height:
+          type:
+          - number
+          - 'null'
+          format: double
+        interlaced:
+          type: boolean
+        bytes:
+          type: integer
+          format: int64
+        name:
+          type:
+          - string
+          - 'null'
+        width:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.TeeShirtSize:
+      enum:
+      - x_small
+      - small
+      - medium
+      - large
+      - x_large
+      - xx_large
+      - vector
+      type: string
+    GettyImages.Services.Connect.Public.Models.Search.VideoSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.TerritoryRestriction:
+      type: object
+      properties:
+        country_code:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Contributor:
       type: object
@@ -852,15 +794,68 @@ components:
           description: The contributor's display name
       additionalProperties: false
       description: Contributor information for an image or video
-    GettyImages.Services.Connect.Public.Models.MaxDimensions:
+    GettyImages.Services.Connect.Public.Models.Download:
       type: object
       properties:
-        height:
-          type: integer
+        product_id:
+          type:
+          - string
+          - 'null'
+        product_type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+        agreement_name:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName:
+      enum:
+      - Standard
+      - Multiseat
+      - Unlimited
+      - Resale
+      - Indemnification
+      type: string
+    GettyImages.Services.Connect.Public.Models.Keyword:
+      type: object
+      properties:
+        keyword_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        relevance:
+          type:
+          - integer
+          - 'null'
           format: int32
-        width:
-          type: integer
-          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.Search.ImageSearchItemDisplaySize:
+      type: object
+      properties:
+        is_watermarked:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Artists.ArtistsImageSearchFieldValues:
       enum:
@@ -898,33 +893,38 @@ components:
       - thumb
       - title
       type: string
-    GettyImages.Services.Connect.Public.Models.Images.ImageDownloadSize:
+    GettyImages.Services.Connect.Public.Models.IStockLicense:
       type: object
       properties:
-        bytes:
+        license_type:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Domain.Services.CreditPack.AssetLicenseName'
+        credits:
           type: integer
-          format: int64
-        downloads:
+          format: int32
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Models.AllowedUse:
+      type: object
+      properties:
+        how_can_i_use_it:
+          type:
+          - string
+          - 'null'
+          description: Indicates how the asset can be used
+        release_info:
+          type:
+          - string
+          - 'null'
+          description: Indicates release status
+        usage_restrictions:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Images.ImageDownloadAuthorization'
-        height:
-          type: integer
-          format: int32
-        media_type:
-          type:
-          - string
-          - 'null'
-        name:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.TeeShirtSize'
-        width:
-          type: integer
-          format: int32
-        dpi:
-          type: integer
-          format: int32
+            type: string
+          description: Indicates asset usage restriction, if any
+        editorial_use_only:
+          type: boolean
+          description: Indicates whether the asset is for editorial use only
       additionalProperties: false
   securitySchemes:
     Api-Key:

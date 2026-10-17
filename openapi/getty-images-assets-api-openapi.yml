@@ -251,13 +251,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AssetType:
-      enum:
-      - NotSet
-      - Image
-      - Film
-      - Music
-      type: string
     Channel:
       type: object
       properties:
@@ -286,6 +279,51 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    AssetFamily:
+      enum:
+      - NotSet
+      - Editorial
+      - Creative
+      - Both
+      type: string
+    GetSendEventsResponse:
+      type: object
+      properties:
+        last_offset:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        asset_send_events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssetEvent'
+      additionalProperties: false
+    AssetChanges:
+      type: object
+      properties:
+        change_set_id:
+          type:
+          - string
+          - 'null'
+          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
+        changed_assets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangedAssetDetail'
+          description: Contains a list of ChangedAssetList results for the query.
+      additionalProperties: false
+    AssetType:
+      enum:
+      - NotSet
+      - Image
+      - Film
+      - Music
+      type: string
     AcquireAssetLicensesRequest:
       required:
       - extended_licenses
@@ -299,28 +337,13 @@ components:
           type: boolean
           description: Defaults to false.
       additionalProperties: false
-    AssetFamily:
+    ExtendedLicenses:
       enum:
-      - NotSet
-      - Editorial
-      - Creative
-      - Both
+      - multiseat
+      - unlimited
+      - resale
+      - indemnification
       type: string
-    AssetEvent:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        asset_id:
-          type:
-          - string
-          - 'null'
-        email_address:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     AssetLicensingResponse:
       type: object
       properties:
@@ -362,43 +385,20 @@ components:
           - 'null'
           description: Contains the asset download URL for assets with an AssetLifecycle of "New."
       additionalProperties: false
-    ExtendedLicenses:
-      enum:
-      - multiseat
-      - unlimited
-      - resale
-      - indemnification
-      type: string
-    GetSendEventsResponse:
+    AssetEvent:
       type: object
       properties:
-        last_offset:
-          type:
-          - string
-          - 'null'
+        timestamp:
+          type: string
           format: date-time
-        asset_send_events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AssetEvent'
-      additionalProperties: false
-    AssetChanges:
-      type: object
-      properties:
-        change_set_id:
+        asset_id:
           type:
           - string
           - 'null'
-          description: Contains the identifier for the change-set resource. Passed into ConfirmAssetChanges requests to confirm receipt of the asset changes in the response.
-        changed_assets:
+        email_address:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/ChangedAssetDetail'
-          description: Contains a list of ChangedAssetList results for the query.
       additionalProperties: false
   securitySchemes:
     Api-Key:

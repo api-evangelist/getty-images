@@ -80,17 +80,43 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse:
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoSearchResponse:
       type: object
       properties:
-        images:
+        videos:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage'
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo'
         auto_corrections:
           $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        preview_urls:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls'
+        destination_url:
+          type:
+          - string
+          - 'null'
+        clip_length:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage:
       type: object
@@ -114,18 +140,12 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoSearchResponse:
-      type: object
-      properties:
-        videos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo'
-        auto_corrections:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
-      additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateSearchStyle:
+      enum:
+      - photography
+      - vector
+      type: string
+      description: Specifies the graphical style of images desired.
     GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls:
       type: object
       properties:
@@ -184,42 +204,22 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImageSearchResponse:
+      type: object
+      properties:
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateImage'
+        auto_corrections:
+          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Models.Search.AutoCorrections'
+      additionalProperties: false
     GettyImages.Services.Connect.Public.Models.Search.AutoCorrections:
       type: object
       properties:
         phrase:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateSearchStyle:
-      enum:
-      - photography
-      - vector
-      type: string
-      description: Specifies the graphical style of images desired.
-    GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideo:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        preview_urls:
-          $ref: '#/components/schemas/GettyImages.Services.Connect.Public.Controllers.Affiliate.AffiliateVideoUrls'
-        destination_url:
-          type:
-          - string
-          - 'null'
-        clip_length:
           type:
           - string
           - 'null'
