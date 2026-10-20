@@ -1,76 +1,4 @@
 edges:
-- partner_name: C2PA (Content Credentials conformance programme)
-  partner: null
-  partner_match: register
-  type: register
-  direction: partner-built
-  channel: standard-directory
-  relationship: standard-participant
-  evidence: https://github.com/c2pa-org/conformance-public/blob/main/conforming-products/conforming-products-list.json
-  category: content provenance (Content Credentials) conformance
-  contract_reference:
-    register: C2PA conforming products list (c2pa-org/conformance-public)
-    spec_file: null
-    role: c2pa-conformant-applicant
-    registered_name: Getty Images (US), Inc.
-    register_id: Getty Images (US), Inc.
-    product_types:
-    - generatorProduct
-    assurance_levels:
-    - 1
-    spec_versions:
-    - '2.2'
-    media_types:
-    - image/avif
-    - image/jpeg
-    - image/png
-    - image/webp
-    products:
-    - product: Getty Images AI-Modified Image
-      record_id: 019f61b8-82c3-7afc-951e-4d2e3e9063be
-      conformance_date: '2026-07-15'
-    - product: Getty Images AI-Generated Image
-      record_id: 019eb73e-4e85-7b4c-9138-f05c365b575d
-      conformance_date: '2026-06-29'
-    - product: iStock AI-Modified Image
-      record_id: 019f6b49-79cd-7453-9bcd-79284820b026
-      conformance_date: '2026-07-28'
-    - product: iStock AI-Generated Image
-      record_id: 019f6165-37e6-75ce-8226-977096bcf071
-      conformance_date: '2026-07-15'
-    matched_domain: gettyimages.com
-    matched_by: domain
-    identity: wikidata Q1520122 'Getty Images' P856 https://www.gettyimages.com
-    detected_by: sweep-media.py
-    detected: '2026-10-15'
-  detected_by: sweep-media.py
-  first_seen: '2026-10-15'
-- partner_name: Pipedream
-  partner: pipedream
-  partner_match: aggregator
-  type: marketplace
-  marketplace: pipedream-components
-  channel: open-source-node
-  relationship: ipaas-bridge
-  direction: third-party
-  evidence: https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/getty_images
-  category: null
-  contract_reference:
-    register: Pipedream components (PipedreamHQ/pipedream components/)
-    spec_file: null
-    role: ipaas-connector:pipedream
-    registered_name: getty images
-    matched_domain: gettyimages.com
-    matched_by: domain
-    detected_by: sweep-workflow-automation.py
-    detected: '2026-10-15'
-    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
-    app_slug: getty_images
-    actions: true
-    sources: true
-    builder: Pipedream repo (component)
-  detected_by: sweep-workflow-automation.py
-  first_seen: '2026-10-15'
 - partner_name: WordPress (own)
   partner: wordpress
   partner_match: mirror
@@ -178,6 +106,78 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: C2PA (Content Credentials conformance programme)
+  partner: null
+  partner_match: register
+  type: register
+  direction: partner-built
+  channel: standard-directory
+  relationship: standard-participant
+  evidence: https://github.com/c2pa-org/conformance-public/blob/main/conforming-products/conforming-products-list.json
+  category: content provenance (Content Credentials) conformance
+  contract_reference:
+    register: C2PA conforming products list (c2pa-org/conformance-public)
+    spec_file: null
+    role: c2pa-conformant-applicant
+    registered_name: Getty Images (US), Inc.
+    register_id: Getty Images (US), Inc.
+    product_types:
+    - generatorProduct
+    assurance_levels:
+    - 1
+    spec_versions:
+    - '2.2'
+    media_types:
+    - image/avif
+    - image/jpeg
+    - image/png
+    - image/webp
+    products:
+    - product: Getty Images AI-Modified Image
+      record_id: 019f61b8-82c3-7afc-951e-4d2e3e9063be
+      conformance_date: '2026-07-15'
+    - product: Getty Images AI-Generated Image
+      record_id: 019eb73e-4e85-7b4c-9138-f05c365b575d
+      conformance_date: '2026-06-29'
+    - product: iStock AI-Modified Image
+      record_id: 019f6b49-79cd-7453-9bcd-79284820b026
+      conformance_date: '2026-07-28'
+    - product: iStock AI-Generated Image
+      record_id: 019f6165-37e6-75ce-8226-977096bcf071
+      conformance_date: '2026-07-15'
+    matched_domain: gettyimages.com
+    matched_by: domain
+    identity: wikidata Q1520122 'Getty Images' P856 https://www.gettyimages.com
+    detected_by: sweep-media.py
+    detected: '2026-10-19'
+  detected_by: sweep-media.py
+  first_seen: '2026-10-15'
+- partner_name: Pipedream
+  partner: pipedream
+  partner_match: aggregator
+  type: marketplace
+  marketplace: pipedream-components
+  channel: open-source-node
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/getty_images
+  category: null
+  contract_reference:
+    register: Pipedream components (PipedreamHQ/pipedream components/)
+    spec_file: null
+    role: ipaas-connector:pipedream
+    registered_name: getty images
+    matched_domain: gettyimages.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: getty_images
+    actions: true
+    sources: true
+    builder: Pipedream repo (component)
+  detected_by: sweep-workflow-automation.py
+  first_seen: '2026-10-15'
 generated: '2026-10-15'
 method: searched
 source:
@@ -188,6 +188,7 @@ checked:
 - https://crates.io/api/v1
 - https://ddex.net/membership/current-members/
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
+- https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
 - https://proxy.golang.org
 - https://pypi.org/pypi
 - https://raw.githubusercontent.com/c2pa-org/conformance-public/main/conforming-products/conforming-products-list.json
