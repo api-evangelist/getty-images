@@ -949,3 +949,9 @@ components:
 x-refined-from:
 - getty-images-openapi.yml
 - getty-images-swagger-v3-openapi.json
+x-provenance:
+  method: harvested
+  publisher: Getty Images
+  source: https://api.gettyimages.com/swagger/v3/swagger.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
